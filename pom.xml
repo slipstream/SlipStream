@@ -1,0 +1,345 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sixsq.slipstream</groupId>
+  <artifactId>SlipStream</artifactId>
+  <packaging>pom</packaging>
+  <version>1.2-SNAPSHOT</version>
+  <name>SlipStream</name>
+  <url>http://sixsq.com/</url>
+
+  <!-- To build all of the submodules automatically, touch the file .slipstream-build-all 
+    in this directory. This file is ignored by git; do NOT add it to the repository. -->
+  <profiles>
+    <profile>
+      <activation>
+        <file>
+          <exists>.slipstream-build-all</exists>
+        </file>
+      </activation>
+      <modules>
+        <!-- <module>../SlipStreamDocumentation</module> -->
+        <!-- <module>../SlipStreamMta</module> -->
+        <!-- <module>../SlipStreamServer</module> -->
+        <!-- <module>../SlipStreamServerDeps</module> -->
+        <!-- <module>../SlipStreamClient</module> -->
+      </modules>
+    </profile>
+  </profiles>
+
+  <repositories>
+    <repository>
+      <id>maven-restlet</id>
+      <name>Public online Restlet repository</name>
+      <url>http://maven.restlet.org</url>
+    </repository>
+    <repository>
+      <id>codehaus</id>
+      <url>http://repository.codehaus.org/</url>
+    </repository>
+  </repositories>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</connection>
+    <url>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</url>
+    <developerConnection>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>docbkx.snapshots</id>
+      <name>Maven Plugin Snapshots</name>
+      <url>http://docbkx-tools.sourceforge.net/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+		<plugin>
+		    <artifactId>maven-release-plugin</artifactId>
+		    <version>2.4</version>
+		    <configuration>
+		       <preparationGoals>clean install</preparationGoals>
+		    </configuration>
+		</plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <target>1.5</target>
+            <source>1.5</source>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.9</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.4.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.9</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>7.4.5.v20110725</version>
+        </plugin>
+        <plugin>
+          <groupId>com.agilejava.docbkx</groupId>
+          <artifactId>docbkx-maven-plugin</artifactId>
+          <version>2.0.13</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.1.1</version>
+        </plugin>
+		<plugin>
+		  <groupId>org.codehaus.mojo</groupId>
+		  <artifactId>findbugs-maven-plugin</artifactId>
+		  <version>2.5.3</version>
+		</plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.2.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>rpm-maven-plugin</artifactId>
+          <version>2.0.1</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>create-build-date</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>create-timestamp</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <timestampFormat>yyyy-MM-dd</timestampFormat>
+          <timestampPropertyName>buildDate</timestampPropertyName>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+  </dependencies>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
+    <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+
+	<slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
+	<installation.dir>${slipstream.base.dir}/server</installation.dir>
+
+	<jetty.version>7.6.1.v20120215</jetty.version>
+	<package.os>el6</package.os>
+    <package.version>${VERSION_NUMBER}</package.version>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.8.2</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>2.15.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.5</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.servlet</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.fileupload</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.restlet.jee</groupId>
+		<artifactId>org.restlet.ext.xml</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.simpleframework</groupId>
+        <artifactId>simple-xml</artifactId>
+        <version>2.2.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.code.typica</groupId>
+        <artifactId>typica</artifactId>
+        <version>1.7.2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.4.1</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-all</artifactId>
+        <version>1.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>3.4.0.GA</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>1.4.2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>2.2.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.17</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
+
+      <distributionManagement>
+        <repository>
+            <id>localrepo</id>
+            <name>Local file system</name>
+            <url>file://${project.build.directory}</url>
+        </repository>
+        <snapshotRepository>
+            <id>localsnapshotrepo</id>
+            <name>Local file system</name>
+            <url>file://${project.build.directory}</url>
+        </snapshotRepository>
+  </distributionManagement>
+</project>
