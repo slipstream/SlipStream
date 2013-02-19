@@ -49,7 +49,10 @@ To build the entire system, clone the following GitHub repositories:
   * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
 
 To build the full system, uncomment the modules element in the SlipStreamParent pom and run:
+
+```
 $ mvn clean install
+```
 
 You can also build each module individually, but you'll need to build the
 [SlipStreamParent](https://github.com/slipstream/SlipStreamParent) (this repository) first.
