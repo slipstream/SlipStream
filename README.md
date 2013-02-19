@@ -38,39 +38,24 @@ Building
 SlipStream(TM) is written in Java, JavaScript, XSLT and Python and
 uses Maven2 for building the software. 
 
-The system is tested using JUnit, Selenium and PyUnit.
+The system is tested using JUnit and PyUnit.
 
 To build the entire system, clone the following GitHub repositories:
 
-  * [SlipStreamClient](https://github.com/SixSq/SlipStreamClient)
-  * [SlipStreamDocumentation](https://github.com/SixSq/SlipStreamDocumentation)
-  * [SlipStreamMta](https://github.com/SixSq/SlipStreamMta)
-  * [SlipStreamParent](https://github.com/SixSq/SlipStreamClient) (this repository)
-  * [SlipStreamServer](https://github.com/SixSq/SlipStreamServer)
-  * [SlipStreamDeployment](https://github.com/SixSq/SlipStreamDeployment)
+  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient) (not yet released as open source!)
+  * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
+  * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
+  * [SlipStreamParent](https://github.com/slipstream/SlipStreamParent) (this repository)
+  * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
 
 To build the full system, uncomment the modules element in the SlipStreamParent pom and run:
 $ mvn clean install
 
 You can also build each module individually, but you'll need to build the
-[SlipStreamParent](https://github.com/SixSq/SlipStreamClient) (this repository) first.
+[SlipStreamParent](https://github.com/slipstream/SlipStreamParent) (this repository) first.
 
 
 Testing
 -------
 
-While unit tests are executed as part of the build process, end-to-end tests
-are available in the [SlipStreamEndToEndTests](https://github.com/SixSq/SlipStreamEndToEndTests)
-repository.
-
-[SlipStreamEndToEndTests](https://github.com/SixSq/SlipStreamEndToEndTests) uses Selenium.
-And by default it uses Firefox for the target browser.  You will therefore need to have
-Firefox installed, and probably have the firefox-bin executable in your PATH.
-
-To execute the end-to-end tests, execute the following in the 
-[SlipStreamEndToEndTests](https://github.com/SixSq/SlipStreamEndToEndTests) directory:
-
-    $ mvn clean install
-
-This will launch the Selinium tests, implemented as standard JUnit tests, firing
-Firefox in the process.
+Unit tests are executed as part of the build process, for both the client and the server.
