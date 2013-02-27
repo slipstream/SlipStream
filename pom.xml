@@ -213,11 +213,11 @@
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
 
-	<slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
-	<installation.dir>${slipstream.base.dir}/server</installation.dir>
-
-	<jetty.version>7.6.1.v20120215</jetty.version>
-	<package.os>el6</package.os>
+	  <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
+	  <installation.dir>${slipstream.base.dir}/server</installation.dir>
+    
+	  <jetty.version>7.6.9.v20130131</jetty.version>
+	  <package.os>el6</package.os>
     <package.version>${VERSION_NUMBER}</package.version>
   </properties>
 
