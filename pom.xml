@@ -41,9 +41,9 @@
   </repositories>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</connection>
-    <url>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</url>
-    <developerConnection>scm:git:ssh://git@github.com/SixSq/SlipStreamParent.git</developerConnection>
+    <connection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</connection>
+    <url>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</url>
+    <developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</developerConnection>
     <tag>SlipStream-1.2</tag>
   </scm>
 
