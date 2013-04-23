@@ -226,6 +226,20 @@
     <dependencies>
 
       <dependency>
+	    <groupId>com.sixsq.slipstream</groupId>
+	    <artifactId>SlipStreamServer-jar</artifactId>
+        <version>${slipstream.version}</version>
+      </dependency>
+	
+      <dependency>
+	    <groupId>com.sixsq.slipstream</groupId>
+	    <artifactId>SlipStreamServer-jar</artifactId>
+        <type>test-jar</type>
+        <version>${slipstream.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.8.2</version>
