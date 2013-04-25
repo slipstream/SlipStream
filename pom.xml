@@ -28,16 +28,60 @@
     </profile>
   </profiles>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
+    <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+
+    <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
+    <installation.dir>${slipstream.base.dir}/server</installation.dir>
+    
+    <jetty.version>7.6.9.v20130131</jetty.version>
+    <package.os>el6</package.os>
+    <package.version>${VERSION_NUMBER}</package.version>
+    
+    <slipstream.version>1.5-SNAPSHOT</slipstream.version>
+    
+    <nexus>http://ci.sixsq.com:8080/nexus</nexus>
+  </properties>
+
   <repositories>
+
     <repository>
       <id>maven-restlet</id>
       <name>Public online Restlet repository</name>
       <url>http://maven.restlet.org</url>
     </repository>
+
     <repository>
       <id>codehaus</id>
       <url>http://repository.codehaus.org/</url>
     </repository>
+
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>sixsq.releases</id>
+      <name>SixSq Releases</name>
+      <url>${nexus}/content/repositories/releases</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>sixsq.snapshots</id>
+      <name>SixSq Snapshots</name>
+      <url>${nexus}/content/repositories/snapshots</url>
+    </repository>
+
   </repositories>
 
   <scm>
@@ -208,22 +252,6 @@
   <dependencies>
   </dependencies>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
-    <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
-
-    <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
-    <installation.dir>${slipstream.base.dir}/server</installation.dir>
-    
-    <jetty.version>7.6.9.v20130131</jetty.version>
-    <package.os>el6</package.os>
-    <package.version>${VERSION_NUMBER}</package.version>
-    
-    <slipstream.version>1.5-SNAPSHOT</slipstream.version>
-  </properties>
-
-
   <dependencyManagement>
     <dependencies>
 
@@ -340,16 +368,19 @@
 
   </dependencyManagement>
 
-      <distributionManagement>
-        <repository>
-            <id>localrepo</id>
-            <name>Local file system</name>
-            <url>file://${project.build.directory}</url>
-        </repository>
-        <snapshotRepository>
-            <id>localsnapshotrepo</id>
-            <name>Local file system</name>
-            <url>file://${project.build.directory}</url>
-        </snapshotRepository>
+  <distributionManagement>
+    <repository>
+      <id>sixsq.releases</id>
+      <name>SixSq Releases</name>
+      <url>${nexus}/content/repositories/releases</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>sixsq.snapshots</id>
+      <name>SixSq Snapshots</name>
+      <url>${nexus}/content/repositories/snapshots</url>
+    </snapshotRepository>
+
   </distributionManagement>
+
 </project>
