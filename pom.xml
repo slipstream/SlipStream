@@ -35,6 +35,7 @@
 
     <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
     <installation.dir>${slipstream.base.dir}/server</installation.dir>
+    <slipstream.downloads.dir>${slipstream.base.dir}/downloads</slipstream.downloads.dir>
     
     <jetty.version>7.6.9.v20130131</jetty.version>
     <jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
