@@ -118,7 +118,7 @@
 		    <artifactId>maven-release-plugin</artifactId>
 		    <version>2.4</version>
 		    <configuration>
-		       <preparationGoals>clean install</preparationGoals>
+		       <preparationGoals>clean deploy</preparationGoals>
 		    </configuration>
 		</plugin>
         <plugin>
