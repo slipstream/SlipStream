@@ -284,6 +284,14 @@
       </dependency>
 
       <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDocumentation</artifactId>
+        <type>zip</type>
+        <classifier>server-bundle</classifier>
+        <version>${slipstream.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.8.2</version>
