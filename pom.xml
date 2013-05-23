@@ -49,6 +49,8 @@
     <nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
     <nexus.yum.repo.gen.snapshots.uri>${nexus.sched.tasks.uri}/5</nexus.yum.repo.gen.snapshots.uri>
     <nexus.yum.repo.gen.releases.uri>${nexus.sched.tasks.uri}/16</nexus.yum.repo.gen.releases.uri>
+    
+    <hsqldb.version>2.2.4</hsqldb.version>
   </properties>
 
   <repositories>
@@ -383,7 +385,7 @@
       <dependency>
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
-        <version>2.2.4</version>
+        <version>${hsqldb.version}</version>
       </dependency>
 
     </dependencies>
