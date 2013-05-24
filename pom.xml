@@ -54,9 +54,9 @@
     <hsqldb.version>2.2.4</hsqldb.version>
 
     <stratuslab.version>2.3</stratuslab.version>
-    <stratuslab.version.zip>${stratuslab.version}-20120831.020056-29</stratuslab.version.zip>
-    <stratuslab.version.zip.rpm>${stratuslab.version}-20120831.02005629</stratuslab.version.zip.rpm>
-    <stratuslab.version.rpm>${stratuslab.version}-20120831.020117-27</stratuslab.version.rpm>
+    <stratuslab.version.zip>${stratuslab.version}-20120927.092637-92</stratuslab.version.zip>
+    <stratuslab.version.zip.rpm>${stratuslab.version}-20120927.09263792</stratuslab.version.zip.rpm>
+    <stratuslab.version.rpm>${stratuslab.version}-20120927.092641-90</stratuslab.version.rpm>
 
   </properties>
 
@@ -71,6 +71,30 @@
     <repository>
       <id>codehaus</id>
       <url>http://repository.codehaus.org/</url>
+    </repository>
+    
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>stratuslab.releases</id>
+      <name>Releases</name>
+      <url>http://repo.stratuslab.eu:8081/content/repositories/centos-6.2-releases</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>stratuslab.snapshots</id>
+      <name>Snapshots</name>
+      <url>http://repo.stratuslab.eu:8081/content/repositories/centos-6.2-snapshots</url>
     </repository>
 
     <repository>
