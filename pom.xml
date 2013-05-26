@@ -58,6 +58,8 @@
     <stratuslab.version.zip.rpm>${stratuslab.version}-20120927.09263792</stratuslab.version.zip.rpm>
     <stratuslab.version.rpm>${stratuslab.version}-20120927.092641-90</stratuslab.version.rpm>
 
+    <libcloud.version>0.12.4</libcloud.version>
+
   </properties>
 
   <repositories>
