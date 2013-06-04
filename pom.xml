@@ -53,10 +53,10 @@
 
     <hsqldb.version>2.2.4</hsqldb.version>
 
-    <stratuslab.version>2.3</stratuslab.version>
-    <stratuslab.version.zip>${stratuslab.version}-20120927.092637-92</stratuslab.version.zip>
-    <stratuslab.version.zip.rpm>${stratuslab.version}-20120927.09263792</stratuslab.version.zip.rpm>
-    <stratuslab.version.rpm>${stratuslab.version}-20120927.092641-90</stratuslab.version.rpm>
+    <stratuslab.version>13.05.0</stratuslab.version>
+    <stratuslab.version.zip>${stratuslab.version}-20130604.101154-80</stratuslab.version.zip>
+    <stratuslab.version.zip.rpm>${stratuslab.version}-20130604.10115480</stratuslab.version.zip.rpm>
+    <stratuslab.version.rpm>${stratuslab.version}-20130604.101159-74</stratuslab.version.rpm>
 
     <libcloud.version>0.12.4</libcloud.version>
 
