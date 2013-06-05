@@ -44,7 +44,7 @@
     <package.os>el6</package.os>
     <package.version>${VERSION_NUMBER}</package.version>
 
-    <slipstream.version>1.6-SNAPSHOT</slipstream.version>
+    <slipstream.version>${project.version}</slipstream.version>
 
     <nexus>http://ci.sixsq.com:8080/nexus</nexus>
     <nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
