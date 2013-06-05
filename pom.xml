@@ -44,7 +44,7 @@
     <package.os>el6</package.os>
     <package.version>${VERSION_NUMBER}</package.version>
 
-    <slipstream.version>${project.version}</slipstream.version>
+    <slipstream.version>1.6-SNAPSHOT</slipstream.version>
 
     <nexus>http://ci.sixsq.com:8080/nexus</nexus>
     <nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
@@ -297,40 +297,7 @@
     <dependencies>
 
       <dependency>
-        <groupId>com.sixsq.
-          Releasing SlipStream
-          ------
-
-          SlipStream Release in Jenkins
-
-          1. Parent
-          http://ci.sixsq.com/job/SlipStreamParent_build/
-
-          2. Server dependencies: hsqldb, backup, libcloud, stratuslab
-          http://ci.sixsq.com/job/SlipStreamServerDeps_build/
-
-          3. MTA
-          http://ci.sixsq.com/job/SlipStreamMta_build/
-
-          4. Client
-          Update VERSION in pypi/src/main/python/setup.py
-          http://ci.sixsq.com/job/SlipStreamClient_build/
-
-          5. Documentation
-          http://ci.sixsq.com/job/SlipStreamDoc_build/
-
-          6. Server
-          http://ci.sixsq.com/job/SlipStreamServer_build/
-
-          7. CloudSigma server connector
-          http://ci.sixsq.com/job/SlipStreamServer_connector_cloudsigma_build/
-
-          8. Abiquo server connector
-          http://ci.sixsq.com/job/SlipStreamServer_connector_abiquo_build/
-
-          9. Abiquo libcloud driver (updated and distributed by SixSq)
-          http://ci.sixsq.com/job/AbiquoLibcloud_build/
-</groupId>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
         <version>${slipstream.version}</version>
       </dependency>
