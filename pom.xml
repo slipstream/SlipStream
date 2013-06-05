@@ -5,7 +5,7 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>1.8-SNAPSHOT</version>
+  <version>1.7-SNAPSHOT</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -29,6 +29,11 @@
   </profiles>
 
   <properties>
+	<!-- CHANGE ME!!! -->
+    <slipstream.version>1.7</slipstream.version>
+
+
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
@@ -42,8 +47,6 @@
 
     <package.os>el6</package.os>
     <package.version>${VERSION_NUMBER}</package.version>
-
-    <slipstream.version>${project.version}</slipstream.version>
 
     <nexus>http://ci.sixsq.com:8080/nexus</nexus>
     <nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
