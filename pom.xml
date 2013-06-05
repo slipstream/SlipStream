@@ -298,6 +298,12 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>Libcloud-SixSq-zip</artifactId>
+        <version>${slipstream.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
         <version>${slipstream.version}</version>
       </dependency>
