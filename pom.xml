@@ -1,12 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.7</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -129,7 +128,7 @@
     <connection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</connection>
     <url>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</url>
     <developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</developerConnection>
-    <tag>SlipStream-1.2</tag>
+    <tag>SlipStream-1.7</tag>
   </scm>
 
   <pluginRepositories>
