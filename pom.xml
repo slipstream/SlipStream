@@ -123,6 +123,11 @@
       <url>${nexus}/content/repositories/snapshots</url>
     </repository>
 
+    <repository>
+      <id>sixsq.thirdparty</id>
+      <url>${nexus}/content/repositories/thirdparty</url>
+    </repository>
+
   </repositories>
 
   <scm>
@@ -437,7 +442,6 @@
       <name>SixSq Snapshots</name>
       <url>${nexus}/content/repositories/snapshots</url>
     </snapshotRepository>
-
   </distributionManagement>
 
 </project>
