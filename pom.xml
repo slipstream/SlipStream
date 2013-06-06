@@ -1,12 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.8-SNAPSHOT</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -30,6 +29,11 @@
   </profiles>
 
   <properties>
+	<!-- CHANGE ME!!! -->
+    <slipstream.version>1.7</slipstream.version>
+
+
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
@@ -43,8 +47,6 @@
 
     <package.os>el6</package.os>
     <package.version>${VERSION_NUMBER}</package.version>
-
-    <slipstream.version>1.6-SNAPSHOT</slipstream.version>
 
     <nexus>http://ci.sixsq.com:8080/nexus</nexus>
     <nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
@@ -300,6 +302,12 @@
 
   <dependencyManagement>
     <dependencies>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>Libcloud-SixSq-zip</artifactId>
+        <version>${slipstream.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
