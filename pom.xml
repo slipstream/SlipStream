@@ -30,9 +30,7 @@
 
   <properties>
 	<!-- CHANGE ME!!! -->
-    <slipstream.version>1.7</slipstream.version>
-
-
+    <slipstream.version>1.8-SNAPSHOT</slipstream.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
