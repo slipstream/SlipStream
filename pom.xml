@@ -39,6 +39,7 @@
     <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
     <installation.dir>${slipstream.base.dir}/server</installation.dir>
     <slipstream.downloads.dir>${slipstream.base.dir}/downloads</slipstream.downloads.dir>
+    <slipstream.war.web-inf.lib.dir>${installation.dir}/webapps/slipstream.war/WEB-INF/lib</slipstream.war.web-inf.lib.dir>
 
     <jetty.version>7.6.9.v20130131</jetty.version>
     <jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
@@ -57,6 +58,7 @@
     <stratuslab.version.rpm>${stratuslab.version}-20130709.020647-24</stratuslab.version.rpm>
 
     <libcloud.version>0.12.4</libcloud.version>
+    <boto.version>2.1.1</boto.version>
 
   </properties>
 
