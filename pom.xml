@@ -54,8 +54,8 @@
     <hsqldb.version>2.2.4</hsqldb.version>
 
     <stratuslab.version>13.05.2</stratuslab.version>
-    <stratuslab.version.zip>${stratuslab.version}-20130709.020642-24</stratuslab.version.zip>
-    <stratuslab.version.rpm>${stratuslab.version}-20130709.020647-24</stratuslab.version.rpm>
+    <stratuslab.version.zip>${stratuslab.version}-20130823.133459-77</stratuslab.version.zip>
+    <stratuslab.version.rpm>${stratuslab.version}-20130823.133517-77</stratuslab.version.rpm>
 
     <libcloud.version>0.12.4</libcloud.version>
     <boto.version>2.1.1</boto.version>
