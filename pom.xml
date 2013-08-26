@@ -312,6 +312,12 @@
         <artifactId>SlipStreamServer-jar</artifactId>
         <version>${slipstream.version}</version>
       </dependency>
+    
+	    <dependency>
+	      <groupId>com.sixsq.slipstream</groupId>
+	      <artifactId>SlipStreamUI</artifactId>
+	        <version>${slipstream.version}</version>
+	    </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
@@ -432,6 +438,12 @@
         <version>${hsqldb.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.clojure</groupId>
+        <artifactId>clojure</artifactId>
+        <version>1.4.0</version>
+      </dependency>
+    
     </dependencies>
 
   </dependencyManagement>
