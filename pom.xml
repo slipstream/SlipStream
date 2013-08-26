@@ -128,6 +128,11 @@
       <url>${nexus}/content/repositories/thirdparty</url>
     </repository>
 
+    <repository>
+      <id>clojars.org</id>
+      <url>http://clojars.org/repo</url>
+    </repository>
+
   </repositories>
 
   <scm>
