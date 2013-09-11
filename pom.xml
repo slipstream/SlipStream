@@ -5,7 +5,7 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>1.7</version>
+  <version>1.7.1</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -30,7 +30,7 @@
 
   <properties>
 	<!-- CHANGE ME!!! -->
-    <slipstream.version>1.7</slipstream.version>
+    <slipstream.version>1.7.1</slipstream.version>
 
 
 
