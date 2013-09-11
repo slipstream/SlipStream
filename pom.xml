@@ -323,7 +323,7 @@
         <artifactId>SlipStreamDocumentation</artifactId>
         <type>zip</type>
         <classifier>client-bundle</classifier>
-        <version>${slipstream.version}</version>
+        <version>1.7</version>
       </dependency>
 
       <dependency>
