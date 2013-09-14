@@ -9,8 +9,12 @@
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
+  <prerequisites>
+    <maven>2.2.1</maven>
+  </prerequisites>
+
   <!-- To build all of the submodules automatically, touch the file .slipstream-build-all
-    in this directory. This file is ignored by git; do NOT add it to the repository. -->
+       in this directory. This file is ignored by git; do NOT add it to the repository. -->
   <profiles>
     <profile>
       <activation>
@@ -29,7 +33,7 @@
   </profiles>
 
   <properties>
-	<!-- CHANGE ME!!! -->
+    <!-- CHANGE ME!!! -->
     <slipstream.version>1.8-SNAPSHOT</slipstream.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -146,7 +150,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.4</version>
+          <version>2.4.1</version>
           <configuration>
             <preparationGoals>clean install</preparationGoals>
           </configuration>
@@ -154,7 +158,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
+          <version>3.1</version>
           <configuration>
             <target>1.5</target>
             <source>1.5</source>
@@ -163,52 +167,52 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.16</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.6</version>
+          <version>2.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.3</version>
+          <version>2.8</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>2.3.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>2.3</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.3</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
           <version>2.5</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>2.4.1</version>
+          <version>2.5</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.16</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.3.1</version>
+          <version>2.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -218,7 +222,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>1.4</version>
+          <version>1.5</version>
         </plugin>
         <plugin>
           <groupId>org.mortbay.jetty</groupId>
@@ -228,12 +232,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.1.1</version>
+          <version>2.4</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>2.5.2</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -244,7 +248,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>1.0</version>
+          <version>1.2</version>
         </plugin>
 
         <plugin>
@@ -297,12 +301,12 @@
         <artifactId>SlipStreamServer-jar</artifactId>
         <version>${slipstream.version}</version>
       </dependency>
-    
-	    <dependency>
-	      <groupId>com.sixsq.slipstream</groupId>
-	      <artifactId>SlipStreamUI</artifactId>
-	        <version>${slipstream.version}</version>
-	    </dependency>
+      
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamUI</artifactId>
+        <version>${slipstream.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
@@ -428,7 +432,7 @@
         <artifactId>clojure</artifactId>
         <version>1.4.0</version>
       </dependency>
-    
+      
     </dependencies>
 
   </dependencyManagement>
