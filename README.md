@@ -1,64 +1,63 @@
-SlipStream
-----------
+# SlipStream
 
-SlipStream(TM) automates the deployment and testing of complete
-software systems.
+Developed by SixSq, SlipStream(TM) is a multi-cloud coordinated
+provisioning and image factory engine. In other words, it is an
+engineering Platform as a Service (PaaS) solution to support
+production deployment in the cloud, as well as development, testing,
+certification and deployment processes into Infrastructure as a
+Service (IaaS) cloud environments.
 
+See the [SlipStream product page][slipstream-info] for more detailed
+information.
 
-Overview
---------
+# Building
 
-The SlipStream service allows all members of a development team, from
-programmers to operations personnel, to capture the complete
-description of a software system, to deploy that system automatically,
-and to run tests on the system, and to collect the results.
+SlipStream(TM) is written in Java, Clojure, JavaScript, XSLT and
+Python.  It uses Maven to build the software and the standard xUnit
+suites for unit testing.
 
-The automation of the deployment and testing of the full system:
+## Prerequisites
 
-  * Increases confidence in the released software,
+You must have Java 1.7+ and Python 2.6+ (but not 3.0+) installed on
+your system.  You must also have Maven 2.2.1 or later installed. 
 
-  * Reduces the effort involved in deploying and maintaining the test
-    infrastructure, 
+The software should build without problems on any *nix-like
+environment (Linux, FreeBSD, Mac OS X, etc.).  However, the packages
+will only be built on platforms supporting RPM.
 
-  * Permits the full effects of changes in the system to be
-    understood, and
+## Checkout
 
-  * Reduces time-to-market by freeing human resources to work on
-    development rather than tedious manual deployment and testing.
+To build the entire system, clone the following GitHub repositories
+into a common directory:
 
-SlipStream is a natural complement to existing unit testing
-technologies.  It is designed to integrate well into any software
-development process and can be adopted incrementally for smooth
-transition from existing deployment and testing practices.
-
-
-Building
---------
-
-SlipStream(TM) is written in Java, JavaScript, XSLT and Python and
-uses Maven2 for building the software. 
-
-The system is tested using JUnit and PyUnit.
-
-To build the entire system, clone the following GitHub repositories:
-
-  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient) (not yet released as open source!)
+  * [SlipStreamParent](https://github.com/slipstream/SlipStreamParent)
   * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
   * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
-  * [SlipStreamParent](https://github.com/slipstream/SlipStreamParent) (this repository)
   * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
+  * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
+  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
 
-To build the full system, uncomment the modules element in the SlipStreamParent pom and run:
+_The SlipStreamClient and SlipStreamServerDeps repositories are
+currently private._
+
+## Running Maven
+
+To build the full system, descend into the SlipStreamParent
+subdirectory and create the file `.slipstream-build-all`.  Then run:
 
 ```
 $ mvn clean install
 ```
 
-You can also build each module individually, but you'll need to build the
-[SlipStreamParent](https://github.com/slipstream/SlipStreamParent) (this repository) first.
+You can also build each module individually, but you'll need to build
+them in the order in the above list.  Execute the same Maven command
+at the root of each cloned repository.
+
+# Testing
+
+Unit tests are executed as part of the build process, for both the
+client and the server.  Failures will cause the build process to
+abort. 
 
 
-Testing
--------
-
-Unit tests are executed as part of the build process, for both the client and the server.
+[slipstream-info]: http://sixsq.com/products/slipstream.html
