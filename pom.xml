@@ -19,11 +19,11 @@
         </file>
       </activation>
       <modules>
-        <!-- <module>../SlipStreamDocumentation</module> -->
-        <!-- <module>../SlipStreamMta</module> -->
-        <!-- <module>../SlipStreamServer</module> -->
-        <!-- <module>../SlipStreamServerDeps</module> -->
-        <!-- <module>../SlipStreamClient</module> -->
+        <module>../SlipStreamDocumentation</module>
+        <module>../SlipStreamMta</module>
+        <module>../SlipStreamServer</module>
+        <module>../SlipStreamServerDeps</module>
+        <module>../SlipStreamClient</module>
       </modules>
     </profile>
   </profiles>
