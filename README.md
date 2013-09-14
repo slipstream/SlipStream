@@ -34,8 +34,8 @@ into a common directory:
   * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
   * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
   * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
-  * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
-  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
+  * SlipStreamServerDeps
+  * SlipStreamClient
 
 _The SlipStreamClient and SlipStreamServerDeps repositories are
 currently private._
@@ -75,8 +75,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
-
-
 
 
 [slipstream-info]: http://sixsq.com/products/slipstream.html
