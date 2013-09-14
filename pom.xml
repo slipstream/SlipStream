@@ -320,7 +320,6 @@
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>docs-pkg</artifactId>
         <type>zip</type>
-        <classifier>bundle</classifier>
         <version>${slipstream.version}</version>
       </dependency>
 
