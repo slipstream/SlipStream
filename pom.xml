@@ -61,6 +61,7 @@
     <stratuslab.version.zip>${stratuslab.version}-20130913.071951-5</stratuslab.version.zip>
     <stratuslab.version.rpm>${stratuslab.version}-20130913.071955-5</stratuslab.version.rpm>
     <stratuslab.version.rpm.api>${stratuslab.version}-20130913.071942-5</stratuslab.version.rpm.api>
+    <stratuslab.version.rpm.api.externals>${stratuslab.version}-20130913.071946-5</stratuslab.version.rpm.api.externals>
 
     <libcloud.version>0.12.4</libcloud.version>
     <boto.version>2.1.1</boto.version>
