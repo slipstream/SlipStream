@@ -33,6 +33,7 @@ into a common directory:
   * [SlipStreamParent](https://github.com/slipstream/SlipStreamParent)
   * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
   * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
+  * [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
   * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
   * SlipStreamServerDeps
   * SlipStreamClient
