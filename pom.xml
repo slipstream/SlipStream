@@ -10,7 +10,7 @@
   <url>http://sixsq.com/</url>
 
   <prerequisites>
-    <maven>2.2.1</maven>
+    <maven>3.0.3</maven>
   </prerequisites>
 
   <!-- To build all of the submodules automatically, touch the file .slipstream-build-all
