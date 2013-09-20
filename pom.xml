@@ -322,9 +322,22 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamUI-static-content</artifactId>
+        <version>${slipstream.version}</version>
+        <type>zip</type>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>docs-pkg</artifactId>
         <type>zip</type>
         <version>${slipstream.version}</version>
+      </dependency>
+
+      <dependency>
+	    <groupId>org.clojars.nathell</groupId>
+	    <artifactId>tagsoup</artifactId>
+	    <version>1.2.1</version>
       </dependency>
 
       <dependency>
@@ -426,6 +439,13 @@
         <groupId>org.clojure</groupId>
         <artifactId>clojure</artifactId>
         <version>1.4.0</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.jclouds</groupId>
+        <artifactId>jclouds-all</artifactId>
+        <version>1.5.5</version>
+        <type>jar</type>
       </dependency>
       
     </dependencies>
