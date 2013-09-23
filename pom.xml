@@ -322,7 +322,7 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
-        <artifactId>SlipStreamUI-static-content</artifactId>
+        <artifactId>SlipStreamServer-ui-static-content</artifactId>
         <version>${slipstream.version}</version>
         <type>zip</type>
       </dependency>
