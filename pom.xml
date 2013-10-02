@@ -35,9 +35,9 @@
 
   <properties>
     <!-- CHANGE ME!!! -->
-    <slipstream.version>2.0.3-SNAPSHOT</slipstream.version>
+  	<slipstream.version>2.0.3</slipstream.version>
 
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
 
