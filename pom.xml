@@ -131,6 +131,30 @@
     </repository>
 
     <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>slipstream.releases</id>
+      <name>SlipStream Releases</name>
+      <url>${nexus}/content/repositories/releases</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>slipstream.snapshots</id>
+      <name>SlipStream Snapshots</name>
+      <url>${nexus}/content/repositories/snapshots</url>
+    </repository>
+
+    <repository>
       <id>sixsq.thirdparty</id>
       <url>${nexus}/content/repositories/thirdparty</url>
     </repository>
