@@ -1,2 +1,4 @@
 .slipstream-build-all
 *~
+.idea/
+*.iml
