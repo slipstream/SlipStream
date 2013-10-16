@@ -329,33 +329,33 @@
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>Libcloud-SixSq-zip</artifactId>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
       </dependency>
       
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamUI</artifactId>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
         <type>test-jar</type>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-ui-static-content</artifactId>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
         <type>zip</type>
       </dependency>
 
@@ -363,7 +363,7 @@
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>docs-pkg</artifactId>
         <type>zip</type>
-        <version>${slipstream.version}</version>
+        <version>${project.version}</version>
       </dependency>
 
       <dependency>
