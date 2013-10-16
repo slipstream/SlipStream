@@ -177,6 +177,16 @@
   </scm>
 
   <build>
+
+    <!-- Allow deployment of artifacts to a file system for testing. -->
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-file</artifactId>
+        <version>2.5</version>
+      </extension>
+    </extensions>        
+
     <pluginManagement>
       <plugins>
         <plugin>
