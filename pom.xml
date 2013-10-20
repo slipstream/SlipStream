@@ -37,7 +37,7 @@
     <!-- Default build number if not specified on command line. -->
     <BUILD_NUMBER>0</BUILD_NUMBER>
 
-    <slipstream.version>${project.version}</slipstream.version>
+    <slipstream.version>2.0.5</slipstream.version>
     
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
@@ -339,33 +339,33 @@
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>Libcloud-SixSq-zip</artifactId>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
       </dependency>
       
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamUI</artifactId>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-jar</artifactId>
         <type>test-jar</type>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-ui-static-content</artifactId>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
         <type>zip</type>
       </dependency>
 
@@ -373,7 +373,7 @@
         <groupId>com.sixsq.slipstream</groupId>
         <artifactId>docs-pkg</artifactId>
         <type>zip</type>
-        <version>${project.version}</version>
+        <version>${slipstream.version}</version>
       </dependency>
 
       <dependency>
