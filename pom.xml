@@ -504,6 +504,12 @@
         <type>jar</type>
       </dependency>
       
+      <dependency>
+        <groupId>net.kencochrane.raven</groupId>
+        <artifactId>raven</artifactId>
+        <version>4.0</version>
+      </dependency>
+
     </dependencies>
 
   </dependencyManagement>
