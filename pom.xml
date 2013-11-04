@@ -480,9 +480,27 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>clojure</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.1</version>
       </dependency>
       
+		<dependency>
+			<groupId>enlive</groupId>
+			<artifactId>enlive</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ring</groupId>
+			<artifactId>ring</artifactId>
+			<version>1.1.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.cgrand</groupId>
+			<artifactId>moustache</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
       <dependency>
         <groupId>org.jclouds</groupId>
         <artifactId>jclouds-all</artifactId>
