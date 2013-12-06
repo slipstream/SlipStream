@@ -37,7 +37,7 @@
     <!-- Default build number if not specified on command line. -->
     <BUILD_NUMBER>0</BUILD_NUMBER>
 
-    <slipstream.version>2.0.6</slipstream.version>
+    <slipstream.version>2.0.7-SNAPSHOT</slipstream.version>
     
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
