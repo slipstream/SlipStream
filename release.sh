@@ -23,6 +23,7 @@ set -e
 modules=(SlipStreamDocumentation \
          SlipStreamServerDeps \
          SlipStreamClient \
+         SlipStreamMetering \
          SlipStreamUI \
          SlipStreamServer \
          SlipStreamConnector-Abiquo \
