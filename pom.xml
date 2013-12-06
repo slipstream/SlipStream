@@ -34,9 +34,6 @@
   </profiles>
 
   <properties>
-    <!-- Default build number if not specified on command line. -->
-    <BUILD_NUMBER>0</BUILD_NUMBER>
-
     <slipstream.version>2.0.11</slipstream.version>
     
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
