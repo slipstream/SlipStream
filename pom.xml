@@ -372,6 +372,14 @@
 
 			<dependency>
 				<groupId>com.sixsq.slipstream</groupId>
+				<artifactId>SlipStreamPersistence</artifactId>
+				<type>test-jar</type>
+				<version>${slipstream.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sixsq.slipstream</groupId>
 				<artifactId>SlipStreamConnector</artifactId>
 				<version>${slipstream.version}</version>
 			</dependency>
