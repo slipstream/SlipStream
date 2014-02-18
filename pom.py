@@ -26,7 +26,7 @@ class Pom(object):
         newLines = []
         for line in fileHandler:
             if foundParent:
-                newLines.append(self._replaceIfFound(p, line, False))
+                newLines.append(self._replaceIfFound(p, line))
             else:
                 newLines.append(line)
             if not foundParent and '<parent>' in line:
@@ -39,14 +39,14 @@ class Pom(object):
         p = re.compile('(<slipstream\.version>)([a-zA-Z0-9.-]+)(</slipstream\.version>)')
         newLines = []
         for line in fileHandler:
-            newLines.append(self._replaceIfFound(p, line, True))
+            newLines.append(self._replaceIfFound(p, line))
         return newLines
 
-    def _replaceIfFound(self, p, line, increase):
+    def _replaceIfFound(self, p, line):
         res = p.findall(line)
         if(res):
             version = res[0][1]
-            newVersion = self._get_version_fn()(version, increase)
+            newVersion = self._get_version_fn()(version)
             newLine = p.sub("\g<1>%s\g<3>" % (newVersion) , line)
         else:
             newLine = line
@@ -55,15 +55,15 @@ class Pom(object):
     def _get_version_fn(self):
         return (self.release and self._strip_snapshot) or self._add_snapshot_and_inc
 
-    def _strip_snapshot(self, version, *arg):
+    def _strip_snapshot(self, version):
         return version.split(snapshotPostfix)[0]
 
-    def _add_snapshot_and_inc(self, version, increase = False):
+    def _add_snapshot_and_inc(self, version):
         striped = self._strip_snapshot(version)
         parts = striped.split('.')
         release = (int)(parts[-1])
         increased = parts[0:-1]
-        newRelease = (increase and (release + 1)) or release
+        newRelease = release + 1
         increased.extend(str(newRelease))
         newVersion = '.'.join(increased)
         return newVersion + snapshotPostfix
