@@ -5,7 +5,7 @@
 	<groupId>com.sixsq.slipstream</groupId>
 	<artifactId>SlipStream</artifactId>
 	<packaging>pom</packaging>
-	<version>2.1.7-SNAPSHOT</version>
+	<version>2.1.1-SNAPSHOT</version>
 	<name>SlipStream</name>
 	<url>http://sixsq.com/</url>
 
@@ -34,7 +34,7 @@
 	</profiles>
 
 	<properties>
-		<slipstream.version>2.1.2-SNAPSHOT</slipstream.version>
+		<slipstream.version>2.1.1-SNAPSHOT</slipstream.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
