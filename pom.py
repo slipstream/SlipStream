@@ -26,7 +26,7 @@ class Pom(object):
         newLines = []
         for line in fileHandler:
             if foundParent:
-                newLines.append(self._replaceIfFound(p, line, True))
+                newLines.append(self._replaceIfFound(p, line, False))
             else:
                 newLines.append(line)
             if not foundParent and '<parent>' in line:
@@ -39,7 +39,7 @@ class Pom(object):
         p = re.compile('(<slipstream\.version>)([a-zA-Z0-9.-]+)(</slipstream\.version>)')
         newLines = []
         for line in fileHandler:
-            newLines.append(self._replaceIfFound(p, line))
+            newLines.append(self._replaceIfFound(p, line, True))
         return newLines
 
     def _replaceIfFound(self, p, line, increase):
@@ -55,7 +55,7 @@ class Pom(object):
     def _get_version_fn(self):
         return (self.release and self._strip_snapshot) or self._add_snapshot_and_inc
 
-    def _strip_snapshot(self, version, **kw):
+    def _strip_snapshot(self, version, *arg):
         return version.split(snapshotPostfix)[0]
 
     def _add_snapshot_and_inc(self, version, increase = False):
