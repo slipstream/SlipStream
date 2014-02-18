@@ -26,7 +26,7 @@ class Pom(object):
         newLines = []
         for line in fileHandler:
             if foundParent:
-                newLines.append(self._replaceIfFound(p, line))
+                newLines.append(self._replaceIfFound(p, line, True))
             else:
                 newLines.append(line)
             if not foundParent and '<parent>' in line:
@@ -42,24 +42,31 @@ class Pom(object):
             newLines.append(self._replaceIfFound(p, line))
         return newLines
 
-    def _replaceIfFound(self, p, line):
+    def _replaceIfFound(self, p, line, increase):
         res = p.findall(line)
         if(res):
             version = res[0][1]
-            newVersion = self._get_version_fn()(version)
+            newVersion = self._get_version_fn()(version, increase)
             newLine = p.sub("\g<1>%s\g<3>" % (newVersion) , line)
         else:
             newLine = line
         return newLine
 
     def _get_version_fn(self):
-        return (self.release and self._strip_snapshot) or self._add_snapshot
+        return (self.release and self._strip_snapshot) or self._add_snapshot_and_inc
 
-    def _strip_snapshot(self, version):
+    def _strip_snapshot(self, version, **kw):
         return version.split(snapshotPostfix)[0]
 
-    def _add_snapshot(self, version):
-        return self._strip_snapshot(version) + snapshotPostfix
+    def _add_snapshot_and_inc(self, version, increase = False):
+        striped = self._strip_snapshot(version)
+        parts = striped.split('.')
+        release = (int)(parts[-1])
+        increased = parts[0:-1]
+        newRelease = (increase and (release + 1)) or release
+        increased.extend(str(newRelease))
+        newVersion = '.'.join(increased)
+        return newVersion + snapshotPostfix
 
     def _parse(self):
         parser = OptionParser(usage="usage: %prog [options] <pomfile>")
