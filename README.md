@@ -60,6 +60,13 @@ Unit tests are executed as part of the build process, for both the
 client and the server.  Failures will cause the build process to
 abort. 
 
+To run the SlipStream server directly from the local git repositories,
+you can drop into the `SlipStreamServer/war` module and run:
+```
+mvn jetty:run-war
+```
+The server will show up on the [local machine](http://localhost:8080). 
+
 # License
 
 The code in the public repositories is licensed under the Apache
