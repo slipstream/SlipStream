@@ -60,6 +60,23 @@ Unit tests are executed as part of the build process, for both the
 client and the server.  Failures will cause the build process to
 abort. 
 
+# Running
+
+By default, SlipStream runs with a in memory hsqldb instance. While this is
+great for unit testing, it's not ideal for end-to-end testing or simple deployment.
+
+To attach to an existing hsqldb instance, the following java options can be used:
+
+```
+-Dpersistence.unit=hsqldb-schema
+```
+
+To start a separate hsqldb, run the following:
+
+```
+$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.2.4/hsqldb-2.2.4.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
+```
+
 # License
 
 The code in the public repositories is licensed under the Apache
