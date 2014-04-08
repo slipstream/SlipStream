@@ -16,12 +16,12 @@ class Pom(object):
         self.project = False
 
     def replace_version(self):
-        with open(self.pom) as f:
+        with open(self.pom, 'w') as fd:
             if self.project:
-                newLines = self._process_project_version(f)
+                newLines = self._process_project_version(fd)
             else:
-                newLines = self._process_slipstream_version(f)
-                open(self.pom, 'w').writelines(newLines)
+                newLines = self._process_slipstream_version(fd)
+                fd.writelines(newLines)
 
     def _process_project_version(self, fileHandler):
         foundParent = False
