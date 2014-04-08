@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import sys
+import optparse
 import re
-from optparse import OptionParser
+import sys
+import unittest
 
 snapshotPostfix = '-SNAPSHOT'
 project_version_re = re.compile('(<version>)(.*)(</version>)')
@@ -65,12 +66,15 @@ class Pom(object):
         release = (int)(parts[-1])
         increased = parts[0:-1]
         newRelease = release + 1
-        increased.extend(str(newRelease))
+        increased.append(str(newRelease))
         newVersion = '.'.join(increased)
         return newVersion + snapshotPostfix
 
     def _parse(self):
-        parser = OptionParser(usage="usage: %prog [options] <pomfile>")
+        parser = optparse.OptionParser(usage="usage: %prog [options] <pomfile>",
+                                       option_class=Option)
+        parser.add_option('--test', action='test',
+                          help="run the test suite and exit")
         parser.add_option("-r", "--release",
                           dest="release",
                           action="store_true",
@@ -109,6 +113,38 @@ class Pom(object):
     def run(self):
         self._parse()
         self.replace_version()
+
+
+# TESTS #######################################################################
+
+class TestPom(unittest.TestCase):
+
+    def setUp(self):
+        self.pom = Pom()
+
+    def test_add_snapshot_and_inc(self):
+        self.assertEqual(self.pom._add_snapshot_and_inc('2.1.9'), '2.1.10-SNAPSHOT')
+
+
+def runtests():
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestPom)
+    unittest.TextTestRunner().run(suite)
+
+
+class Option(optparse.Option):
+
+    ACTIONS = optparse.Option.ACTIONS + ("test",)
+
+    def take_action(self, action, dest, opt, value, values, parser):
+        if action == "test":
+            runtests()
+            parser.exit()
+        else:
+            optparse.Option.take_action(self, action, dest, opt, value, values,
+                                        parser)
+
+
+# MAIN ########################################################################
 
 if __name__ == '__main__':
     Pom().run()
