@@ -5,6 +5,8 @@ import re
 from optparse import OptionParser
 
 snapshotPostfix = '-SNAPSHOT'
+project_version_re = re.compile('(<version>)(.*)(</version>)')
+slipstream_version_re = re.compile('(<slipstream\.version>)([a-zA-Z0-9.-]+)(</slipstream\.version>)')
 
 
 class Pom(object):
@@ -15,19 +17,18 @@ class Pom(object):
 
     def replace_version(self):
         with open(self.pom) as f:
-            if(self.project):
+            if self.project:
                 newLines = self._process_project_version(f)
             else:
                 newLines = self._process_slipstream_version(f)
                 open(self.pom, 'w').writelines(newLines)
 
     def _process_project_version(self, fileHandler):
-        p = re.compile('(<version>)(.*)(</version>)')
         foundParent = False
         newLines = []
         for line in fileHandler:
             if foundParent:
-                newLines.append(self._replaceIfFound(p, line))
+                newLines.append(self._replaceIfFound(project_version_re, line))
             else:
                 newLines.append(line)
                 if not foundParent and '<parent>' in line:
@@ -37,18 +38,17 @@ class Pom(object):
                         return newLines
 
     def _process_slipstream_version(self, fileHandler):
-        p = re.compile('(<slipstream\.version>)([a-zA-Z0-9.-]+)(</slipstream\.version>)')
         newLines = []
         for line in fileHandler:
-            newLines.append(self._replaceIfFound(p, line))
+            newLines.append(self._replaceIfFound(slipstream_version_re, line))
             return newLines
 
-    def _replaceIfFound(self, p, line):
-        res = p.findall(line)
-        if(res):
+    def _replaceIfFound(self, pattern, line):
+        res = pattern.findall(line)
+        if res:
             version = res[0][1]
             newVersion = self._get_version_fn()(version)
-            newLine = p.sub("\g<1>%s\g<3>" % (newVersion), line)
+            newLine = pattern.sub("\g<1>%s\g<3>" % (newVersion), line)
         else:
             newLine = line
             return newLine
