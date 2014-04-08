@@ -74,43 +74,37 @@ class Pom(object):
         parser.add_option("-r", "--release",
                           dest="release",
                           action="store_true",
-                          default=False,
                           help="Release POM")
         parser.add_option("-s", "--snapshot",
-                          dest="snapshot",
-                          action="store_true",
-                          default=False,
+                          dest="release",
+                          action="store_false",
                           help="Set snapshot version POM")
         parser.add_option("-p", "--project",
                           dest="project",
                           action="store_true",
-                          default=False,
                           help="Change project version")
         parser.add_option("--slipstream",
-                          dest="slipstream",
-                          action="store_true",
-                          default=False,
+                          dest="project",
+                          action="store_false",
                           help="Change slipstream version")
 
-        (options, args) = parser.parse_args()
+        options, args = parser.parse_args()
 
-        self.release = options.release
-        snapshot = options.snapshot
-        self.project = options.project
-        slipstream = options.slipstream
-        if(len(args) < 1):
+        if len(args) < 1:
             print >> sys.stderr, "Missing <pomfile> argument"
             sys.exit(1)
 
-        self.pom = args[0]
-
-        if not (self.release or snapshot):
+        if options.release is None:
             print >> sys.stderr, "Missing -r/--release or -s/--snapshot"
             sys.exit(1)
 
-        if not (self.project or slipstream):
-            print >> sys.stderr, "Missing -p/--project or --slipstream"
+        if options.project is None:
             sys.exit(1)
+            print >> sys.stderr, "Missing -p/--project or --slipstream"
+
+        self.pom = args[0]
+        self.release = options.release
+        self.project = options.project
 
     def run(self):
         self._parse()
