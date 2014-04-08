@@ -35,23 +35,23 @@ class Pom(object):
                     foundParent = True
                     if foundParent and '</parent>' in line:
                         foundParent = False
-                        return newLines
+        return newLines
 
     def _process_slipstream_version(self, fileHandler):
         newLines = []
         for line in fileHandler:
             newLines.append(self._replaceIfFound(slipstream_version_re, line))
-            return newLines
+        return newLines
 
     def _replaceIfFound(self, pattern, line):
         res = pattern.findall(line)
         if res:
             version = res[0][1]
             newVersion = self._get_version_fn()(version)
-            newLine = pattern.sub("\g<1>%s\g<3>" % (newVersion), line)
+            newLine = pattern.sub("\g<1>%s\g<3>" % newVersion, line)
         else:
             newLine = line
-            return newLine
+        return newLine
 
     def _get_version_fn(self):
         return (self.release and self._strip_snapshot) or self._add_snapshot_and_inc
