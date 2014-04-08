@@ -6,6 +6,7 @@ from optparse import OptionParser
 
 snapshotPostfix = '-SNAPSHOT'
 
+
 class Pom(object):
 
     def __init__(self):
@@ -18,39 +19,39 @@ class Pom(object):
                 newLines = self._process_project_version(f)
             else:
                 newLines = self._process_slipstream_version(f)
-        open(self.pom, 'w').writelines(newLines)
+                open(self.pom, 'w').writelines(newLines)
 
     def _process_project_version(self, fileHandler):
         p = re.compile('(<version>)(.*)(</version>)')
-        foundParent = False 
+        foundParent = False
         newLines = []
         for line in fileHandler:
             if foundParent:
                 newLines.append(self._replaceIfFound(p, line))
             else:
                 newLines.append(line)
-            if not foundParent and '<parent>' in line:
-                foundParent = True
-            if foundParent and '</parent>' in line:
-                foundParent = False
-        return newLines
+                if not foundParent and '<parent>' in line:
+                    foundParent = True
+                    if foundParent and '</parent>' in line:
+                        foundParent = False
+                        return newLines
 
     def _process_slipstream_version(self, fileHandler):
         p = re.compile('(<slipstream\.version>)([a-zA-Z0-9.-]+)(</slipstream\.version>)')
         newLines = []
         for line in fileHandler:
             newLines.append(self._replaceIfFound(p, line))
-        return newLines
+            return newLines
 
     def _replaceIfFound(self, p, line):
         res = p.findall(line)
         if(res):
             version = res[0][1]
             newVersion = self._get_version_fn()(version)
-            newLine = p.sub("\g<1>%s\g<3>" % (newVersion) , line)
+            newLine = p.sub("\g<1>%s\g<3>" % (newVersion), line)
         else:
             newLine = line
-        return newLine
+            return newLine
 
     def _get_version_fn(self):
         return (self.release and self._strip_snapshot) or self._add_snapshot_and_inc
@@ -74,22 +75,22 @@ class Pom(object):
                           dest="release",
                           action="store_true",
                           default=False,
-                          help="Release POM")                      
+                          help="Release POM")
         parser.add_option("-s", "--snapshot",
-                        dest="snapshot",
-                        action="store_true",
-                        default=False,
-                        help="Set snapshot version POM")
+                          dest="snapshot",
+                          action="store_true",
+                          default=False,
+                          help="Set snapshot version POM")
         parser.add_option("-p", "--project",
-                        dest="project",
-                        action="store_true",
-                        default=False,
-                        help="Change project version")
+                          dest="project",
+                          action="store_true",
+                          default=False,
+                          help="Change project version")
         parser.add_option("--slipstream",
-                        dest="slipstream",
-                        action="store_true",
-                        default=False,
-                        help="Change slipstream version")
+                          dest="slipstream",
+                          action="store_true",
+                          default=False,
+                          help="Change slipstream version")
 
         (options, args) = parser.parse_args()
 
@@ -100,9 +101,9 @@ class Pom(object):
         if(len(args) < 1):
             print >> sys.stderr, "Missing <pomfile> argument"
             sys.exit(1)
-            
+
         self.pom = args[0]
-    
+
         if not (self.release or snapshot):
             print >> sys.stderr, "Missing -r/--release or -s/--snapshot"
             sys.exit(1)
@@ -115,5 +116,5 @@ class Pom(object):
         self._parse()
         self.replace_version()
 
-if  __name__ =='__main__':
+if __name__ == '__main__':
     Pom().run()
