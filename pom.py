@@ -22,7 +22,7 @@ class Pom(object):
                 newLines = self._process_project_version(f)
             else:
                 newLines = self._process_slipstream_version(f)
-                open(self.pom, 'w').writelines(newLines)
+            open(self.pom, 'w').writelines(newLines)
 
     def _process_project_version(self, fileHandler):
         foundParent = False
