@@ -34,8 +34,8 @@ class Pom(object):
                 newLines.append(line)
                 if not foundParent and '<parent>' in line:
                     foundParent = True
-                    if foundParent and '</parent>' in line:
-                        foundParent = False
+                if foundParent and '</parent>' in line:
+                    foundParent = False
         return newLines
 
     def _process_slipstream_version(self, fileHandler):
