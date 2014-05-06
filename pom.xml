@@ -54,7 +54,7 @@
 		<nexus.yum.repo.gen.snapshots.uri>${nexus.sched.tasks.uri}/438</nexus.yum.repo.gen.snapshots.uri>
 		<nexus.yum.repo.gen.releases.uri>${nexus.sched.tasks.uri}/16</nexus.yum.repo.gen.releases.uri>
 
-		<hsqldb.version>2.2.4</hsqldb.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
 
 		<stratuslab.version>13.10.0</stratuslab.version>
 		<stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
@@ -523,7 +523,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>3.4.0.GA</version>
+				<version>4.3.5.Final</version>
 			</dependency>
 
 			<dependency>
