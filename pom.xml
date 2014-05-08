@@ -350,6 +350,12 @@
 
 			<dependency>
 				<groupId>com.sixsq.slipstream</groupId>
+				<artifactId>SlipStreamCredCache</artifactId>
+				<version>${slipstream.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sixsq.slipstream</groupId>
 				<artifactId>SlipStreamService</artifactId>
 				<version>${slipstream.version}</version>
 			</dependency>
