@@ -26,6 +26,8 @@ IMPORTANT: v2.2.0 requires data migration from v2.1.x. The following steps MUST 
 - Migrate to Hibernate 4.3.5
 - Fix checkbox not set correctly in edit mode for user
 - Enable c3p0 database connection pooling by default
+- Improve ergonomics of run dashboard
+- Fixed issue with the metering legend items ending with a parenthesis
 - Fix several minor bug
 
 Server: [Commits](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.1.16...SlipStreamServer-2.2.0)  
