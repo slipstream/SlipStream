@@ -6,7 +6,6 @@
 [UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.0...master)  
 [Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.0...master)  
 [Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.0...master)  
-[api-doc](https://github.com/slipstream/api-doc/compare/api-doc-2.2.0...master)  
 
 ## v2.2.0 - May 10th, 2014
 
@@ -32,13 +31,7 @@ IMPORTANT: v2.2.0 requires data migration from v2.1.x. The following steps MUST 
 - Fixed issue with the metering legend items ending with a parenthesis
 - Fix several minor bug
 
-Server: [Commits](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.1.16...SlipStreamServer-2.2.0)  
-UI: [Commits](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.1.16...SlipStreamUI-2.2.0)  
-Client: [Commits](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.1.16...SlipStreamClient-2.2.0)
-
-## v2.1.16 - May 3rd, 2014
-...
-
-Server: [Commits](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.1.15...SlipStreamServer-2.1.16)  
-UI: [Commits](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.1.16...SlipStreamUI-2.1.15)  
-Client: [Commits](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.1.16...SlipStreamClient-2.1.15)
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.1.16...SlipStreamServer-2.2.0)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.1.16...SlipStreamUI-2.2.0)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.1.16...SlipStreamClient-2.2.0)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.1.16...SlipStreamDocumentation-2.2.0)  
