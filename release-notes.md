@@ -36,5 +36,5 @@ Client: [Commits](https://github.com/slipstream/SlipStreamClient/compare/SlipStr
 ...
 
 Server: [Commits](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.1.15...SlipStreamServer-2.1.16)  
-UI: [Commits](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.1.16...SlipStreamUI-2.1.15)
+UI: [Commits](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.1.16...SlipStreamUI-2.1.15)  
 Client: [Commits](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.1.16...SlipStreamClient-2.1.15)
