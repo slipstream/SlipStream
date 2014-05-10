@@ -1,6 +1,6 @@
 # SlipStream
 
-Developed by SixSq, SlipStream(TM) is a multi-cloud coordinated
+Developed by SixSq, SlipStream is a multi-cloud coordinated
 provisioning and image factory engine. In other words, it is an
 engineering Platform as a Service (PaaS) solution to support
 production deployment in the cloud, as well as development, testing,
@@ -12,14 +12,14 @@ information.
 
 # Building
 
-SlipStream(TM) is written in Java, Clojure, JavaScript, XSLT and
-Python.  It uses Maven to build the software and the standard xUnit
+SlipStream is written in Java, Clojure, Python and JavaScript.
+It uses Maven to build the software and the standard xUnit
 suites for unit testing.
 
 ## Prerequisites
 
 You must have Java 1.7+ and Python 2.6+ (but not 3.0+) installed on
-your system.  You must also have Maven 2.2.1 or later installed. 
+your system.  You must also have Maven 3 installed. 
 
 The software should build without problems on any *nix-like
 environment (Linux, FreeBSD, Mac OS X, etc.).  However, the packages
@@ -30,16 +30,13 @@ will only be built on platforms supporting RPM.
 To build the entire system, clone the following GitHub repositories
 into a common directory:
 
-  * [SlipStreamParent](https://github.com/slipstream/SlipStreamParent)
+  * [SlipStream](https://github.com/slipstream/SlipStream)
   * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
   * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
   * [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
   * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
-  * SlipStreamServerDeps
-  * SlipStreamClient
-
-_The SlipStreamClient and SlipStreamServerDeps repositories are
-currently private._
+  * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
+  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
 
 ## Running Maven
 
@@ -83,7 +80,7 @@ mvn jetty:run-war -Dpersistence.unit=hsqldb-schema
 To start a separate hsqldb, run the following:
 
 ```
-$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.2.4/hsqldb-2.2.4.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
+$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
 ```
 
 # License
