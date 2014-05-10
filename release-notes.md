@@ -9,12 +9,16 @@
 
 ## v2.2.0 - May 10th, 2014
 
-IMPORTANT: v2.2.0 requires data migration from v2.1.x. The following steps MUST be followed:
+### Migration procedure
+
+**IMPORTANT: v2.2.0 requires data migration from v2.1.x. The following steps MUST be followed:**
  1. Stop SlipStream
  2. Stop HSQLDB (or your DB engine)
  3. Execute the SQL files located in /opt/slipstream/server/migrations
  4. Start HSQLDB (or your DB engine)
- 5. Start SlipStream
+ 5. Start SlipStream**
+
+### New features and bug fixes
 
 - Fixed performance issue under heavy load due to HashMap causing infinite loop
 - Wrapping parameters of Parameterized into ConcurrentHashMap
