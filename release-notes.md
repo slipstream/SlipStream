@@ -4,9 +4,9 @@
 
 [Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.0...master)  
 [UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.0...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.0...master)
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.0...master)
-[api-doc](https://github.com/slipstream/api-doc/compare/api-doc-2.2.0...master)
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.0...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.0...master)  
+[api-doc](https://github.com/slipstream/api-doc/compare/api-doc-2.2.0...master)  
 
 ## v2.2.0 - May 10th, 2014
 
