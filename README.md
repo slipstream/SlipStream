@@ -10,6 +10,10 @@ Service (IaaS) cloud environments.
 See the [SlipStream product page][slipstream-info] for more detailed
 information.
 
+# Release Notes
+
+Here are the [release notes](/release-notes.md).
+
 # Building
 
 SlipStream is written in Java, Clojure, Python and JavaScript.
