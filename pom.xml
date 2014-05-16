@@ -65,7 +65,6 @@
 		<libcloud.version>0.14.1</libcloud.version>
 		<boto.version>2.1.1</boto.version>
 
-		<version.jclouds>1.5.5</version.jclouds>
 	</properties>
 
 	<repositories>
@@ -591,27 +590,6 @@
 				<groupId>net.cgrand</groupId>
 				<artifactId>moustache</artifactId>
 				<version>1.1.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.jclouds</groupId>
-				<artifactId>jclouds-all</artifactId>
-				<version>${version.jclouds}</version>
-				<type>jar</type>
-			</dependency>
-
-			<dependency>
-				<groupId>org.jclouds.driver</groupId>
-				<artifactId>jclouds-slf4j</artifactId>
-				<version>${version.jclouds}</version>
-				<type>jar</type>
-			</dependency>
-
-			<dependency>
-				<groupId>org.jclouds.driver</groupId>
-				<artifactId>jclouds-sshj</artifactId>
-				<version>${version.jclouds}</version>
-				<type>jar</type>
 			</dependency>
 
 			<dependency>
