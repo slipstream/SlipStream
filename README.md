@@ -44,7 +44,7 @@ into a common directory:
 
 ## Running Maven
 
-To build the full system, descend into the SlipStreamParent
+To build the full system, descend into the SlipStream
 subdirectory and create the file `.slipstream-build-all`.  Then run:
 
 ```
