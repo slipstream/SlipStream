@@ -7,85 +7,123 @@ production deployment in the cloud, as well as development, testing,
 certification and deployment processes into Infrastructure as a
 Service (IaaS) cloud environments.
 
-See the [SlipStream product page][slipstream-info] for more detailed
-information.
+See the [SlipStream product page]( http://sixsq.com/products/slipstream.html)
+for more detailed information.
+
 
 # Release Notes
 
 Here are the [release notes](/release-notes.md).
 
-# Building
 
-SlipStream is written in Java, Clojure, Python and JavaScript.
-It uses Maven to build the software and the standard xUnit
+# Getting started 
+
+SlipStream is written in [Java], [Clojure], [Python] and [JavaScript].
+
+It uses [Maven] to build the software and the standard xUnit
 suites for unit testing.
+
+[Java]: https://www.java.com
+[Clojure]: http://clojure.org
+[Python]: https://www.python.org
+[JavaScript]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[Maven]: https://maven.apache.org/
+
 
 ## Prerequisites
 
-You must have Java 1.7+ and Python 2.6+ (but not 3.0+) installed on
-your system.  You must also have Maven 3 installed. 
+SlipStream has been tested and is working with the following versions:
+
+* Java 1.7+
+* Python 2.6+ (but not 3.0+)
+* Maven 3
 
 The software should build without problems on any *nix-like
 environment (Linux, FreeBSD, Mac OS X, etc.).  However, the packages
 will only be built on platforms supporting RPM.
 
-## Checkout
+
+## Getting the source code
 
 To build the entire system, clone the following GitHub repositories
 into a common directory:
 
-  * [SlipStream](https://github.com/slipstream/SlipStream)
-  * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
-  * [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
-  * [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
-  * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
-  * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
-  * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
-
-## Running Maven
-
-To build the full system, descend into the SlipStream
-subdirectory and create the file `.slipstream-build-all`.  Then run:
+* [SlipStream](https://github.com/slipstream/SlipStream) 
+* [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
+* [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
+* [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
+* [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
+* [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
+* [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
 
 ```
-$ mvn clean install
+$ for project in SlipStream SlipStreamDocumentation SlipStreamMta SlipStreamUI SlipStreamServer SlipStreamServerDeps SlipStreamClient; do git clone https://github.com/slipstream/$project; done
 ```
 
-You can also build each module individually, but you'll need to build
-them in the order in the above list.  Execute the same Maven command
-at the root of each cloned repository.
 
-# Testing
+## Installing dependencies
 
-Unit tests are executed as part of the build process, for both the
-client and the server.  Failures will cause the build process to
-abort. 
-
-# Running
-
-To run the SlipStream server directly from the local git repositories,
-you can drop into the `SlipStreamServer/war` module and run:
+We’re going to assume you're running OS X with [brew] already installed, otherwise you’re on your own.
 
 ```
-mvn jetty:run-war
+$ brew install cmake python maven
 ```
 
-The server will show up on the [local machine](http://localhost:8080). 
-
-By default, SlipStream runs with a in memory hsqldb instance. While this is
-great for unit testing, it's not ideal for end-to-end testing or simple deployment.
-
-To attach to an existing hsqldb instance, the following java options can be used:
+Install [foreman](https://ddollar.github.io/foreman/) (to run database and webserver processes):
 
 ```
-mvn jetty:run-war -Dpersistence.unit=hsqldb-schema
+$ gem install foreman
 ```
 
-To start a separate hsqldb, run the following:
+And finally let’s make sure we have [virtualenv](http://virtualenv.readthedocs.org)
+for our Python environment:
 
 ```
-$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
+$ pip install --upgrade virtualenv
 ```
+
+[brew]: http://brew.sh/
+
+
+## Configure the environment
+
+Create a Python environment:
+
+```
+# set cwd to repo root
+$ cd /path/to/slipstream
+
+# create a base environment
+$ virtualenv .venv
+
+# "activate" the environment, so python becomes localized
+$ source .venv/bin/activate
+```
+
+Bootstrap your environment:
+
+```
+# install basic dependencies
+$ make install
+```
+
+
+## Running the webserver
+
+Run the webserver and a persisted database:
+
+```
+$ make run
+```
+
+Now that the server’s running, visit
+[http://127.0.0.1:8000/](http://127.0.0.1:8000/) with your Web browser.
+
+The websever is configuraed so that any changes made into the SlipStreamUI
+assets (css, js) are reflected without reloading the process.
+
+Please note that the server process needs to build a WAR ran by
+Jetty behind the scenes, which can take some time.
 
 # License
 
@@ -103,6 +141,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
-
-
-[slipstream-info]: http://sixsq.com/products/slipstream.html
