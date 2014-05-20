@@ -91,7 +91,7 @@ Create a Python environment:
 
 ```
 # set cwd to repo root
-$ cd /path/to/slipstream
+$ cd /path/to/SlipStream
 
 # create a base environment
 $ virtualenv .venv
