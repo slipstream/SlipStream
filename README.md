@@ -66,7 +66,7 @@ $ for project in SlipStream SlipStreamDocumentation SlipStreamMta SlipStreamUI S
 We’re going to assume you're running OS X with [brew] already installed, otherwise you’re on your own.
 
 ```
-$ brew install cmake python maven
+$ brew install cmake coreutils python maven
 ```
 
 Install [foreman](https://ddollar.github.io/foreman/) (to run database and webserver processes):
@@ -105,6 +105,9 @@ Bootstrap your environment:
 ```
 # install basic dependencies
 $ make install
+
+# link client scripts
+$ [sudo] make link
 ```
 
 
