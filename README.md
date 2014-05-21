@@ -107,7 +107,7 @@ Bootstrap your environment:
 $ make install
 
 # link client scripts
-$ [sudo] make link
+$ make link
 ```
 
 
