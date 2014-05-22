@@ -111,9 +111,9 @@ $ make link
 ```
 
 
-## Running the webserver
+## Running the server
 
-Run the webserver and a persisted database:
+Run the server and a persisted database:
 
 ```
 $ make run
@@ -127,6 +127,17 @@ assets (css, js) are reflected without reloading the process.
 
 Please note that the server process needs to build a WAR ran by
 Jetty behind the scenes, which can take some time.
+
+# Configuring the server
+
+Once the server is running you need to configure a connector before
+trying to deploy a module. Out of the box, using the local connector
+is the easiest way to get started. To do so, navigate to the
+[server configuration page](http://localhost:8080/configuration) and
+define a cloud connector instance in the SlipStream Basics section:
+
+  dummy:com.sixsq.slipstream.connector.local.LocalConnector
+
 
 # License
 
