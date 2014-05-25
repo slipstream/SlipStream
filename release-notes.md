@@ -2,10 +2,47 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.0...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.0...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.0...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.0...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.1...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.1...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.1...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.1...master)  
+
+## v2.2.1 - May 26th, 2014
+
+### Migration procedure
+
+**IMPORTANT: v2.2.1 requires data migration from v2.2.0. The following steps MUST be followed:**
+ 1. Stop SlipStream
+ 2. Stop HSQLDB (or your DB engine)
+ 3. Execute the SQL files located in /opt/slipstream/server/migrations (file 005)
+ 4. Start HSQLDB (or your DB engine)
+ 5. Start SlipStream**
+
+### New features and bug fixes
+
+- Multi-thread bulk VM creation can be limited for clouds that can't cope
+- Added support for CloudStack Advanced Zones as a sub-connector
+- Fix issues related to API doc and xml processing
+- Made c3p0 optional (see jar-persistence/src/main/resources/META-INF/persistence.xml for details)
+- Add persistence support for MySQL and Postgres
+- Update the OpenStack connector to use the new OpenStack CLI
+- Update poms following SlipStreamParent -> SlipStream git repo rename
+- Upgrade c3p0 version
+- Now using Apache HTTP client connector unstead of default Restlet Client connector
+- Streamline log entries for asynchronous activity
+- Upgrade Restlet to v2.2.1
+- Metering update communicate via temporary file instead of stdin
+- Remove StratusLab from default configuration
+- Fix strange orm issue with JPA 2.0
+- A few more minor bug fixes
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.0...SlipStreamServer-2.2.1)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.0...SlipStreamUI-2.2.1)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.0...SlipStreamClient-2.2.1)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.0...SlipStreamDocumentation-2.2.1)  
+
 
 ## v2.2.0 - May 10th, 2014
 
@@ -14,7 +51,7 @@
 **IMPORTANT: v2.2.0 requires data migration from v2.1.x. The following steps MUST be followed:**
  1. Stop SlipStream
  2. Stop HSQLDB (or your DB engine)
- 3. Execute the SQL files located in /opt/slipstream/server/migrations
+ 3. Execute the SQL files located in /opt/slipstream/server/migrations (files 001..004)
  4. Start HSQLDB (or your DB engine)
  5. Start SlipStream**
 
