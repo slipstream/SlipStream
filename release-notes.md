@@ -2,10 +2,25 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.1...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.1...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.1...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.1...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.2...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.2...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.2...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.2...master)  
+
+## v2.2.2 - May 27th, 2014
+
+### New features and bug fixes
+
+- Updated CloudStack connector to use the new TasksRunner when terminating instances
+- Force draw on usage panel, since now default section
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.1...SlipStreamServer-2.2.2)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.1...SlipStreamUI-2.2.2)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.1...SlipStreamClient-2.2.2)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.1...SlipStreamDocumentation-2.2.2)  
+
 
 ## v2.2.1 - May 26th, 2014
 
