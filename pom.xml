@@ -525,6 +525,18 @@
 			</dependency>
 
 			<dependency>
+				<groupId>net.sf.flexjson</groupId>
+				<artifactId>flexjson</artifactId>
+				<version>3.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20140107</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest-all</artifactId>
 				<version>1.1</version>
