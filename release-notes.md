@@ -7,6 +7,27 @@
 [Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.2...master)  
 [Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.2...master)  
 
+## v2.2.3 - June 2nd, 2014
+
+### New features and bug fixes
+
+- Improved error handling of CloudStack connector
+- Fixed a bug with SSH (paramiko)
+- Updated RPM packaging of SlipStream client
+- Updated xFilesFactor of graphite.  For local update run the following 
+```bash
+for f in $(find /var/lib/carbon/whisper/slipstream/ -name *.wsp); do whisper-resize $f --xFilesFactor=0 --aggregationMethod=max 10s:6h 1m:7d 10m:5y; done
+```
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.1...SlipStreamServer-2.2.2)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.1...SlipStreamUI-2.2.2)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.1...SlipStreamClient-2.2.2)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.1...SlipStreamDocumentation-2.2.2)  
+
+
+
 ## v2.2.2 - May 27th, 2014
 
 ### New features and bug fixes
