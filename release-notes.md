@@ -2,10 +2,42 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.2...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.2...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.2...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.2...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.4...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.4...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.4...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.4...master)  
+
+
+## v2.2.4 - June 13th, 2014
+
+### Migration procedure
+
+**IMPORTANT: v2.2.4 requires data migration from v2.2.3. The following steps MUST be followed:**
+ 1. Stop SlipStream
+ 2. Stop HSQLDB (or your DB engine)
+ 3. Execute the SQL files located in /opt/slipstream/server/migrations (file 006)
+ 4. Start HSQLDB (or your DB engine)
+ 5. Start SlipStream**
+
+### New features and bug fixes
+
+- New State Machine.
+- New logic for the garbage collector.
+- Auto-discovery of connectors.
+- Fixed a bug where module parameters disappear of the old version when a new version is saved.
+- Improved some RuntimeParameters.
+- Fixed a bug where SSH login with keys doesn't work on images with SELinux enabled.
+- Improved messages displayed during a Build.
+- Added target script termination when abort flag is raised.
+- Improved the detection of VMs not killed in a final state.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.3...SlipStreamServer-2.2.4)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.3...SlipStreamUI-2.2.4)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.3...SlipStreamClient-2.2.4)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.3...SlipStreamDocumentation-2.2.4)  
+
 
 ## v2.2.3 - June 2nd, 2014
 
