@@ -15,9 +15,14 @@
 **IMPORTANT: v2.2.4 requires data migration from v2.2.3. The following steps MUST be followed:**
  1. Stop SlipStream
  2. Stop HSQLDB (or your DB engine)
- 3. Execute the SQL files located in /opt/slipstream/server/migrations (file 006)
+ 3. Execute the SQL files located in /opt/slipstream/server/migrations (file 006) 
  4. Start HSQLDB (or your DB engine)
  5. Start SlipStream**
+
+Example command to execute the migration script:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --debug --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/006_run_states_fix.sql
+```
 
 ### New features and bug fixes
 
