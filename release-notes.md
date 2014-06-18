@@ -2,10 +2,31 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.4...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.4...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.4...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.4...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.5...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.5...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.5...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.5...master)  
+
+
+## v2.2.5 - June 18th, 2014
+
+### New features and bug fixes
+
+- Some UI improvements related to the new state machine.
+- In the UI when a Run page is loaded the delay of 10 seconds before the first update of the overview section was removed.
+- Added the ability for privileged users to see the vmstate in the Runs of other users.
+- Improved the migration of the garbage collector.
+- Improved the logging and the error handling of describeInstance.
+- Fixed an HTTP 500 when there is no user-agent in the request.
+- Fixed a bug where when you try to build an image, run a deployment or run an image, the latest version is always used even if you were not on the latest version when creating the Run.
+
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.4...SlipStreamServer-2.2.5)
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.4...SlipStreamUI-2.2.5)
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.4...SlipStreamClient-2.2.5)
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.4...SlipStreamDocumentation-2.2.5)
 
 
 ## v2.2.4 - June 13th, 2014
