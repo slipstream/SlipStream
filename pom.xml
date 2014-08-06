@@ -65,6 +65,11 @@
 		<libcloud.version>0.14.1</libcloud.version>
 		<boto.version>2.1.1</boto.version>
 
+		<!-- Provide default value to avoid the need for an explicit   -->
+		<!-- command line option.  This value will still be overridden -->
+		<!-- by the command line option value when used, e.g. in the   -->
+		<!-- continuous integration system.                            -->
+		<BUILD_NUMBER>0</BUILD_NUMBER>
 	</properties>
 
 	<repositories>
