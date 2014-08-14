@@ -2,13 +2,13 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.6...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.6...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.6...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.6...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.0...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.0...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.0...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.0...master)  
 
 
-## v2.2.6 - August 14th, 2014
+## v2.3.0 - August 14th, 2014
 
 ### New features and bug fixes
 
@@ -27,10 +27,10 @@ No DB migration (from v2.2.5) is required.
 
 ### Commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.5...SlipStreamServer-2.2.6)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.5...SlipStreamUI-2.2.6)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.5...SlipStreamClient-2.2.6)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.5...SlipStreamDocumentation-2.2.6)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.2.5...SlipStreamServer-2.3.0)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.2.5...SlipStreamUI-2.3.0)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.2.5...SlipStreamClient-2.3.0)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.2.5...SlipStreamDocumentation-2.3.0)  
 
 
 ## v2.2.5 - June 18th, 2014
