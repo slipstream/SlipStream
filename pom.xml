@@ -591,6 +591,13 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.taoensso</groupId>
+				<artifactId>tower</artifactId>
+				<version>2.1.0-RC2</version>
+			</dependency>
+
+
+			<dependency>
 				<groupId>expectations</groupId>
 				<artifactId>expectations</artifactId>
 				<version>2.0.6</version>
