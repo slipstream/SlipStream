@@ -50,7 +50,6 @@ into a common directory:
 
 * [SlipStream](https://github.com/slipstream/SlipStream) 
 * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
-* [SlipStreamMta](https://github.com/slipstream/SlipStreamMta)
 * [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
 * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
 * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
@@ -74,7 +73,6 @@ update_ss_repo(){
 
 update_ss_repo "SlipStream"
 update_ss_repo "SlipStreamDocumentation"
-update_ss_repo "SlipStreamMta"
 update_ss_repo "SlipStreamUI"
 update_ss_repo "SlipStreamServer"
 update_ss_repo "SlipStreamServerDeps"
