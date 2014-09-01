@@ -28,6 +28,7 @@
 				<module>../SlipStreamServer</module>
 				<module>../SlipStreamServerDeps</module>
 				<module>../SlipStreamClient</module>
+				<module>../SlipStreamConnectors</module>
 			</modules>
 		</profile>
 	</profiles>
