@@ -28,6 +28,7 @@
 				<module>../SlipStreamServer</module>
 				<module>../SlipStreamServerDeps</module>
 				<module>../SlipStreamClient</module>
+				<module>../SlipStreamConnector-Occi</module>
 				<module>../SlipStreamConnectors</module>
 			</modules>
 		</profile>
@@ -46,6 +47,7 @@
 		<slipstream.war.web-inf.lib.dir>${installation.dir}/webapps/slipstream.war/WEB-INF/lib</slipstream.war.web-inf.lib.dir>
 
 		<jetty.version>9.0.6.v20130930</jetty.version>
+		<jetty.connector.dir>${installation.dir}/lib/connectors</jetty.connector.dir>
 		<jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
 
 		<package.os>el6</package.os>
