@@ -176,9 +176,9 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</developerConnection>
-		<url>https://github.com/slipstream/SlipStreamParent</url>
+		<connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
+		<url>https://github.com/slipstream/SlipStream</url>
 		<tag>HEAD</tag>
 	</scm>
 
