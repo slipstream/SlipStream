@@ -30,12 +30,15 @@
 				<module>../SlipStreamClient</module>
 				<module>../SlipStreamConnector-Occi</module>
 				<module>../SlipStreamConnectors</module>
+				<module>../SlipStreamConnector-EC2</module>
+				<module>../SlipStreamConnector-CloudSigma</module>
+				<module>../SlipStreamConnector-vCloud</module>
 			</modules>
 		</profile>
 	</profiles>
 
 	<properties>
-		<slipstream.version>2.3.2-SNAPSHOT</slipstream.version>
+		<slipstream.version>2.3.3-SNAPSHOT</slipstream.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
