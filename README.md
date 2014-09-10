@@ -27,6 +27,15 @@ suites for unit testing.
 [JavaScript]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 [Maven]: https://maven.apache.org/
 
+This quick guide will help you setup a local development environment. For
+more indepth knowledge, including how to deploy a production environment,
+we invite you to have a look at the
+[documentation](https://slipstream.sixsq.com/documentation).
+We find particularly useful the [User Guide and Tutorial](https://slipstream.sixsq.com/html/tutorial.html)
+and [Administrator Manual](https://slipstream.sixsq.com/html/administrator-manual.html).
+
+You can also check our up-coming [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
+) for tutorials, feature demonstrations and tip & tricks.
 
 ## Prerequisites
 
@@ -195,6 +204,13 @@ add the cloud ids to the native images (e.g. Ubuntu, CentOS) you just create.
 
 That's it!!
 
+To learn more, we invite you to have a look at the
+[documentation](https://slipstream.sixsq.com/documentation).
+We find particularly useful the [User Guide and Tutorial](https://slipstream.sixsq.com/html/tutorial.html)
+and [Administrator Manual](https://slipstream.sixsq.com/html/administrator-manual.html).
+
+You can also check our up-coming [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
+) for tutorials, feature demonstrations and tip & tricks.
 
 
 # License
