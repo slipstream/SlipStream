@@ -54,7 +54,8 @@ will only be built on platforms supporting RPM.
 ## Getting the source code
 
 To build the entire system, clone the following GitHub repositories
-into a common directory:
+into a common directory. The following will pull the master (bleeding edge).
+You might want to pull a release tag to be on the safe side:
 
 * [SlipStream](https://github.com/slipstream/SlipStream) 
 * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
