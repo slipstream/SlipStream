@@ -153,7 +153,13 @@ You can also change the database backend connection using the `persistence.unit`
 example:
 
 ```
--Dpersistence.unit=hsqldb-schema
+-Dpersistence.unit=mysql-schema
+```
+
+or
+
+```
+-Dpersistence.unit=postgres-schema
 ```
 
 # Configuring the server
