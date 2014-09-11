@@ -111,6 +111,7 @@ urlid slipstream
 url jdbc:hsqldb:hsql://localhost/slipstream
 username SA
 password
+EOF
 ```
 
 # Run SlipStream
@@ -133,7 +134,7 @@ $ mvn jetty:run-war
 Now that the server’s running, visit
 [http://localhost:8080/](http://localhost:8080/) with your Web browser.
 
-As you can see, we run SlipStream as a WAR behind Jetty.
+As you can see, we run SlipStream as a war behind Jetty.
 
 During development, especially when working on the UI with css and js files,
 to avoid the war building round trip, you can start the server pointing to
@@ -143,15 +144,12 @@ source static location as following:
 $ mvn jetty:run-war -Dstatic.content.location=file:../../SlipStreamUI/src/slipstream/ui/views 
 ```
 
-The websever is configuraed so that any changes made into the SlipStreamUI
-assets (css, js) are reflected in the browser, without having to re-build
-the war file.
+You can also change the database backend connection using the `persistence.unit`. For
+example:
 
-You can also change the database backend connection using the
-
-  -Dpersistence.unit=hsqldb-schema
-
-parameter.
+```
+-Dpersistence.unit=hsqldb-schema
+```
 
 # Configuring the server
 
@@ -163,7 +161,9 @@ is the easiest way to get started. To do so, navigate to the
 [server configuration page](http://localhost:8080/configuration) and
 define a cloud connector instance in the SlipStream Basics section:
 
-  dummy:com.sixsq.slipstream.connector.local.LocalConnector
+```
+dummy:com.sixsq.slipstream.connector.local.LocalConnector
+```
 
 For other cloud connector configuration, check our [blog](http://sixsq.com/blog/index.html).
 
