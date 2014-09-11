@@ -24,15 +24,12 @@
 			</activation>
 			<modules>
 				<module>../SlipStreamDocumentation</module>
+				<module>../SlipStreamDocumentationAPI</module>
 				<module>../SlipStreamUI</module>
 				<module>../SlipStreamServer</module>
 				<module>../SlipStreamServerDeps</module>
 				<module>../SlipStreamClient</module>
-				<module>../SlipStreamConnector-Occi</module>
 				<module>../SlipStreamConnectors</module>
-				<module>../SlipStreamConnector-EC2</module>
-				<module>../SlipStreamConnector-CloudSigma</module>
-				<module>../SlipStreamConnector-vCloud</module>
 			</modules>
 		</profile>
 	</profiles>

@@ -53,22 +53,27 @@ will only be built on platforms supporting RPM.
 
 ## Getting the source code
 
-To build the entire system, clone the following GitHub repositories
-into a common directory. The following will pull the master (bleeding edge).
-You might want to pull a release tag to be on the safe side:
+To build the entire system, you need the following GitHub repositories
+into a common directory.
 
 * [SlipStream](https://github.com/slipstream/SlipStream) 
 * [SlipStreamDocumentation](https://github.com/slipstream/SlipStreamDocumentation)
+* [SlipStreamDocumentationAPI](https://github.com/slipstream/SlipStreamDocumentationAPI)
 * [SlipStreamUI](https://github.com/slipstream/SlipStreamUI)
 * [SlipStreamServer](https://github.com/slipstream/SlipStreamServer)
 * [SlipStreamServerDeps](https://github.com/slipstream/SlipStreamServerDeps)
 * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
 * [SlipStreamConnectors](https://github.com/slipstream/SlipStreamConnectors)
 
+First, clone the SlipStream parent repository and execute the git-pull.sh
+script:
 ```
-$ ./git-pull.sh
+$ git clone git@github.com:slipstream/SlipStream.git
+$ SlipStream/git-pull.sh
 ```
 
+Note: the above instructions will pull the master (bleeding edge). To be on the safe
+side, you can change the script to pull a specific release tag.
 
 ## Installing dependencies
 

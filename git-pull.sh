@@ -13,8 +13,8 @@ update_ss_repo(){
   echo
 }
 
-update_ss_repo "SlipStream"
 update_ss_repo "SlipStreamDocumentation"
+update_ss_repo "SlipStreamDocumentationAPI"
 update_ss_repo "SlipStreamUI"
 update_ss_repo "SlipStreamServer"
 update_ss_repo "SlipStreamServerDeps"
