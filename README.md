@@ -80,9 +80,10 @@ side, you can change the script to pull a specific release tag.
 We’re going to assume you're running OS X with [brew] and [easy_install] already installed, otherwise you can probably find equivalent packages on other *nix OSs. Windows is harder, but if you succeed, feel free to contribute the recipe :-)
 
 ```
-$ brew install maven
+$ brew install maven pandoc
 $ sudo easy_install pip
-$ pip install nose coverage paramiko
+$ sudo pip install nose coverage paramiko mock pylint
+$ export LC_CTYPE="en_US.UTF-8"
 ```
 
 [brew]: http://brew.sh/
