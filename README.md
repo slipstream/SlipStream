@@ -112,7 +112,7 @@ contains a number of other databases, including MySQL and PostgreSQL. But feel f
 Create an HSQLDB definition file:
 
 ```
-$ cat < ~/sqltool.rc << EOF
+$ cat > ~/sqltool.rc << EOF
 urlid slipstream
 url jdbc:hsqldb:hsql://localhost/slipstream
 username SA
@@ -125,7 +125,7 @@ EOF
 ## Run the database
 
 ```
-$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream
+$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
 ```
 
 ## Running the server
@@ -136,6 +136,8 @@ Run the server:
 $ cd ../SlipStreamServer/war
 $ mvn jetty:run-war
 ```
+
+If the last command return an error like `JettyRunWarMojo : Unsupported major.minor version 51.0` please have a look here: [Configuring Maven to use Java 7 on Mac OS X](http://www.jayway.com/2013/03/08/configuring-maven-to-use-java-7-on-mac-os-x/).
 
 Now that the server’s running, visit
 [http://localhost:8080/](http://localhost:8080/) with your Web browser.
