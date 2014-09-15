@@ -5,7 +5,7 @@
 	<groupId>com.sixsq.slipstream</groupId>
 	<artifactId>SlipStream</artifactId>
 	<packaging>pom</packaging>
-	<version>2.3.1-SNAPSHOT</version>
+	<version>2.3.4-SNAPSHOT</version>
 	<name>SlipStream</name>
 	<url>http://sixsq.com/</url>
 
@@ -24,16 +24,18 @@
 			</activation>
 			<modules>
 				<module>../SlipStreamDocumentation</module>
+				<module>../SlipStreamDocumentationAPI</module>
 				<module>../SlipStreamUI</module>
 				<module>../SlipStreamServer</module>
 				<module>../SlipStreamServerDeps</module>
 				<module>../SlipStreamClient</module>
+				<module>../SlipStreamConnectors</module>
 			</modules>
 		</profile>
 	</profiles>
 
 	<properties>
-		<slipstream.version>2.3.1-SNAPSHOT</slipstream.version>
+		<slipstream.version>2.3.4-SNAPSHOT</slipstream.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
@@ -45,6 +47,7 @@
 		<slipstream.war.web-inf.lib.dir>${installation.dir}/webapps/slipstream.war/WEB-INF/lib</slipstream.war.web-inf.lib.dir>
 
 		<jetty.version>9.0.6.v20130930</jetty.version>
+		<jetty.connector.dir>${installation.dir}/lib/connectors</jetty.connector.dir>
 		<jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
 
 		<package.os>el6</package.os>
@@ -170,9 +173,9 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStreamParent.git</developerConnection>
-		<url>https://github.com/slipstream/SlipStreamParent</url>
+		<connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
+		<url>https://github.com/slipstream/SlipStream</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -192,12 +195,12 @@
 				<plugin>
 					<groupId>com.theoryinpractise</groupId>
 					<artifactId>clojure-maven-plugin</artifactId>
-					<version>1.3.20</version>
+					<version>1.3.23</version>
 				</plugin>
 				<plugin>
 					<groupId>eu.somatik.serviceloader-maven-plugin</groupId>
 					<artifactId>serviceloader-maven-plugin</artifactId>
-					<version>1.0.2</version>
+					<version>1.0.3</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-release-plugin</artifactId>
@@ -218,12 +221,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-report-plugin</artifactId>
-					<version>2.16</version>
+					<version>2.17</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.7</version>
+					<version>2.8.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -233,17 +236,17 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.5.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
+					<version>3.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -258,12 +261,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.16</version>
+					<version>2.17</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -273,7 +276,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>license-maven-plugin</artifactId>
-					<version>1.5</version>
+					<version>1.7</version>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.jetty</groupId>
@@ -293,13 +296,13 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<version>1.2.1</version>
+					<version>1.3.2</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
-					<version>1.2</version>
+					<version>1.3</version>
 				</plugin>
 
 				<plugin>
@@ -568,8 +571,14 @@
 						
 			<dependency>
 				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.7</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-jdk14</artifactId>
-				<version>1.4.2</version>
+				<version>1.7.7</version>
 			</dependency>
 
 			<dependency>
