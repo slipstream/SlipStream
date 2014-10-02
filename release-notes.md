@@ -2,10 +2,52 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.0...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.0...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.0...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.0...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.4...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.4...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.4...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.4...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.4...master)  
+
+
+## v2.3.4 - October 3rd, 2014
+
+### Migration procedure
+
+**IMPORTANT: v2.3.4 requires data migration from v2.3.0. The following steps MUST be followed:**
+ 1. Stop SlipStream
+ 2. Stop HSQLDB (or your DB engine)
+ 3. Execute the following SQL files located in /opt/slipstream/server/migrations:
+  * 008_runtimeparameter_new_name_column.sql
+  * 009_embedded_authz_in_module.sql
+ 4. Start HSQLDB (or your DB engine)
+ 5. Start SlipStream**
+
+Example command to execute the migration script:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --debug --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/008_runtimeparameter_new_name_column.sql
+```
+
+### New features and bug fixes
+
+- Database performance improvement.
+- Added support of mutable Run in ss-execute.
+- All server-side connectors are now extracted in individual packages.
+- Added per-connector config files.
+- Improved XML importation.
+- Improved error reporting from SlipStream Clients to the SlipStream Server.
+- Increase the maximal size of runtime parameter values to 4096 bytes.
+- Fixed a bug which prevent to get the runtimeparameters 'ids' and 'multiplicity' with ss-get.
+- Fixed a bug where a failure in a deployment script might not be detected.
+- Fixed a bug where deployment refuse to start if the cloudservice is set to 'default'.
+- Fixed a bug of circular reference in modules.
+- Updated the documentation.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.0...SlipStreamServer-2.3.4)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.0...SlipStreamUI-2.3.4)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.0...SlipStreamClient-2.3.4)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.0...SlipStreamDocumentation-2.3.4)  
 
 
 ## v2.3.0 - August 14th, 2014
@@ -61,7 +103,7 @@ No DB migration (from v2.2.5) is required.
 **IMPORTANT: v2.2.4 requires data migration from v2.2.3. The following steps MUST be followed:**
  1. Stop SlipStream
  2. Stop HSQLDB (or your DB engine)
- 3. Execute the SQL files located in /opt/slipstream/server/migrations (file 006) 
+ 3. Execute the SQL files located in /opt/slipstream/server/migrations (files 006 and 007) 
  4. Start HSQLDB (or your DB engine)
  5. Start SlipStream**
 
