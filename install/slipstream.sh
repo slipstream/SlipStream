@@ -39,6 +39,7 @@ PYPI_SCPCLIENT_VER=0.4
 
 ### Advanced parameters
 CONFIGURE_FIREWALL=true
+SLIPSTREAM_EXAMPLES=true
 
 SLIPSTREAM_SERVER_HOME=/opt/slipstream/server
 
