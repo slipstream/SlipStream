@@ -203,11 +203,13 @@ To learn more, we invite you to have a look at the
 We find particularly useful the [User Guide and Tutorial](https://slipstream.sixsq.com/html/tutorial.html)
 and [Administrator Manual](https://slipstream.sixsq.com/html/administrator-manual.html).
 
-You can also check our up-coming [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
+You can also check [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
 ) for tutorials, feature demonstrations and tip & tricks.
 
 
-# License
+# License and copyright
+
+Copyright (C) 2014 SixSq Sarl (sixsq.com)
 
 The code in the public repositories is licensed under the Apache
 license.
