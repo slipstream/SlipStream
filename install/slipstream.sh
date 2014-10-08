@@ -23,7 +23,8 @@ echo SS_HOSTNAME=$SS_HOSTNAME
 
 # Type of repository to lookup for SlipStream packages. 'Releases' will install
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
-SS_REPO_KIND=Releases
+#SS_REPO_KIND=Releases
+SS_REPO_KIND=Snapshots
 echo SS_REPO_KIND=$SS_REPO_KIND
 
 # libcloud
