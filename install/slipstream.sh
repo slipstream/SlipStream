@@ -204,6 +204,7 @@ function deploy_nginx_proxy() {
 
     # Install nginx and the configuratoin file for SlipStream
     yum install -y slipstream-server-nginx-conf
+    service nginx start || true
 
 }
 
