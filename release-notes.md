@@ -22,9 +22,14 @@
  4. Start HSQLDB (or your DB engine)
  5. Start SlipStream**
 
+Command to stop HSQLDB:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --sql 'SHUTDOWN;' slipstream
+```
+
 Example command to execute the migration script:
 ```
-java -jar /opt/hsqldb/lib/sqltool.jar --debug --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/008_runtimeparameter_new_name_column.sql
+java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/008_runtimeparameter_new_name_column.sql
 ```
 
 ### New features and bug fixes
