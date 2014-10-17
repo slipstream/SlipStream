@@ -2,9 +2,6 @@
 #
 # SlipStream 2.3 PROD installation recipe
 
-
-# NB! THIS SCRIPT CONTAINS A HACK see at the bottom
-
 # Fail fast and fail hard.
 set -e
 set -o pipefail
@@ -66,7 +63,8 @@ function _get_hostname() {
 # First "global" IPv4 address
 SS_HOSTNAME=$(_get_hostname)
 [ -z "${SS_HOSTNAME}" ] && \
-    abort "Could not determinee IP or hostname of the public interface SlipStream will running on."
+    abort "Could not determinee IP or hostname of the public interface 
+SlipStream will running on."
 
 # libcloud
 CLOUD_CLIENT_LIBCLOUD_VERSION=0.14.1
@@ -168,7 +166,8 @@ function _disable_selinux() {
     _print "- disabling selinux"
 
     echo 0 > /selinux/enforce
-    sed -i -e 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux /etc/selinux/config
+    sed -i -e 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux \
+        /etc/selinux/config
 }
 
 function prepare_node () {
@@ -217,7 +216,8 @@ function deploy_slipstream_client () {
     pip install -Iv scpclient==$PYPI_SCPCLIENT_VER
 
     # winrm
-    pip install https://github.com/diyan/pywinrm/archive/a2e7ecf95cf44535e33b05e0c9541aeb76e23597.zip
+    winrm_pkg=a2e7ecf95cf44535e33b05e0c9541aeb76e23597.zip
+    pip install https://github.com/diyan/pywinrm/archive/${winrm_pkg}
 
     yum install -y --enablerepo=epel slipstream-client
 }
@@ -248,9 +248,11 @@ function update_slipstream_configuration() {
            -e "/^[a-z]/ s/example.com/${SS_HOSTNAME}/" \
            $SLIPSTREAM_CONF
 
-    _update_or_add_config_property slipstream.base.url https://${SS_HOSTNAME}/
-    _update_or_add_config_property cloud.connector.orchestrator.publicsshkey /opt/slipstream/server/.ssh/id_rsa.pub
-    _update_or_add_config_property cloud.connector.orchestrator.privatesshkey /opt/slipstream/server/.ssh/id_rsa
+    _update_or_add_config_property slipstream.base.url https://${SS_HOSTNAME}
+    _update_or_add_config_property cloud.connector.orchestrator.publicsshkey \
+        /opt/slipstream/server/.ssh/id_rsa.pub
+    _update_or_add_config_property cloud.connector.orchestrator.privatesshkey \
+        /opt/slipstream/server/.ssh/id_rsa
 
 }
 
