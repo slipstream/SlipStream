@@ -32,10 +32,12 @@ class Pom(object):
                 newLines.append(self._replaceIfFound(project_version_re, line))
             else:
                 newLines.append(line)
-                if not foundParent and '<parent>' in line:
-                    foundParent = True
-                if foundParent and '</parent>' in line:
-                    foundParent = False
+                
+            if not foundParent and '<parent>' in line:
+                foundParent = True
+            if foundParent and '</parent>' in line:
+                foundParent = False
+            
         return newLines
 
     def _process_slipstream_version(self, fileHandler):
