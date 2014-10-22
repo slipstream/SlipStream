@@ -24,7 +24,7 @@
 
 Command to stop HSQLDB:
 ```
-java -jar /opt/hsqldb/lib/sqltool.jar --sql 'SHUTDOWN;' slipstream
+java -jar /opt/hsqldb/lib/sqltool.jar --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/slipstream,user=sa,password= --sql 'SHUTDOWN;' 
 ```
 
 Example command to execute the migration script:
