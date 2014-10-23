@@ -2,11 +2,34 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.4...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.4...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.4...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.4...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.4...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.5...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.5...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.5...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.5...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.5...master)  
+
+
+## v2.3.5 - October 23th, 2014
+
+### New features and bug fixes
+
+- Removed autocreation of the users test and sixsq.
+- Improvement of the logging.
+- Fixed a bug where the ownership of a module can be changed implicitly when editing the module (#14).
+- Fixed a bug in the orchestrator that can generate a error in a mutable run (#15).
+- Fixed a bug in the StratusLab connector that prevent to Run an Image with an extra disk (#16).
+- Fixed a bug in the vCloud connector that prevent it to work with SlipStream v2.3.4+ (#17).
+
+### Migration
+
+No DB migration (from v2.3.4) is required.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.4...SlipStreamServer-2.3.5)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.4...SlipStreamUI-2.3.5)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.4...SlipStreamClient-2.3.5)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.4...SlipStreamDocumentation-2.3.5)  
 
 
 ## v2.3.4 - October 3rd, 2014
