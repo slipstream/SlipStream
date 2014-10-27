@@ -19,6 +19,7 @@
 - Fixed a bug in the orchestrator that can generate a error in a mutable run (#15).
 - Fixed a bug in the StratusLab connector that prevent to Run an Image with an extra disk (#16).
 - Fixed a bug in the vCloud connector that prevent it to work with SlipStream v2.3.4+ (#17).
+- Added support for building an image with ss-execute.
 
 ### Migration
 
