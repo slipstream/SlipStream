@@ -5,7 +5,7 @@
 	<groupId>com.sixsq.slipstream</groupId>
 	<artifactId>SlipStream</artifactId>
 	<packaging>pom</packaging>
-	<version>2.3.5-SNAPSHOT</version>
+	<version>2.3.5</version>
 	<name>SlipStream</name>
 	<url>http://sixsq.com/</url>
 
@@ -175,7 +175,7 @@
 		<connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
 		<url>https://github.com/slipstream/SlipStream</url>
-		<tag>HEAD</tag>
+		<tag>SlipStream-2.3.5</tag>
 	</scm>
 
 	<build>
