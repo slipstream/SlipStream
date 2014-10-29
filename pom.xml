@@ -34,7 +34,7 @@
 	</profiles>
 
 	<properties>
-		<slipstream.version>2.3.6</slipstream.version>
+		<slipstream.version>2.3.7-SNAPSHOT</slipstream.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
