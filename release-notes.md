@@ -2,11 +2,55 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.4...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.4...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.4...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.4...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.4...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.6...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.6...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.6...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.6...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.6...master)  
+
+
+## v2.3.6 - October 29th, 2014
+
+### New features and bug fixes
+
+- Removed all usage of the deprecated SSLv3
+- Prefer the usage of TLSv1 for secure communications.
+- Bug fixes
+
+### Migration
+
+No DB migration (from v2.3.5) is required.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.5...SlipStreamServer-2.3.6)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.5...SlipStreamUI-2.3.6)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.5...SlipStreamClient-2.3.6)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.5...SlipStreamDocumentation-2.3.6)  
+
+
+## v2.3.5 - October 23th, 2014
+
+### New features and bug fixes
+
+- Removed autocreation of the users test and sixsq.
+- Improvement of the logging.
+- Fixed a bug where the ownership of a module can be changed implicitly when editing the module (#14).
+- Fixed a bug in the orchestrator that can generate a error in a mutable run (#15).
+- Fixed a bug in the StratusLab connector that prevent to Run an Image with an extra disk (#16).
+- Fixed a bug in the vCloud connector that prevent it to work with SlipStream v2.3.4+ (#17).
+- Added support for building an image with ss-execute.
+
+### Migration
+
+No DB migration (from v2.3.4) is required.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.4...SlipStreamServer-2.3.5)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.4...SlipStreamUI-2.3.5)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.4...SlipStreamClient-2.3.5)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.4...SlipStreamDocumentation-2.3.5)  
 
 
 ## v2.3.4 - October 3rd, 2014
@@ -22,9 +66,14 @@
  4. Start HSQLDB (or your DB engine)
  5. Start SlipStream**
 
+Command to stop HSQLDB:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/slipstream,user=sa,password= --sql 'SHUTDOWN;' 
+```
+
 Example command to execute the migration script:
 ```
-java -jar /opt/hsqldb/lib/sqltool.jar --debug --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/008_runtimeparameter_new_name_column.sql
+java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/008_runtimeparameter_new_name_column.sql
 ```
 
 ### New features and bug fixes

@@ -5,7 +5,7 @@
 	<groupId>com.sixsq.slipstream</groupId>
 	<artifactId>SlipStream</artifactId>
 	<packaging>pom</packaging>
-	<version>2.3.5-SNAPSHOT</version>
+	<version>2.3.7-SNAPSHOT</version>
 	<name>SlipStream</name>
 	<url>http://sixsq.com/</url>
 
@@ -34,7 +34,7 @@
 	</profiles>
 
 	<properties>
-		<slipstream.version>2.3.5-SNAPSHOT</slipstream.version>
+		<slipstream.version>2.3.7-SNAPSHOT</slipstream.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
@@ -203,7 +203,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.1</version>
+					<version>2.5</version>
 					<configuration>
 						<preparationGoals>clean install</preparationGoals>
 					</configuration>
@@ -290,7 +290,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
-					<version>2.5.3</version>
+					<version>2.5.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -453,6 +453,12 @@
 				<groupId>org.clojars.nathell</groupId>
 				<artifactId>tagsoup</artifactId>
 				<version>1.2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>clj-json</groupId>
+				<artifactId>clj-json</artifactId>
+				<version>0.5.3</version>
 			</dependency>
 
 			<dependency>
