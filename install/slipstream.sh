@@ -63,7 +63,7 @@ function _get_hostname() {
 # First "global" IPv4 address
 SS_HOSTNAME=$(_get_hostname)
 [ -z "${SS_HOSTNAME}" ] && \
-    abort "Could not determinee IP or hostname of the public interface 
+    abort "Could not determinee IP or hostname of the public interface
 SlipStream will running on."
 
 # libcloud
@@ -267,7 +267,7 @@ function _update_or_add_config_property() {
 
 function _deploy_nginx_proxy() {
 
-    _print "- install nginx and nginx configuration for SlipStream" 
+    _print "- install nginx and nginx configuration for SlipStream"
 
     # Install nginx and the configuratoin file for SlipStream
     yum install -y slipstream-server-nginx-conf
@@ -286,7 +286,7 @@ function _load_slipstream_examples() {
 
 function _deploy_cloud_connectors() {
      _print "- installing SlipStream connectors"
-     #yum -y install slipstream-connector* 
+     #yum -y install slipstream-connector*
      _print "---> WARNING: Skipped installation of SlipStream connectors."
 }
 
@@ -305,9 +305,9 @@ deploy_slipstream_client
 deploy_slipstream_server
 cleanup
 
-_print "SlipStream server installed and accessble at https://$SS_HOSTNAME"
-_print "Please see Configuration section of the SlipStream administrator 
-manual for the next steps like changing the service default passwords, 
+_print "SlipStream server installed and accessible at https://$SS_HOSTNAME"
+_print "Please see Configuration section of the SlipStream administrator
+manual for the next steps like changing the service default passwords,
 adding cloud connectors and more."
 _print "$(date)"
 
