@@ -196,14 +196,14 @@ function _deploy_hsqldb () {
 
 function deploy_slipstream_server_deps () {
 
-    _print "Instanlling dependencies"
+    _print "Installing dependencies"
 
     _deploy_hsqldb
 }
 
 function deploy_slipstream_client () {
 
-    _print "Instanlling SlipStream client"
+    _print "Installing SlipStream client"
 
     # Required by SlipStream cloud clients CLI
     pip install -Iv apache-libcloud==${CLOUD_CLIENT_LIBCLOUD_VERSION}
@@ -224,7 +224,7 @@ function deploy_slipstream_client () {
 
 function deploy_slipstream_server () {
 
-    _print "Instanlling SlipStream server"
+    _print "Installing SlipStream server"
 
     service slipstream stop || true
 
