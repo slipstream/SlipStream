@@ -3,12 +3,11 @@
 Developed by SixSq, SlipStream is a multi-cloud coordinated
 provisioning and image factory engine. In other words, it is an
 engineering Platform as a Service (PaaS) solution to support
-DevOps processes. It's AppStore feature makes deploying app
-in the cloud a child's play.
+DevOps processes. Its AppStore feature makes deploying apps
+in the cloud child's play.
 
-See the [SlipStream product page]( http://sixsq.com/products/slipstream.html)
+See the [SlipStream product page][ss-product]
 for more detailed information.
-
 
 # Release Notes
 
@@ -28,14 +27,13 @@ suites for unit testing.
 [Maven]: https://maven.apache.org/
 
 This quick guide will help you setup a local development environment. For
-more indepth knowledge, including how to deploy a production environment,
+more in-depth knowledge, including how to deploy a production environment,
 we invite you to have a look at the
-[documentation](https://slipstream.sixsq.com/documentation).
-We find particularly useful the [User Guide and Tutorial](https://slipstream.sixsq.com/html/tutorial.html)
-and [Administrator Manual](https://slipstream.sixsq.com/html/administrator-manual.html).
+[documentation][ss-docs].
+We find particularly useful the [User Guide and Tutorial][ss-tutorial]
+and [Administrator Manual][ss-admin].
 
-You can also check our [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
-) for tutorials, feature demonstrations and tip & tricks.
+You can also check our [YouTube channel][ss-youtube] for tutorials, feature demonstrations and tips & tricks.
 
 ## Prerequisites
 
@@ -101,7 +99,7 @@ $ mvn install
 ```
 
 Note: if you get errors building the documentation, check that you have a working
-installation of pdflatex.  If not, you can skip this by commenting out the SlipStreamDocumentation
+installation of `pdflatex`.  If not, you can skip this by commenting out the SlipStreamDocumentation
 module in the pom.xml
 
 # Setup the database
@@ -137,7 +135,7 @@ $ cd ../SlipStreamServer/war
 $ mvn jetty:run-war
 ```
 
-If the last command return an error like `JettyRunWarMojo : Unsupported major.minor version 51.0` please have a look here: [Configuring Maven to use Java 7 on Mac OS X](http://www.jayway.com/2013/03/08/configuring-maven-to-use-java-7-on-mac-os-x/).
+If the last command returns an error like `JettyRunWarMojo : Unsupported major.minor version 51.0` please have a look here: [Configuring Maven to use Java 7 on Mac OS X](http://www.jayway.com/2013/03/08/configuring-maven-to-use-java-7-on-mac-os-x/).
 
 Now that the server’s running, visit
 [http://localhost:8080/](http://localhost:8080/) with your Web browser.
@@ -199,12 +197,11 @@ add the cloud ids to the native images (e.g. Ubuntu, CentOS) you just create.
 That's it!!
 
 To learn more, we invite you to have a look at the
-[documentation](https://slipstream.sixsq.com/documentation).
-We find particularly useful the [User Guide and Tutorial](https://slipstream.sixsq.com/html/tutorial.html)
-and [Administrator Manual](https://slipstream.sixsq.com/html/administrator-manual.html).
+[documentation][ss-docs].
+We find particularly useful the [User Guide and Tutorial][ss-tutorial]
+and [Administrator Manual][ss-admin].
 
-You can also check [YouTube channel](https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
-) for tutorials, feature demonstrations and tip & tricks.
+You can also check [YouTube channel][ss-youtube] for tutorials, feature demonstrations and tip & tricks.
 
 
 # License and copyright
@@ -225,3 +222,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
+
+[ss-product]: http://sixsq.com/products/slipstream.html
+[ss-docs]: https://slipstream.sixsq.com/documentation
+[ss-tutorial]: https://slipstream.sixsq.com/html/tutorial.html
+[ss-admin]: https://slipstream.sixsq.com/html/administrator-manual.html
+[ss-youtube]: https://www.youtube.com/channel/UCGYw3n7c-QsDtsVH32By1-g
