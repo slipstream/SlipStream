@@ -187,9 +187,9 @@ $ mvn clean
 $ mvn install
 ```
 
-Note: if you get errors building the documentation, check that you have a working
-installation of `pdflatex`.  If not, you can skip this by commenting out the SlipStreamDocumentation
-module in the pom.xml
+**Note**: if you get errors building the documentation, check that you have a working
+installation of `pdflatex`.  If not, you can skip this by commenting out the
+SlipStreamDocumentation module in the `pom.xml` file.
 
 # Setup the database
 
