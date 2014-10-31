@@ -73,8 +73,13 @@ repositories.
 
 ## Installing dependencies
 
+The primary platform used by the SlipStream developers is Mac OS X.  Production 
+releases are compiled on CentOS 6.  The instructions should be easily ported to
+any *nix-like system.  Windows is harder, but if you succeed, feel free to 
+contribute the recipe :-)
+
 ### Mac OS X
-We’re going to assume you're running OS X with [brew] and [easy_install] already installed, otherwise you can probably find equivalent packages on other *nix OSs. Windows is harder, but if you succeed, feel free to contribute the recipe :-)
+We’re going to assume you're running OS X with [brew] and [easy_install] already installed.
 
 ```
 $ brew install maven pandoc
