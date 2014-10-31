@@ -21,13 +21,7 @@ It uses [Maven] to build the software and the standard xUnit
 suites for unit testing.
 
 This quick guide will help you setup a local development environment. For
-more in-depth knowledge, including how to deploy a production environment,
-we invite you to have a look at the
-[documentation][ss-docs].
-We find particularly useful the [User Guide and Tutorial][ss-tutorial]
-and [Administrator Manual][ss-admin].
-
-You can also check our [YouTube channel][ss-youtube] for tutorials, feature demonstrations and tips & tricks.
+more detailed information, check the links in the "Learn More" section below.
 
 ## Prerequisites
 
@@ -212,7 +206,9 @@ EOF
 ## Run the database
 
 ```
-$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server --database.0 file:slipstreamdb --dbname.0 slipstream &
+$ java -cp ~/.m2/repository/org/hsqldb/hsqldb/2.3.2/hsqldb-2.3.2.jar org.hsqldb.server.Server \
+       --database.0 file:slipstreamdb \
+       --dbname.0 slipstream &
 ```
 
 ## Running the server
@@ -254,6 +250,16 @@ or
 
 # Configuring the server
 
+## User(s)
+
+During the initial startup of the server, an administrator account 
+("super") will be created.  The initial password for this account is
+"supeRsupeR".  You should log in as this user, visit the profile page
+(single user icon at top), and change the password to another value.
+
+You can also create new users accounts by visiting the "users" page 
+(group of people icon at top).  
+
 ## Connector(s)
 
 Once the server is up and running you need to configure a connector before
@@ -261,37 +267,38 @@ trying to deploy a module. Out of the box, using the local connector
 is the easiest way to get started. To do so, navigate to the
 [server configuration page](http://localhost:8080/configuration) and
 define a cloud connector instance in the SlipStream Basics section:
-
 ```
-dummy:com.sixsq.slipstream.connector.local.LocalConnector
+test-cloud:local
 ```
+You must be logged in with an administrator account to do this.  The 
+value of this field has the form "name1:connector1,name2:connector2";
+multiple instances of a single connector are permitted.  If the name
+isn't given, it defaults to the connector name.
 
-For other cloud connector configuration, check our [blog](http://sixsq.com/blog/index.html).
+For configuration of other cloud connectors, check our [blog](http://sixsq.com/blog/index.html).
 
 ## Load default modules
 
-The client module includes examples that can be loaded.
-
+The client module includes examples from the tutorial that can be loaded.
 ```
 $ cd ../../SlipStreamClient/client/src/main/python
 $ ./ss-module-upload.py --endpoint http://localhost:8080 -u test -p tesTtesT ../resources/doc/*
 ```
+Change the username and password to an existing (preferably non-administrator)
+account.
 
-Here we are using the default password of the test account. It's a good idea to change
-these!
-
-You now only need to configure the cloud parameters of a user, say test. And
-add the cloud ids to the native images (e.g. Ubuntu, CentOS) you just create.
+You now only need to configure the cloud parameters of a user (e.g. "test"). And
+add the cloud IDs to the native images (e.g. Ubuntu, CentOS) you just created.
 
 That's it!!
 
-To learn more, we invite you to have a look at the
-[documentation][ss-docs].
+# Learn More
+
+To learn more, we invite you to have a look at the [documentation][ss-docs].
 We find particularly useful the [User Guide and Tutorial][ss-tutorial]
 and [Administrator Manual][ss-admin].
 
-You can also check [YouTube channel][ss-youtube] for tutorials, feature demonstrations and tip & tricks.
-
+You can also check [YouTube channel][ss-youtube] for tutorials, feature demonstrations and tips & tricks.
 
 # License and copyright
 
