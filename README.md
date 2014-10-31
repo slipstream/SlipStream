@@ -20,12 +20,6 @@ SlipStream is written in [Java], [Clojure], [Python] and [JavaScript].
 It uses [Maven] to build the software and the standard xUnit
 suites for unit testing.
 
-[Java]: https://www.java.com
-[Clojure]: http://clojure.org
-[Python]: https://www.python.org
-[JavaScript]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
-[Maven]: https://maven.apache.org/
-
 This quick guide will help you setup a local development environment. For
 more in-depth knowledge, including how to deploy a production environment,
 we invite you to have a look at the
@@ -63,18 +57,23 @@ into a common directory.
 * [SlipStreamClient](https://github.com/slipstream/SlipStreamClient)
 * [SlipStreamConnectors](https://github.com/slipstream/SlipStreamConnectors)
 
-First, clone the SlipStream parent repository and execute the git-pull.sh
+Clone the SlipStream parent repository and execute the `git-pull.sh`
 script:
 ```
 $ git clone git@github.com:slipstream/SlipStream.git
 $ SlipStream/git-pull.sh
 ```
 
-Note: the above instructions will pull the master (bleeding edge). To be on the safe
+**Note**: the above instructions will pull the master (bleeding edge). To be on the safe
 side, you can change the script to pull a specific release tag.
+
+**Note**: The given GitHub URLs require that you have a GitHub account with a 
+registered SSH key.  If you do not, switch to using the HTTPS URLs for the
+repositories.
 
 ## Installing dependencies
 
+### Mac OS X
 We’re going to assume you're running OS X with [brew] and [easy_install] already installed, otherwise you can probably find equivalent packages on other *nix OSs. Windows is harder, but if you succeed, feel free to contribute the recipe :-)
 
 ```
@@ -86,6 +85,85 @@ $ export LC_CTYPE="en_US.UTF-8"
 
 [brew]: http://brew.sh/
 [easy_install]: http://python-distribute.org/distribute_setup.py
+
+### CentOS 6
+
+These instructions assume that you are building the software on an
+**up-to-date, minimal CentOS 6 system**.  The build may work on other
+distributions, but you may have to modify the packages or commands to
+get a working version.
+
+Several of the packages required for the build are not available in
+the core CentOS 6 distribution.  You will need to configure your
+machine to use the [EPEL 6 package repository][epel].
+
+EPEL provides an RPM to do the configuration.  Just download the RPM
+and install it with `yum`.
+
+    $ wget -nd <URL>
+    $ yum install -y <downloaded RPM>
+
+You can find the URL and package name via the information in the "How
+can I use these extra packages?" section on the [EPEL welcome
+page][epel].
+
+Most (but not all!) of the build dependencies can be installed
+directly with `yum`.  The following table list the RPM packages that
+must be installed and describes how those packages are used within the
+build.
+
+A command like:
+
+    $ yum install -y [packages]
+
+will install all of the listed packages.
+
+Package                       Comment
+----------------------------  -----------------------------------------
+java-1.7.0-openjdk-devel      Compile and run the server
+python                        Client CLI build and testing
+python-devel                  Needed for python module dependencies
+pylint                        Analysis of python code
+python-pip                    Installation of python modules
+python-mock                   Mocking library used in unit tests
+gcc                           c-bindings for python module dependencies
+pandoc                        Generates documentation from Markdown
+texlive-latex                 For PDF versions of docs
+texlive-xetex                 For PDF versions of docs
+git                           Download sources from GitHub
+rpm-build                     Creates binary distribution packages
+createrepo                    Create local yum repository
+-----------------------------------------------------------------------
+
+There are a few python modules that must be installed with `pip`.  The
+SlipStream code uses options and features that require more recent
+versions than those packaged for CentOS 6.  The following table
+provides details.  Use the command:
+
+    $ pip install nose coverage paramiko
+
+to install all of these packages.
+
+Package     Comment
+----------  ------------------------------------
+nose        Unit testing utility for python code
+coverage    Coverage testing for python code
+paramiko    SSH library for python
+------------------------------------------------
+
+Lastly, the overall build is managed with Maven.  You will need to
+download the [Maven distribution][mvn-download] (choose the most
+recent binary distribution), unpack the distribution and modify the
+environment to make the `mvn` command visible.
+
+Once you have downloaded and unpacked Maven, you can setup the
+environment with:
+
+    $ export MAVEN_HOME=<installation directory>/apache-maven-3.2.3
+    $ export PATH=$PATH:$MAVEN_HOME/bin
+
+The `mvn` command should now be visible.  The software will build with
+any maven version later than 2.2.1.
 
 # Build everything
 
@@ -222,6 +300,15 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
+
+[Java]: https://www.java.com
+[Clojure]: http://clojure.org
+[Python]: https://www.python.org
+[JavaScript]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[Maven]: https://maven.apache.org/
+
+[epel]: http://fedoraproject.org/wiki/EPEL
+[mvn-download]: http://maven.apache.org/download.cgi
 
 [ss-product]: http://sixsq.com/products/slipstream.html
 [ss-docs]: https://slipstream.sixsq.com/documentation
