@@ -100,8 +100,10 @@ machine to use the [EPEL 6 package repository][epel].
 EPEL provides an RPM to do the configuration.  Just download the RPM
 and install it with `yum`.
 
-    $ wget -nd <URL>
-    $ yum install -y <downloaded RPM>
+```
+$ wget -nd <URL>
+$ yum install -y <downloaded RPM>
+```
 
 You can find the URL and package name via the information in the "How
 can I use these extra packages?" section on the [EPEL welcome
@@ -114,42 +116,44 @@ build.
 
 A command like:
 
-    $ yum install -y [packages]
+```
+$ yum install -y [packages]
+```
 
 will install all of the listed packages.
 
-Package                       Comment
-----------------------------  -----------------------------------------
-java-1.7.0-openjdk-devel      Compile and run the server
-python                        Client CLI build and testing
-python-devel                  Needed for python module dependencies
-pylint                        Analysis of python code
-python-pip                    Installation of python modules
-python-mock                   Mocking library used in unit tests
-gcc                           c-bindings for python module dependencies
-pandoc                        Generates documentation from Markdown
-texlive-latex                 For PDF versions of docs
-texlive-xetex                 For PDF versions of docs
-git                           Download sources from GitHub
-rpm-build                     Creates binary distribution packages
-createrepo                    Create local yum repository
------------------------------------------------------------------------
+| Package                      | Comment                                  |
+|:-----------------------------|:-----------------------------------------|
+| java-1.7.0-openjdk-devel     | Compile and run the server               |
+| python                       | Client CLI build and testing             |
+| python-devel                 | Needed for python module dependencies    |
+| pylint                       | Analysis of python code                  |
+| python-pip                   | Installation of python modules           |
+| python-mock                  | Mocking library used in unit tests       |
+| gcc                          | c-bindings for python module dependencies|
+| pandoc                       | Generates documentation from Markdown    |
+| texlive-latex                | For PDF versions of docs                 |
+| texlive-xetex                | For PDF versions of docs                 |
+| git                          | Download sources from GitHub             |
+| rpm-build                    | Creates binary distribution packages     |
+| createrepo                   | Create local yum repository              |
 
 There are a few python modules that must be installed with `pip`.  The
 SlipStream code uses options and features that require more recent
 versions than those packaged for CentOS 6.  The following table
 provides details.  Use the command:
 
-    $ pip install nose coverage paramiko
+```
+$ pip install nose coverage paramiko
+```
 
 to install all of these packages.
 
-Package     Comment
-----------  ------------------------------------
-nose        Unit testing utility for python code
-coverage    Coverage testing for python code
-paramiko    SSH library for python
-------------------------------------------------
+| Package    | Comment                             |
+|:---------- |:------------------------------------|
+| nose       | Unit testing utility for python code|
+| coverage   | Coverage testing for python code    |
+| paramiko   | SSH library for python              |
 
 Lastly, the overall build is managed with Maven.  You will need to
 download the [Maven distribution][mvn-download] (choose the most
@@ -159,8 +163,10 @@ environment to make the `mvn` command visible.
 Once you have downloaded and unpacked Maven, you can setup the
 environment with:
 
-    $ export MAVEN_HOME=<installation directory>/apache-maven-3.2.3
-    $ export PATH=$PATH:$MAVEN_HOME/bin
+```
+$ export MAVEN_HOME=<installation directory>/apache-maven-3.2.3
+$ export PATH=$PATH:$MAVEN_HOME/bin
+```
 
 The `mvn` command should now be visible.  The software will build with
 any maven version later than 2.2.1.
