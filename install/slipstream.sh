@@ -48,8 +48,20 @@ function abort() {
 }
 
 function _print() {
-    echo "::: $@" 1>&3
+    echo -e "::: $@" 1>&3
 }
+
+function _print_on_trap() {
+    if [ "$VERBOSE" != "true" ]; then
+        _print "ERROR! Check log file ${LOG_FILE}\n... snippet ...\n$(tail -5 ${LOG_FILE})"
+    fi
+}
+
+function _on_trap() {
+    _print_on_trap
+}
+
+trap '_on_trap' ERR
 
 # Return first global IPv4 address.
 function _get_hostname() {
