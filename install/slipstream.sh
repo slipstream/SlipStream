@@ -260,12 +260,17 @@ function update_slipstream_configuration() {
            -e "/^[a-z]/ s/example.com/${SS_HOSTNAME}/" \
            $SLIPSTREAM_CONF
 
+    _update_or_add_config_property slipstream.update.clienturl \
+        https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz
+    _update_or_add_config_property slipstream.update.clientbootstrapurl \
+        https://${SS_HOSTNAME}/downloads/slipstream.bootstrap
+    _update_or_add_config_property cloud.connector.library.libcloud.url \
+        https://${SS_HOSTNAME}/downloads/libcloud.tgz
     _update_or_add_config_property slipstream.base.url https://${SS_HOSTNAME}
     _update_or_add_config_property cloud.connector.orchestrator.publicsshkey \
         /opt/slipstream/server/.ssh/id_rsa.pub
     _update_or_add_config_property cloud.connector.orchestrator.privatesshkey \
         /opt/slipstream/server/.ssh/id_rsa
-
 }
 
 function _update_or_add_config_property() {
