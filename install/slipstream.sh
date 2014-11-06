@@ -13,7 +13,7 @@ LOG_FILE=/tmp/slipstream-install.log
 SS_REPO_KIND=Releases
 SLIPSTREAM_EXAMPLES=true
 
-while getopts l:svE opt; do
+while getopts l:H:svE opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -28,6 +28,10 @@ while getopts l:svE opt; do
     E)
         # Do not upload examples
         SLIPSTREAM_EXAMPLES=false
+        ;;
+    H)
+        # hostname/ip
+        SS_HOSTNAME=$OPTARG
         ;;
     *)
         ;;
@@ -77,7 +81,7 @@ function _get_hostname() {
 # # # # # # # # # # #
 
 # First "global" IPv4 address
-SS_HOSTNAME=$(_get_hostname)
+SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
 [ -z "${SS_HOSTNAME}" ] && \
     abort "Could not determinee IP or hostname of the public interface 
 for SlipStream to run on."
