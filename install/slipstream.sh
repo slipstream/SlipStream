@@ -5,7 +5,7 @@
 # Fail fast and fail hard.
 set -e
 set -o pipefail
-# set -x
+set -x
 
 VERBOSE=false
 LOG_FILE=/tmp/slipstream-install.log
