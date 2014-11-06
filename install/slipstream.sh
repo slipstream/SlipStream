@@ -5,15 +5,15 @@
 # Fail fast and fail hard.
 set -e
 set -o pipefail
-set -x
 
 VERBOSE=false
 LOG_FILE=/tmp/slipstream-install.log
 # Type of repository to lookup for SlipStream packages. 'Releases' will install
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
 SS_REPO_KIND=Releases
+SLIPSTREAM_EXAMPLES=true
 
-while getopts l:sv opt; do
+while getopts l:svE opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -24,6 +24,10 @@ while getopts l:sv opt; do
     s)
         # Use Snapshots repo
         SS_REPO_KIND=Snapshots
+        ;;
+    E)
+        # Do not upload examples
+        SLIPSTREAM_EXAMPLES=false
         ;;
     *)
         ;;
@@ -75,8 +79,8 @@ function _get_hostname() {
 # First "global" IPv4 address
 SS_HOSTNAME=$(_get_hostname)
 [ -z "${SS_HOSTNAME}" ] && \
-    abort "Could not determinee IP or hostname of the public interface
-SlipStream will running on."
+    abort "Could not determinee IP or hostname of the public interface 
+for SlipStream to run on."
 
 # libcloud
 CLOUD_CLIENT_LIBCLOUD_VERSION=0.14.1
@@ -94,11 +98,10 @@ PYPI_SCPCLIENT_VER=0.4
 
 CONFIGURE_FIREWALL=true
 
-SLIPSTREAM_EXAMPLES=true
-SS_USERNAME=sixsq
+SS_USERNAME=super
 # Deafult.  Should be changed immenidately after installation.
 # See SlipStream administrator manual.
-SS_PASSWORD=siXsQsiXsQ
+SS_PASSWORD=supeRsupeR
 
 SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
 
@@ -313,6 +316,7 @@ function cleanup () {
 }
 
 set -u
+set -x
 
 _print $(date)
 _print "Starting installation of SlipStream server."
