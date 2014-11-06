@@ -145,12 +145,11 @@ EOF
 function _add_yum_repos () {
     _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
 
-	yum install -y yum-utils
-
     # EPEL
     epel_repo_rpm=epel-release-${EPEL_VER}.noarch.rpm
     rpm -Uvh --force \
         http://mirror.switch.ch/ftp/mirror/epel/6/i386/${epel_repo_rpm}
+    sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/epel.repo
 
     # Nginx
     nginx_repo_rpm=nginx-release-centos-6-0.el6.ngx.noarch.rpm
@@ -161,8 +160,10 @@ function _add_yum_repos () {
     ss_repo_rpm=slipstream-repos-1.0-1.noarch.rpm
 	rpm -Uvh --force \
         http://yum.sixsq.com/slipstream/centos/6/${ss_repo_rpm}
-	yum-config-manager --disable SlipStream-*
-	yum-config-manager --enable SlipStream-${SS_REPO_KIND}
+    
+    yum install -y yum-utils
+    yum-config-manager --disable SlipStream-*
+    yum-config-manager --enable SlipStream-${SS_REPO_KIND}
 }
 
 function _install_global_dependencies() {
