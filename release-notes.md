@@ -2,11 +2,32 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.6...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.6...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.6...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.6...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.6...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.7...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.7...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.7...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.7...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.7...master)  
+
+## v2.3.7 - November 7th, 2014
+
+### New features and bug fixes
+
+- Refactored cloud connector base classes to simplify connector development and maintenance on both Java and Python parts.
+- EC2 connector: migrated to the AWS python-boto 2.32.
+- StratusLab connector: RPM name changed - `slipstream-connector-stratuslab-python` obsoletes `stratuslab-slipstream-downloads`.
+- Bug fixes.
+
+### Migration
+
+No DB migration (from v2.3.6) is required.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.6...SlipStreamServer-2.3.7)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.6...SlipStreamUI-2.3.7)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.6...SlipStreamClient-2.3.7)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.6...SlipStreamConnectors-2.3.7)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.6...SlipStreamDocumentation-2.3.7)
 
 
 ## v2.3.6 - October 29th, 2014
