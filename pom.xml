@@ -13,7 +13,7 @@
 		<maven>3.0.3</maven>
 	</prerequisites>
 
-	<!-- To build all of the submodules automatically, touch the file .slipstream-build-all 
+	<!-- To build all of the submodules automatically, touch the file .slipstream-build-all
 		in this directory. This file is ignored by git; do NOT add it to the repository. -->
 	<profiles>
 		<profile>
@@ -65,7 +65,7 @@
 		<stratuslab.version.rpm.api.externals>${stratuslab.version}</stratuslab.version.rpm.api.externals>
 
 		<libcloud.version>0.14.1</libcloud.version>
-		<boto.version>2.1.1</boto.version>
+		<boto.version>2.32.1</boto.version>
 
 		<!-- Provide default value to avoid the need for an explicit   -->
 		<!-- command line option.  This value will still be overridden -->
@@ -567,13 +567,13 @@
 				<artifactId>hibernate-c3p0</artifactId>
 				<version>4.3.5.Final</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.mchange</groupId>
 				<artifactId>c3p0</artifactId>
 				<version>0.9.2.1</version>
 			</dependency>
-						
+
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
