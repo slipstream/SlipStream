@@ -52,9 +52,6 @@
 		<package.os>el6</package.os>
 
 		<nexus>http://nexus.sixsq.com</nexus>
-		<nexus.sched.tasks.uri>${nexus}/service/local/schedule_run</nexus.sched.tasks.uri>
-		<nexus.yum.repo.gen.snapshots.uri>${nexus.sched.tasks.uri}/438</nexus.yum.repo.gen.snapshots.uri>
-		<nexus.yum.repo.gen.releases.uri>${nexus.sched.tasks.uri}/16</nexus.yum.repo.gen.releases.uri>
 
 		<hsqldb.version>2.3.2</hsqldb.version>
 
