@@ -36,6 +36,11 @@
 	<properties>
 		<slipstream.version>2.3.8-SNAPSHOT</slipstream.version>
 
+                <!-- community or enterprise edition of the software --> 
+                <!-- empty = community edition                       -->
+                <!-- "-enterprise" = enterprise edition              --> 
+                <slipstream.edition></slipstream.edition>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
 		<buildTimestamp>${maven.build.timestamp}</buildTimestamp>
@@ -115,33 +120,9 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-			<id>sixsq.releases</id>
-			<name>SixSq Releases</name>
-			<url>${nexus}/content/repositories/releases</url>
-		</repository>
-
-		<repository>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>sixsq.snapshots</id>
-			<name>SixSq Snapshots</name>
-			<url>${nexus}/content/repositories/snapshots</url>
-		</repository>
-
-		<repository>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 			<id>slipstream.releases</id>
 			<name>SlipStream Releases</name>
-			<url>${nexus}/content/repositories/releases</url>
+			<url>${nexus}/content/repositories/releases${slipstream.edition}</url>
 		</repository>
 
 		<repository>
@@ -153,7 +134,7 @@
 			</snapshots>
 			<id>slipstream.snapshots</id>
 			<name>SlipStream Snapshots</name>
-			<url>${nexus}/content/repositories/snapshots</url>
+			<url>${nexus}/content/repositories/snapshots${slipstream.edition}</url>
 		</repository>
 
 		<repository>
@@ -169,8 +150,8 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/slipstream/SlipStream${slipstream.edition}.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream${slipstream.edition}.git</developerConnection>
 		<url>https://github.com/slipstream/SlipStream</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -664,13 +645,13 @@
 		<repository>
 			<id>sixsq.releases</id>
 			<name>SixSq Releases</name>
-			<url>${nexus}/content/repositories/releases</url>
+			<url>${nexus}/content/repositories/releases${slipstream.edition}</url>
 		</repository>
 
 		<snapshotRepository>
 			<id>sixsq.snapshots</id>
 			<name>SixSq Snapshots</name>
-			<url>${nexus}/content/repositories/snapshots</url>
+			<url>${nexus}/content/repositories/snapshots${slipstream.edition}</url>
 		</snapshotRepository>
 	</distributionManagement>
 
