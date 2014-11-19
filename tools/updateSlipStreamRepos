@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# Script to maintain the SlipStream* repos up to date
+#
+#   - Copy it out of this 'tools' folder to the root folder where you
+#     want to clone the SlipStream* repos.
+#
+#   - Running the script in a clean directory will git clone all
+#     SliStream* repos within the current directory.
+#
+#   - If the repo folders are already present, the script will update
+#     them with git pull. Note that the branch will not be changed.
+#
+#   - After the git clone or pull actions, all projects will be build
+#     in the right order using mvn clean install. You can use -q to
+#     skip the tests but note that after a mvn clean some projects
+#     require the tests to be build to work.
+#
+#   - To see the full output of each command use -v. Note that in this
+#     simple version of the script only one of -v or -q can be used at
+#     the same time.
+
+REPOS=()
+REPOS+=("SlipStream")
+REPOS+=("SlipStreamDocumentation")
+REPOS+=("SlipStreamServerDeps")
+REPOS+=("SlipStreamUI")
+REPOS+=("SlipStreamClient")
+REPOS+=("SlipStreamServer")
+REPOS+=("SlipStreamConnectors")
+
+exec 3>&1
+
+pecho() {
+  echo -n "${1}" 1>&3
+}
+
+pecholn() {
+  echo "${1}" 1>&3
+}
+
+if [ "${1}" != "-v" ]
+then
+  exec 1>/dev/null
+  exec 2>/dev/null
+fi
+
+if [ "${1}" == "-q" ]
+then
+  SKIP_TESTS="true"
+else
+  SKIP_TESTS="false"
+fi
+
+git_branch(){
+  pecho $(git branch | grep \* | sed "s/\* \(.*\)/[\1] /")
+}
+
+update_ss_repo(){
+  if [ -d ${1} ]
+  then
+    pecho "  - Updating ${1}... "
+    (cd ${1}; git_branch; git pull && pecholn " OK" || pecholn " ERROR")
+  else
+    pecho "  - Repo ${1} is not yet cloned here. Cloning ${1}... "
+    git clone git@github.com:slipstream/${1}.git && pecholn "OK" || pecholn "ERROR"
+  fi
+  echo
+}
+
+install_project(){
+  if [ -d ${1} ]
+  then
+    pecho "  - Installing ${1}... "
+    (cd ${1}; git_branch; mvn install -Dmaven.test.skip=$SKIP_TESTS && pecholn " OK" || pecholn " ERROR")
+  else
+    pecholn "  - Project ${1} not found. Skipping."
+  fi
+  echo
+}
+
+pecholn "Updating repos:"
+
+for repo in "${REPOS[@]}"
+do
+  update_ss_repo $repo
+done
+
+pecholn
+pecholn "Installing projects:"
+
+for repo in "${REPOS[@]}"
+do
+  install_project $repo
+done
+exit
+
