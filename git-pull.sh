@@ -13,6 +13,7 @@ REPOS=(
 "SlipStreamServerDeps"
 "SlipStreamClient"
 "SlipStreamConnectors"
+"SlipStreamConnector-Occi"
 )
 
 # loop over possible repository locations for cloning

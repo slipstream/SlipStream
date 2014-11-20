@@ -29,6 +29,7 @@
         <module>../SlipStreamServerDeps</module>
         <module>../SlipStreamClient</module>
         <module>../SlipStreamConnectors</module>
+        <module>../SlipStreamConnector-Occi</module>
       </modules>
     </profile>
   </profiles>
