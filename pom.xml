@@ -30,6 +30,7 @@
         <module>../SlipStreamClient</module>
         <module>../SlipStreamConnectors</module>
         <module>../SlipStreamConnector-Occi</module>
+        <!-- add enterprise modules here : do not remove comment --> 
       </modules>
     </profile>
   </profiles>

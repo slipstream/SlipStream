@@ -14,6 +14,7 @@ REPOS=(
 "SlipStreamClient"
 "SlipStreamConnectors"
 "SlipStreamConnector-Occi"
+# add enterprise-only repositories here -- do not remove this comment
 )
 
 # loop over possible repository locations for cloning
