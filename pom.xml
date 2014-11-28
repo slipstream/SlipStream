@@ -151,8 +151,8 @@
   </repositories>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/slipstream/SlipStream${slipstream.edition}.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream${slipstream.edition}.git</developerConnection>
+    <connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
     <url>https://github.com/slipstream/SlipStream</url>
     <tag>HEAD</tag>
   </scm>
