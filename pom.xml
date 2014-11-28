@@ -57,7 +57,8 @@
 
     <package.os>el6</package.os>
 
-    <nexus>http://nexus.sixsq.com</nexus>
+    <nexus>http://nexus.sixsq.com/content/repositories</nexus>
+    <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
     <hsqldb.version>2.3.2</hsqldb.version>
 
@@ -123,7 +124,7 @@
       </snapshots>
       <id>slipstream.releases</id>
       <name>SlipStream Releases</name>
-      <url>${nexus}/content/repositories/releases${slipstream.edition}</url>
+      <url>${nexus}/releases${slipstream.edition}</url>
     </repository>
 
     <repository>
@@ -135,12 +136,12 @@
       </snapshots>
       <id>slipstream.snapshots</id>
       <name>SlipStream Snapshots</name>
-      <url>${nexus}/content/repositories/snapshots${slipstream.edition}</url>
+      <url>${nexus}/snapshots${slipstream.edition}</url>
     </repository>
 
     <repository>
       <id>sixsq.thirdparty</id>
-      <url>${nexus}/content/repositories/thirdparty</url>
+      <url>${nexus.thirdparty}/thirdparty</url>
     </repository>
 
     <repository>
@@ -646,13 +647,13 @@
     <repository>
       <id>sixsq.releases</id>
       <name>SixSq Releases</name>
-      <url>${nexus}/content/repositories/releases${slipstream.edition}</url>
+      <url>${nexus}/releases${slipstream.edition}</url>
     </repository>
 
     <snapshotRepository>
       <id>sixsq.snapshots</id>
       <name>SixSq Snapshots</name>
-      <url>${nexus}/content/repositories/snapshots${slipstream.edition}</url>
+      <url>${nexus}/snapshots${slipstream.edition}</url>
     </snapshotRepository>
   </distributionManagement>
 
