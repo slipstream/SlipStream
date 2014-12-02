@@ -195,7 +195,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5</version>
           <configuration>
-            <preparationGoals>clean install</preparationGoals>
+            <preparationGoals>clean</preparationGoals>
             <tagNameFormat>v@{project.version}${slipstream.edition}</tagNameFormat>
           </configuration>
         </plugin>
