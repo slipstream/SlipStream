@@ -57,6 +57,10 @@
 
     <package.os>el6</package.os>
 
+    <scm.read>scm:git:https://github.com/slipstream</scm.read>
+    <scm.write>scm:git:ssh://git@github.com/slipstream</scm.write>
+    <scm.public>https://github.com/slipstream</scm.public>
+
     <nexus>http://nexus.sixsq.com/content/repositories</nexus>
     <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
@@ -152,9 +156,9 @@
   </repositories>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/slipstream/SlipStream.git</developerConnection>
-    <url>https://github.com/slipstream/SlipStream</url>
+    <connection>${scm.read}/SlipStream.git</connection>
+    <developerConnection>${scm.write}/SlipStream.git</developerConnection>
+    <url>${scm.public}/SlipStream</url>
     <tag>HEAD</tag>
   </scm>
 
