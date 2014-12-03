@@ -1,9 +1,5 @@
 #!/bin/bash
 
-GITHUB_URL="git@github.com:slipstream"
-
-LOCAL_URL="file://${PWD}"
-
 REPOS=(
 "SlipStream"
 "SlipStreamDocumentation"
