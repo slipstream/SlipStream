@@ -63,4 +63,6 @@ The procedure for each release is the following:
   10. As usual, all of the build artifacts are stored in the
   production Nexus server.
 
-
+Note: The jobs will share the same local maven repository in the
+Jenkins account on the server.  It is important that the two build
+jobs do not run at the same time!
