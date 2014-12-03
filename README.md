@@ -79,7 +79,6 @@ We’re going to assume you're running OS X with [brew] and [easy_install] alrea
 $ brew install maven pandoc
 $ sudo easy_install pip
 $ sudo pip install nose coverage paramiko mock pylint
-$ export LC_CTYPE="en_US.UTF-8"
 ```
 
 [brew]: http://brew.sh/
