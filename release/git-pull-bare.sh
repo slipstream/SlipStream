@@ -81,5 +81,3 @@ done
 # This only needs to be updated in the parent SlipStream module.
 update_scm_urls
 update_nexus_urls
-
-touch ${WORKSPACE}/SlipStream/.slipstream-build-all
