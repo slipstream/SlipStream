@@ -2,11 +2,11 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.8...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.8...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.8...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.8...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.8...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.8...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.8...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.8...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.8...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.8...master)  
 
 ## v2.3.8 - December 17th, 2014
 
@@ -32,18 +32,18 @@ java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:fi
 
 ### New features and bug fixes
 
-- Performance improvement for Runs with s big amount of VMs.
+- Performance improvement for Runs with a big amount of VMs.
 - StratusLab connector was refactored.
-- Support Cloud images without wget preinstalled.
+- Support Cloud images without wget preinstalled (fallback to curl).
 - Bug fixes.
 
 ### Commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.7...SlipStreamServer-2.3.8)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.7...SlipStreamUI-2.3.8)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.7...SlipStreamClient-2.3.8)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.7...SlipStreamConnectors-2.3.8)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.7...SlipStreamDocumentation-2.3.8)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.7...v2.3.8)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.7...v2.3.8)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.7...v2.3.8)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.7...v2.3.8)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.7...v2.3.8)  
 
 ## v2.3.7 - November 7th, 2014
 
