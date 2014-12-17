@@ -42,7 +42,7 @@ java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:fi
 [Server](https://github.com/slipstream/SlipStreamServer/compare/SlipStreamServer-2.3.7...SlipStreamServer-2.3.8)  
 [UI](https://github.com/slipstream/SlipStreamUI/compare/SlipStreamUI-2.3.7...SlipStreamUI-2.3.8)  
 [Client](https://github.com/slipstream/SlipStreamClient/compare/SlipStreamClient-2.3.7...SlipStreamClient-2.3.8)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.7...SlipStreamConnectors-2.3.8) 
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/SlipStreamConnectors-2.3.7...SlipStreamConnectors-2.3.8)  
 [Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/SlipStreamDocumentation-2.3.7...SlipStreamDocumentation-2.3.8)  
 
 ## v2.3.7 - November 7th, 2014
