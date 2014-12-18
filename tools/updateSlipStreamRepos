@@ -20,14 +20,21 @@
 #     simple version of the script only one of -v or -q can be used at
 #     the same time.
 
+export LC_CTYPE="en_US.UTF-8"
+
+OK="$(tput setaf 2) OK$(tput sgr0)"
+ERROR="$(tput setaf 1) ERROR$(tput sgr0)"
+
+GIT_PULL_HAD_ERROR="false"
+
 REPOS=()
 REPOS+=("SlipStream")
 REPOS+=("SlipStreamDocumentation")
 REPOS+=("SlipStreamServerDeps")
 REPOS+=("SlipStreamUI")
 REPOS+=("SlipStreamClient")
-REPOS+=("SlipStreamServer")
 REPOS+=("SlipStreamConnectors")
+REPOS+=("SlipStreamServer")
 
 exec 3>&1
 
@@ -60,10 +67,10 @@ update_ss_repo(){
   if [ -d ${1} ]
   then
     pecho "  - Updating ${1}... "
-    (cd ${1}; git_branch; git pull && pecholn " OK" || pecholn " ERROR")
+    (cd ${1}; git_branch; if git pull; then pecholn "$OK"; else pecholn "$ERROR"; exit 1; fi;) || GIT_PULL_HAD_ERROR="true"; 
   else
     pecho "  - Repo ${1} is not yet cloned here. Cloning ${1}... "
-    git clone git@github.com:slipstream/${1}.git && pecholn "OK" || pecholn "ERROR"
+    git clone git@github.com:slipstream/${1}.git && pecholn "$OK" || pecholn "$ERROR"
   fi
   echo
 }
@@ -72,7 +79,7 @@ install_project(){
   if [ -d ${1} ]
   then
     pecho "  - Installing ${1}... "
-    (cd ${1}; git_branch; mvn install -Dmaven.test.skip=$SKIP_TESTS && pecholn " OK" || pecholn " ERROR")
+    (cd ${1}; git_branch; mvn install -Dmaven.test.skip=$SKIP_TESTS && pecholn "$OK" || pecholn "$ERROR")
   else
     pecholn "  - Project ${1} not found. Skipping."
   fi
@@ -85,6 +92,13 @@ for repo in "${REPOS[@]}"
 do
   update_ss_repo $repo
 done
+
+if $GIT_PULL_HAD_ERROR
+then
+  pecholn 
+  pecholn "Some repos didn't update successfully. You might have uncommitted changes. Please fix it and re-run this command."
+  exit 1
+fi
 
 pecholn
 pecholn "Installing projects:"
