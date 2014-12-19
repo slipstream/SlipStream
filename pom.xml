@@ -37,7 +37,7 @@
   </profiles>
 
   <properties>
-    <slipstream.version>2.3.9</slipstream.version>
+    <slipstream.version>2.3.10-SNAPSHOT</slipstream.version>
 
     <!-- community or enterprise edition of the software -->
     <!-- empty = community edition                       -->
