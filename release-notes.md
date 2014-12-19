@@ -2,11 +2,26 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.8...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.8...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.8...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.8...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.8...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.9...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.9...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.9...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.9...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.9...master)  
+
+## v2.3.9 - December 19th, 2014
+
+### New features and bug fixes
+
+- Bugfix of the service catalog on the welcome page.
+- Improvements in documentation around traoubleshooting of the user deployemnts.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.8...v2.3.9)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.8...v2.3.9)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.8...v2.3.9)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.8...v2.3.9)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.8...v2.3.9)  
 
 ## v2.3.8 - December 17th, 2014
 
