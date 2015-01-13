@@ -2,11 +2,32 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.9...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.9...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.9...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.9...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.9...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.0...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.0...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.0...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.0...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.0...master)  
+
+## v2.4.0 - January 13th, 2015
+
+### New features and bug fixes
+
+- New UI based on [Bootstrap](http://getbootstrap.com/)
+- Added export of users as CSV
+- Image Run will attach extra disk if defined in cloud parameters and the action is supported by the cloud connector
+- Minor updates and fixes in StratusLab and StratusLabIter connector
+
+### Migration
+
+No DB migration (from v2.3.9) is required.
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.3.9...v2.4.0)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.3.9...v2.4.0)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.3.9...v2.4.0)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.3.9...v2.4.0)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.3.9...v2.4.0)  
 
 ## v2.3.9 - December 19th, 2014
 
