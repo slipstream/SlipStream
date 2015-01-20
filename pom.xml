@@ -596,6 +596,12 @@
       </dependency>
 
       <dependency>
+          <groupId>org.clojure</groupId>
+          <artifactId>data.xml</artifactId>
+          <version>0.0.8</version>
+      </dependency>
+
+      <dependency>
         <groupId>com.taoensso</groupId>
         <artifactId>tower</artifactId>
         <version>3.0.2</version>
