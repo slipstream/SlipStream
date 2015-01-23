@@ -36,7 +36,7 @@ function add_nrpe_firewall_rules () {
     NRPE_RULE="$(_iptables_get_accept_rule $NRPE_PORT)"
 
     grep -q "dport $NRPE_PORT.*ACCEPT" /etc/sysconfig/iptables && \
-        { echo "Port already added."; return 0; }
+        { echo "Port already added."; return 0; } || true
 
     iptables-save > /etc/sysconfig/iptables
     sed -i.bak -e "/-A INPUT -j REJECT/i ${NRPE_RULE}" /etc/sysconfig/iptables
