@@ -6,7 +6,7 @@ CONNECTORS_URL=https://raw.githubusercontent.com/slipstream/SlipStream/master/in
 
 echo "::: Installing connectors ${@}"
 for name in "${@}"; do
-    echo "   ---> ${cname}"
+    echo "   ---> ${name}"
     script=connector-${name}.sh
     curl --fail --insecure -O ${CONNECTORS_URL}/$script || \
         { echo "Failed to get installation script for connector '${name}'"; exit 1; }
