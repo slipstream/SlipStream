@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 _SL_OS=centos-6
 _SL_VER=v14.06.0

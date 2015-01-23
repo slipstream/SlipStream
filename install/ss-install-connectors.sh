@@ -8,7 +8,8 @@ echo "::: Installing connectors ${@}"
 for name in "${@}"; do
     echo "   ---> ${cname}"
     script=connector-${name}.sh
-    curl -k -O ${CONNECTORS_URL}/$script
+    curl --fail --insecure -O ${CONNECTORS_URL}/$script || \
+        { echo "Failed to get installation script for connector '${name}'"; exit 1; }
     chmod +x $script
     ./$script
 done
