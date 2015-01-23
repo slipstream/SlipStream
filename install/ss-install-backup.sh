@@ -12,7 +12,7 @@ set +x
 AMAZON_KEY=${3:?"Provide Amazon Key"}
 set -x
 INSTANCE_ID=${4:?"Provide instance ID (e.g., IP/hostname)."}
-BACKUP_VIA_CRON={$5:-"false"} # false or true
+BACKUP_VIA_CRON=${5:-"false"} # false or true
 
 function install_backup_S3 () {
 
@@ -33,7 +33,7 @@ function install_backup_S3 () {
 
     # Enable backup via cron (e.g., if Nagios monitoring is not enabled).
     [ "$BACKUP_VIA_CRON" == "true" ] && \
-        { sed -i 's/^#//' /etc/cron.d/slipstream-backup; service crond start; }
+        { sed -i 's/^#//' /etc/cron.d/slipstream-backup; service crond start; } || true
 }
 
 install_backup_S3
