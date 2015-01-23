@@ -18,7 +18,7 @@ function install_backup_S3 () {
 
     yum install -y slipstream-server-backup
 
-	S3CURL_CONF=/opt/slipstream/server/.s3curl
+    S3CURL_CONF=/opt/slipstream/server/.s3curl
     cp -f /opt/slipstream/backup/s3curl.cfg.tpl $S3CURL_CONF
     chmod 600 $S3CURL_CONF
     chown slipstream: $S3CURL_CONF
@@ -33,7 +33,7 @@ function install_backup_S3 () {
 
     # Enable backup via cron (e.g., if Nagios monitoring is not enabled).
     [ "$BACKUP_VIA_CRON" == "true" ] && \
-    	{ sed -i 's/^#//' /etc/cron.d/slipstream-backup; service crond start; }
+        { sed -i 's/^#//' /etc/cron.d/slipstream-backup; service crond start; }
 }
 
 install_backup_S3

@@ -53,7 +53,7 @@ function install_nrpe_monitoring () {
     sed -i -e 's|^debug=.*$|debug=1|' /etc/nagios/nrpe.cfg
     sed -i -e 's|^include_dir=.*$|include_dir='${NRPE_D}'|' /etc/nagios/nrpe.cfg
 
-	_install_check_mem
+    _install_check_mem
 
     mkdir -p $NRPE_D
     cat > $NRPE_D/slipstream.cfg <<\EOF
