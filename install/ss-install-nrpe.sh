@@ -24,7 +24,27 @@ function _install_check_mem () {
     chmod +x ${CHECK_MEM_BIN}
 }
 
-function install_monitoring_nrpe () {
+function _iptables_get_accept_rule () {
+    PORT=$1
+    ACCEPT_RULE="-A INPUT -m state --state NEW -m tcp -p tcp --dport $PORT -j ACCEPT"
+    echo $ACCEPT_RULE
+}
+
+function add_nrpe_firewall_rules () {
+    echo "Adding NRPE firewall rules..."
+    NRPE_PORT=5666
+    NRPE_RULE="$(_iptables_get_accept_rule $NRPE_PORT)"
+
+    grep -q "dport $NRPE_PORT.*ACCEPT" /etc/sysconfig/iptables && \
+        { echo "Port already added."; return 0; }
+
+    iptables-save > /etc/sysconfig/iptables
+    sed -i.bak -e "/-A INPUT -j REJECT/i ${NRPE_RULE}" /etc/sysconfig/iptables
+    service iptables restart || \
+        { cp /etc/sysconfig/iptables.bak /etc/sysconfig/iptables; service iptables restart; }
+}
+
+function install_nrpe_monitoring () {
 
     echo "Installing NRPE..."
     yum -y --enablerepo=epel install $NRPE_DEPS
@@ -52,4 +72,5 @@ EOF
     service nrpe restart
 }
 
-install_monitoring_nrpe
+install_nrpe_monitoring
+add_nrpe_firewall_rules
