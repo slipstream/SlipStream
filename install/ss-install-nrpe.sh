@@ -56,7 +56,7 @@ function install_nrpe_monitoring () {
     _install_check_mem
 
     mkdir -p $NRPE_D
-    cat > $NRPE_D/slipstream.cfg <<\EOF
+    cat > $NRPE_D/slipstream.cfg << EOF
 command[check_hsqldb]=$LIB_DIR/nagios/plugins/check_procs -C java -a org.hsqldb.server.Server -c 1:1
 command[check_rootpart]=$LIB_DIR/nagios/plugins/check_disk -w 20% -c 10% -p /
 command[check_slipstream_backup]=/opt/slipstream/backup/nagios_slipstream_backup
