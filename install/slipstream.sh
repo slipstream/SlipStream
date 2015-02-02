@@ -122,7 +122,7 @@ SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
 DEPS="unzip curl wget gnupg nc python-pip"
 CLEAN_PKG_CACHE="yum clean all"
 
-SS_JETTY_CONFIG=/etc/defaults/slipstream
+SS_JETTY_CONFIG=/etc/default/slipstream
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Deployment.
