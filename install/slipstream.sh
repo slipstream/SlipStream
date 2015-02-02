@@ -291,7 +291,7 @@ function _set_localization() {
 
 function _set_jetty_args() {
     prop_name=$1
-    prop_value=$2
+    prop_value=${2:-""}
     if ( ! grep -q -- "-D$prop_name=" ${SS_JETTY_CONFIG} ); then
         cat >> ${SS_JETTY_CONFIG} <<EOF
 export JETTY_ARGS="\$JETTY_ARGS -D$prop_name=$prop_value"
