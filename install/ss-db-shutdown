@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+java -jar /opt/hsqldb/lib/sqltool.jar \
+   --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/slipstream,user=sa,password= \
+   --sql 'SHUTDOWN;'
