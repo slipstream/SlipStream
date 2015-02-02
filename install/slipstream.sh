@@ -15,7 +15,7 @@ SLIPSTREAM_EXAMPLES=true
 SS_THEME=
 SS_LANG=
 
-while getopts l:H:svE opt; do
+while getopts l:H:t:L:svE opt; do
     case $opt in
     v)
         VERBOSE=true
