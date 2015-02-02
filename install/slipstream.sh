@@ -12,6 +12,8 @@ LOG_FILE=/tmp/slipstream-install.log
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
 SS_REPO_KIND=Releases
 SLIPSTREAM_EXAMPLES=true
+SS_THEME=
+SS_LANG=
 
 while getopts l:H:svE opt; do
     case $opt in
@@ -32,6 +34,14 @@ while getopts l:H:svE opt; do
     H)
         # hostname/ip
         SS_HOSTNAME=$OPTARG
+        ;;
+    t)
+        # Theme name
+        SS_THEME=$OPTARG
+        ;;
+    L)
+        # Localization language
+        SS_LANG=$OPTARG
         ;;
     *)
         ;;
@@ -83,7 +93,7 @@ function _get_hostname() {
 # First "global" IPv4 address
 SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
 [ -z "${SS_HOSTNAME}" ] && \
-    abort "Could not determinee IP or hostname of the public interface 
+    abort "Could not determinee IP or hostname of the public interface
 for SlipStream to run on."
 
 # libcloud
@@ -111,6 +121,8 @@ SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
 
 DEPS="unzip curl wget gnupg nc python-pip"
 CLEAN_PKG_CACHE="yum clean all"
+
+SS_JETTY_CONFIG=/etc/defaults/slipstream
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Deployment.
@@ -167,7 +179,7 @@ function _add_yum_repos () {
     ss_repo_rpm=slipstream-repos-1.0-1.noarch.rpm
 	rpm -Uvh --force \
         http://yum.sixsq.com/slipstream/centos/6/${ss_repo_rpm}
-    
+
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
     yum-config-manager --enable SlipStream-${SS_REPO_KIND}
@@ -260,6 +272,33 @@ function deploy_slipstream_server () {
     _deploy_nginx_proxy
 
     _load_slipstream_examples
+   
+    _set_theme
+    _set_localization
+}
+
+function _set_theme() {
+    if [ -n $SS_THEME ]; then
+        _set_jetty_args slipstream.ui.util.theme.current-theme $SS_THEME
+    fi
+}
+
+function _set_localization() {
+    if [ -n $SS_LANG ]; then
+        _set_jetty_args slipstream.ui.util.localization.lang-default $SS_LANG
+    fi
+}
+
+function _set_jetty_args() {
+    prop_name=$1
+    prop_value=$2
+    if ( ! grep -q -- "-D$prop_name=" ${SS_JETTY_CONFIG} ); then
+        cat >> ${SS_JETTY_CONFIG} <<EOF
+export JETTY_ARGS="\$JETTY_ARGS -D$prop_name=$prop_value"
+EOF
+    elif ( ! grep -q -- "-D$prop_name=$prop_value" ${SS_JETTY_CONFIG} ); then
+            sed -i -e "s/-D$prop_name=[a-zA-Z0-9]*[ \t]*/-D$prop_name=$prop_value /" ${SS_JETTY_CONFIG}
+    fi
 }
 
 function update_slipstream_configuration() {
