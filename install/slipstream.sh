@@ -122,7 +122,7 @@ SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
 DEPS="unzip curl wget gnupg nc python-pip"
 CLEAN_PKG_CACHE="yum clean all"
 
-SS_JETTY_CONFIG=/etc/defaults/slipstream
+SS_JETTY_CONFIG=/etc/default/slipstream
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Deployment.
@@ -266,15 +266,15 @@ function deploy_slipstream_server () {
 
     _deploy_cloud_connectors
 
+    _set_theme
+    _set_localization
+
     chkconfig --add slipstream
     service slipstream start
 
     _deploy_nginx_proxy
 
     _load_slipstream_examples
-   
-    _set_theme
-    _set_localization
 }
 
 function _set_theme() {
