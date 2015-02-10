@@ -226,11 +226,18 @@ function _deploy_hsqldb () {
     service hsqldb start || true # false-positive failure
 }
 
+function _deploy_graphite () {
+    _print "- installing Graphite"
+
+    yum install -y slipstream-graphite
+}	
+
 function deploy_slipstream_server_deps () {
 
     _print "Installing dependencies"
 
     _deploy_hsqldb
+    _deploy_graphite
 }
 
 function deploy_slipstream_client () {
