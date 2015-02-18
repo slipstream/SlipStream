@@ -581,6 +581,7 @@
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
         <version>${hsqldb.version}</version>
+        <type>zip</type>
       </dependency>
 
       <dependency>
