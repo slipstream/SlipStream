@@ -2,7 +2,9 @@
 
 GITHUB_URL="git@github.com:slipstream"
 
-LOCAL_URL="file://${WORKSPACE}"
+EDITION="Community"
+
+LOCAL_URL="file://${WORKSPACE}/${EDITION}"
 
 REPOS=(
 "SlipStream"
