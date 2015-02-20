@@ -2,11 +2,51 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.0...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.0...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.0...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.0...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.0...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.1...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.1...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.1...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.1...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.1...master)  
+
+## v2.4.1 - February 20th, 2015
+
+### New features and bug fixes
+
+- Allow deployments to set a tolerance for provisioning failures
+- Fix bug that caused service catalog entries to be deleted
+- Allow style of UI to be more easily customized
+- Add network mapping parameters for OpenStack connector
+- Add pagination support for VM listings on dashboard
+- Optimize uploading of reports to improve performance
+- Numerous minor improvements and bug fixes in UI
+
+### Migration
+
+**IMPORTANT: v2.4.1 requires data migration from v2.4.0. The following steps MUST be followed:**
+ 1. Stop SlipStream
+ 2. Stop HSQLDB (or your DB engine)
+ 3. Execute the following SQL files located in /opt/slipstream/server/migrations:
+  * 011_add_maxprovisioningfailures_in_node.sql
+ 4. Start HSQLDB (or your DB engine)
+ 5. Start SlipStream**
+
+Command to stop HSQLDB:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/slipstream,user=sa,password= --sql 'SHUTDOWN;' 
+```
+
+Example command to execute the migration script:
+```
+java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/011_add_maxprovisioningfailures_in_node.sql
+```
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.0...v2.4.1)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.0...v2.4.1)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.0...v2.4.1)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.0...v2.4.1)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.0...v2.4.1)  
 
 ## v2.4.0 - January 13th, 2015
 
