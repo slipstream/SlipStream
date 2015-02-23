@@ -32,11 +32,11 @@ MVN_INSTALL_HAD_ERROR="false"
 REPOS=()
 REPOS+=("SlipStream")
 REPOS+=("SlipStreamDocumentation")
-REPOS+=("SlipStreamServerDeps")
 REPOS+=("SlipStreamUI")
+REPOS+=("SlipStreamServer")
+REPOS+=("SlipStreamServerDeps")
 REPOS+=("SlipStreamClient")
 REPOS+=("SlipStreamConnectors")
-REPOS+=("SlipStreamServer")
 
 exec 3>&1
 
