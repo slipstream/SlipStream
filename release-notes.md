@@ -2,19 +2,23 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.1...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.1...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.1...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.1...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.1...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...master)  
 
-## v2.4.1 - February 20th, 2015
+## v2.4.2 - February 28th, 2015
 
-### New features and bug fixes
+### New features and bug fixes from v2.4.0
 
+- Change monitoring implementation to avoid corrupted dashboard information
+- Improve monitoring implementation to avoid peaks in activity
 - Allow deployments to set a tolerance for provisioning failures
 - Fix bug that caused service catalog entries to be deleted
 - Allow style of UI to be more easily customized
+- Validate multiplicity values in deployments
+- SlipStream client now backs off and waits when server is loaded
 - Add network mapping parameters for OpenStack connector
 - Add pagination support for VM listings on dashboard
 - Optimize uploading of reports to improve performance
@@ -22,7 +26,7 @@
 
 ### Migration
 
-**IMPORTANT: v2.4.1 requires data migration from v2.4.0. The following steps MUST be followed:**
+**IMPORTANT: v2.4.2 requires data migration from v2.4.0. The following steps MUST be followed:**
  1. Stop SlipStream
  2. Stop HSQLDB (or your DB engine)
  3. Execute the following SQL files located in /opt/slipstream/server/migrations:
@@ -42,11 +46,15 @@ java -jar /opt/hsqldb/lib/sqltool.jar --autoCommit --inlineRc=url=jdbc:hsqldb:fi
 
 ### Commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.0...v2.4.1)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.0...v2.4.1)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.0...v2.4.1)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.0...v2.4.1)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.0...v2.4.1)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.0...v2.4.2)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.0...v2.4.2)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.0...v2.4.2)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.0...v2.4.2)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.0...v2.4.2)  
+
+## v2.4.1 - February 20th, 2015
+
+This release is deprecated because of problems discovered after deployment.  Use the v2.4.2 release.
 
 ## v2.4.0 - January 13th, 2015
 
