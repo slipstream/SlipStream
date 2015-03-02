@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/SlipStream/SlipStream.png?label=ready&title=Ready)](https://waffle.io/SlipStream/SlipStream)
 # SlipStream
 
 Developed by SixSq, SlipStream is a multi-cloud coordinated
