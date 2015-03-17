@@ -8,6 +8,59 @@
 [Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...master)  
 [Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...master)  
 
+## v2.5.0 - Mars 17th, 2015
+
+### New features and bug fixes from v2.4.2
+
+- 
+- 
+
+### Migration
+
+**IMPORTANT: v2.5.0 requires data migration from v2.4.2. The following steps MUST be followed:**
+ 1. Upgrade SlipStream
+ 2. Ensure SlipStream is running
+ 3. Execute the following python script *012_edit_save_all_users.py* from the directory */opt/slipstream/server/migrations/*
+ 
+ ```bash
+ cd /opt/slipstream/server/migrations/
+ python 012_edit_save_all_users.py <username> <password>
+ ```
+    `<username>` and `<password>` have to be credentials of a SlipStream administrator.
+ 4. Stop SlipStream
+ 
+ ```bash
+ service slipstream stop
+ ```
+ 5. Stop HSQLDB (or your DB engine)
+ 
+ ```bash
+ java -jar /opt/hsqldb/lib/sqltool.jar --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/slipstream,user=sa,password= --sql 'SHUTDOWN;' 
+ ```
+ 6. Execute the following SQL script */opt/slipstream/server/migrations/013_convert_to_keep_running.sql*:
+ 
+ ```bash
+ java -jar /opt/hsqldb/lib/sqltool.jar --inlineRc=url=jdbc:hsqldb:file:/opt/slipstream/SlipStreamDB/slipstreamdb,user=sa,password= /opt/slipstream/server/migrations/013_convert_to_keep_running.sql
+ ```
+ 7. Start HSQLDB (or your DB engine)
+ 
+ ```bash
+ service hsqldb start # ignore start error
+ ```
+ 8. Start SlipStream
+ 
+ ```bash
+ service slipstream start
+ ```
+
+### Commits
+
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...v2.5.0)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...v2.5.0)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...v2.5.0)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...v2.5.0)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...v2.5.0)  
+
 ## v2.4.2 - February 28th, 2015
 
 ### New features and bug fixes from v2.4.0
