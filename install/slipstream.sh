@@ -14,6 +14,8 @@ SS_REPO_KIND=Releases
 SLIPSTREAM_EXAMPLES=true
 SS_THEME=
 SS_LANG=
+# Possible values: 'community' or 'enterprise'
+BUILD_TARGET=community
 
 while getopts l:H:t:L:svE opt; do
     case $opt in
@@ -267,7 +269,7 @@ function deploy_slipstream_server () {
 
     service slipstream stop || true
 
-    yum install -y slipstream-server
+    yum install -y slipstream-server-${BUILD_TARGET}
 
     update_slipstream_configuration
 
@@ -282,6 +284,18 @@ function deploy_slipstream_server () {
     _deploy_nginx_proxy
 
     _load_slipstream_examples
+}
+
+function deploy_ssclj_server () {
+
+    _print "Installing SlipStream Clojure server"
+
+    service ssclj stop || true
+
+    yum install -y slipstream-ssclj-${BUILD_TARGET}
+    
+    # chkconfig --add slipstream
+    service ssclj start
 }
 
 function _set_theme() {
@@ -374,6 +388,7 @@ _print "Starting installation of SlipStream server."
 prepare_node
 deploy_slipstream_server_deps
 deploy_slipstream_client
+deploy_ssclj_server
 deploy_slipstream_server
 cleanup
 
