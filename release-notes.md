@@ -12,7 +12,6 @@
 
 ### New features and bug fixes from v2.4.2
 
-- 
 - Added the Event server
 - Improved authorization mechinisme
 - Improved logging
