@@ -2,22 +2,39 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.5...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.5...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.5...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.5...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.5...master)  
 
-## v2.5.0 - Mars 17th, 2015
+## v2.5 - Mars 20th, 2015
 
 ### New features and bug fixes from v2.4.2
 
 - 
-- 
+- Added the Event server
+- Improved authorization mechinisme
+- Improved logging
+- Improved the collector
+- Improved stability of the /vms resource when there is a huge amount of VMs
+- Improved the Run dialog on the UI:
+  - The Cloud for all node can be selected at one place
+  - The two checkboxes in the user profile to define the `keep running` behaviour was converted into a dropdown menu
+  - The `keep running` behaviour can be redefined
+  - Tags can be defined when creating a Run.
+  - The value selected for `Cloud` and `Keep running` dropdown menus correspond to the default of the user profile. 
+  - It's now possible to create a Run even if there is no SSH key in the user profile
+  - An error is displayed if SSH access is asked but there is no key in the user profile
+- Improved the time needed to terminate VMs with `stratuslabiter-terminate-instances`.
+- Increased the maximum amount of items returned by /vms and /run to 500
+- New packaging for the community edition.
+- Fixed a bug where deployment scripts were not executed when running a simple image.
+- Bugfixes
 
 ### Migration
 
-**IMPORTANT: v2.5.0 requires data migration from v2.4.2. The following steps MUST be followed:**
+**IMPORTANT: v2.5 requires data migration from v2.4.2. The following steps MUST be followed:**
  1. Upgrade SlipStream
  2. Ensure SlipStream is running
  3. Execute the following python script *012_edit_save_all_users.py* from the directory */opt/slipstream/server/migrations/*
@@ -55,11 +72,11 @@
 
 ### Commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...v2.5.0)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...v2.5.0)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...v2.5.0)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...v2.5.0)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...v2.5.0)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...v2.5)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...v2.5)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...v2.5)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...v2.5)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...v2.5)  
 
 ## v2.4.2 - February 28th, 2015
 
