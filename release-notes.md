@@ -2,11 +2,11 @@
 
 ## Development commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.5...master)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.5...master)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.5...master)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.5...master)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.5...master)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.5-community...master)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.5-community...master)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.5-community...master)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.5-community...master)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.5-community...master)  
 
 ## v2.5 - Mars 20th, 2015
 
@@ -71,11 +71,11 @@
 
 ### Commits
 
-[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...v2.5)  
-[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...v2.5)  
-[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...v2.5)  
-[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...v2.5)  
-[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...v2.5)  
+[Server](https://github.com/slipstream/SlipStreamServer/compare/v2.4.2...v2.5-community)  
+[UI](https://github.com/slipstream/SlipStreamUI/compare/v2.4.2...v2.5-community)  
+[Client](https://github.com/slipstream/SlipStreamClient/compare/v2.4.2...v2.5-community)  
+[Connectors](https://github.com/slipstream/SlipStreamConnectors/compare/v2.4.2...v2.5-community)  
+[Documentation](https://github.com/slipstream/SlipStreamDocumentation/compare/v2.4.2...v2.5-community)  
 
 ## v2.4.2 - February 28th, 2015
 
