@@ -25,7 +25,6 @@
         </file>
       </activation>
       <modules>
-        <module>../SlipStreamDocumentation</module>
         <module>../SlipStreamUI</module>
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
