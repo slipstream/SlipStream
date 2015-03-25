@@ -410,13 +410,6 @@
       </dependency>
 
       <dependency>
-        <groupId>com.sixsq.slipstream</groupId>
-        <artifactId>docs-pkg</artifactId>
-        <type>zip</type>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
         <version>2.3</version>
