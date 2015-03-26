@@ -8,7 +8,6 @@ LOCAL_URL="file://${WORKSPACE}/${EDITION}"
 
 REPOS=(
 "SlipStream"
-"SlipStreamDocumentation"
 "SlipStreamUI"
 "SlipStreamServer"
 "SlipStreamServerDeps"

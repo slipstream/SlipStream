@@ -2,7 +2,6 @@
 
 REPOS=(
 "SlipStream"
-"SlipStreamDocumentation"
 "SlipStreamUI"
 "SlipStreamServer"
 "SlipStreamServerDeps"
