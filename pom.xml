@@ -25,7 +25,6 @@
         </file>
       </activation>
       <modules>
-        <module>../SlipStreamDocumentation</module>
         <module>../SlipStreamUI</module>
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
@@ -407,13 +406,6 @@
         <artifactId>SlipStreamServer-ui-static-content</artifactId>
         <version>${project.version}</version>
         <type>zip</type>
-      </dependency>
-
-      <dependency>
-        <groupId>com.sixsq.slipstream</groupId>
-        <artifactId>docs-pkg</artifactId>
-        <type>zip</type>
-        <version>${project.version}</version>
       </dependency>
 
       <dependency>

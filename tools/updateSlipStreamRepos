@@ -31,7 +31,6 @@ MVN_INSTALL_HAD_ERROR="false"
 
 REPOS=()
 REPOS+=("SlipStream")
-REPOS+=("SlipStreamDocumentation")
 REPOS+=("SlipStreamUI")
 REPOS+=("SlipStreamServer")
 REPOS+=("SlipStreamServerDeps")

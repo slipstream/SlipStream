@@ -6,7 +6,6 @@ GITHUB_URLS=(
 )
 
 REPOS=(
-"SlipStreamDocumentation"
 "SlipStreamUI"
 "SlipStreamServer"
 "SlipStreamServerDeps"
