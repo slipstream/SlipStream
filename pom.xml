@@ -448,13 +448,6 @@
       </dependency>
 
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>servlet-api</artifactId>
-        <version>2.5</version>
-        <scope>compile</scope>
-      </dependency>
-
-      <dependency>
         <groupId>org.restlet.jee</groupId>
         <artifactId>org.restlet</artifactId>
         <version>2.2.1</version>
@@ -567,12 +560,6 @@
         <groupId>com.taoensso</groupId>
         <artifactId>tower</artifactId>
         <version>3.0.2</version>
-      </dependency>
-
-      <dependency>
-        <groupId>clj-time</groupId>
-        <artifactId>clj-time</artifactId>
-        <version>0.8.0</version>
       </dependency>
 
       <dependency>
@@ -707,12 +694,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.hsqldb</groupId>
-        <artifactId>hsqldb</artifactId>
-        <version>2.3.2</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.xerial</groupId>
         <artifactId>sqlite-jdbc</artifactId>
         <version>3.7.2</version>
@@ -786,13 +767,6 @@
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-all</artifactId>
         <version>1.1</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>expectations</groupId>
-        <artifactId>expectations</artifactId>
-        <version>2.0.6</version>
         <scope>test</scope>
       </dependency>
 
