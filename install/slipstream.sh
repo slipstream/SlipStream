@@ -202,6 +202,11 @@ function _disable_selinux() {
         /etc/selinux/config
 }
 
+function _install_ntp() {
+    yum install -y ntp
+    service ntpd start
+}
+
 function prepare_node () {
 
     _print "Preparing node"
@@ -210,6 +215,7 @@ function prepare_node () {
     _install_global_dependencies
     _configure_firewall
     _disable_selinux
+    _install_ntp
 }
 
 function _deploy_hsqldb () {
@@ -230,7 +236,7 @@ function _deploy_graphite () {
     _print "- installing Graphite"
 
     yum install -y slipstream-graphite
-}	
+}
 
 function deploy_slipstream_server_deps () {
 
