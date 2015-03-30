@@ -205,6 +205,8 @@ function _disable_selinux() {
 function _install_ntp() {
     yum install -y ntp
     service ntpd start
+    chkconfig --add ntpd
+    chkconfig ntpd on
 }
 
 function prepare_node () {
