@@ -19,10 +19,9 @@
   <!-- NOT add it to the repository.                 -->
   <profiles>
     <profile>
+      <id>full-build</id>
       <activation>
-        <file>
-          <exists>.slipstream-build-all</exists>
-        </file>
+        <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
         <module>../SlipStreamUI</module>
