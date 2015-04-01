@@ -11,7 +11,10 @@ for more detailed information.
 
 # Release Notes
 
-Here are the [release notes](/release-notes.md).
+The [release
+notes](http://ssdocs.sixsq.com/documentation/release_notes.html) are
+available from the main [SlipStream
+documentation](http://ssdocs.sixsq.com) website.
 
 # Getting started 
 
