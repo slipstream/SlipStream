@@ -12,7 +12,7 @@ for more detailed information.
 # Release Notes
 
 The [release
-notes](http://ssdocs.sixsq.com/documentation/release_notes.html) are
+notes](http://ssdocs.sixsq.com/documentation/release_notes/) are
 available from the main [SlipStream
 documentation](http://ssdocs.sixsq.com) website.
 
