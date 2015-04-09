@@ -176,7 +176,7 @@ function _add_yum_repos () {
 
     # SlipStream
     rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-2.0-1.noarch.rpm
-    sed -i -e 's|sslcacert=/etc/slipstream/cacerts|sslcacert=/etc/slipstream/cacerts/yum.sixsq.com.crt|' \
+    sed -i -e 's|^sslcacert=/etc/slipstream/cacerts|#sslcacert=/etc/slipstream/cacerts|' \
         /etc/yum.repos.d/slipstream.repo
 
     yum install -y yum-utils
