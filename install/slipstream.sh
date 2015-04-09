@@ -10,12 +10,12 @@ VERBOSE=false
 LOG_FILE=/tmp/slipstream-install.log
 # Type of repository to lookup for SlipStream packages. 'Releases' will install
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
-SS_REPO_KIND=Releases
+SS_REPO_KIND=Releases-community
 SLIPSTREAM_EXAMPLES=true
 SS_THEME=
 SS_LANG=
 
-while getopts l:H:t:L:svE opt; do
+while getopts l:H:t:L:s:vE opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -24,8 +24,7 @@ while getopts l:H:t:L:svE opt; do
         LOG_FILE=$OPTARG
         ;;
     s)
-        # Use Snapshots repo
-        SS_REPO_KIND=Snapshots
+        SS_REPO_KIND=$OPTARG
         ;;
     E)
         # Do not upload examples
