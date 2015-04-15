@@ -111,50 +111,44 @@ can I use these extra packages?" section on the [EPEL welcome
 page][epel].
 
 Most (but not all!) of the build dependencies can be installed
-directly with `yum`.  The following table list the RPM packages that
-must be installed and describes how those packages are used within the
-build.
+directly with `yum`.  A (bash) command like:
 
-A command like:
-
+``` bash
+SLIPSTREAM_DEV_YUM_DEPENDENCIES=(
+  java-1.7.0-openjdk-devel  # Compile and run the server
+  python                    # Client CLI build and testing
+  python-devel              # Needed for python module dependencies
+  pylint                    # Analysis of python code
+  python-pip                # Installation of python modules
+  python-mock               # Mocking library used in unit tests
+  gcc                       # c-bindings for python module dependencies
+  pandoc                    # Generates documentation from Markdown
+  texlive-latex             # For PDF versions of docs
+  texlive-xetex             # For PDF versions of docs
+  git                       # Download sources from GitHub (installed from sources below to get latest version)
+  rpm-build                 # Creates binary distribution packages
+  createrepo                # Create local yum repository
+)
+yum install -y ${SLIPSTREAM_DEV_YUM_DEPENDENCIES[@]}
 ```
-$ yum install -y [packages]
-```
 
-will install all of the listed packages.
-
-| Package                      | Comment                                  |
-|:-----------------------------|:-----------------------------------------|
-| java-1.7.0-openjdk-devel     | Compile and run the server               |
-| python                       | Client CLI build and testing             |
-| python-devel                 | Needed for python module dependencies    |
-| pylint                       | Analysis of python code                  |
-| python-pip                   | Installation of python modules           |
-| python-mock                  | Mocking library used in unit tests       |
-| gcc                          | c-bindings for python module dependencies|
-| pandoc                       | Generates documentation from Markdown    |
-| texlive-latex                | For PDF versions of docs                 |
-| texlive-xetex                | For PDF versions of docs                 |
-| git                          | Download sources from GitHub             |
-| rpm-build                    | Creates binary distribution packages     |
-| createrepo                   | Create local yum repository              |
+will install all necessary packages.  The comments describe how those
+RPM packages are used within the build.
 
 There are a few python modules that must be installed with `pip`.  The
 SlipStream code uses options and features that require more recent
-versions than those packaged for CentOS 6.  The following table
-provides details.  Use the command:
+versions than those packaged for CentOS 6.  Use the (bash) command:
 
-```
-$ pip install nose coverage paramiko
+``` bash
+SLIPSTREAM_DEV_PIP_DEPENDENCIES=(
+  nose                      # Unit testing utility for python code
+  coverage                  # Coverage testing for python code
+  paramiko                  # SSH library for python
+)
+pip install ${SLIPSTREAM_DEV_PIP_DEPENDENCIES[@]}
 ```
 
 to install all of these packages.
-
-| Package    | Comment                             |
-|:---------- |:------------------------------------|
-| nose       | Unit testing utility for python code|
-| coverage   | Coverage testing for python code    |
-| paramiko   | SSH library for python              |
 
 Lastly, the overall build is managed with Maven.  You will need to
 download the [Maven distribution][mvn-download] (choose the most
