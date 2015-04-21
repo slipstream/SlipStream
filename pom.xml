@@ -344,6 +344,12 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamCljResources-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamCredCache</artifactId>
         <version>${project.version}</version>
       </dependency>
