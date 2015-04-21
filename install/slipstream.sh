@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SlipStream 2.3 PROD installation recipe
+# SlipStream installation recipe
 
 # Fail fast and fail hard.
 set -e
@@ -282,6 +282,9 @@ function deploy_slipstream_server () {
 
     _set_theme
     _set_localization
+
+    chkconfig --add ssclj
+    service ssclj start
 
     chkconfig --add slipstream
     service slipstream start
