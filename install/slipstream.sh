@@ -379,7 +379,7 @@ set -u
 set -x
 
 _print $(date)
-_print "Starting installation of SlipStream server."
+_print "Starting installation of SlipStream server (from ${SS_REPO_KIND})."
 
 prepare_node
 deploy_slipstream_server_deps
