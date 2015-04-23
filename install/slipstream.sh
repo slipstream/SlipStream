@@ -229,8 +229,7 @@ function _deploy_hsqldb () {
 
     yum install -y slipstream-hsqldb
 
-    # FIXME: hsqldb init script exits with 1.
-    service hsqldb start || true # false-positive failure
+    service hsqldb start
 }
 
 function _deploy_graphite () {
