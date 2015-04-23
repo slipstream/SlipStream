@@ -271,22 +271,18 @@ function deploy_slipstream_server () {
 
     _print "Installing SlipStream server"
 
-    service slipstream stop || true
+    _stop_slipstream_service
 
     yum install -y slipstream-server
 
-    update_slipstream_configuration
+    _update_slipstream_configuration
 
     _deploy_cloud_connectors
 
     _set_theme
     _set_localization
 
-    chkconfig --add ssclj
-    service ssclj start
-
-    chkconfig --add slipstream
-    service slipstream start
+    _start_slipstream_service
 
     _deploy_nginx_proxy
 
@@ -305,6 +301,23 @@ function _set_localization() {
     fi
 }
 
+function _stop_slipstream_service() {
+    _print "- stopping SlipStream service"
+    
+    service slipstream stop || true
+    service ssclj stop || true
+}
+
+function _start_slipstream_service() {
+    _print "- starting SlipStream service"
+    
+    chkconfig --add ssclj
+    service ssclj start
+
+    chkconfig --add slipstream
+    service slipstream start
+}
+
 function _set_jetty_args() {
     prop_name=$1
     prop_value=${2:-""}
@@ -317,7 +330,7 @@ EOF
     fi
 }
 
-function update_slipstream_configuration() {
+function _update_slipstream_configuration() {
 
     sed -i -e "/^[a-z]/ s/slipstream.sixsq.com/${SS_HOSTNAME}/" \
            -e "/^[a-z]/ s/example.com/${SS_HOSTNAME}/" \
