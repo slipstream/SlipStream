@@ -229,6 +229,18 @@ function _deploy_hsqldb () {
 
     yum install -y slipstream-hsqldb
 
+    cat > ~/sqltool.rc <<EOF
+urlid slipstream
+url jdbc:hsqldb:hsql://localhost:9001/slipstream
+username sa
+password
+
+urlid ssclj
+url jdbc:hsqldb:hsql://localhost:9001/ssclj
+username sa
+password
+EOF
+
     service hsqldb start
 }
 
