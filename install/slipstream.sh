@@ -112,7 +112,7 @@ PYPI_SCPCLIENT_VER=0.4
 CONFIGURE_FIREWALL=true
 
 SS_USERNAME=super
-# Deafult.  Should be changed immenidately after installation.
+# Deafult.  Should be changed immediately after installation.
 # See SlipStream administrator manual.
 SS_PASSWORD=supeRsupeR
 
