@@ -1,4 +1,5 @@
-#!/bin/bash -ex
+#!/bin/bash
+set -e
 
 # Usage: <list of connector names>
 
