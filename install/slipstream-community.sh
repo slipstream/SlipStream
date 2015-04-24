@@ -19,7 +19,7 @@ if ! test "${REPO_TO_TAG[$REPO]+isset}"; then echo "Please provide one of: ${REP
 
 SS_INSTALL_SCRIPT=https://raw.githubusercontent.com/slipstream/SlipStream/${REPO_TO_TAG[$REPO]}/install/slipstream.sh
 echo -n "::: Downlading SlipStream installation script... "
-curl -sSf -k -o slipstream.sh $SS_INSTALL_SCRIPT || { echo "Failed downloading $SS_INSTALL_SCRIPT"; exit; }
+curl -sSf -k -o slipstream.sh $SS_INSTALL_SCRIPT || { echo "Failed downloading $SS_INSTALL_SCRIPT"; exit 1; }
 echo "done."
 chmod +x slipstream.sh
 
