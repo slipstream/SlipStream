@@ -17,6 +17,12 @@ REPO_TO_YUM[release]=Releases
 REPO=${1:-release}
 if ! test "${REPO_TO_TAG[$REPO]+isset}"; then echo "Please provide one of: ${REPOS[@]}"; exit; fi
 
+#
+# SlipStream Server.
+#
+echo ":::"
+echo "::: SlipStream Service."
+echo ":::"
 SS_INSTALL_SCRIPT=https://raw.githubusercontent.com/slipstream/SlipStream/${REPO_TO_TAG[$REPO]}/install/slipstream.sh
 echo -n "::: Downlading SlipStream installation script... "
 curl -sSf -k -o slipstream.sh $SS_INSTALL_SCRIPT || { echo "Failed downloading $SS_INSTALL_SCRIPT"; exit 1; }
@@ -24,4 +30,23 @@ echo "done."
 chmod +x slipstream.sh
 
 ./slipstream.sh -s ${REPO_TO_YUM[$REPO]}-community
+
+#
+# SlipStream Cloud Connectors.
+#
+echo ":::"
+echo "::: SlipStream Cloud Connectors."
+echo ":::"
+SS_CONNECTORS_INSTALL_SCRIPT=https://raw.githubusercontent.com/slipstream/SlipStream/${REPO_TO_TAG[$REPO]}/install/ss-install-connectors.sh
+echo -n "::: Downlading SlipStream connectors installation script... "
+curl -sSf -k -o ss-install-connectors.sh $SS_CONNECTORS_INSTALL_SCRIPT || { echo "Failed downloading $SS_CONNECTORS_INSTALL_SCRIPT"; exit 1; }
+echo "done."
+chmod +x ss-install-connectors.sh
+CONNECTORS="cloudstack occi openstack physicalhost stratuslab"
+./ss-install-connectors.sh $CONNECTORS
+
+service slipstream restart
+
+echo
+echo "::: SlipStream connectors installed: $CONNECTORS"
 
