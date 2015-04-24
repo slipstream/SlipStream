@@ -116,6 +116,11 @@ SS_USERNAME=super
 # See SlipStream administrator manual.
 SS_PASSWORD=supeRsupeR
 
+# Default local coordinates of SlipStream.
+SS_LOCAL_PORT=8182
+SS_LOCAL_HOST=localhost
+SS_LOCAL_URL=http://$SS_LOCAL_HOST:$SS_LOCAL_PORT
+
 SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
 
 DEPS="unzip curl wget gnupg nc python-pip"
@@ -315,19 +320,34 @@ function _set_localization() {
 
 function _stop_slipstream_service() {
     _print "- stopping SlipStream service"
-    
+
     service slipstream stop || true
     service ssclj stop || true
 }
 
 function _start_slipstream_service() {
     _print "- starting SlipStream service"
-    
+
     chkconfig --add ssclj
     service ssclj start
 
     chkconfig --add slipstream
     service slipstream start
+
+    _start_slipstream_application
+}
+
+function _start_slipstream_application() {
+    set +e
+    while true; do
+        nc -v -z $SS_LOCAL_HOST $SS_LOCAL_PORT
+        if [ "$?" == "0" ]; then
+            break
+        fi
+        sleep 2
+    done
+    set -e
+    curl -m 60 -S -o /dev/null $SS_LOCAL_URL
 }
 
 function _set_jetty_args() {
@@ -383,10 +403,9 @@ function _deploy_nginx_proxy() {
 function _load_slipstream_examples() {
     _is_true $SLIPSTREAM_EXAMPLES || return 0
 
-    sleep 5
     _print "- loading SlipStream examples"
     ss-module-upload -u ${SS_USERNAME} -p ${SS_PASSWORD} \
-        --endpoint https://localhost /usr/share/doc/slipstream/*.xml
+        --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
 }
 
 function _deploy_cloud_connectors() {
