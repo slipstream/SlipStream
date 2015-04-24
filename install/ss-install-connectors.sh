@@ -5,7 +5,7 @@ set -e
 
 CONNECTORS_URL=https://raw.githubusercontent.com/slipstream/SlipStream/master/install/connectors
 
-echo "::: Installing connectors ${@}"
+echo "::: Installing connectors: ${@}"
 for name in "${@}"; do
     echo "   ---> ${name}"
     script=connector-${name}.sh
