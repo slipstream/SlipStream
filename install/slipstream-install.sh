@@ -2,6 +2,25 @@
 set -e
 set -o pipefail
 
+_SCRIPT_NAME=${0##*/}
+
+function usage() {
+    echo -e "usage:\n$_SCRIPT_NAME [kind] [repo]
+ - kind: <community|enterprise> (default: community)
+ - repo: <release|candidate|snapshot> (default: release)"
+    exit 1
+}
+
+while getopts : opt; do
+    case $opt in
+    \?)
+        usage
+        ;;
+    esac
+done
+
+GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
+
 KINDS=(enterprise community)
 REPOS=(release candidate snapshot)
 
@@ -14,15 +33,6 @@ declare -A REPO_TO_YUM
 REPO_TO_YUM[snapshot]=Snapshots
 REPO_TO_YUM[candidate]=Candidates
 REPO_TO_YUM[release]=Releases
-
-GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
-
-function usage() {
-    echo -e "usage:\n$0 [kind] [repo]
- - kind: <community|enterprise> (default: community)
- - repo: <release|candidate|snapshot> (default: release)"
-    exit 1
-}
 
 function _check_kind() {
     if [ "$1" != "community" ] && [ "$1" != "enterprise" ]; then
