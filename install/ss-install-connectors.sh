@@ -56,7 +56,7 @@ function _download() {
     TO=$1
     shift
     FROM=$SCRIPT_BASE_URL/$TO
-    _printn "downlading $@... "
+    _printn "downloading $@... "
     curl -sSf -k -o $TO $FROM || { _print "ERROR: Failed downloading $FROM"; exit 1; }
     _prints "done."
     chmod +x $TO
