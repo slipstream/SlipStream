@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-REPO=snapshot
+REPO=release
 
 _SCRIPT_NAME=${0##*/}
 
