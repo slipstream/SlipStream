@@ -1,4 +1,6 @@
 #!/bin/bash
+# Install SlipStream connectors.
+
 set -e
 set -o pipefail
 
