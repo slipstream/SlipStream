@@ -5,9 +5,9 @@ set -o pipefail
 _SCRIPT_NAME=${0##*/}
 
 function usage() {
-    echo -e "usage:\n$_SCRIPT_NAME [kind] [repo]
- - kind: <community|enterprise> (default: community)
- - repo: <release|candidate|snapshot> (default: release)"
+    echo -e "usage:\n$_SCRIPT_NAME [edition] [repokind]
+ - edition: <community|enterprise> (default: community)
+ - repokind: <release|candidate|snapshot> (default: release)"
     exit 1
 }
 
