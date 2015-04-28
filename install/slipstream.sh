@@ -180,9 +180,7 @@ function _add_yum_repos () {
         http://nginx.org/packages/centos/6/noarch/RPMS/${nginx_repo_rpm}
 
     # SlipStream
-    rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-2.0-1.noarch.rpm
-    sed -i -e 's|^sslcacert=/etc/slipstream/cacerts|#sslcacert=/etc/slipstream/cacerts|' \
-        /etc/yum.repos.d/slipstream.repo
+    rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
 
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
