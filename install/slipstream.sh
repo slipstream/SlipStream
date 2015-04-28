@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# SlipStream installation recipe
+# SlipStream installation recipe.
 
 # Fail fast and fail hard.
 set -e
