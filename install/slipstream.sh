@@ -244,7 +244,7 @@ username sa
 password
 EOF
 
-    service hsqldb start
+    service hsqldb start || true
 }
 
 function _deploy_graphite () {
@@ -400,6 +400,11 @@ function _deploy_nginx_proxy() {
 
 function _load_slipstream_examples() {
     _is_true $SLIPSTREAM_EXAMPLES || return 0
+
+    sed -i -e '/<node / s/>$/ maxProvisioningFailures="0">/' \
+        /usr/share/doc/slipstream/examples_tutorials_service-testing_system.xml \
+        /usr/share/doc/slipstream/examples_tutorials_torque_torque.xml \
+        /usr/share/doc/slipstream/examples_tutorials_wordpress_wordpress.xml
 
     _print "- loading SlipStream examples"
     ss-module-upload -u ${SS_USERNAME} -p ${SS_PASSWORD} \
