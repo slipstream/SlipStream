@@ -46,6 +46,6 @@ _check_repo $REPO
 SCRIPT_BASE_URL=$GH_BASE_URL/${REPO_TO_TAG[$REPO]}/install
 
 SCRIPT=slipstream-install.sh
- _download $SCRIPT "SlipStream installation wrapper script"
+_download $SCRIPT "SlipStream installation wrapper script"
 ./$SCRIPT community $REPO
 
