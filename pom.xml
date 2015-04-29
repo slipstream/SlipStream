@@ -706,6 +706,12 @@
       </dependency>
 
       <dependency>
+        <groupId>honeysql</groupId>
+        <artifactId>honeysql</artifactId>
+        <version>0.5.2</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.xerial</groupId>
         <artifactId>sqlite-jdbc</artifactId>
         <version>3.7.2</version>
