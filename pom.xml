@@ -497,13 +497,13 @@
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-        <version>2.1</version>
+        <version>2.3.1</version>
       </dependency>
 
       <dependency>
         <groupId>javax.mail</groupId>
         <artifactId>mail</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.7</version>
         <scope>compile</scope>
       </dependency>
 
@@ -534,7 +534,7 @@
       <dependency>
         <groupId>com.mchange</groupId>
         <artifactId>c3p0</artifactId>
-        <version>0.9.2.1</version>
+        <version>0.9.5</version>
       </dependency>
 
       <dependency>
@@ -594,13 +594,13 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.2.3</version>
+        <version>2.5.3</version>
       </dependency>
 
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>13.0</version>
+        <version>18.0</version>
       </dependency>
 
       <dependency>
