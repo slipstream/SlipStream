@@ -67,7 +67,7 @@ function install_slipstream_connectors() {
     echo -e ":::\n::: SlipStream Cloud Connectors.\n:::"
     SCRIPT=ss-install-connectors.sh
     _download $SCRIPT "SlipStream connectors installation script"
-    CONNECTORS="cloudstack occi openstack physicalhost stratuslab"
+    CONNECTORS="cloudstack occi openstack stratuslab"
     ./$SCRIPT -r $REPO $CONNECTORS
     service slipstream restart
     echo -e "\n::: SlipStream connectors installed: $CONNECTORS"
