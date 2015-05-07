@@ -10,7 +10,7 @@
   <url>http://sixsq.com/</url>
 
   <prerequisites>
-    <maven>3.0.3</maven>
+    <maven>3.2.0</maven>
   </prerequisites>
 
   <!-- To NOT build all of the submodules, define the -->
