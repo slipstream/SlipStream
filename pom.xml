@@ -77,7 +77,7 @@
     <stratuslab.version.rpm.api.externals>${stratuslab.version}</stratuslab.version.rpm.api.externals>
 
     <libcloud.version>0.14.1</libcloud.version>
-    <boto.version>2.32.1</boto.version>
+    <boto.version>2.38.0</boto.version>
 
     <!-- Provide default value to avoid the need for an explicit   -->
     <!-- command line option.  This value will still be overridden -->
