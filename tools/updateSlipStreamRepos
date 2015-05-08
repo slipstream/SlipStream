@@ -12,13 +12,11 @@
 #     them with git pull. Note that the branch will not be changed.
 #
 #   - After the git clone or pull actions, all projects will be build
-#     in the right order using mvn clean install. You can use -q to
+#     in the right order using mvn clean install. You can use --skip-tests to
 #     skip the tests but note that after a mvn clean some projects
 #     require the tests to be build to work.
 #
-#   - To see the full output of each command use -v. Note that in this
-#     simple version of the script only one of -v or -q can be used at
-#     the same time.
+#   - To see the full output of each command use -v.
 
 # Required for the pylint execution in project SlipStreamClient
 export LC_CTYPE="en_US.UTF-8"
@@ -49,7 +47,7 @@ pecholn() {
 }
 
 SKIP_TESTS="false"
-if [ "${1}" == "-q" ]
+if [ "${1}" == "--skip-tests" ]
 then
   SKIP_TESTS="true"
   shift
@@ -70,7 +68,7 @@ fi
 
 if [ "${1}" != "" ]; then
   echo "$(basename $0): invalid option: ${1}."
-  echo "$(basename $0): only -q, -v and --separate-modules are valid in that order."
+  echo "$(basename $0): only --skip-tests, -v and --separate-modules are valid in that order."
   exit 1
 fi
 
