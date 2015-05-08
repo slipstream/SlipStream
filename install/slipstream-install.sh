@@ -7,7 +7,7 @@ _SCRIPT_NAME=${0##*/}
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [edition] [repokind]
  - edition: <community|enterprise> (default: community)
- - repokind: <release|candidate|snapshot> (default: release)"
+ - repokind: <release|candidate|snapshot|local> (default: release)"
     exit 1
 }
 
@@ -22,14 +22,16 @@ done
 GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 
 KINDS=(enterprise community)
-REPOS=(release candidate snapshot)
+REPOS=(release candidate snapshot local)
 
 declare -A REPO_TO_TAG
+REPO_TO_TAG[local]=master
 REPO_TO_TAG[snapshot]=master
 REPO_TO_TAG[candidate]=candidate-latest
 REPO_TO_TAG[release]=release-latest
 
 declare -A REPO_TO_YUM
+REPO_TO_YUM[local]=Local
 REPO_TO_YUM[snapshot]=Snapshots
 REPO_TO_YUM[candidate]=Candidates
 REPO_TO_YUM[release]=Releases
