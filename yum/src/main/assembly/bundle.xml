@@ -1,0 +1,17 @@
+<assembly>
+  <id>bundle</id>
+  
+  <includeBaseDirectory>true</includeBaseDirectory>
+  <baseDirectory>yum</baseDirectory>
+  
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  
+  <fileSets>
+    <fileSet>
+      <directory>target/yum</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

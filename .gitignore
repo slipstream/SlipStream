@@ -3,6 +3,8 @@
 .idea/
 *.iml
 
+target
+
 pom.xml.next
 pom.xml.releaseBackup
 pom.xml.tag
