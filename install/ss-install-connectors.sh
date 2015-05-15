@@ -13,11 +13,12 @@ exec 4>&2 3>&1 1>>${LOG_FILE} 2>&1
 
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [-r repo] <list of connectors>
- -r repo: <release|candidate|snapshot> (default: release)" 1>&3
+ -r repo: <release|candidate|snapshot|local> (default: release)" 1>&3
     exit 1
 }
 
 declare -A REPO_TO_TAG
+REPO_TO_TAG[local]=master
 REPO_TO_TAG[snapshot]=master
 REPO_TO_TAG[candidate]=candidate-latest
 REPO_TO_TAG[release]=release-latest

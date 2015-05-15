@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>SlipStreamYumRepo</artifactId>
+  <name>YUM repository</name>
+  <packaging>pom</packaging>
+  <url>http://sixsq.com/</url>
+
+  <parent>
+    <groupId>com.sixsq.slipstream</groupId>
+    <artifactId>SlipStream</artifactId>
+    <version>2.9-SNAPSHOT</version>
+  </parent>
+
+  <profiles>
+    <profile>
+      <id>build-yum-repo</id>
+      <activation>
+        <file>
+          <exists>/usr/bin/rpmbuild</exists>
+        </file>
+      </activation>
+
+  <build>
+
+    <plugins>
+
+      <plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>exec-maven-plugin</artifactId>
+	<executions>
+
+	  <execution>
+	    <id>collect-rpm-packages</id>
+	    <phase>install</phase>
+	    <goals>
+	      <goal>exec</goal>
+	    </goals>
+	    <configuration>
+	      <executable>src/main/scripts/collect-rpm-packages.sh</executable>
+	    </configuration>
+	  </execution>
+
+	</executions>
+      </plugin>
+
+
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-assembly-plugin</artifactId>
+	<configuration>
+	  <descriptors>
+	    <descriptor>src/main/assembly/bundle.xml</descriptor>
+	  </descriptors>
+	</configuration>
+	
+	<executions>
+	  
+	  <execution>
+	    <id>bundle</id>
+	    <goals>
+	      <goal>single</goal>
+	    </goals>
+	    <phase>install</phase>
+	  </execution>
+	  
+	</executions>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+    </profile>
+  </profiles>
+
+</project>

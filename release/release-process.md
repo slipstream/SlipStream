@@ -2,67 +2,144 @@
 Release Process
 ===============
 
-This document describes the overall process for a release that is
-captured in the Jenkins jobs.  This concentrates on the production of
-the release artifacts and basically ignores things like verifying the
-documentation, preparing release notes, etc.  (Those are important
-too, but not described here!)
+This document describes the overall process for a release.
 
-Jenkins Release Jobs
-====================
+Code Freeze
+-----------
 
-There are 4 release-related jobs on the Jenkins server:
-  * Community_Release
-  * Enterprise_Release
-  * Community_Release_Check
-  * Enterprise_Release_Check
-The names indicate which edition (Community or Enterprise) the job
-deals with.
+Releases happen systematically after the demo meeting for a sprint.
+Nonetheless, remind everyone to push their accepted changes into the
+master branch and to avoid any other changes in master until the
+release has been finished.
 
-Check Jobs
-==========
+Verification
+------------
 
-The jobs with "_Check" in their name verify that all the code can be
-built and released.  These jobs run daily to ensure that the code is
-always in a release-able state.
+The Jenkins release job is optimized to perform the full release as
+quickly as possible.  Consequently, it neither checks the consistency
+of the Community and Enterprise code bases nor does it run the defined
+unit tests.  **These checks must be done manually before triggering
+the release build.**
 
-These jobs use the standard release process (as described below), but
-run on bare copies of the production GitHub repositories and store
-artifacts in an "internal" maven repository on disk.  This guarantees
-that all of the release commits, tags, and artifacts are **completely
-isolated from the production services**.
+### Code Base Consistency
 
-Release Jobs
-============
+To verify the consistency between the Community and Enterprise code
+bases, check that all of the jobs named "Merge_*" (in the "SS Build"
+tab) are passing.  Better, manually trigger all of these jobs and
+verify that they all pass.  (These jobs are extremely quick.)
 
-The release jobs without "_Check" in their names must be triggered
-manually and will perform a release using the **production GitHub
-repositories** and the **production Nexus server**.
+If any of these jobs do not pass, then you'll have to manually resolve
+any merge conflicts between the Community and Enterprise editions.
+Consult the definition of the failing merge job to reproduce any merge
+conflicts.
 
-The procedure for each release is the following:
-  1. The workspace for Jenkins is completely destroyed before the
-  release procedure starts.
-  2. The SlipStream repository is cloned into a subdirectory of the
-  workspace. 
-  3. All of the SlipStream repositories for the given edition are
-  cloned into the workspace using the `git-pull.sh` script (or
-  `release/git-pull-bare.sh` for the "_Check" jobs).
-  4. The `.slipstream-build-all` file is created in the SlipStream
-  repository to signal that all of the modules should be built
-  together. 
-  5. A "dry run" of the "release:prepare" goal is run within the
-  SlipStream repository, creating the tag and next versions of the
-  module `pom.xml` files.
-  6. The tag `pom.xml` files are committed to the repositories and a
-  tag is created.
-  7. The next `pom.xml` files are committed to the repositories.
-  8. The created tag is checked out in all of the local working copies
-  of the repositories.
-  9. A full build is started using `mvn clean deploy` in the
-  SlipStream repository.
-  10. As usual, all of the build artifacts are stored in the
-  production Nexus server.
+### Build Verification
 
-Note: The jobs will share the same local maven repository in the
-Jenkins account on the server.  It is important that the two build
-jobs do not run at the same time!
+The two jobs "Community_Build" and "Enterprise_Build" (also in the "SS
+Build" tab) perform a full, consistent build of SlipStream.  Trigger
+these builds manually **after** all of the changes for the release
+have been pushed into the master branch.
+
+Disable Build Jobs
+------------------
+
+The individual build jobs in the "SS Community" and "SS Enterprise"
+tabs are triggered on changes in the repository.  As the release
+process proceeds, they will be triggered, slowing down the overall
+release process.  
+
+To make the release as quickly as possible and to avoid noise
+related to failure with inconsistent versions, disable all of the 
+build jobs on these two tabs. 
+
+Trigger Release
+---------------
+
+The "SlipStream_release_check_full" partially checks the release build
+process.  You can trigger this job to do further tests of the release
+process, without actually checking any changes into the GitHub
+repositories. 
+
+The "SlipStream_release_full" job in the "SS Release" tab will perform
+the **complete release of SlipStream** (both the Community and
+Enterprise editions).  If all goes well, the full release should be
+built in around 15 minutes.
+
+If things do not go well, then you'll need to troll through the logs
+to determine what failed.  You'll then have to manually clean up any
+tags that were made in the repositories, fix any issues, and try the
+release again. 
+
+Publishing Releases
+-------------------
+
+All of the candidate releases are published automatically into the YUM
+repository automatically via a cron job on the yum server
+(`yum.sixsq.com`).  Nonetheless, you should verify that the new
+release does appear after the build.
+
+**Stable releases are published manually.**  If the previous candidate
+release was judged to be stable, then you can publish it by doing the
+following: 
+
+  1. Log into `yum.sixsq.com` as root.
+  2. Run the script `./bin/publish-release.sh RELEASE_NUMBER` 
+
+This will then scan the Nexus repository and publish the release with
+the given RELEASE_NUMBER.  Verify that the release does indeed show up
+in the YUM repository. 
+
+Enable Build Jobs
+-----------------
+
+If you disabled the build jobs on the "SS Community" and "SS
+Enterprise" tabs, then you should re-enable them after the release has
+been completed.
+
+You should also manually trigger the full build from the root build
+job for each of these.  There may be intermediate failures in these
+jobs if they are performed out of the usual build order because the
+correct snapshot version of a dependency may not exist yet.
+
+You should also manually trigger the full builds on the "SS Build"
+tab.  Verify that these pass with the new snapshot version. 
+
+
+Updating Release Notes
+----------------------
+
+The release notes are created as part of the standard SlipStream
+documentation on http://ssdocs.sixsq.com.  To update these release
+notes, clone the SlipStreamDocumentation repository and add the
+release notes to the **candidate category**.
+
+If the previous candidate release was promoted to stable, then you
+must also copy the release notes into the stable releases page,
+combining multiple candidate release entries if there has been a gap. 
+
+Follow the instructions in that repository's README to publish the new
+release notes.  Verify that the new release notes have indeed been
+published. 
+
+
+Publishing SlipStream Client
+----------------------------
+
+If you've published a new stable release, then you should also publish
+the associated SlipStream client to PyPi.  
+
+Before starting, get the PyPi credentials from the `slipstream.txt`
+file and create your `~/.pypirc` file.
+
+The publishing procedure is then:
+
+  1. Clone the SlipStreamClient repository
+  2. Checkout the stable release tag
+  3. Descend into the `pypi` subdirectory
+  4. Run `mvn clean install -P release`
+  5. Descend into `target/pypi-pkg`
+  6. Run `python setup.py sdist`
+  7. Publish it with `python setup.py sdisk upload`
+
+Then verify on PyPi that the new version is available.
+
