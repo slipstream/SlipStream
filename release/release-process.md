@@ -2,13 +2,7 @@
 Release Process
 ===============
 
-This document describes the overall process for a release that is
-captured in the Jenkins jobs.
-
-This concentrates on the production of the release artifacts and
-basically ignores things like verifying the documentation, preparing
-release notes, etc.  (Those are important too, but not described
-here!)
+This document describes the overall process for a release.
 
 Code Freeze
 -----------
@@ -22,7 +16,7 @@ Verification
 ------------
 
 The Jenkins release job is optimized to perform the full release as
-quickly as possible.  Consequently, it neight checks the consistency
+quickly as possible.  Consequently, it neither checks the consistency
 of the Community and Enterprise code bases nor does it run the defined
 unit tests.  **These checks must be done manually before triggering
 the release build.**
@@ -31,7 +25,7 @@ the release build.**
 
 To verify the consistency between the Community and Enterprise code
 bases, check that all of the jobs named "Merge_*" (in the "SS Build"
-tab) are passing.  Better manually trigger all of these jobs and
+tab) are passing.  Better, manually trigger all of these jobs and
 verify that they all pass.  (These jobs are extremely quick.)
 
 If any of these jobs do not pass, then you'll have to manually resolve
@@ -54,8 +48,9 @@ tabs are triggered on changes in the repository.  As the release
 process proceeds, they will be triggered, slowing down the overall
 release process.  
 
-To make the release as quickly as possible, disable all of the build
-jobs on these two tabs. 
+To make the release as quickly as possible and to avoid noise
+related to failure with inconsistent versions, disable all of the 
+build jobs on these two tabs. 
 
 Trigger Release
 ---------------
