@@ -89,6 +89,35 @@ This will then scan the Nexus repository and publish the release with
 the given RELEASE_NUMBER.  Verify that the release does indeed show up
 in the YUM repository. 
 
+Updating Moving Tags
+--------------------
+
+The installation tools use two moving tags in the repository to
+recover the correct versions of scripts for the installation.  These
+tags are on the SlipStream repository.
+
+Whenever a candidate release is made, move the "candidate-latest" tag
+to the associated version.  From the cloned and updated SlipStream
+repository, do the following:
+```
+$ git tag -d candidate-latest
+$ git push origin :refs/tags/candidate-latest
+$ git tag candidate-latest vX.X-community
+$ git push origin :refs/tags/candidate-latest
+```
+
+If you have published a new stable release, then you must also update
+the "release-latest" tag, with the same procedure, obviously replacing
+the tag name:
+```
+$ git tag -d release-latest
+$ git push origin :refs/tags/release-latest
+$ git tag release-latest vX.X-community
+$ git push origin :refs/tags/release-latest
+```
+
+In both cases, you should verify that the tags do show up on GitHub.
+
 Enable Build Jobs
 -----------------
 
@@ -125,7 +154,7 @@ published.
 Publishing SlipStream Client
 ----------------------------
 
-If you've published a new stable release, then you should also publish
+If you've published a new stable release, then you must also publish
 the associated SlipStream client to PyPi.  
 
 Before starting, get the PyPi credentials from the `slipstream.txt`
@@ -137,9 +166,5 @@ The publishing procedure is then:
   2. Checkout the stable release tag
   3. Descend into the `pypi` subdirectory
   4. Run `mvn clean install -P release`
-  5. Descend into `target/pypi-pkg`
-  6. Run `python setup.py sdist`
-  7. Publish it with `python setup.py sdisk upload`
 
 Then verify on PyPi that the new version is available.
-
