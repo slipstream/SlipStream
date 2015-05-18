@@ -103,7 +103,7 @@ repository, do the following:
 $ git tag -d candidate-latest
 $ git push origin :refs/tags/candidate-latest
 $ git tag candidate-latest vX.X-community
-$ git push origin :refs/tags/candidate-latest
+$ git push origin candidate-latest
 ```
 
 If you have published a new stable release, then you must also update
@@ -113,7 +113,7 @@ the tag name:
 $ git tag -d release-latest
 $ git push origin :refs/tags/release-latest
 $ git tag release-latest vX.X-community
-$ git push origin :refs/tags/release-latest
+$ git push origin release-latest
 ```
 
 In both cases, you should verify that the tags do show up on GitHub.
