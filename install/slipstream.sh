@@ -11,9 +11,12 @@ LOG_FILE=/tmp/slipstream-install.log
 # Type of repository to lookup for SlipStream packages. 'Releases' will install
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
 SS_REPO_KIND=Releases-community
-SLIPSTREAM_EXAMPLES=true
 SS_THEME=
 SS_LANG=
+
+# Allow this to be set in the environment to avoid having to pass arguments
+# through all of the other installation scripts.
+SLIPSTREAM_EXAMPLES=${SLIPSTREAM_EXAMPLES:-true}
 
 while getopts l:H:t:L:s:vE opt; do
     case $opt in
