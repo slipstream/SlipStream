@@ -172,6 +172,7 @@ function _add_yum_repos () {
     _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
 
     # EPEL
+    rpm -e epel-release || true
     epel_repo_rpm=epel-release-${EPEL_VER}.noarch.rpm
     rpm -Uvh --force \
         http://mirror.switch.ch/ftp/mirror/epel/6/i386/${epel_repo_rpm}
