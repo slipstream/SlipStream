@@ -189,13 +189,14 @@ function _add_yum_repos () {
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
     yum-config-manager --enable SlipStream-${SS_REPO_KIND}
+    yum-config-manager --enable epel
 }
 
 function _install_global_dependencies() {
 
     _print "- installing dependencies"
 
-    yum install -y --enablerepo=epel $DEPS
+    yum install -y $DEPS
 
 }
 
@@ -283,7 +284,7 @@ function deploy_slipstream_client () {
     winrm_pkg=a2e7ecf95cf44535e33b05e0c9541aeb76e23597.zip
     pip install https://github.com/diyan/pywinrm/archive/${winrm_pkg}
 
-    yum install -y --enablerepo=epel slipstream-client
+    yum install -y slipstream-client
 }
 
 function deploy_slipstream_server () {
