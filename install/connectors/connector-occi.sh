@@ -12,6 +12,7 @@ function deploy() {
     #
     #curl -o /etc/yum.repos.d/rocci.repo http://repository.egi.eu/community/software/rocci.cli/4.2.x/releases/repofiles/sl-6-x86_64.repo
     cat > /etc/yum.repos.d/rocci.repo <<EOF
+[rocci-cli]
 name=ROCCI CLI repository at EGI
 baseurl=http://repository.egi.eu/community/software/rocci.cli/4.3.x/releases/sl/6/x86_64/RPMS
 enabled=1
