@@ -1,4 +1,4 @@
-SRC_DIR = $(shell grealpath ../SlipStreamClient/client/src)
+SRC_DIR = $(shell realpath ../SlipStreamClient/client/src)
 
 install:
 	pip install -r requirements.txt
