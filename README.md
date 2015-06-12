@@ -1,22 +1,23 @@
 # SlipStream
 
-Developed by SixSq, SlipStream is a multi-cloud coordinated
-provisioning and image factory engine. In other words, it is an
-engineering Platform as a Service (PaaS) solution to support
-DevOps processes. Its App Store feature makes deploying apps
-in the cloud child's play.
-
-See the [SlipStream product page][ss-product]
-for more detailed information.
+Developed by SixSq, SlipStream is a multi-cloud application management
+platform.  See the [SlipStream product page][ss-product] for more
+detailed information.
 
 # Release Notes
 
-The [release notes][ss-release] are
-available from the main [SlipStream documentation][ss-docs] website.
+The [release notes][ss-release] are available from the main
+[SlipStream documentation][ss-docs] website.  Stable releases are
+those that have been validated and are supported.  Candidate releases
+are (usually) the result of each development iteration and may or may
+not be stable.  These can be used but are not supported.
 
 # Getting started 
 
-See the [Developer Guide][ss-dev] on the main [SlipStream documentation][ss-docs] website.
+See the [Developer Guide][ss-dev] on the main [SlipStream
+documentation][ss-docs] website.  This contains the full, supported
+build procedure for SlipStream, including the required build tools and
+dependencies.
 
 # License and copyright
 
