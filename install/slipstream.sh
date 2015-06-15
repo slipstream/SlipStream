@@ -205,7 +205,10 @@ function _disable_selinux() {
     _print "- disabling selinux"
 
     # disable SELinux using command to be consistent between CentOS 6 and 7
-    setenforce 0
+    enforce=$(getenforce)
+    if [[ "$enforce" != "Disabled" ]]; then
+    	setenforce 0
+    fi
     sed -i -e 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux \
         /etc/selinux/config
 }
