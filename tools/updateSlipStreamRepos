@@ -129,7 +129,7 @@ if $BUILD_SEPARATE_MODULES; then
     install_project $repo
   done
 else
-  (cd SlipStream && mvn clean install -Dmaven.test.skip=$SKIP_TESTS 1>&3 2>&4;)
+  (cd SlipStream && mvn clean install --fail-at-end  -Dmaven.test.skip=$SKIP_TESTS 1>&3 2>&4;)
 fi
 
 if $MVN_INSTALL_HAD_ERROR
