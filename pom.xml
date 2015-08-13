@@ -69,7 +69,7 @@
     <nexus>http://nexus.sixsq.com/content/repositories</nexus>
     <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
-    <hsqldb.version>2.3.2</hsqldb.version>
+    <hsqldb.version>2.3.3</hsqldb.version>
 
     <stratuslab.version>14.06.0</stratuslab.version>
     <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
