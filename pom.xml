@@ -52,7 +52,7 @@
     <slipstream.downloads.dir>${slipstream.base.dir}/downloads</slipstream.downloads.dir>
     <slipstream.war.web-inf.lib.dir>${installation.dir}/webapps/slipstream.war/WEB-INF/lib</slipstream.war.web-inf.lib.dir>
 
-    <jetty.version>9.3.2.v20150730</jetty.version>
+    <jetty.version>9.0.6.v20130930</jetty.version>
     <jetty.connector.dir>${installation.dir}/lib/connectors</jetty.connector.dir>
     <jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
 
