@@ -12,8 +12,8 @@
 #     them with git pull. Note that the branch will not be changed.
 #
 #   - After the git clone or pull actions, all projects will be build
-#     in the right order using mvn clean install. You can use --skip-tests to
-#     skip the tests but note that after a mvn clean some projects
+#     in the right order using mvn clean install. You can use --with-tests to
+#     include the tests. Note that after a mvn clean some projects
 #     require the tests to be build to work.
 #
 #   - To see the full output of each command use -v.
@@ -46,10 +46,10 @@ pecholn() {
   echo "${1}" 1>&3
 }
 
-SKIP_TESTS="false"
-if [ "${1}" == "--skip-tests" ]
+SKIP_TESTS="true"
+if [ "${1}" == "--with-tests" ]
 then
-  SKIP_TESTS="true"
+  SKIP_TESTS="false"
   shift
 fi
 
@@ -68,7 +68,7 @@ fi
 
 if [ "${1}" != "" ]; then
   echo "$(basename $0): invalid option: ${1}."
-  echo "$(basename $0): only --skip-tests, -v and --separate-modules are valid in that order."
+  echo "$(basename $0): only --with-tests, -v and --separate-modules are valid in that order."
   exit 1
 fi
 
