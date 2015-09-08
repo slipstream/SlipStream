@@ -99,7 +99,7 @@ SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
 for SlipStream to run on."
 
 # libcloud
-CLOUD_CLIENT_LIBCLOUD_VERSION=0.14.1
+CLOUD_CLIENT_LIBCLOUD_VERSION=0.18.0
 
 # EPEL repository
 EPEL_VER=6-8
