@@ -27,7 +27,7 @@ curl -k -L -sSf -u $USER_PASS -o $TARBALL $TARBALL_URL
 tar -C $SS_CONF_DIR -zxvf $TARBALL
 rm -f $TARBALL
 
-# Discover connectors that have to be intalled.
+# Discover connectors that have to be installed.
 CONNECTORS_TO_INSTALL=$(grep -hr cloud.connector.class $SS_CONF_DIR | \
     awk -F= '
 {
