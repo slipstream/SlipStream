@@ -8,8 +8,9 @@ USER_PASS=${2:?"Privde 'user:pass' to get referece configuration."}
 YUM_CREDS_URL=${3:?"Provide YUM repo certs URL as https://host/path/file.tgz"}
 YUM_CREDS_URL_USERPASS=${4:?"Provide 'user:pass' to get YUM repo certs."}
 YUM_REPO=${5:-Snapshots-enterprise}
+GIT_BRANCH=${6:-master}
 
-GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
+GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/$GIT_BRANCH
 
 SS_CONF_DIR=/etc/slipstream
 mkdir -p $SS_CONF_DIR
@@ -47,7 +48,7 @@ CONNECTORS_TO_INSTALL=$(grep -hr cloud.connector.class $SS_CONF_DIR | \
 }' | sort -u)
 
 # Install SlipStream, but don't start it.
-curl -sSf -k -o slipstream.sh $GH_BASE_URL/master/install/slipstream.sh
+curl -sSf -k -o slipstream.sh $GH_BASE_URL/install/slipstream.sh
 chmod +x slipstream.sh
 ./slipstream.sh -S -s $YUM_REPO
 
@@ -58,7 +59,7 @@ fi
 
 # Install required connectors.
 curl -sSf -k -o ss-install-connectors.sh \
-    $GH_BASE_URL/master/install/ss-install-connectors.sh
+    $GH_BASE_URL/install/ss-install-connectors.sh
 chmod +x ss-install-connectors.sh
 ./ss-install-connectors.sh $CONNECTORS_TO_INSTALL
 
