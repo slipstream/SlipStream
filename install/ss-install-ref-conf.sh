@@ -47,6 +47,11 @@ CONNECTORS_TO_INSTALL=$(grep -hr cloud.connector.class $SS_CONF_DIR | \
     };
 }' | sort -u)
 
+# Generate new passwords for the defined users.
+for passfile in /etc/slipstream/passwords/*; do
+    echo -n $(uuid) | tail -c 12 > $passfile
+done
+
 # Install SlipStream, but don't start it.
 curl -sSf -k -o slipstream.sh $GH_BASE_URL/install/slipstream.sh
 chmod +x slipstream.sh
