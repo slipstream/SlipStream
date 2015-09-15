@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 #
-# SlipStream installation recipe
+# SlipStream installation recipe.
+# The installation works on RedHat based distribution only.
+# The script does the following:
+#  - installs SlipStream dependencies
+#  - installs and starts RDBMS
+#  - installs and starts SlipStream service (it's optionally possible not to
+#  start the service).
+# NB! Installation of the SlipStream connectors is not done in this script.
 
 # Fail fast and fail hard.
 set -e
@@ -11,14 +18,31 @@ LOG_FILE=/tmp/slipstream-install.log
 # Type of repository to lookup for SlipStream packages. 'Releases' will install
 # stable releases, whereas 'Snapshots' will install unstable/testing packages.
 SS_REPO_KIND=Releases-community
-SS_THEME=
-SS_LANG=
+SS_THEME=default
+SS_LANG=en
+SS_START=true
+
+USAGE="usage: -h -v -l <log-file> -s <repo-kind> -E -H <ip> -t <theme> -L <lang> -S\n
+-h print this help\n
+-v run in verbose mode\n
+-l log file (default: $LOG_FILE)\n
+-s kind of the repository to use (default: $SS_REPO_KIND)\n
+-E don't load examples\n
+-H hostname or IP of the host. If not provided, an attempt to discover it is made.\n
+-t the theme for the service\n
+-L the language of the interface. Possilbe values: en, fr, de, jp. (default: en)\n
+-S don't start SlipStream service."
 
 # Allow this to be set in the environment to avoid having to pass arguments
 # through all of the other installation scripts.
 SLIPSTREAM_EXAMPLES=${SLIPSTREAM_EXAMPLES:-true}
 
-while getopts l:H:t:L:s:vE opt; do
+function _exit_usage() {
+    echo -e $USAGE
+    exit 1
+}
+
+while getopts l:H:t:L:s:vESh opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -45,7 +69,12 @@ while getopts l:H:t:L:s:vE opt; do
         # Localization language
         SS_LANG=$OPTARG
         ;;
-    *)
+    S)
+        # Don't start SlipStream service
+        SS_START=false
+        ;;
+    *|h)
+        _exit_usage
         ;;
     esac
 done
@@ -124,7 +153,8 @@ SS_LOCAL_PORT=8182
 SS_LOCAL_HOST=localhost
 SS_LOCAL_URL=http://$SS_LOCAL_HOST:$SS_LOCAL_PORT
 
-SLIPSTREAM_CONF=/etc/slipstream/slipstream.conf
+SLIPSTREAM_ETC=/etc/slipstream
+SLIPSTREAM_CONF=$SLIPSTREAM_ETC/slipstream.conf
 
 DEPS="unzip curl wget gnupg nc python-pip"
 CLEAN_PKG_CACHE="yum clean all"
@@ -301,12 +331,11 @@ function deploy_slipstream_server () {
 
     _update_slipstream_configuration
 
-    _deploy_cloud_connectors
-
     _set_theme
     _set_localization
 
-    _start_slipstream_service
+    _register_slipstream_with_system_startup
+    _start_slipstream
 
     _deploy_nginx_proxy
 
@@ -332,16 +361,26 @@ function _stop_slipstream_service() {
     service ssclj stop || true
 }
 
-function _start_slipstream_service() {
-    _print "- starting SlipStream service"
+function _register_slipstream_with_system_startup() {
+    _print "- registering SlipStream service with system startup"
 
     chkconfig --add ssclj
-    service ssclj start
-
     chkconfig --add slipstream
-    service slipstream start
+}
 
-    _start_slipstream_application
+function _start_slipstream() {
+    if [ _is_true $SS_START ]; then
+        _print "- starting SlipStream service"
+        _start_slipstream_service
+        _start_slipstream_application
+    else
+        _print "- WARNING: requested not to start SlipStream service"
+    fi
+}
+
+function _start_slipstream_service() {
+    service ssclj start
+    service slipstream start
 }
 
 function _start_slipstream_application() {
@@ -369,11 +408,23 @@ EOF
     fi
 }
 
-function _update_slipstream_configuration() {
-
+function _update_hostname_in_conf_file() {
+    # $@ names of the files to update
     sed -i -e "/^[a-z]/ s/slipstream.sixsq.com/${SS_HOSTNAME}/" \
            -e "/^[a-z]/ s/example.com/${SS_HOSTNAME}/" \
-           $SLIPSTREAM_CONF
+           -e "/^[a-z]/ s/<CHANGE_HOSTNAME>/${SS_HOSTNAME}/" \
+           $@
+}
+
+function _update_slipstream_configuration() {
+
+    _update_hostname_in_conf_file $SLIPSTREAM_CONF.*
+
+    if [ -d $SLIPSTREAM_ETC/connectors ]; then
+        for cconf in $(find $SLIPSTREAM_ETC/connectors -name "*.conf"); do
+            _update_hostname_in_conf_file $cconf
+        done
+    fi
 
     _update_or_add_config_property slipstream.update.clienturl \
         https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz
@@ -408,17 +459,12 @@ function _deploy_nginx_proxy() {
 }
 
 function _load_slipstream_examples() {
+    _is_true $SS_START || return 0
     _is_true $SLIPSTREAM_EXAMPLES || return 0
 
     _print "- loading SlipStream examples"
     ss-module-upload -u ${SS_USERNAME} -p ${SS_PASSWORD} \
         --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
-}
-
-function _deploy_cloud_connectors() {
-     _print "- installing SlipStream connectors"
-     #yum -y install slipstream-connector*
-     _print "---> WARNING: Skipped installation of SlipStream connectors."
 }
 
 function cleanup () {
@@ -437,7 +483,17 @@ deploy_slipstream_client
 deploy_slipstream_server
 cleanup
 
-_print "SlipStream server installed and accessible at https://$SS_HOSTNAME"
+function _how_to_start_service() {
+    declare -f _start_slipstream_service | awk '/{/{x=1;next}/}/{x=0}x'
+}
+
+if [ _is_true $SS_START ]; then
+    _print "SlipStream server installed and accessible at https://$SS_HOSTNAME"
+else
+    _print "SlipStream server installed, but wasn't started."
+    _print "To start the service run:\n$(_how_to_start_service)"
+    _print "SlipStream server will become accessible at https://$SS_HOSTNAME"
+fi
 _print "Please see Configuration section of the SlipStream administrator
 manual for the next steps like changing the service default passwords,
 adding cloud connectors and more."
