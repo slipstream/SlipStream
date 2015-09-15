@@ -4,7 +4,7 @@ set -x
 set -o pipefail
 
 TARBALL_URL=${1:?"Provide reference configuration URL as https://host/path/file.tgz"}
-USER_PASS=${2:?"Privde 'user:pass' to get referece configuration."}
+USER_PASS=${2:?"Provide 'user:pass' to get referece configuration."}
 YUM_CREDS_URL=${3:?"Provide YUM repo certs URL as https://host/path/file.tgz"}
 YUM_CREDS_URL_USERPASS=${4:?"Provide 'user:pass' to get YUM repo certs."}
 YUM_REPO=${5:-Snapshots-enterprise}
