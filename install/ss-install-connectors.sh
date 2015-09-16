@@ -80,8 +80,15 @@ trap '_on_trap' ERR
 CONNECTORS=${@}
 
 _print "Installing SlipStream connectors: $CONNECTORS"
-for name in "${@}"; do
+
+declare -A CONNECTORS_MAPPING 
+CONNECTORS_MAPPING=(
+    ['cloudstackadvancedzone']='cloudstack'
+    ['stratuslabiter']='stratuslab')
+
+for name in "$CONNECTORS"; do
     _print "---> ${name}"
+    [ -n "${CONNECTORS_MAPPING[$name]}" ] && name=${CONNECTORS_MAPPING[$name]}
     script=connector-${name}.sh
     _download $script "$name connector installation script"
     _printn "installing... "
