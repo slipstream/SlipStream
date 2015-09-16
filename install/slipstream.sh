@@ -369,7 +369,7 @@ function _register_slipstream_with_system_startup() {
 }
 
 function _start_slipstream() {
-    if [ _is_true $SS_START ]; then
+    if ( _is_true $SS_START ); then
         _print "- starting SlipStream service"
         _start_slipstream_service
         _start_slipstream_application
@@ -489,7 +489,7 @@ function _how_to_start_service() {
     declare -f _start_slipstream_service | awk '/{/{x=1;next}/}/{x=0}x'
 }
 
-if [ _is_true $SS_START ]; then
+if ( _is_true $SS_START ); then
     _print "SlipStream server installed and accessible at https://$SS_HOSTNAME"
 else
     _print "SlipStream server installed, but wasn't started."
