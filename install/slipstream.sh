@@ -418,7 +418,9 @@ function _update_hostname_in_conf_file() {
 
 function _update_slipstream_configuration() {
 
-    _update_hostname_in_conf_file $SLIPSTREAM_CONF.*
+    for ssconf in $(find $SLIPSTREAM_ETC -maxdepth 1 -name \"$(basename $SLIPSTREAM_CONF)*\" -type f); do
+        _update_hostname_in_conf_file $ssconf
+    done
 
     if [ -d $SLIPSTREAM_ETC/connectors ]; then
         for cconf in $(find $SLIPSTREAM_ETC/connectors -name "*.conf"); do
