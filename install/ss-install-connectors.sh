@@ -86,7 +86,7 @@ CONNECTORS_MAPPING=(
     ['cloudstackadvancedzone']='cloudstack'
     ['stratuslabiter']='stratuslab')
 
-for name in "$CONNECTORS"; do
+for name in $CONNECTORS; do
     _print "---> ${name}"
     [ -n "${CONNECTORS_MAPPING[$name]}" ] && name=${CONNECTORS_MAPPING[$name]}
     script=connector-${name}.sh
