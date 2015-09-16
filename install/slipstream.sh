@@ -418,7 +418,7 @@ function _update_hostname_in_conf_file() {
 
 function _update_slipstream_configuration() {
 
-    for ssconf in $(find $SLIPSTREAM_ETC -maxdepth 1 -name \"$(basename $SLIPSTREAM_CONF)*\" -type f); do
+    for ssconf in $(find $SLIPSTREAM_ETC -maxdepth 1 -name "$(basename $SLIPSTREAM_CONF)*" -type f); do
         _update_hostname_in_conf_file $ssconf
     done
 
