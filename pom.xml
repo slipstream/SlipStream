@@ -765,6 +765,12 @@
         <version>2.1.2</version>
       </dependency>
 
+      <dependency>
+        <groupId>superstring</groupId>
+        <artifactId>superstring</artifactId>
+        <version>2.1.0</version>
+      </dependency>
+
       <!-- *************************** -->
       <!-- direct clojure dependencies -->
       <!-- *************************** -->
