@@ -515,7 +515,7 @@
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-        <version>2.3.1</version>
+        <version>2.4</version>
       </dependency>
 
       <dependency>
@@ -534,7 +534,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20141113</version>
+        <version>20150729</version>
       </dependency>
 
       <dependency>
@@ -612,19 +612,19 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
       </dependency>
 
       <dependency>
@@ -738,7 +738,7 @@
       <dependency>
         <groupId>environ</groupId>
         <artifactId>environ</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
       </dependency>
 
       <dependency>
@@ -756,7 +756,7 @@
       <dependency>
         <groupId>org.xerial</groupId>
         <artifactId>sqlite-jdbc</artifactId>
-        <version>3.8.11.1</version>
+        <version>3.8.11.2</version>
       </dependency>
 
       <dependency>
@@ -796,7 +796,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>tools.namespace</artifactId>
-        <version>0.2.10</version>
+        <version>0.2.11</version>
       </dependency>
 
       <dependency>
@@ -814,7 +814,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>java.jdbc</artifactId>
-        <version>0.4.1</version>
+        <version>0.4.2</version>
       </dependency>
 
       <dependency>
@@ -844,7 +844,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>tools.nrepl</artifactId>
-        <version>0.2.10</version>
+        <version>0.2.11</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>
