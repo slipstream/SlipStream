@@ -99,7 +99,7 @@ install_project(){
   if [ -d ${1} ]
   then
     pecho "  - Installing ${1}... "
-    (cd ${1}; git_branch; if mvn clean install -DskipModules=true -Dmaven.test.skip=$SKIP_TESTS; then pecholn "$OK"; else pecholn "$ERROR"; exit 1; fi;) || MVN_INSTALL_HAD_ERROR="true";
+    (cd ${1}; git_branch; if mvn clean install --update-snapshots -DskipModules=true -Dmaven.test.skip=$SKIP_TESTS; then pecholn "$OK"; else pecholn "$ERROR"; exit 1; fi;) || MVN_INSTALL_HAD_ERROR="true";
   else
     pecholn "  - Project ${1} not found. Skipping."
   fi
@@ -129,7 +129,7 @@ if $BUILD_SEPARATE_MODULES; then
     install_project $repo
   done
 else
-  (cd SlipStream && mvn clean install --fail-at-end  -Dmaven.test.skip=$SKIP_TESTS 1>&3 2>&4;)
+  (cd SlipStream && mvn clean install --update-snapshots --fail-at-end  -Dmaven.test.skip=$SKIP_TESTS 1>&3 2>&4;)
 fi
 
 if $MVN_INSTALL_HAD_ERROR
