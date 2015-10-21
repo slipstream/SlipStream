@@ -9,6 +9,7 @@ YUM_CREDS_URL=${3:?"Provide YUM repo certs URL as https://host/path/file.tgz"}
 YUM_CREDS_URL_USERPASS=${4:?"Provide 'user:pass' to get YUM repo certs."}
 YUM_REPO=${5:-Snapshots-enterprise}
 GIT_BRANCH=${6:-master}
+CONNECTOR_REPO=${7:-release}
 
 GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/$GIT_BRANCH
 
@@ -66,7 +67,7 @@ fi
 curl -sSf -k -o ss-install-connectors.sh \
     $GH_BASE_URL/install/ss-install-connectors.sh
 chmod +x ss-install-connectors.sh
-./ss-install-connectors.sh $CONNECTORS_TO_INSTALL
+./ss-install-connectors.sh -r $CONNECTOR_REPO $CONNECTORS_TO_INSTALL
 
 # Start SlipStream.
 service ssclj start
