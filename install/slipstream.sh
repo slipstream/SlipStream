@@ -343,7 +343,8 @@ function deploy_slipstream_server () {
 }
 
 function _set_theme() {
-    if [ -n $SS_THEME ]; then
+    # do not write this line if using the default theme for now
+    if [ -n $SS_THEME -a "X$SS_THEME" -ne "Xdefault" ]; then
         _set_jetty_args slipstream.ui.util.theme.current-theme $SS_THEME
     fi
 }
