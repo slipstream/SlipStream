@@ -636,7 +636,7 @@
       <dependency>
         <groupId>prismatic</groupId>
         <artifactId>schema</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.3</version>
       </dependency>
 
       <dependency>
@@ -820,7 +820,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
-        <version>0.1.346.0-17112a-alpha</version>
+        <version>0.2.371</version>
       </dependency>
 
       <!-- ***************** -->
@@ -844,7 +844,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>tools.nrepl</artifactId>
-        <version>0.2.11</version>
+        <version>0.2.12</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>
