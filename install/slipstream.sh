@@ -514,9 +514,6 @@ set -x
 _print $(date)
 _print "Starting installation of SlipStream server (from ${SS_YUM_REPO})."
 
-exit 0
-# FIXME
-
 prepare_node
 deploy_slipstream_server_deps
 deploy_slipstream_client
