@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e
-set -x
 set -o pipefail
 
+_SCRIPT_NAME=${0##*/}
+
 _YUM_REPO_KIND_DEFAULT=snapshot
-_YUM_REPO_EDITION_DEFAULT=enterprise
+_YUM_REPO_EDITION_DEFAULT=community
+_YUM_REPO_EDITIONS=(${_YUM_REPO_EDITION_DEFAULT} community)
 
 declare -A YUM_REPO_TO_GH_BRANCH
 YUM_REPO_TO_GH_BRANCH[local]=master
@@ -12,12 +14,60 @@ YUM_REPO_TO_GH_BRANCH[${_YUM_REPO_KIND_DEFAULT}]=master
 YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
 YUM_REPO_TO_GH_BRANCH[release]=release-latest
 
-TARBALL_URL=${1:?"Provide reference configuration URL as https://host/path/file.tgz"}
-USER_PASS=${2:?"Provide 'user:pass' to get referece configuration."}
-YUM_CREDS_URL=${3:?"Provide YUM repo certs URL as https://host/path/file.tgz"}
-YUM_CREDS_URL_USERPASS=${4:?"Provide 'user:pass' to get YUM repo certs."}
-YUM_REPO_KIND=${5:-${_YUM_REPO_KIND_DEFAULT}}
-YUM_REPO_EDITION=${6:-${_YUM_REPO_EDITION_DEFAULT}}
+YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
+YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
+
+function usage_exit() {
+    echo -e "usage:\n$_SCRIPT_NAME -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass> -k <kind> -e <edition>
+-r reference configuration URL as https://host/path/file.tgz. Mandatory parameter.
+-u credentials (user:pass) for URL with referece configuration. Optional parameter.
+-c YUM certificate tarball url as https://host/path/file.tgz Optional parameter.
+-p credentials (user:pass) for URL with YUM certificate tarball.  Optional parameter.
+-k kind of the YUM repository to use: ${!YUM_REPO_TO_GH_BRANCH[@]}. Default: $_YUM_REPO_KIND_DEFAULT
+-e edition of the YUM repository to use: ${_YUM_REPO_EDITIONS[@]}. Default: $_YUM_REPO_EDITION_DEFAULT
+"
+    exit 1
+}
+
+while getopts r:u:c:p:k:e: opt; do
+    case $opt in
+    r)
+        TARBALL_URL=$OPTARG
+        ;;
+    u)
+        TARBALL_URL_USERPASS=$OPTARG
+        ;;
+    c)
+        YUM_CREDS_URL=$OPTARG
+        ;;
+    p)
+        YUM_CREDS_URL_USERPASS=$OPTARG
+        ;;
+    k)
+        YUM_REPO_KIND=$OPTARG
+        ;;
+    e)
+        YUM_REPO_EDITION=$OPTARG
+        ;;
+    \?)
+        usage_exit
+        ;;
+    esac
+done
+
+if [ -z "$TARBALL_URL" ]; then
+    echo "ERROR: URL with reference configuration tarball was not provided."
+    usage_exit
+fi
+if [ -z "$TARBALL_URL_USERPASS" ]; then
+    echo "WARNING: Credentials for URL with reference configuration tarball were not provided."
+fi
+if [ -z "$YUM_CREDS_URL" ]; then
+    echo "WARNING: URL with YUM certificates tarball was not provided."
+fi
+if [ -z "$YUM_CREDS_URL_USERPASS" ]; then
+    echo "WARNING: Credentials for URL with YUM certificates tarball were not provided."
+fi
 
 GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
 
@@ -25,9 +75,14 @@ SS_CONF_DIR=/etc/slipstream
 mkdir -p $SS_CONF_DIR
 
 function _install_yum_client_cert() {
+    [ -z "$YUM_CREDS_URL" ] && { echo "WARNING: Skipped intallation of YUM credentials."; return; }
     # Get and inflate YUM certs.
     TARBALL=~/yum-certs.tgz
-    curl -k -L -sSf -u $YUM_CREDS_URL_USERPASS -o $TARBALL $YUM_CREDS_URL
+    _CREDS=
+    if [ -n "$YUM_CREDS_URL_USERPASS" ]; then
+        _CREDS="-u $YUM_CREDS_URL_USERPASS"
+    fi
+    curl -k -L -sSf $_CREDS -o $TARBALL $YUM_CREDS_URL
     tar -C $SS_CONF_DIR -zxvf $TARBALL
     chmod 400 $SS_CONF_DIR/yum-client.*
     rm -f $TARBALL
@@ -36,7 +91,11 @@ function _install_yum_client_cert() {
 function _install_reference_configuration() {
     # Get and inflate the tarball with the server configuration.
     TARBALL=~/ss-ref-conf.tgz
-    curl -k -L -sSf -u $USER_PASS -o $TARBALL $TARBALL_URL
+    _CREDS=
+    if [ -n "$TARBALL_URL_USERPASS" ]; then
+        _CREDS="-u $TARBALL_URL_USERPASS"
+    fi
+    curl -k -L -sSf $_CREDS -o $TARBALL $TARBALL_URL
     tar -C $SS_CONF_DIR -zxvf $TARBALL
     rm -f $TARBALL
 
