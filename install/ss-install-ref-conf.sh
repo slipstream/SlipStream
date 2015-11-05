@@ -18,18 +18,32 @@ YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
 YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
 
 function usage_exit() {
-    echo -e "usage:\n$_SCRIPT_NAME -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass> -k <kind> -e <edition>
+    echo -e "usage:\n$_SCRIPT_NAME -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
+    -k <YUM repo kind> -e <YUM repo edition> -o '<parameters to slipstream.sh>'
 -r reference configuration URL as https://host/path/file.tgz. Mandatory parameter.
 -u credentials (user:pass) for URL with referece configuration. Optional parameter.
 -c YUM certificate tarball url as https://host/path/file.tgz Optional parameter.
 -p credentials (user:pass) for URL with YUM certificate tarball.  Optional parameter.
 -k kind of the YUM repository to use: ${!YUM_REPO_TO_GH_BRANCH[@]}. Default: $_YUM_REPO_KIND_DEFAULT
 -e edition of the YUM repository to use: ${_YUM_REPO_EDITIONS[@]}. Default: $_YUM_REPO_EDITION_DEFAULT
+-o set of parameters to be passed to slipstream.sh installation script.
 "
     exit 1
 }
 
-while getopts r:u:c:p:k:e: opt; do
+function _check_yum_repo_kind_to_github_tag_map() {
+    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
+        usage_exit
+    fi
+}
+
+function _check_repo_edition() {
+    if [ "$1" != "community" ] && [ "$1" != "enterprise" ]; then
+       usage_exit
+    fi
+}
+
+while getopts r:u:c:p:k:e:o: opt; do
     case $opt in
     r)
         TARBALL_URL=$OPTARG
@@ -44,10 +58,15 @@ while getopts r:u:c:p:k:e: opt; do
         YUM_CREDS_URL_USERPASS=$OPTARG
         ;;
     k)
+        _check_yum_repo_kind_to_github_tag_map $OPTARG
         YUM_REPO_KIND=$OPTARG
         ;;
     e)
+        _check_repo_edition $OPTARG
         YUM_REPO_EDITION=$OPTARG
+        ;;
+    o)
+        SS_INSTALL_OPTIONS=$OPTARG
         ;;
     \?)
         usage_exit
@@ -128,7 +147,7 @@ function _install_slipstream() {
     # Install SlipStream, but don't start it.
     curl -sSf -k -o slipstream.sh $GH_BASE_URL/install/slipstream.sh
     chmod +x slipstream.sh
-    ./slipstream.sh -S -k $YUM_REPO_KIND -e $YUM_REPO_EDITION
+    ./slipstream.sh -S -k $YUM_REPO_KIND -e $YUM_REPO_EDITION $SS_INSTALL_OPTIONS
 
     # After SS RPM installation our conf file might have been moved. Bring it back.
     if [ -f $SS_CONF_DIR/slipstream.conf.rpmorig ]; then
