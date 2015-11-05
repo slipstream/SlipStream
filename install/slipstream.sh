@@ -13,20 +13,36 @@
 set -e
 set -o pipefail
 
+# # # # # # #
+# DEFAULTS.
+# # # # # # #
+
 VERBOSE=false
 LOG_FILE=/tmp/slipstream-install.log
-# Type of repository to lookup for SlipStream packages. 'Releases' will install
-# stable releases, whereas 'Snapshots' will install unstable/testing packages.
-SS_REPO_KIND=Releases-community
+
+# Defult YUM repository kind.
+_YUM_REPO_KIND_DEFAULT=release
+declare -A _YUM_REPO_KIND_MAP
+_YUM_REPO_KIND_MAP[local]=Local
+_YUM_REPO_KIND_MAP[snapshot]=Snapshots
+_YUM_REPO_KIND_MAP[candidate]=Candidates
+_YUM_REPO_KIND_MAP[${_YUM_REPO_KIND_DEFAULT}]=Releases
+SS_YUM_REPO_KIND=${_YUM_REPO_KIND_MAP[$_YUM_REPO_KIND_DEFAULT]}
+
+# Defult YUM repository edition.
+_YUM_REPO_EDITIONS=(enterprise community)
+SS_YUM_REPO_EDITION=community
+
 SS_THEME=default
 SS_LANG=en
 SS_START=true
 
-USAGE="usage: -h -v -l <log-file> -s <repo-kind> -E -H <ip> -t <theme> -L <lang> -S\n
+USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
 -h print this help\n
 -v run in verbose mode\n
 -l log file (default: $LOG_FILE)\n
--s kind of the repository to use (default: $SS_REPO_KIND)\n
+-k kind of the repository to use: ${!_YUM_REPO_KIND_MAP[@]}. Default: $_YUM_REPO_KIND_DEFAULT\n
+-e edition of the repository to use: ${_YUM_REPO_EDITIONS[@]}. Default: $SS_YUM_REPO_EDITION\n
 -E don't load examples\n
 -H hostname or IP of the host. If not provided, an attempt to discover it is made.\n
 -t the theme for the service\n
@@ -42,7 +58,18 @@ function _exit_usage() {
     exit 1
 }
 
-while getopts l:H:t:L:s:vESh opt; do
+function _check_repo_edition() {
+    if [ "$1" != "community" ] && [ "$1" != "enterprise" ]; then
+       _exit_usage
+    fi
+}
+
+function _check_repo_kind() {
+    if ! test "${_YUM_REPO_KIND_MAP[$1]+isset}"; then
+        _exit_usage
+    fi
+}
+while getopts l:H:t:L:k:e:vESh opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -50,8 +77,13 @@ while getopts l:H:t:L:s:vESh opt; do
     l)
         LOG_FILE=$OPTARG
         ;;
-    s)
-        SS_REPO_KIND=$OPTARG
+    k)
+        _check_repo_kind $OPTARG
+        SS_YUM_REPO_KIND=${_YUM_REPO_KIND_MAP[$OPTARG]}
+        ;;
+    e)
+        _check_repo_edition $OPTARG
+        SS_YUM_REPO_EDITION=$OPTARG
         ;;
     E)
         # Do not upload examples
@@ -78,6 +110,8 @@ while getopts l:H:t:L:s:vESh opt; do
         ;;
     esac
 done
+
+SS_YUM_REPO=${SS_YUM_REPO_KIND}-${SS_YUM_REPO_EDITION}
 
 shift $((OPTIND - 1))
 
@@ -218,7 +252,7 @@ function _add_yum_repos () {
 
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
-    yum-config-manager --enable SlipStream-${SS_REPO_KIND}
+    yum-config-manager --enable SlipStream-${SS_YUM_REPO_KIND}
     yum-config-manager --enable epel
 }
 
@@ -478,7 +512,10 @@ set -u
 set -x
 
 _print $(date)
-_print "Starting installation of SlipStream server (from ${SS_REPO_KIND})."
+_print "Starting installation of SlipStream server (from ${SS_YUM_REPO})."
+
+exit 0
+# FIXME
 
 prepare_node
 deploy_slipstream_server_deps
