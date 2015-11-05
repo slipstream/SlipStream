@@ -252,7 +252,7 @@ function _add_yum_repos () {
 
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
-    yum-config-manager --enable SlipStream-${SS_YUM_REPO_KIND}
+    yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     yum-config-manager --enable epel
 }
 
@@ -513,9 +513,6 @@ set -x
 
 _print $(date)
 _print "Starting installation of SlipStream server (from ${SS_YUM_REPO})."
-
-exit 0
-# FIXME
 
 prepare_node
 deploy_slipstream_server_deps
