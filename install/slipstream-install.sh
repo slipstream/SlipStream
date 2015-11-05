@@ -37,7 +37,7 @@ YUM_REPO_EDITION=${1:-community}
 YUM_REPO_KIND=${2:-release}
 _check_yum_repo_kind_to_github_tag_map $YUM_REPO_KIND
 
-SCRIPT_BASE_URL=$_GH_BASE_URL/${REPO_TO_TAG[$YUM_REPO_KIND]}/install
+SCRIPT_BASE_URL=$_GH_BASE_URL/${YUM_REPO_TO_GH_BRANCH[$YUM_REPO_KIND]}/install
 
 function _download() {
     TO=$1
