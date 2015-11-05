@@ -252,7 +252,7 @@ function _add_yum_repos () {
 
     yum install -y yum-utils
     yum-config-manager --disable SlipStream-*
-    yum-config-manager --enable SlipStream-${SS_YUM_REPO_KIND}
+    yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     yum-config-manager --enable epel
 }
 
