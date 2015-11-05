@@ -430,6 +430,12 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>auth</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-ui-static-content</artifactId>
         <version>${project.version}</version>
         <type>zip</type>
@@ -821,6 +827,30 @@
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
         <version>0.1.346.0-17112a-alpha</version>
+      </dependency>
+
+      <dependency>
+        <groupId>puppetlabs</groupId>
+        <artifactId>http-client</artifactId>
+        <version>0.4.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>buddy</groupId>
+        <artifactId>buddy-core</artifactId>
+        <version>0.6.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>buddy</groupId>
+        <artifactId>buddy-hashers</artifactId>
+        <version>0.6.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>buddy</groupId>
+        <artifactId>buddy-sign</artifactId>
+        <version>0.6.0</version>
       </dependency>
 
       <!-- ***************** -->
