@@ -21,6 +21,12 @@ done
 
 _GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 
+function _check_yum_repo_kind_to_github_tag_map() {
+    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
+        usage
+    fi
+}
+
 YUM_REPO_EDITION=${1:-community}
 YUM_REPO_KIND=${2:-release}
 _check_yum_repo_kind_to_github_tag_map $YUM_REPO_KIND
@@ -32,12 +38,6 @@ YUM_REPO_TO_GH_BRANCH[local]=master
 YUM_REPO_TO_GH_BRANCH[snapshot]=master
 YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
 YUM_REPO_TO_GH_BRANCH[release]=release-latest
-
-function _check_yum_repo_kind_to_github_tag_map() {
-    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
-        usage
-    fi
-}
 
 function _download() {
     TO=$1
