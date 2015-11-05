@@ -37,7 +37,7 @@ SS_THEME=default
 SS_LANG=en
 SS_START=true
 
-USAGE="usage: -h -v -l <log-file> -s <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
+USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
 -h print this help\n
 -v run in verbose mode\n
 -l log file (default: $LOG_FILE)\n
