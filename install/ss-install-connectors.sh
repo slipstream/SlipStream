@@ -4,36 +4,38 @@
 set -e
 set -o pipefail
 
-REPO=release
-
 _SCRIPT_NAME=${0##*/}
+
+_YUM_REPO_KIND_DEFAULT=release
 
 LOG_FILE=/tmp/slipstream-connectors-install.log
 exec 4>&2 3>&1 1>>${LOG_FILE} 2>&1
 
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [-r repo] <list of connectors>
- -r repo: <release|candidate|snapshot|local> (default: release)" 1>&3
+ -r repo: <release|candidate|snapshot|local> (default: ${_YUM_REPO_KIND_DEFAULT})" 1>&3
     exit 1
 }
 
-declare -A REPO_TO_TAG
-REPO_TO_TAG[local]=master
-REPO_TO_TAG[snapshot]=master
-REPO_TO_TAG[candidate]=candidate-latest
-REPO_TO_TAG[release]=release-latest
+declare -A YUM_REPO_TO_GH_BRANCH
+YUM_REPO_TO_GH_BRANCH[local]=master
+YUM_REPO_TO_GH_BRANCH[snapshot]=master
+YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
+YUM_REPO_TO_GH_TAG[${_YUM_REPO_KIND_DEFAULT}]=release-latest
 
 function _check_repo() {
-    if ! test "${REPO_TO_TAG[$1]+isset}"; then
+    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
         usage
     fi
 }
 
+SS_YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
+
 while getopts :r: opt; do
     case $opt in
     r)
-        REPO=$OPTARG
-        _check_repo $REPO
+        SS_YUM_REPO_KIND=$OPTARG
+        _check_repo $SS_YUM_REPO_KIND
         ;;
     \?)
         usage
@@ -65,7 +67,7 @@ function _download() {
     chmod +x $TO
 }
 
-SCRIPT_BASE_URL=$GH_BASE_URL/${REPO_TO_TAG[$REPO]}/install/connectors
+SCRIPT_BASE_URL=$GH_BASE_URL/${YUM_REPO_TO_GH_BRANCH[$SS_YUM_REPO_KIND]}/install/connectors
 
 function _print_on_trap() {
     _prints "\nERROR! Check log file ${LOG_FILE}\n... snippet ...\n$(tail -5 ${LOG_FILE})"

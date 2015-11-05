@@ -4,9 +4,11 @@ set -o pipefail
 
 _SCRIPT_NAME=${0##*/}
 
+_YUM_REPO_KIND_DEFAULT=release
+
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [repokind]
- - repokind: <release|candidate|snapshot> (default: release)"
+ - repokind: <release|candidate|snapshot|local> (default: ${_YUM_REPO_KIND_DEFAULT})"
     exit 1
 }
 
@@ -20,13 +22,14 @@ done
 
 GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 
-declare -A REPO_TO_TAG
-REPO_TO_TAG[snapshot]=master
-REPO_TO_TAG[candidate]=candidate-latest
-REPO_TO_TAG[release]=release-latest
+declare -A YUM_REPO_TO_GH_BRANCH
+YUM_REPO_TO_GH_BRANCH[local]=master
+YUM_REPO_TO_GH_BRANCH[snapshot]=master
+YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
+YUM_REPO_TO_GH_TAG[${_YUM_REPO_KIND_DEFAULT}]=release-latest
 
 function _check_repo() {
-    if ! test "${REPO_TO_TAG[$1]+isset}"; then
+    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
         usage
     fi
 }
@@ -41,11 +44,11 @@ function _download() {
     chmod +x $TO
 }
 
-REPO=${1:-release}
-_check_repo $REPO
-SCRIPT_BASE_URL=$GH_BASE_URL/${REPO_TO_TAG[$REPO]}/install
+YUM_REPO_KIND=${1:-${_YUM_REPO_KIND_DEFAULT}}
+_check_repo $YUM_REPO_KIND
+SCRIPT_BASE_URL=$GH_BASE_URL/${YUM_REPO_TO_GH_BRANCH[$YUM_REPO_KIND]}/install
 
 SCRIPT=slipstream-install.sh
 _download $SCRIPT "SlipStream installation wrapper script"
-./$SCRIPT community $REPO
+./$SCRIPT community $YUM_REPO_KIND
 

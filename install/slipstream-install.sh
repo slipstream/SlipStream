@@ -19,34 +19,25 @@ while getopts : opt; do
     esac
 done
 
-GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
+_GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 
-KINDS=(enterprise community)
-REPOS=(release candidate snapshot local)
+declare -A YUM_REPO_TO_GH_BRANCH
+YUM_REPO_TO_GH_BRANCH[local]=master
+YUM_REPO_TO_GH_BRANCH[snapshot]=master
+YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
+YUM_REPO_TO_GH_BRANCH[release]=release-latest
 
-declare -A REPO_TO_TAG
-REPO_TO_TAG[local]=master
-REPO_TO_TAG[snapshot]=master
-REPO_TO_TAG[candidate]=candidate-latest
-REPO_TO_TAG[release]=release-latest
-
-declare -A REPO_TO_YUM
-REPO_TO_YUM[local]=Local
-REPO_TO_YUM[snapshot]=Snapshots
-REPO_TO_YUM[candidate]=Candidates
-REPO_TO_YUM[release]=Releases
-
-function _check_kind() {
-    if [ "$1" != "community" ] && [ "$1" != "enterprise" ]; then
+function _check_yum_repo_kind_to_github_tag_map() {
+    if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
         usage
     fi
 }
 
-function _check_repo() {
-    if ! test "${REPO_TO_TAG[$1]+isset}"; then
-        usage
-    fi
-}
+YUM_REPO_EDITION=${1:-community}
+YUM_REPO_KIND=${2:-release}
+_check_yum_repo_kind_to_github_tag_map $YUM_REPO_KIND
+
+SCRIPT_BASE_URL=$_GH_BASE_URL/${YUM_REPO_TO_GH_BRANCH[$YUM_REPO_KIND]}/install
 
 function _download() {
     TO=$1
@@ -62,7 +53,7 @@ function install_slipstream_server() {
     echo -e ":::\n::: SlipStream Service.\n:::"
     SCRIPT=slipstream.sh
     _download $SCRIPT "SlipStream installation script"
-    ./$SCRIPT -s ${REPO_TO_YUM[$REPO]}-$KIND
+    ./$SCRIPT -k $YUM_REPO_KIND -e $YUM_REPO_EDITION
 }
 
 function install_slipstream_connectors() {
@@ -70,18 +61,12 @@ function install_slipstream_connectors() {
     SCRIPT=ss-install-connectors.sh
     _download $SCRIPT "SlipStream connectors installation script"
     CONNECTORS="cloudstack occi openstack stratuslab"
-    ./$SCRIPT -r $REPO $CONNECTORS
+    ./$SCRIPT -r $YUM_REPO_KIND $CONNECTORS
     service slipstream restart
     echo -e "\n::: SlipStream connectors installed: $CONNECTORS"
 }
 
-KIND=${1:-community}
-_check_kind $KIND
-REPO=${2:-release}
-_check_repo $REPO
-SCRIPT_BASE_URL=$GH_BASE_URL/${REPO_TO_TAG[$REPO]}/install
-
 install_slipstream_server
-if [ "$KIND" == "community" ]; then
+if [ "$YUM_REPO_EDITION" == "community" ]; then
     install_slipstream_connectors
 fi
