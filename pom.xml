@@ -70,6 +70,7 @@
     <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
     <hsqldb.version>2.3.3</hsqldb.version>
+    <postgresql.version>9.4-1201-jdbc41</postgresql.version>
 
     <stratuslab.version>14.06.0</stratuslab.version>
     <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
@@ -577,6 +578,12 @@
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
         <version>${hsqldb.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgresql.version}</version>
       </dependency>
 
       <dependency>
