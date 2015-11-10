@@ -264,17 +264,29 @@ function _install_global_dependencies() {
 
 }
 
-function _disable_selinux() {
+function _configure_selinux() {
 
-    _print "- disabling selinux"
+    _print "- configuring selinux"
 
-    # disable SELinux using command to be consistent between CentOS 6 and 7
+    # install SELinux needed utility tools
+    yum -y install policycoreutils policycoreutils-python
+
+    # if not disabled, configure SELinux in permissive mode
     enforce=$(getenforce)
     if [[ "$enforce" != "Disabled" ]]; then
-    	setenforce 0
+
+        sed -i -e 's/^SELINUX=.*/SELINUX=permissive/' /etc/sysconfig/selinux \
+            /etc/selinux/config
+
+        setenforce Permissive
+        
+        # configure SELinux to work with SlipStream server
+        setsebool -P httpd_run_stickshift 1
+        setsebool -P httpd_can_network_connect 1
+        semanage fcontext -a -t httpd_cache_t "/tmp/slipstream(/.*)?"
+        restorecon -R -v /tmp/slipstream || true
     fi
-    sed -i -e 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux \
-        /etc/selinux/config
+
 }
 
 function _install_ntp() {
@@ -291,7 +303,7 @@ function prepare_node () {
     _add_yum_repos
     _install_global_dependencies
     _configure_firewall
-    _disable_selinux
+    _configure_selinux
     _install_ntp
 }
 
