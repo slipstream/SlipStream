@@ -37,6 +37,8 @@ SS_THEME=default
 SS_LANG=en
 SS_START=true
 
+SS_DB=hsqldb
+
 USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
 -h print this help\n
 -v run in verbose mode\n
@@ -47,7 +49,8 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -H hostname or IP of the host. If not provided, an attempt to discover it is made.\n
 -t the theme for the service\n
 -L the language of the interface. Possilbe values: en, fr, de, jp. (default: en)\n
--S don't start SlipStream service."
+-S don't start SlipStream service.\n
+-d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB"
 
 # Allow this to be set in the environment to avoid having to pass arguments
 # through all of the other installation scripts.
@@ -69,7 +72,14 @@ function _check_repo_kind() {
         _exit_usage
     fi
 }
-while getopts l:H:t:L:k:e:vESh opt; do
+
+function _check_db_param() {
+    if [ "$1" != "hsqldb" ] && [ "$1" != "postgresql" ]; then
+       _exit_usage
+    fi
+}
+
+while getopts l:H:t:L:k:e:d:vESh opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -105,6 +115,10 @@ while getopts l:H:t:L:k:e:vESh opt; do
         # Don't start SlipStream service
         SS_START=false
         ;;
+    d)
+        _check_db_param $OPTARG
+        SS_DB=$OPTARG
+        ;;
     *|h)
         _exit_usage
         ;;
@@ -132,6 +146,10 @@ function abort() {
 
 function _print() {
     echo -e "::: $@" 1>&3
+}
+
+function _print_error() {
+    _print "ERROR! $@"
 }
 
 function _print_on_trap() {
@@ -170,6 +188,15 @@ EPEL_VER=6-8
 # Packages from PyPi for SlipStream Client
 PYPI_PARAMIKO_VER=1.9.0
 PYPI_SCPCLIENT_VER=0.4
+
+# PostgreSQL
+# NB! Should correspond to the maven dependency version.
+POSTGRESQL_VER=9.4
+POSTGRESQL_REL=1
+POSTGRESQL_RHEL=6.7
+POSTGRESQL_USER=postgres
+POSTGRESQL_PASS=password
+POSTGRESQL_DBS="slipstream ssclj"
 
 # # # # # # # # # # # #
 # Advanced parameters.
@@ -295,6 +322,47 @@ function prepare_node () {
     _install_ntp
 }
 
+function _deploy_postgresql () {
+
+    _print "- installing PostgreSQL"
+
+    VER=${POSTGRESQL_VER//.}
+    rpm -iUvh \
+        http://yum.postgresql.org/$POSTGRESQL_VER/redhat/rhel-$POSTGRESQL_RHEL-x86_64/pgdg-centos$VER-$POSTGRESQL_VER-$POSTGRESQL_REL.noarch.rpm
+
+    yum -y --nogpgcheck install --enablerepo=pgdg$VER \
+        postgresql$VER \
+        postgresql$VER-server \
+        postgresql$VER-libs \
+        postgresql$VER-contrib
+
+    # chkconfig
+    chkconfig postgresql-$POSTGRESQL_VER on
+
+    # start
+    service postgresql-$POSTGRESQL_VER initdb
+    service postgresql-$POSTGRESQL_VER start
+
+    # post-install configuration
+    sed -i \
+        -e '/^local.*all.*all.*/ s/^#*/#/' \
+        -e '/^host.*all.*127.0.0.1\/32.*/ s/^#*/#/' \
+        -e '/^host.*all.*::1\/128.*/ s/^#*/#/' \
+         /var/lib/pgsql/9.4/data/pg_hba.conf
+   cat >> /var/lib/pgsql/9.4/data/pg_hba.conf<<EOF
+local   all             all                                     trust
+host    all             all             127.0.0.1/32            trust
+host    all             all             ::1/128                 trust
+EOF
+    service postgresql-$POSTGRESQL_VER restart
+
+    for db_name in $POSTGRESQL_DBS; do
+        su - postgres -c "createdb $db_name"
+    done
+    su - postgres -c "psql -c \"ALTER ROLE ${POSTGRESQL_USER} WITH PASSWORD '"${POSTGRESQL_PASS}"'\";"
+
+}
+
 function _deploy_hsqldb () {
 
     _print "- installing HSQLDB"
@@ -328,9 +396,16 @@ function _deploy_graphite () {
 
 function deploy_slipstream_server_deps () {
 
-    _print "Installing dependencies"
+    _print "Installing SlipStream dependencies"
 
-    _deploy_hsqldb
+    if [ "$SS_DB" = "postgresql" ]; then
+        _deploy_postgresql
+    elif [ "$SS_DB" = "hsqldb" ]; then
+        _deploy_hsqldb
+    else
+        _print_error "Unsupported RDBMS provided: $SS_DB"
+        _exit_usage
+    fi
     _deploy_graphite
 }
 
@@ -361,6 +436,7 @@ function deploy_slipstream_server () {
 
     _stop_slipstream_service
 
+    _print "- installing and configuring SlipStream service"
     yum install -y slipstream-server
 
     _update_slipstream_configuration
