@@ -664,6 +664,13 @@
         <version>0.4.0</version>
       </dependency>
 
+      <!-- upgrade aleph dependency to avoid problem on clojure 1.8.0 --> 
+      <dependency>
+        <groupId>potemkin</groupId>
+        <artifactId>potemkin</artifactId>
+        <version>0.4.1</version>
+      </dependency>
+
       <dependency>
         <groupId>clojurewerkz</groupId>
         <artifactId>scrypt</artifactId>
