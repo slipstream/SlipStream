@@ -52,6 +52,9 @@ To make the release as quickly as possible and to avoid noise
 related to failure with inconsistent versions, disable all of the 
 build jobs on these two tabs. 
 
+The script `control-build-jobs.sh` in this repository can automate
+this.
+
 Trigger Release
 ---------------
 
@@ -125,6 +128,9 @@ If you disabled the build jobs on the "SS Community" and "SS
 Enterprise" tabs, then you should re-enable them after the release has
 been completed.
 
+The script `control-build-jobs.sh` in this repository can automate
+this.
+
 You should also manually trigger the full build from the root build
 job for each of these.  There may be intermediate failures in these
 jobs if they are performed out of the usual build order because the
@@ -132,7 +138,6 @@ correct snapshot version of a dependency may not exist yet.
 
 You should also manually trigger the full builds on the "SS Build"
 tab.  Verify that these pass with the new snapshot version. 
-
 
 Updating Release Notes
 ----------------------
