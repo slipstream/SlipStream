@@ -139,8 +139,8 @@ function _install_reference_configuration() {
 
     # Generate new passwords for the defined users.
     for passfile in /etc/slipstream/passwords/*; do
-    echo -n $(uuidgen) | tail -c 12 > $passfile
-done
+        echo -n $(uuidgen) | tail -c 12 > $passfile
+    done
 }
 
 function _install_slipstream() {
