@@ -684,6 +684,12 @@
       </dependency>
 
       <dependency>
+        <groupId>com.cemerick</groupId>
+        <artifactId>url</artifactId>
+        <version>0.1.1</version>
+      </dependency>
+
+      <dependency>
         <groupId>ring</groupId>
         <artifactId>ring-core</artifactId>
         <version>1.4.0</version>
