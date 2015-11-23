@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 set -o pipefail
 
 _SCRIPT_NAME=${0##*/}
