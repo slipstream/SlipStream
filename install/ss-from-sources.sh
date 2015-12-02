@@ -30,6 +30,7 @@ slipstream_backend = $slipstream_backend
 with_refconf = $with_refconf
 NEXUS_CREDS = $NEXUS_CREDS
 REFCONF_NAME = $REFCONF_NAME
+TEST_SERVICE = $TEST_SERVICE
 === --- ==="
 
 
