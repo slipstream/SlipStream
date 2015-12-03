@@ -53,15 +53,19 @@ related to failure with inconsistent versions, disable all of the
 build jobs on these two tabs. 
 
 The script `control-build-jobs.sh` in this repository can automate
-this.
+this.  It supports the `-h` option to get help on the command.  You'll
+need to provide a Jenkins username and password. 
 
-Trigger Release
----------------
+Check Release
+-------------
 
 The "SlipStream_release_check_full" partially checks the release build
 process.  You can trigger this job to do further tests of the release
 process, without actually checking any changes into the GitHub
 repositories. 
+
+Trigger Release
+---------------
 
 The "SlipStream_release_full" job in the "SS Release" tab will perform
 the **complete release of SlipStream** (both the Community and
@@ -73,13 +77,22 @@ to determine what failed.  You'll then have to manually clean up any
 tags that were made in the repositories, fix any issues, and try the
 release again. 
 
-Publishing Releases
--------------------
+Publishing Candidate Releases
+-----------------------------
 
 All of the candidate releases are published automatically into the YUM
 repository automatically via a cron job on the yum server
 (`yum.sixsq.com`).  Nonetheless, you should verify that the new
 release does appear after the build.
+
+Publishing Stable Releases
+--------------------------
+
+In principle, the previous candidate release was installed on both
+Nuvla and the HNX marketplace.  From the upgrade and subsequent use of
+those services, determine if there were any significant issues.  If
+there were no significant issues, promote the previous candidate to
+stable. 
 
 **Stable releases are published manually.**  If the previous candidate
 release was judged to be stable, then you can publish it by doing the
@@ -99,6 +112,9 @@ The installation tools use two moving tags in the repository to
 recover the correct versions of scripts for the installation.  These
 tags are on the SlipStream repository.
 
+Candidate Release
+~~~~~~~~~~~~~~~~~
+
 Whenever a candidate release is made, move the "candidate-latest" tag
 to the associated version.  From the cloned and updated SlipStream
 repository, do the following:
@@ -108,6 +124,9 @@ $ git push origin :refs/tags/candidate-latest
 $ git tag candidate-latest vX.X-community
 $ git push origin candidate-latest
 ```
+
+Stable Release
+~~~~~~~~~~~~~~
 
 If you have published a new stable release, then you must also update
 the "release-latest" tag, with the same procedure, obviously replacing
@@ -144,17 +163,20 @@ Updating Release Notes
 
 The release notes are created as part of the standard SlipStream
 documentation on http://ssdocs.sixsq.com.  To update these release
-notes, clone the SlipStreamDocumentation repository and add the
-release notes to the **candidate category**.
+notes:
+
+  1. Clone the SlipStreamDocumentation repository, 
+  2. Checkout the 'draft' branch, and 
+  3. Add the release notes to the **candidate category**.
 
 If the previous candidate release was promoted to stable, then you
 must also copy the release notes into the stable releases page,
 combining multiple candidate release entries if there has been a gap. 
 
-Follow the instructions in that repository's README to publish the new
-release notes.  Verify that the new release notes have indeed been
-published. 
-
+To publish the updated release notes, just merge the changes in the
+'draft' branch into master and push to the central repository.  The
+new version should appear on the documentation website in a couple of
+minutes. Verify that this is the case.
 
 Publishing SlipStream Client
 ----------------------------
