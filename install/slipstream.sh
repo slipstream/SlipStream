@@ -28,6 +28,7 @@ _YUM_REPO_KIND_MAP[snapshot]=Snapshots
 _YUM_REPO_KIND_MAP[candidate]=Candidates
 _YUM_REPO_KIND_MAP[${_YUM_REPO_KIND_DEFAULT}]=Releases
 SS_YUM_REPO_KIND=${_YUM_REPO_KIND_MAP[$_YUM_REPO_KIND_DEFAULT]}
+SS_YUM_REPO_DEF_URL=
 
 # Defult YUM repository edition.
 _YUM_REPO_EDITIONS=(enterprise community)
@@ -50,6 +51,7 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -t the theme for the service\n
 -L the language of the interface. Possilbe values: en, fr, de, jp. (default: en)\n
 -S don't start SlipStream service.\n
+-x URL with the YUM repo definition file.\n
 -d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB"
 
 # Allow this to be set in the environment to avoid having to pass arguments
@@ -79,7 +81,7 @@ function _check_db_param() {
     fi
 }
 
-while getopts l:H:t:L:k:e:d:vESh opt; do
+while getopts l:H:t:L:k:e:d:x:vESh opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -114,6 +116,9 @@ while getopts l:H:t:L:k:e:d:vESh opt; do
     S)
         # Don't start SlipStream service
         SS_START=false
+        ;;
+    x)
+        SS_YUM_REPO_DEF_URL=$OPTARG
         ;;
     d)
         _check_db_param $OPTARG
@@ -262,12 +267,15 @@ EOF
 function _add_yum_repos () {
     _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
 
+    yum install -y yum-utils
+
     # EPEL
     rpm -e epel-release || true
     epel_repo_rpm=epel-release-${EPEL_VER}.noarch.rpm
     rpm -Uvh --force \
         http://mirror.switch.ch/ftp/mirror/epel/6/i386/${epel_repo_rpm}
     sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/epel.repo
+    yum-config-manager --enable epel
 
     # Nginx
     nginx_repo_rpm=nginx-release-centos-6-0.el6.ngx.noarch.rpm
@@ -275,12 +283,14 @@ function _add_yum_repos () {
         http://nginx.org/packages/centos/6/noarch/RPMS/${nginx_repo_rpm}
 
     # SlipStream
-    rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
-
-    yum install -y yum-utils
-    yum-config-manager --disable SlipStream-*
-    yum-config-manager --enable SlipStream-${SS_YUM_REPO}
-    yum-config-manager --enable epel
+    if [ -n "$SS_YUM_REPO_DEF_URL" ]; then
+        curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
+        SS_YUM_REPO=$(yum repolist enabled | grep -i slipstream | awk '{print $2}')
+    else
+        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
+        yum-config-manager --disable SlipStream-*
+        yum-config-manager --enable SlipStream-${SS_YUM_REPO}
+    fi
 }
 
 function _install_global_dependencies() {
