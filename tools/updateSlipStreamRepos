@@ -80,7 +80,7 @@ fi
 
 
 git_branch(){
-  pecho $(git branch | grep \* | sed "s/\* \(.*\)/[\1] /")
+  pecho $(git rev-parse --abbrev-ref HEAD)
 }
 
 update_ss_repo(){
