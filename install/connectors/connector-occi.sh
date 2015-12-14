@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rOCCI_VERSION=4.2.x
+rOCCI_VERSION=4.3.x
 UMD_VERSION=3.0.1-1
 
 function deploy() {
