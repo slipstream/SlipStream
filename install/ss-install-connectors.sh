@@ -21,7 +21,7 @@ declare -A YUM_REPO_TO_GH_BRANCH
 YUM_REPO_TO_GH_BRANCH[local]=master
 YUM_REPO_TO_GH_BRANCH[snapshot]=master
 YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
-YUM_REPO_TO_GH_TAG[${_YUM_REPO_KIND_DEFAULT}]=release-latest
+YUM_REPO_TO_GH_BRANCH[${_YUM_REPO_KIND_DEFAULT}]=release-latest
 
 function _check_repo() {
     if ! test "${YUM_REPO_TO_GH_BRANCH[$1]+isset}"; then
