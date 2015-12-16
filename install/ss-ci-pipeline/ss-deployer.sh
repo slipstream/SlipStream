@@ -71,16 +71,23 @@ if ( _is_true $with_refconf ); then
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        YUM_CERT_PARAMS=
-        #if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
-        #    YUM_CERT_PARAMS="-c ${_NEXUS_URI}?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST -p $NEXUS_CREDS"
-        #fi
-        /tmp/ss-install-ref-conf.sh \
-            -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
-            -u $NEXUS_CREDS \
-            -k $YUM_REPO_KIND \
-            -e $YUM_REPO_EDITION \
-            $YUM_CERT_PARAMS -o "$_SS_PARAM_BACKEND"
+        if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
+            /tmp/ss-install-ref-conf.sh \
+                -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+                -u $NEXUS_CREDS \
+                -k $YUM_REPO_KIND \
+                -e $YUM_REPO_EDITION \
+                -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
+                -p $NEXUS_CREDS \
+                -o "$_SS_PARAM_BACKEND"
+        else
+            /tmp/ss-install-ref-conf.sh \
+                -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+                -u $NEXUS_CREDS \
+                -k $YUM_REPO_KIND \
+                -e $YUM_REPO_EDITION \
+                -o "$_SS_PARAM_BACKEND"
+        fi
     else
         /tmp/ss-install-ref-conf.sh \
             -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
