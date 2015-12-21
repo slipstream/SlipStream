@@ -70,7 +70,7 @@
     <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
     <hsqldb.version>2.3.3</hsqldb.version>
-    <postgresql.version>9.4-1201-jdbc41</postgresql.version>
+    <postgresql.version>9.4-1206-jdbc42</postgresql.version>
 
     <stratuslab.version>14.06.0</stratuslab.version>
     <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
@@ -522,7 +522,7 @@
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-        <version>2.4</version>
+        <version>2.5</version>
       </dependency>
 
       <dependency>
@@ -541,7 +541,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20150729</version>
+        <version>20151123</version>
       </dependency>
 
       <dependency>
@@ -559,7 +559,7 @@
       <dependency>
         <groupId>com.mchange</groupId>
         <artifactId>c3p0</artifactId>
-        <version>0.9.5</version>
+        <version>0.9.5.2</version>
       </dependency>
 
       <dependency>
@@ -625,31 +625,31 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.4</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.4</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.4</version>
       </dependency>
 
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>18.0</version>
+        <version>19.0</version>
       </dependency>
 
       <dependency>
         <groupId>prismatic</groupId>
         <artifactId>schema</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
       </dependency>
 
       <dependency>
@@ -668,7 +668,7 @@
       <dependency>
         <groupId>potemkin</groupId>
         <artifactId>potemkin</artifactId>
-        <version>0.4.1</version>
+        <version>0.4.2</version>
       </dependency>
 
       <dependency>
@@ -734,25 +734,25 @@
       <dependency>
         <groupId>metrics-clojure</groupId>
         <artifactId>metrics-clojure</artifactId>
-        <version>2.5.1</version>
+        <version>2.6.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-ring</groupId>
         <artifactId>metrics-clojure-ring</artifactId>
-        <version>2.5.1</version>
+        <version>2.6.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-jvm</groupId>
         <artifactId>metrics-clojure-jvm</artifactId>
-        <version>2.5.1</version>
+        <version>2.6.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-graphite</groupId>
         <artifactId>metrics-clojure-graphite</artifactId>
-        <version>2.5.1</version>
+        <version>2.6.0</version>
       </dependency>
 
       <dependency>
@@ -939,7 +939,7 @@
       <dependency>
         <groupId>peridot</groupId>
         <artifactId>peridot</artifactId>
-        <version>0.4.1</version>
+        <version>0.4.2</version>
         <scope>test</scope>
       </dependency>
 
