@@ -11,25 +11,18 @@ yum install -y epel-release yum-utils
 # epel may not be enabled though
 yum-config-manager --enable epel
 yum clean all
-yum erase -y python-paramiko python-crypto
 yum install -y \
-  java-1.8.0-openjdk-devel \
-  python \
-  python-devel \
-  pylint \
-  python-pip \
-  python-mock \
-  gcc \
-  git \
-  rpm-build \
-  createrepo
-
-#
-# SlipStream python dependencies that require
-# versions that are more recent than packages.
-#
-echo statecustom "Installing python dependencies..."
-pip install nose coverage paramiko
+    git \
+    java-1.8.0-openjdk-devel \
+    python \
+    python-devel \
+    pylint \
+    python-mock \
+    python-nose \
+    python-coverage \
+    python-paramiko \
+    rpm-build \
+    createrepo
 
 #
 # install latest maven version
