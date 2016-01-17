@@ -51,7 +51,7 @@ cd ~
 MAVEN_SETTINGS=$PWD/builder-settings.xml
 nexus_username=`echo -n ${nexus_creds} | cut -d ':' -f 1`
 nexus_password=`echo -n ${nexus_creds} | cut -d ':' -f 2`
-cat > $MAVEN_SETTINGS <<"EOF"
+cat > $MAVEN_SETTINGS <<EOF
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
