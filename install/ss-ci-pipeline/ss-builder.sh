@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# input parameteres
+# input parameters
 #
+# maven_goal
+# nexus_creds
 # slipstream_version
 # slipstream_client_version
 # slipstream_connectors_version
@@ -24,6 +26,8 @@ set -e
 source ~/.bashrc
 
 
+maven_goal=`ss-get maven_goal`
+nexus_creds=`ss-get nexus_creds`
 slipstream_edition=`ss-get slipstream_edition`
 slipstream_version=`ss-get slipstream_version`
 slipstream_client_version=`ss-get slipstream_client_version`
@@ -41,6 +45,58 @@ _HOSTNAME=`ss-get hostname`
 cd ~
 
 #
+# create a settings.xml file (clobbering any existing file)
+#
+MAVEN_SETTINGS=$PWD/builder-settings.xml
+nexus_username=`echo -n ${nexus_creds} | cut -d ':' -f 1`
+nexus_password=`echo -n ${nexus_creds} | cut -d ':' -f 2`
+cat > $MAVEN_SETTINGS <<"EOF"
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <localRepository/>
+  <interactiveMode/>
+  <usePluginRegistry/>
+  <offline/>
+
+  <servers>
+    <server>
+      <id>sixsq.snapshots</id>
+      <username>${nexus_username}</username>
+      <password>${nexus_password}</password>
+    </server>
+    <server>
+      <id>sixsq.releases</id>
+      <username>${nexus_username}</username>
+      <password>${nexus_password}</password>
+    </server>
+    <server>
+      <id>sixsq.thirdparty</id>
+      <username>${nexus_username}</username>
+      <password>${nexus_password}</password>
+    </server>
+    <server>
+      <id>slipstream.snapshots</id>
+      <username>${nexus_username}</username>
+      <password>${nexus_password}</password>
+    </server>
+    <server>
+      <id>slipstream.releases</id>
+      <username>${nexus_username}</username>
+      <password>${nexus_password}</password>
+    </server>
+
+  </servers>
+  <mirrors/>
+  <proxies/>
+  <profiles/>  
+  <activeProfiles/>
+
+</settings>
+EOF
+
+#
 # clone the SlipStream source code
 #
 declare -A _SS_EDITION_GH_REPO
@@ -56,6 +112,7 @@ git clone https://github.com/$GH_REPO_EDITION/SlipStreamBootstrap
 
 cd SlipStreamBootstrap
 mvn -P public \
+  --settings ${MAVEN_SETTINGS} \
   -B \
   -Dslipstream.version=${slipstream_version} \
   -Dslipstream.client.version=${slipstream_client_version} \
@@ -70,7 +127,8 @@ mvn -P public \
 #
 ss-set statecustom "Building SlipStream $slipstream_edition..."
 cd SlipStream
-mvn -B -DskipTests=${skip_tests} clean install
+mvn --settings ${MAVEN_SETTINGS} \
+    -B -DskipTests=${skip_tests} clean ${maven_goal}
 
 #
 # make local yum repository
