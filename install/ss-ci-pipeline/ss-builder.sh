@@ -27,7 +27,7 @@ source ~/.bashrc
 
 
 maven_goal=`ss-get maven_goal`
-maven_options=`ss-get maven_options`
+maven_options="`ss-get maven_options`"
 nexus_creds=`ss-get nexus_creds`
 slipstream_edition=`ss-get slipstream_edition`
 slipstream_version=`ss-get slipstream_version`
