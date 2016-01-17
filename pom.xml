@@ -43,6 +43,11 @@
     <!-- "-enterprise" = enterprise edition              -->
     <slipstream.edition>-community</slipstream.edition>
 
+    <!-- package platform for the created RPMs -->
+    <!-- CentOS 6: ""                          -->
+    <!-- CentOS 7: "-rhel7"                    -->
+    <platform.os></platform.os>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
@@ -129,7 +134,7 @@
       </snapshots>
       <id>slipstream.releases</id>
       <name>SlipStream Releases</name>
-      <url>${nexus}/releases${slipstream.edition}</url>
+      <url>${nexus}/releases${slipstream.edition}${platform.os}</url>
     </repository>
 
     <repository>
@@ -141,7 +146,7 @@
       </snapshots>
       <id>slipstream.snapshots</id>
       <name>SlipStream Snapshots</name>
-      <url>${nexus}/snapshots${slipstream.edition}</url>
+      <url>${nexus}/snapshots${slipstream.edition}${platform.os}</url>
     </repository>
 
     <repository>
@@ -958,13 +963,13 @@
     <repository>
       <id>sixsq.releases</id>
       <name>SixSq Releases</name>
-      <url>${nexus}/releases${slipstream.edition}</url>
+      <url>${nexus}/releases${slipstream.edition}${platform.os}</url>
     </repository>
 
     <snapshotRepository>
       <id>sixsq.snapshots</id>
       <name>SixSq Snapshots</name>
-      <url>${nexus}/snapshots${slipstream.edition}</url>
+      <url>${nexus}/snapshots${slipstream.edition}${platform.os}</url>
     </snapshotRepository>
   </distributionManagement>
 
