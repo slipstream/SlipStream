@@ -27,6 +27,7 @@ source ~/.bashrc
 
 
 maven_goal=`ss-get maven_goal`
+maven_options=`ss-get maven_options`
 nexus_creds=`ss-get nexus_creds`
 slipstream_edition=`ss-get slipstream_edition`
 slipstream_version=`ss-get slipstream_version`
@@ -113,6 +114,7 @@ git clone https://github.com/$GH_REPO_EDITION/SlipStreamBootstrap
 cd SlipStreamBootstrap
 mvn -P public \
   --settings ${MAVEN_SETTINGS} \
+  ${maven_options} \
   -B \
   -Dslipstream.version=${slipstream_version} \
   -Dslipstream.client.version=${slipstream_client_version} \
@@ -128,6 +130,7 @@ mvn -P public \
 ss-set statecustom "Building SlipStream $slipstream_edition..."
 cd SlipStream
 mvn --settings ${MAVEN_SETTINGS} \
+    ${maven_options} \
     -B -DskipTests=${skip_tests} clean ${maven_goal}
 
 #
