@@ -40,10 +40,30 @@ skip_tests=`ss-get skip_tests`
 
 _HOSTNAME=`ss-get hostname`
 
+function _install_git_creds() {
+    [ "$nexus_creds" -eq "user:pass" ] && { echo "WARNING: Skipped intallation of git credentials."; return; }
+
+    # Get and inflate git credentials.
+    TARBALL=~/git-creds.tgz
+    GIT_CREDS_URL=http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz
+    SSH_DIR=~/.ssh
+    mkdir -p $SSH_DIR
+    chmod 0700 $SSH_DIR
+    _CREDS="-u $nexus_creds"
+    curl -k -L -sSf $_CREDS -o $TARBALL $GIT_CREDS_URL
+    tar -C $SSH_DIR -zxvf $TARBALL
+    rm -f $TARBALL
+}
+
 #
 # work from home directory
 #
 cd ~
+
+#
+# get git creds for enterprise version
+#
+_install_git_creds
 
 #
 # create a settings.xml file (clobbering any existing file)
