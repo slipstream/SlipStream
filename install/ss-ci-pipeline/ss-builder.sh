@@ -41,7 +41,7 @@ skip_tests=`ss-get skip_tests`
 _HOSTNAME=`ss-get hostname`
 
 function _install_git_creds() {
-    [ "$nexus_creds" -eq "user:pass" ] && { echo "WARNING: Skipped intallation of git credentials."; return; }
+    [ "$nexus_creds" == "user:pass" ] && { echo "WARNING: Skipped intallation of git credentials."; return; }
 
     # Get and inflate git credentials.
     TARBALL=~/git-creds.tgz
@@ -53,6 +53,9 @@ function _install_git_creds() {
     curl -k -L -sSf $_CREDS -o $TARBALL $GIT_CREDS_URL
     tar -C $SSH_DIR -zxvf $TARBALL
     rm -f $TARBALL
+    chown root:root ~/.ssh/*
+
+    echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 }
 
 #
@@ -128,11 +131,18 @@ GH_REPO_EDITION=${_SS_EDITION_GH_REPO[$slipstream_edition]}
 YUM_REPO_NAME=SlipStream-FromSources-$slipstream_edition
 
 ss-set statecustom "Cloning SlipStream $slipstream_edition source code..."
-# TODO: Need credentials to access private GitHub repo.
-git clone https://github.com/$GH_REPO_EDITION/SlipStreamBootstrap
+if [ "$slipstream_edition" == "enterprise" ]; then
+    bootstrap_url=git@github.com:SixSq/SlipStreamBootstrap.git
+    maven_profile=""
+else
+    bootstrap_url=https://github.com/$GH_REPO_EDITION/SlipStreamBootstrap
+    maven_profile="-P public"
+fi
+
+git clone $bootstrap_url
 
 cd SlipStreamBootstrap
-mvn -P public \
+mvn ${maven_profile} \
   --settings ${MAVEN_SETTINGS} \
   ${maven_options} \
   -B \
