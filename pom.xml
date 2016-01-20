@@ -727,7 +727,7 @@
       <dependency>
         <groupId>clj-http</groupId>
         <artifactId>clj-http</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
       </dependency>
 
       <dependency>
@@ -739,25 +739,25 @@
       <dependency>
         <groupId>metrics-clojure</groupId>
         <artifactId>metrics-clojure</artifactId>
-        <version>2.6.0</version>
+        <version>2.6.1</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-ring</groupId>
         <artifactId>metrics-clojure-ring</artifactId>
-        <version>2.6.0</version>
+        <version>2.6.1</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-jvm</groupId>
         <artifactId>metrics-clojure-jvm</artifactId>
-        <version>2.6.0</version>
+        <version>2.6.1</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-graphite</groupId>
         <artifactId>metrics-clojure-graphite</artifactId>
-        <version>2.6.0</version>
+        <version>2.6.1</version>
       </dependency>
 
       <dependency>
@@ -821,7 +821,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>clojure</artifactId>
-        <version>1.7.0</version>
+        <version>1.8.0</version>
       </dependency>
 
       <dependency>
@@ -944,7 +944,7 @@
       <dependency>
         <groupId>peridot</groupId>
         <artifactId>peridot</artifactId>
-        <version>0.4.2</version>
+        <version>0.4.3</version>
         <scope>test</scope>
       </dependency>
 
