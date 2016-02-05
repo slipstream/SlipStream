@@ -82,7 +82,7 @@ jobs=(Merge_SlipStream \
       SlipStreamConnector-EC2_build \
       SlipStreamConnector-NuvlaBox_build \
       SlipStreamConnector-vCloud_build \
-      SlipStreamConnectors-SoftLayer_Enterprise \
+      SlipStreamConnectors_NativeSoftLayer_Enterprise_build \
       SlipStreamConnectors_Enterprise_build \
       SlipStreamI18n_build \
       SlipStreamServer_Enterprise_build \
