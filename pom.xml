@@ -28,6 +28,7 @@
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
         <module>../SlipStreamClient</module>
+        <module>../SlipStreamClientAPI</module>
         <module>../SlipStreamConnectors</module>
         <module>clojure-deps</module>
         <module>yum</module>
