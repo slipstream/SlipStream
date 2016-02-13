@@ -199,7 +199,7 @@
         <plugin>
           <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
           <artifactId>serviceloader-maven-plugin</artifactId>
-          <version>1.0.4</version>
+          <version>1.0.6</version>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
@@ -318,6 +318,12 @@
           <groupId>org.kuali.maven.plugins</groupId>
           <artifactId>graph-maven-plugin</artifactId>
           <version>1.2.3</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.10</version>
         </plugin>
 
       </plugins>
