@@ -61,28 +61,32 @@ fi
 jobs=(Merge_SlipStream \
       Merge_SlipStreamBootstrap \
       Merge_SlipStreamClient \
+      Merge_SlipStreamClientAPI \
       Merge_SlipStreamConnectors \
       Merge_SlipStreamServer \
       Merge_SlipStreamServerDeps \
       Merge_SlipStreamUI \
       Community_Build \
+      Community_Build_CentOS7 \
       Enterprise_Build \
+      Enterprise_Build_CentOS7 \
       Community_deployment_CentOS_6 \
       Community_deployment_CentOS_7 \
       Enterprise_deployment_CentOS_6 \
       SlipStream_build \
       SlipStreamClient_build \
+      SlipStreamClientAPI_build \
       SlipStreamConnectors_build \
       SlipStreamServer_build \
       SlipStreamServerDeps_build \
       SlipStreamUI_build \
       SlipStream_Enterprise_build \
       SlipStreamClient_Enterprise_build \
+      SlipStreamClientAPI_Enterprise_build \
       SlipStreamConnector-CloudSigma_build \
       SlipStreamConnector-EC2_build \
       SlipStreamConnector-NuvlaBox_build \
       SlipStreamConnector-vCloud_build \
-      SlipStreamConnectors_NativeSoftLayer_Enterprise_build \
       SlipStreamConnectors_Enterprise_build \
       SlipStreamI18n_build \
       SlipStreamServer_Enterprise_build \

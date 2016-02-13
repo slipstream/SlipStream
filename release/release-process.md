@@ -112,8 +112,7 @@ The installation tools use two moving tags in the repository to
 recover the correct versions of scripts for the installation.  These
 tags are on the SlipStream repository.
 
-Candidate Release
-~~~~~~~~~~~~~~~~~
+### Candidate Release
 
 Whenever a candidate release is made, move the "candidate-latest" tag
 to the associated version.  From the cloned and updated SlipStream
@@ -125,8 +124,7 @@ $ git tag candidate-latest vX.X-community
 $ git push origin candidate-latest
 ```
 
-Stable Release
-~~~~~~~~~~~~~~
+### Stable Release
 
 If you have published a new stable release, then you must also update
 the "release-latest" tag, with the same procedure, obviously replacing
