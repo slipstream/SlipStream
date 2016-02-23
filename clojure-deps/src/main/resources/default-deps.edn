@@ -95,4 +95,6 @@
  [reply "0.3.7" :scope "provided"]
  [peridot "0.4.3" :scope "test"]
  [expectations "2.1.4" :scope "test"]
+ [clojure-ini "0.0.2"]
+ [slingshot "0.12.2"]
  ]
