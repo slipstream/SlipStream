@@ -281,8 +281,9 @@ function _configure_firewall () {
 
     _print "- configuring firewall"
 
-    srvc_stop firewalld
-    srvc_mask firewalld
+    # firewalld may not be installed
+    srvc_stop firewalld || true
+    srvc_mask firewalld || true
 
     yum -y install iptables-services
     srvc_enable iptables
