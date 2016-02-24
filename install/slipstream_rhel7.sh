@@ -360,7 +360,6 @@ function _configure_selinux() {
         semanage fcontext -a -t httpd_cache_t "/tmp/slipstream(/.*)?"
         restorecon -R -v /tmp/slipstream || true
     fi
-
 }
 
 function _install_time_sync_service() {
@@ -418,7 +417,6 @@ EOF
         su - postgres -c "createdb $db_name"
     done
     su - postgres -c "psql -c \"ALTER ROLE ${POSTGRESQL_USER} WITH PASSWORD '"${POSTGRESQL_PASS}"'\";"
-
 }
 
 function _deploy_hsqldb () {
@@ -603,7 +601,7 @@ function _deploy_nginx_proxy() {
 
     _print "- install nginx and nginx configuration for SlipStream"
 
-    # Install nginx and the configuration file for SlipStream
+    # Install nginx and the configuration file for SlipStream.
     yum install -y slipstream-server-nginx-conf
     srvc_start nginx
 }
