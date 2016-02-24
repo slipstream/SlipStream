@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# FIXME: This may not work on centos 7.
+#        But http://repository.egi.eu/sw/production/umd/4/ is empty.
+
 rOCCI_VERSION=4.3.x
 UMD_VERSION=3.0.1-1
 
