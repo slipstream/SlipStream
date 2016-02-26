@@ -178,9 +178,15 @@ cd -
 ss-set statecustom "Exporting YUM repository $YUM_REPO_NAME..."
 
 yum install -y httpd
-service httpd start
+systemctl start httpd
 
 # Open TCP:80 in the local firewall.  Insert before REJECT or append.
+
+systemctl stop firewalld.service || true
+systemctl mask firewalld.service || true
+yum -y install iptables-services
+systemctl start iptables.service
+
 RULE='-m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT'
 BEFORE_RULE_NUM=$(iptables -nL INPUT --line-numbers | grep REJECT | awk '{print $1}')
 if [ -n "$BEFORE_RULE_NUM" ]; then
@@ -192,7 +198,7 @@ rm -f /etc/sysconfig/iptables.bak
 cp /etc/sysconfig/iptables{,.bak}
 iptables-save > /etc/sysconfig/iptables
 
-ln -s /opt/slipstream/yum /var/www/html/
+ln -sf /opt/slipstream/yum /var/www/html/
 cat > /var/www/html/slipstream.repo <<EOF
 [$YUM_REPO_NAME]
 name=$YUM_REPO_NAME

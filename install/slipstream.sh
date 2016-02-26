@@ -237,6 +237,10 @@ function _is_true() {
     fi
 }
 
+function _inst() {
+    yum install -y
+}
+
 function srvc_start() {
     systemctl start $1
 }
@@ -281,10 +285,11 @@ function _configure_firewall () {
 
     _print "- configuring firewall"
 
-    srvc_stop firewalld
-    srvc_mask firewalld
+    # firewalld may not be installed
+    srvc_stop firewalld || true
+    srvc_mask firewalld || true
 
-    yum -y install iptables-services
+    _inst iptables-services
     srvc_enable iptables
 
     cat > /etc/sysconfig/iptables <<EOF
@@ -308,10 +313,10 @@ EOF
 function _add_yum_repos () {
     _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
 
-    yum install -y yum-utils
+    _inst yum-utils
 
     # EPEL
-    yum install -y epel-release
+    _inst epel-release
     yum-config-manager --enable epel
 
     # Nginx
@@ -335,7 +340,7 @@ function _install_global_dependencies() {
 
     _print "- installing dependencies"
 
-    yum install -y $DEPS
+    _inst $DEPS
 }
 
 function _configure_selinux() {
@@ -343,7 +348,7 @@ function _configure_selinux() {
     _print "- configuring selinux"
 
     # install SELinux needed utility tools
-    yum -y install policycoreutils policycoreutils-python
+    _inst policycoreutils policycoreutils-python
 
     # if not disabled, configure SELinux in permissive mode
     if [[ "$(getenforce)" != "Disabled" ]]; then
@@ -352,18 +357,17 @@ function _configure_selinux() {
             /etc/selinux/config
 
         setenforce Permissive
-        
+
         # configure SELinux to work with SlipStream server
         setsebool -P httpd_run_stickshift 1
         setsebool -P httpd_can_network_connect 1
         semanage fcontext -a -t httpd_cache_t "/tmp/slipstream(/.*)?"
         restorecon -R -v /tmp/slipstream || true
     fi
-
 }
 
 function _install_time_sync_service() {
-    yum install -y chrony
+    _inst chrony
     srvc_start chronyd.service
     srvc_enable chronyd.service
 }
@@ -387,13 +391,12 @@ function _deploy_postgresql () {
     rpm -iUvh \
         http://yum.postgresql.org/$POSTGRESQL_VER/redhat/rhel-$POSTGRESQL_RHEL-x86_64/pgdg-centos$VER-$POSTGRESQL_VER-$POSTGRESQL_REL.noarch.rpm
 
-    yum -y --nogpgcheck install --enablerepo=pgdg$VER \
+    _inst --nogpgcheck --enablerepo=pgdg$VER \
         postgresql$VER \
         postgresql$VER-server \
         postgresql$VER-libs \
         postgresql$VER-contrib
 
-    # chkconfig
     srvc_enable postgresql-$POSTGRESQL_VER
 
     # start
@@ -417,7 +420,6 @@ EOF
         su - postgres -c "createdb $db_name"
     done
     su - postgres -c "psql -c \"ALTER ROLE ${POSTGRESQL_USER} WITH PASSWORD '"${POSTGRESQL_PASS}"'\";"
-
 }
 
 function _deploy_hsqldb () {
@@ -428,7 +430,7 @@ function _deploy_hsqldb () {
     kill -9 $(cat /var/run/hsqldb.pid) || true
     rm -f /var/run/hsqldb.pid
 
-    yum install -y slipstream-hsqldb
+    _inst slipstream-hsqldb
 
     cat > ~/sqltool.rc <<EOF
 urlid slipstream
@@ -448,7 +450,7 @@ EOF
 function _deploy_graphite () {
     _print "- installing Graphite"
 
-    yum install -y slipstream-graphite
+    _inst slipstream-graphite
 }
 
 function deploy_slipstream_server_deps () {
@@ -480,7 +482,7 @@ function deploy_slipstream_client () {
     winrm_pkg=a2e7ecf95cf44535e33b05e0c9541aeb76e23597.zip
     pip install https://github.com/diyan/pywinrm/archive/${winrm_pkg}
 
-    yum install -y slipstream-client
+    _inst slipstream-client
 }
 
 function deploy_slipstream_server () {
@@ -490,7 +492,7 @@ function deploy_slipstream_server () {
     _stop_slipstream_service
 
     _print "- installing and configuring SlipStream service"
-    yum install -y slipstream-server
+    _inst slipstream-server
 
     _update_slipstream_configuration
 
@@ -602,8 +604,8 @@ function _deploy_nginx_proxy() {
 
     _print "- install nginx and nginx configuration for SlipStream"
 
-    # Install nginx and the configuration file for SlipStream
-    yum install -y slipstream-server-nginx-conf
+    # Install nginx and the configuration file for SlipStream.
+    _inst slipstream-server-nginx-conf
     srvc_start nginx
 }
 

@@ -127,9 +127,9 @@ fi
 
 #
 # restarting services (probably not necessary)
-service slipstream restart
-service ssclj restart
-service nginx restart
+systemctl restart slipstream
+systemctl restart ssclj
+systemctl restart nginx
 
 #
 # set the service URL
