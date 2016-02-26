@@ -67,12 +67,9 @@ jobs=(Merge_SlipStream \
       Merge_SlipStreamServerDeps \
       Merge_SlipStreamUI \
       Community_Build \
-      Community_Build_CentOS7 \
       Enterprise_Build \
-      Enterprise_Build_CentOS7 \
-      Community_deployment_CentOS_6 \
-      Community_deployment_CentOS_7 \
-      Enterprise_deployment_CentOS_6 \
+      Community_deployment \
+      Enterprise_deployment \
       SlipStream_build \
       SlipStreamClient_build \
       SlipStreamClientAPI_build \

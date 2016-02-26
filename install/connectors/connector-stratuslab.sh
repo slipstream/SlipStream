@@ -1,5 +1,6 @@
 #!/bin/bash -ex
 
+# NB!  This works on CentOS 7 as well.  Tested.
 _SL_OS=centos-6
 _SL_VER=v14.06.0
 SL_OS_VER=${_SL_OS}-${_SL_VER}
