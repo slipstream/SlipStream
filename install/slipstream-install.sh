@@ -62,7 +62,7 @@ function install_slipstream_connectors() {
     _download $SCRIPT "SlipStream connectors installation script"
     CONNECTORS="cloudstack occi openstack stratuslab"
     ./$SCRIPT -r $YUM_REPO_KIND $CONNECTORS
-    service slipstream restart
+    systemctl restart slipstream restart
     echo -e "\n::: SlipStream connectors installed: $CONNECTORS"
 }
 
