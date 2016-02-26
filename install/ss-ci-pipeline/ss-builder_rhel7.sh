@@ -160,7 +160,7 @@ mvn ${maven_profile} \
 ss-set statecustom "Building SlipStream $slipstream_edition..."
 cd SlipStream
 mvn --settings ${MAVEN_SETTINGS} \
-    ${maven_options} \
+    ${maven_options} -Dpackage.os=el7 \
     -B -DskipTests=${skip_tests} clean ${maven_goal}
 
 #
@@ -192,7 +192,7 @@ service httpd start
 #cp /etc/sysconfig/iptables{,.bak}
 #iptables-save > /etc/sysconfig/iptables
 
-ln -s /opt/slipstream/yum /var/www/html/
+ln -sf /opt/slipstream/yum /var/www/html/
 cat > /var/www/html/slipstream.repo <<EOF
 [$YUM_REPO_NAME]
 name=$YUM_REPO_NAME

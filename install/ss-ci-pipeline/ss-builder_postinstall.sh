@@ -57,7 +57,7 @@ curl -o ~/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stabl
 chmod a+x ~/bin/lein
 export PATH=$PATH:~/bin
 export LEIN_ROOT=true
-lein
+time lein
 cat >> ~/.bashrc << EOF
 export PATH=$PATH:~/bin
 export LEIN_ROOT=true
