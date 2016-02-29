@@ -46,8 +46,7 @@
     <slipstream.edition>-community</slipstream.edition>
 
     <!-- package platform for the created RPMs -->
-    <!-- CentOS 7: "-rhel7"                    -->
-    <platform.os />
+    <platform.os>-rhel7</platform.os>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
