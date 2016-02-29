@@ -46,7 +46,6 @@
     <slipstream.edition>-community</slipstream.edition>
 
     <!-- package platform for the created RPMs -->
-    <!-- CentOS 6: ""                          -->
     <!-- CentOS 7: "-rhel7"                    -->
     <platform.os />
 
@@ -63,7 +62,7 @@
     <jetty.connector.dir>${installation.dir}/lib/connectors</jetty.connector.dir>
     <jetty.lib.ext.dir>${installation.dir}/lib/ext</jetty.lib.ext.dir>
 
-    <package.os>el6</package.os>
+    <package.os>el7</package.os>
 
     <!-- prefixes for SCM-related URLs           -->
     <!-- These should NOT have a trailing slash! -->
@@ -103,6 +102,7 @@
       <url>http://maven.restlet.org</url>
     </repository>
 
+    <!-- NB! It's OK to depend on StratusLab from CentOS 6 repos. -->
     <repository>
       <releases>
         <enabled>true</enabled>

@@ -184,21 +184,17 @@ SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
     abort "Could not determinee IP or hostname of the public interface
 for SlipStream to run on."
 
-# libcloud
+# apache-libcloud
 CLOUD_CLIENT_LIBCLOUD_VERSION=0.18.0
 
-# EPEL repository
-EPEL_VER=6-8
-
 # Packages from PyPi for SlipStream Client
-PYPI_PARAMIKO_VER=1.9.0
 PYPI_SCPCLIENT_VER=0.4
 
 # PostgreSQL
 # NB! Should correspond to the maven dependency version.
 POSTGRESQL_VER=9.4
 POSTGRESQL_REL=1
-POSTGRESQL_RHEL=6.7
+POSTGRESQL_RHEL=7.1
 POSTGRESQL_USER=postgres
 POSTGRESQL_PASS=password
 POSTGRESQL_DBS="slipstream ssclj"
@@ -241,10 +237,60 @@ function _is_true() {
     fi
 }
 
+function _inst() {
+    yum install -y
+}
+
+function srvc_start() {
+    systemctl start $1
+}
+function srvc_stop() {
+    systemctl stop $1
+}
+function srvc_restart() {
+    systemctl restart $1
+}
+function srvc_enable() {
+    systemctl enable $1
+}
+function srvc_mask() {
+    systemctl mask $1
+}
+function srvc_() {
+    systemctl $@
+}
+
+function _now_sec() {
+    date +%s
+}
+
+function _wait_listens() {
+    # host port [timeout seconds] [sleep interval seconds]
+    wait_time=${3:-60}
+    sleep_interval=${4:-2}
+    stop_time=$(($(_now_sec) + $wait_time))
+    while (( "$(_now_sec)" <= $stop_time )); do
+        ncat -v -4 $1 $2 < /dev/null
+        if [ "$?" == "0" ]; then
+            return 0
+        fi
+        sleep $sleep_interval
+    done
+    abort "Timed out after ${wait_time} sec waiting for $1:$2"
+}
+
+
 function _configure_firewall () {
     _is_true $CONFIGURE_FIREWALL || return 0
 
     _print "- configuring firewall"
+
+    # firewalld may not be installed
+    srvc_stop firewalld || true
+    srvc_mask firewalld || true
+
+    _inst iptables-services
+    srvc_enable iptables
 
     cat > /etc/sysconfig/iptables <<EOF
 *filter
@@ -261,33 +307,30 @@ function _configure_firewall () {
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 COMMIT
 EOF
-    service iptables restart
+    srvc_start iptables
 }
 
 function _add_yum_repos () {
     _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
 
-    yum install -y yum-utils
+    _inst yum-utils
 
     # EPEL
-    rpm -e epel-release || true
-    epel_repo_rpm=epel-release-${EPEL_VER}.noarch.rpm
-    rpm -Uvh --force \
-        http://mirror.switch.ch/ftp/mirror/epel/6/i386/${epel_repo_rpm}
-    sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/epel.repo
+    _inst epel-release
     yum-config-manager --enable epel
 
     # Nginx
-    nginx_repo_rpm=nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    nginx_repo_rpm=nginx-release-centos-7-0.el7.ngx.noarch.rpm
 	rpm -Uvh --force \
-        http://nginx.org/packages/centos/6/noarch/RPMS/${nginx_repo_rpm}
+        http://nginx.org/packages/centos/7/noarch/RPMS/${nginx_repo_rpm}
 
     # SlipStream
     if [ -n "$SS_YUM_REPO_DEF_URL" ]; then
         curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
         SS_YUM_REPO=$(yum repolist enabled | grep -i slipstream | awk '{print $2}')
     else
-        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
+        #rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
+        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-2.3-1.noarch.rpm
         yum-config-manager --disable SlipStream-*
         yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     fi
@@ -297,8 +340,7 @@ function _install_global_dependencies() {
 
     _print "- installing dependencies"
 
-    yum install -y $DEPS
-
+    _inst $DEPS
 }
 
 function _configure_selinux() {
@@ -306,31 +348,28 @@ function _configure_selinux() {
     _print "- configuring selinux"
 
     # install SELinux needed utility tools
-    yum -y install policycoreutils policycoreutils-python
+    _inst policycoreutils policycoreutils-python
 
     # if not disabled, configure SELinux in permissive mode
-    enforce=$(getenforce)
-    if [[ "$enforce" != "Disabled" ]]; then
+    if [[ "$(getenforce)" != "Disabled" ]]; then
 
         sed -i -e 's/^SELINUX=.*/SELINUX=permissive/' /etc/sysconfig/selinux \
             /etc/selinux/config
 
         setenforce Permissive
-        
+
         # configure SELinux to work with SlipStream server
         setsebool -P httpd_run_stickshift 1
         setsebool -P httpd_can_network_connect 1
         semanage fcontext -a -t httpd_cache_t "/tmp/slipstream(/.*)?"
         restorecon -R -v /tmp/slipstream || true
     fi
-
 }
 
-function _install_ntp() {
-    yum install -y ntp
-    service ntpd start
-    chkconfig --add ntpd
-    chkconfig ntpd on
+function _install_time_sync_service() {
+    _inst chrony
+    srvc_start chronyd.service
+    srvc_enable chronyd.service
 }
 
 function prepare_node () {
@@ -341,7 +380,7 @@ function prepare_node () {
     _install_global_dependencies
     _configure_firewall
     _configure_selinux
-    _install_ntp
+    _install_time_sync_service
 }
 
 function _deploy_postgresql () {
@@ -352,48 +391,46 @@ function _deploy_postgresql () {
     rpm -iUvh \
         http://yum.postgresql.org/$POSTGRESQL_VER/redhat/rhel-$POSTGRESQL_RHEL-x86_64/pgdg-centos$VER-$POSTGRESQL_VER-$POSTGRESQL_REL.noarch.rpm
 
-    yum -y --nogpgcheck install --enablerepo=pgdg$VER \
+    _inst --nogpgcheck --enablerepo=pgdg$VER \
         postgresql$VER \
         postgresql$VER-server \
         postgresql$VER-libs \
         postgresql$VER-contrib
 
-    # chkconfig
-    chkconfig postgresql-$POSTGRESQL_VER on
+    srvc_enable postgresql-$POSTGRESQL_VER
 
     # start
-    service postgresql-$POSTGRESQL_VER initdb
-    service postgresql-$POSTGRESQL_VER start
+    srvc_ initdb postgresql-$POSTGRESQL_VER
+    srvc_start postgresql-$POSTGRESQL_VER
 
     # post-install configuration
     sed -i \
         -e '/^local.*all.*all.*/ s/^#*/#/' \
         -e '/^host.*all.*127.0.0.1\/32.*/ s/^#*/#/' \
         -e '/^host.*all.*::1\/128.*/ s/^#*/#/' \
-         /var/lib/pgsql/9.4/data/pg_hba.conf
-   cat >> /var/lib/pgsql/9.4/data/pg_hba.conf<<EOF
+         /var/lib/pgsql/$POSTGRESQL_VER/data/pg_hba.conf
+   cat >> /var/lib/pgsql/$POSTGRESQL_VER/data/pg_hba.conf<<EOF
 local   all             all                                     trust
 host    all             all             127.0.0.1/32            trust
 host    all             all             ::1/128                 trust
 EOF
-    service postgresql-$POSTGRESQL_VER restart
+    srvc_restart postgresql-$POSTGRESQL_VER
 
     for db_name in $POSTGRESQL_DBS; do
         su - postgres -c "createdb $db_name"
     done
     su - postgres -c "psql -c \"ALTER ROLE ${POSTGRESQL_USER} WITH PASSWORD '"${POSTGRESQL_PASS}"'\";"
-
 }
 
 function _deploy_hsqldb () {
 
     _print "- installing HSQLDB"
 
-    service hsqldb stop || true
+    srvc_stop hsqldb || true
     kill -9 $(cat /var/run/hsqldb.pid) || true
     rm -f /var/run/hsqldb.pid
 
-    yum install -y slipstream-hsqldb
+    _inst slipstream-hsqldb
 
     cat > ~/sqltool.rc <<EOF
 urlid slipstream
@@ -407,13 +444,13 @@ username sa
 password
 EOF
 
-    service hsqldb start
+    srvc_start hsqldb
 }
 
 function _deploy_graphite () {
     _print "- installing Graphite"
 
-    yum install -y slipstream-graphite
+    _inst slipstream-graphite
 }
 
 function deploy_slipstream_server_deps () {
@@ -439,17 +476,13 @@ function deploy_slipstream_client () {
     pip install -Iv apache-libcloud==${CLOUD_CLIENT_LIBCLOUD_VERSION}
 
     # Required by SlipStream ssh utils
-    yum install -y gcc python-devel
-    # python-crypto clashes with Crypto installed as dependency with paramiko
-    yum remove -y python-crypto
-    pip install -Iv paramiko==$PYPI_PARAMIKO_VER
     pip install -Iv scpclient==$PYPI_SCPCLIENT_VER
 
     # winrm
     winrm_pkg=a2e7ecf95cf44535e33b05e0c9541aeb76e23597.zip
     pip install https://github.com/diyan/pywinrm/archive/${winrm_pkg}
 
-    yum install -y slipstream-client
+    _inst slipstream-client
 }
 
 function deploy_slipstream_server () {
@@ -459,14 +492,13 @@ function deploy_slipstream_server () {
     _stop_slipstream_service
 
     _print "- installing and configuring SlipStream service"
-    yum install -y slipstream-server
+    _inst slipstream-server
 
     _update_slipstream_configuration
 
     _set_theme
     _set_localization
 
-    _register_slipstream_with_system_startup
     _start_slipstream
 
     _deploy_nginx_proxy
@@ -490,15 +522,8 @@ function _set_localization() {
 function _stop_slipstream_service() {
     _print "- stopping SlipStream service"
 
-    service slipstream stop || true
-    service ssclj stop || true
-}
-
-function _register_slipstream_with_system_startup() {
-    _print "- registering SlipStream service with system startup"
-
-    chkconfig --add ssclj
-    chkconfig --add slipstream
+    srvc_stop slipstream || true
+    srvc_stop ssclj || true
 }
 
 function _start_slipstream() {
@@ -512,20 +537,12 @@ function _start_slipstream() {
 }
 
 function _start_slipstream_service() {
-    service ssclj start
-    service slipstream start
+    systemctl start ssclj
+    systemctl start slipstream
 }
 
 function _start_slipstream_application() {
-    set +e
-    while true; do
-        nc -v -z $SS_LOCAL_HOST $SS_LOCAL_PORT
-        if [ "$?" == "0" ]; then
-            break
-        fi
-        sleep 2
-    done
-    set -e
+    _wait_listens $SS_LOCAL_HOST $SS_LOCAL_PORT
     curl -m 60 -S -o /dev/null $SS_LOCAL_URL
 }
 
@@ -587,10 +604,9 @@ function _deploy_nginx_proxy() {
 
     _print "- install nginx and nginx configuration for SlipStream"
 
-    # Install nginx and the configuratoin file for SlipStream
-    yum install -y slipstream-server-nginx-conf
-    service nginx start
-
+    # Install nginx and the configuration file for SlipStream.
+    _inst slipstream-server-nginx-conf
+    srvc_start nginx
 }
 
 function _load_slipstream_examples() {

@@ -55,8 +55,16 @@ function _iptables_get_accept_rule () {
     echo $ACCEPT_RULE
 }
 
+function _install_iptables() {
+    systemctl stop firewalld.service || true
+    systemctl mask firewalld.service || true
+    yum install -y iptables-services
+    systemctl start iptables.service
+}
+
 function add_nrpe_firewall_rules () {
     _printn " adding NRPE firewall rules... "
+    _install_iptables
     NRPE_PORT=5666
     NRPE_RULE="$(_iptables_get_accept_rule $NRPE_PORT)"
 
@@ -65,8 +73,8 @@ function add_nrpe_firewall_rules () {
 
     iptables-save > /etc/sysconfig/iptables
     sed -i.bak -e "/-A INPUT -j REJECT/i ${NRPE_RULE}" /etc/sysconfig/iptables
-    service iptables restart || \
-        { cp /etc/sysconfig/iptables.bak /etc/sysconfig/iptables; service iptables restart; }
+    systemctl restart iptables || \
+        { cp /etc/sysconfig/iptables.bak /etc/sysconfig/iptables; systemctl restart iptables; }
     _prints "done."
 }
 
@@ -97,10 +105,9 @@ EOF
     # enable arguments to NRPE commands
     sed -i -e 's/^dont_blame_nrpe=.*/dont_blame_nrpe=1/' /etc/nagios/nrpe.cfg
 
-    sed -i -e "s|# chkconfig:.*|# chkconfig: 36 60 45|" /etc/init.d/nrpe
-    chkconfig --add nrpe
+    systemctl enable nrpe
 
-    service nrpe restart
+    systemctl restart nrpe
     _prints "done."
 }
 

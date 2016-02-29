@@ -62,7 +62,7 @@ function _configure() {
 function install_backup_S3 () {
     _install
     _configure
-    service crond start
+    systemctl restart crond
 }
 
 _print "Installing SlipStream backup."

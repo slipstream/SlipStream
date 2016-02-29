@@ -165,8 +165,8 @@ function _install_slipstream_connectors() {
 
 function _start_slipstream() {
     # Start SlipStream.
-    service ssclj start
-    service slipstream start
+    systemctl start ssclj
+    systemctl start slipstream
 }
 
 _install_yum_client_cert
