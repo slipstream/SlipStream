@@ -238,7 +238,7 @@ function _is_true() {
 }
 
 function _inst() {
-    yum install -y
+    yum install -y $@
 }
 
 function srvc_start() {
