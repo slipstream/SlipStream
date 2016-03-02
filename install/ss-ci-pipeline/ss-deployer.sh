@@ -38,6 +38,9 @@ function _is_none() {
     fi
 }
 
+yum clean all
+yum upgrade -y
+
 ss-get --timeout 1800 builder.ready
 
 install_examples=`ss-get install_examples`
