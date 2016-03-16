@@ -51,6 +51,7 @@
  [http-kit "2.1.19"]
 
  [instaparse "1.4.1"]
+ [io.nervous/kvlt "0.1.0"]
 
  [javax.mail/mail "1.4.7" :scope "compile"]
  [javax.servlet/javax.servlet-api "3.1.0"]
