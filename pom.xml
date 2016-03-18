@@ -13,6 +13,10 @@
     <maven>3.2.0</maven>
   </prerequisites>
 
+  <modules>
+    <module>clojure-deps</module>
+  </modules>
+
   <!-- To NOT build all of the submodules, define the -->
   <!-- property "skipModules" in the build.           -->
   <profiles>
@@ -30,7 +34,6 @@
         <module>../SlipStreamClient</module>
         <module>../SlipStreamClientAPI</module>
         <module>../SlipStreamConnectors</module>
-        <module>clojure-deps</module>
         <module>yum</module>
         <!-- add enterprise modules here : do not remove comment -->
       </modules>
