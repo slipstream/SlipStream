@@ -1,9 +1,9 @@
 #!/bin/bash
 
 function deploy() {
-    yum -y install slipstream-connector-softlayer
     pip install importlib
-    pip install softlayer
+    pip install SoftLayer
+    yum -y install slipstream-connector-nativesoftlayer
 }
 
 deploy
