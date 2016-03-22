@@ -80,7 +80,7 @@ if ( _is_true $with_refconf ); then
                 -u $NEXUS_CREDS \
                 -k $YUM_REPO_KIND \
                 -e $YUM_REPO_EDITION \
-                -c ${_NEXUS_URI}'?r=releases-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
+                -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
                 -p $NEXUS_CREDS \
                 -o "$_SS_PARAM_BACKEND"
         else
