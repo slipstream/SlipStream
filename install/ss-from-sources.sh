@@ -169,7 +169,7 @@ if ( _is_true $with_refconf ); then
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
     /tmp/ss-install-ref-conf.sh \
-        -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+        -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
         -u $NEXUS_CREDS \
         -k $YUM_REPO_KIND \
         -e $YUM_REPO_EDITION \
