@@ -76,16 +76,16 @@ if ( _is_true $with_refconf ); then
     if ( _is_none ${SS_REPO_CONF_URL} ); then
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
             /tmp/ss-install-ref-conf.sh \
-                -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+                -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
                 -u $NEXUS_CREDS \
                 -k $YUM_REPO_KIND \
                 -e $YUM_REPO_EDITION \
-                -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
+                -c ${_NEXUS_URI}'?r=releases-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
                 -p $NEXUS_CREDS \
                 -o "$_SS_PARAM_BACKEND"
         else
             /tmp/ss-install-ref-conf.sh \
-                -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+                -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
                 -u $NEXUS_CREDS \
                 -k $YUM_REPO_KIND \
                 -e $YUM_REPO_EDITION \
@@ -93,7 +93,7 @@ if ( _is_true $with_refconf ); then
         fi
     else
         /tmp/ss-install-ref-conf.sh \
-            -r $_NEXUS_URI'?r=snapshots-enterprise&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+            -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
             -u $NEXUS_CREDS \
             -o "$_SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
     fi
