@@ -64,7 +64,7 @@ boot=/usr/local/bin/boot
 curl -fsSLo $boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
 chmod 755 $boot
 export BOOT_AS_ROOT=yes
-./$boot
+$boot
 cat >>~/.bashrc<<EOF
 export BOOT_JVM_OPTIONS="-client -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx2g -Xverify:none"
 export BOOT_HOME=~/.boot
