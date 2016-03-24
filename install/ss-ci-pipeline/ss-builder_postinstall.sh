@@ -57,6 +57,22 @@ export LEIN_ROOT=true
 EOF
 
 #
+# Install boot
+# 
+echo statecustom "Installing boot..."
+boot=/usr/local/bin/boot
+curl -fsSLo $boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
+chmod 755 $boot
+export BOOT_AS_ROOT=yes
+./$boot
+cat >>.bashrc<<EOF
+export BOOT_JVM_OPTIONS="-client -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx2g -Xverify:none"
+export BOOT_HOME=~/.boot
+export BOOT_EMIT_TARGET=no
+export BOOT_AS_ROOT=yes
+EOF
+
+#
 # On some OS flavours $HOME may not be defined.
 #
 cat >> ~/.bashrc << EOF
