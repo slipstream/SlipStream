@@ -65,7 +65,7 @@ curl -fsSLo $boot https://github.com/boot-clj/boot-bin/releases/download/latest/
 chmod 755 $boot
 export BOOT_AS_ROOT=yes
 ./$boot
-cat >>.bashrc<<EOF
+cat >>~/.bashrc<<EOF
 export BOOT_JVM_OPTIONS="-client -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx2g -Xverify:none"
 export BOOT_HOME=~/.boot
 export BOOT_EMIT_TARGET=no
