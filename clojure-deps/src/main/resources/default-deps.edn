@@ -4,6 +4,7 @@
  [com.sixsq.slipstream/auth "3.1-SNAPSHOT"]
  [com.sixsq.slipstream/Libcloud-SixSq-zip "3.1-SNAPSHOT"]
  [com.sixsq.slipstream/SlipStreamAsync "3.1-SNAPSHOT"]
+ [com.sixsq.slipstream/SlipStreamClientAPI-jar "3.1-SNAPSHOT"]
  [com.sixsq.slipstream/SlipStreamCljResources-jar "3.1-SNAPSHOT"]
  [com.sixsq.slipstream/SlipStreamConnector "3.1-SNAPSHOT"]
  [com.sixsq.slipstream/SlipStreamConnector :scope "test"]
