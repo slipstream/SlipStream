@@ -17,7 +17,7 @@
  [com.sixsq.slipstream/SlipStreamService "3.1-SNAPSHOT" :scope "test"]
  [com.sixsq.slipstream/SlipStreamUI "3.1-SNAPSHOT"]
 
- [aleph "0.4.0"]
+ [aleph "0.4.1-beta7"]
 
  [buddy/buddy-core "0.9.0"]
  [buddy/buddy-hashers "0.11.0"]
