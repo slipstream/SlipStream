@@ -17,7 +17,7 @@ tag_release() {
   repo=${1}
 
   # make the release tag
-  (cd ${repo}; find . -name pom.xml -exec mv -f {}.tag {} \; ; git add . ; git commit -m "release ${TAG}"; git push; git tag ${TAG}; git push origin ${TAG})
+  (cd ${repo}; find . -name pom.xml -exec mv -f {}.tag {} \; ; mvn generate-sources -Pupdate-boot-version; git add . ; git commit -m "release ${TAG}"; git push; git tag ${TAG}; git push origin ${TAG})
 
 }
 
@@ -26,7 +26,7 @@ update_to_snapshot() {
   repo=${1}
 
   # update to next development version
-  (cd ${repo}; find . -name pom.xml -exec mv -f {}.next {} \; ; git add . ; git commit -m "next development version"; git push)
+  (cd ${repo}; find . -name pom.xml -exec mv -f {}.next {} \; ; mvn generate-sources -Pupdate-boot-version; git add . ; git commit -m "next development version"; git push)
 }
 
 # checkout given version (tag or master)
