@@ -15,6 +15,7 @@
 
   <modules>
     <module>clojure-deps</module>
+    <module>yum</module>
   </modules>
 
   <!-- To NOT build all of the submodules, define the -->
@@ -34,7 +35,6 @@
         <module>../SlipStreamClient</module>
         <module>../SlipStreamClientAPI</module>
         <module>../SlipStreamConnectors</module>
-        <module>yum</module>
         <!-- add enterprise modules here : do not remove comment -->
       </modules>
     </profile>
