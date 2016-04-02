@@ -4,6 +4,32 @@ TAG=NONE
 
 BRANCH=${1:-master}
 
+PUSH_CHANGES=${2:-false}
+
+if [ "${PUSH_CHANGES}" == "true" ]; then
+    TARGET=deploy
+else
+    TARGET=install
+fi
+
+do_push() {
+    if [ "${PUSH_CHANGES}" == "true" ]; then
+        echo "INFO: PUSHING changes."
+        git push
+    else
+        echo "INFO: not pushing changes."
+    fi
+}
+
+do_push_tag() {
+    if [ "${PUSH_CHANGES}" == "true" ]; then
+        echo "INFO: PUSHING tag ${TAG}."
+        git push origin ${TAG}
+    else
+        echo "INFO: not pushing tag."
+    fi
+}
+
 # retrieve the tag
 retrieve_tag() {
   repo=SlipStream
@@ -12,12 +38,19 @@ retrieve_tag() {
   export TAG
 }
 
+retrieve_snapshot() {
+  repo=SlipStream
+
+  SNAPSHOT=`grep project.dev.com.sixsq.slipstream\\:SlipStream= ${repo}/release.properties | cut -d = -f 2`
+  export SNAPSHOT
+}
+
 # update pom.xml files for tag and next development version
 tag_release() {
   repo=${1}
 
   # make the release tag
-  (cd ${repo}; find . -name pom.xml.tag -exec mv -f {} $(dirname {})/pom.xml \; ; mvn generate-sources -DupdateBootVersion ; git add . ; git commit -m "release ${TAG}"; git push; git tag ${TAG}; git push origin ${TAG})
+  (cd ${repo}; find . -name pom.xml.tag -exec mv -f {} $(dirname {})/pom.xml \; ; mvn generate-sources -DupdateBootVersion ; git add . ; git commit -m "release ${TAG}"; do_push; git tag ${TAG}; do_push_tag)
 
 }
 
@@ -26,7 +59,7 @@ update_to_snapshot() {
   repo=${1}
 
   # update to next development version
-  (cd ${repo}; find . -name pom.xml.next -exec mv -f {} $(dirname {})/pom.xml \; ; mvn generate-sources -DupdateBootVersion; git add . ; git commit -m "next development version"; git push)
+  (cd ${repo}; find . -name pom.xml.next -exec mv -f {} $(dirname {})/pom.xml \; ; mvn generate-sources -DupdateBootVersion; git add . ; git commit -m "next development version"; do_push)
 }
 
 # checkout given version (tag or master)
@@ -41,6 +74,9 @@ do_tag() {
     retrieve_tag
     echo "TAG = ${TAG}"
 
+    # hack to update build.boot files
+    find . -name build.boot -exec sed -i "s/^(def +version+.*)/(def +version+ \"${TAG}\")/" {} \;
+
     REPOS=`find . -type d -name SlipStream\* -a -not -name \*.git`
     for repo in ${REPOS[@]}
     do
@@ -51,7 +87,14 @@ do_tag() {
 }
 
 do_update() {
+    retrieve_snapshot
+    echo "SNAPSHOT = ${SNAPSHOT}"
+
     REPOS=`find . -type d -name SlipStream\* -a -not -name \*.git`
+
+    # hack to update build.boot files
+    find . -name build.boot -exec sed -i "s/^(def +version+.*)/(def +version+ \"${SNAPSHOT}\")/" {} \;
+
     for repo in ${REPOS[@]}
     do
         echo "UPDATING: ${repo}"
@@ -138,7 +181,7 @@ mvn -B \
     -Djvmargs="-Xmx1024M" \
     -DskipTests \
     -f ${WORKSPACE}/Community/SlipStream/pom.xml \
-    clean deploy
+    clean ${TARGET}
 
 #
 # Enterprise Release Build
@@ -147,4 +190,4 @@ mvn -B \
     -Djvmargs="-Xmx1024M" \
     -DskipTests \
     -f ${WORKSPACE}/Enterprise/SlipStream/pom.xml \
-    clean deploy
+    clean ${TARGET}
