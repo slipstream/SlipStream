@@ -48,7 +48,7 @@ retrieve_snapshot() {
 retrieve_release() {
     repo=SlipStream
 
-      RELEASE=`grep project.rel.com.sixsq.slipstream.*:SlipStream=3.1= ${repo}/release.properties | cut -d = -f 2`
+      RELEASE=`grep project.rel.com.sixsq.slipstream.*:SlipStream= ${repo}/release.properties | cut -d = -f 2`
       export RELEASE
 }
 
