@@ -45,6 +45,13 @@ retrieve_snapshot() {
   export SNAPSHOT
 }
 
+retrieve_release() {
+    repo=SlipStream
+
+      RELEASE=`grep project.rel.com.sixsq.slipstream.*:SlipStream=3.1= ${repo}/release.properties | cut -d = -f 2`
+      export RELEASE
+}
+
 # update pom.xml files for tag and next development version
 tag_release() {
   repo=${1}
@@ -73,9 +80,11 @@ checkout() {
 do_tag() {
     retrieve_tag
     echo "TAG = ${TAG}"
+    retrieve_release
+    echo "RELEASE = ${RELEASE}"
 
     # hack to update build.boot files
-    find . -name build.boot -exec sed -i "s/^(def +version+.*)/(def +version+ \"${TAG}\")/" {} \;
+    find . -name build.boot -exec sed -i "s/^(def +version+.*)/(def +version+ \"${RELEASE}\")/" {} \;
 
     REPOS=`find . -type d -name SlipStream\* -a -not -name \*.git`
     for repo in ${REPOS[@]}
