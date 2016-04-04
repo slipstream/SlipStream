@@ -15,7 +15,6 @@
 
   <modules>
     <module>clojure-deps</module>
-    <module>yum</module>
   </modules>
 
   <!-- To NOT build all of the submodules, define the -->
@@ -29,6 +28,7 @@
         </property>
       </activation>
       <modules>
+        <module>yum</module>
         <module>../SlipStreamUI</module>
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
