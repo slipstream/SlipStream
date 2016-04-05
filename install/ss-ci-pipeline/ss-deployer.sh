@@ -52,7 +52,11 @@ YUM_REPO_KIND=`ss-get yum_repo_kind`
 YUM_REPO_EDITION=`ss-get yum_repo_edition`
 SS_REPO_CONF_URL=`ss-get ss-repo-conf-url`
 
+
 function _install_yum_client_cert() {
+    SS_CONF_DIR=/etc/slipstream
+    mkdir -p $SS_CONF_DIR
+
     TARBALL=~/yum-certs.tgz
     _CREDS=
     if [ -n "$NEXUS_CREDS" ]; then
