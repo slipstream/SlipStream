@@ -52,6 +52,17 @@ YUM_REPO_KIND=`ss-get yum_repo_kind`
 YUM_REPO_EDITION=`ss-get yum_repo_edition`
 SS_REPO_CONF_URL=`ss-get ss-repo-conf-url`
 
+function _install_yum_client_cert() {
+    TARBALL=~/yum-certs.tgz
+    _CREDS=
+    if [ -n "$NEXUS_CREDS" ]; then
+        _CREDS="-u $NEXUS_CREDS"
+    fi
+    curl -k -L -sSf $_CREDS -o $TARBALL $1
+    tar -C $SS_CONF_DIR -zxvf $TARBALL
+    chmod 400 $SS_CONF_DIR/yum-client.*
+    rm -f $TARBALL
+}
 
 #
 # for installation from local repository
@@ -121,6 +132,10 @@ else
         -o /tmp/slipstream.sh \
         $_GH_SCRIPTS_URL/slipstream.sh
     chmod +x /tmp/slipstream.sh
+    if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
+        _install_yum_client_cert \
+            ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST'
+    fi
     if ( _is_none ${SS_REPO_CONF_URL} ); then
         /tmp/slipstream.sh $_SS_PARAM_BACKEND -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
     else
