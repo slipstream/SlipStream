@@ -56,6 +56,9 @@ function _configure() {
     sed -i -e "s|AMAZON_BUCKET=.*|AMAZON_BUCKET=${AMAZON_BUCKET}|" \
         -e "s|SS_HOSTNAME=.*|SS_HOSTNAME=${INSTANCE_ID}|" \
         /etc/slipstream/slipstream-backup.conf
+    mkdir -p /var/log/slipstream/
+    chown slipstream. /var/log/slipstream/
+    echo "BACKUP_TIMESTAMP=/var/log/slipstream/slipstream-backup-timestamp" >> /etc/slipstream/slipstream-backup.conf
     _prints "done."
 }
 
