@@ -28,7 +28,6 @@
         </property>
       </activation>
       <modules>
-        <module>yum</module>
         <module>../SlipStreamUI</module>
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
@@ -36,6 +35,9 @@
         <module>../SlipStreamClientAPI</module>
         <module>../SlipStreamConnectors</module>
         <!-- add enterprise modules here : do not remove comment -->
+
+        <!-- construct yum repository after everything -->
+        <module>yum</module>
       </modules>
     </profile>
   </profiles>
