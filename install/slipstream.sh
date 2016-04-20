@@ -620,7 +620,8 @@ function _deploy_elasticsearch() {
 
     _print "- install elasticsearch"
 
-    # Install elasticsearch
+    # Install elasticsearch with explicit java dependency
+    _inst java-1.8.0-openjdk-headless
     _inst elasticsearch
 
     # Configurate elasticsearch
