@@ -311,7 +311,7 @@ EOF
 }
 
 function _add_yum_repos () {
-    _print "- adding YUM repositories (EPEL, Nginx, SlipStream)"
+    _print "- adding YUM repositories (EPEL, Nginx, Elasticsearch, SlipStream)"
 
     _inst yum-utils
 
@@ -321,8 +321,22 @@ function _add_yum_repos () {
 
     # Nginx
     nginx_repo_rpm=nginx-release-centos-7-0.el7.ngx.noarch.rpm
-	rpm -Uvh --force \
+    rpm -Uvh --force \
         http://nginx.org/packages/centos/7/noarch/RPMS/${nginx_repo_rpm}
+
+    # Elasticsearch
+    # install signing key
+    rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+
+    # configure Elasticsearch yum repo
+    cat > /etc/yum.repos.d/elasticsearch.repo <<EOF
+[elasticsearch-2.x]
+name=Elasticsearch repository for 2.x packages
+baseurl=https://packages.elastic.co/elasticsearch/2.x/centos
+gpgcheck=1
+gpgkey=https://packages.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+EOF
 
     # SlipStream
     if [ -n "$SS_YUM_REPO_DEF_URL" ]; then
@@ -456,6 +470,8 @@ function _deploy_graphite () {
 function deploy_slipstream_server_deps () {
 
     _print "Installing SlipStream dependencies"
+
+    _deploy_elasticsearch
 
     if [ "$SS_DB" = "postgresql" ]; then
         _deploy_postgresql
@@ -598,6 +614,27 @@ function _update_or_add_config_property() {
     grep -qP "^[ \t]*$PROPERTY" $SLIPSTREAM_CONF && \
         sed -i "s|$PROPERTY.*|$SUBST_STR|" $SLIPSTREAM_CONF || \
         echo $SUBST_STR >> $SLIPSTREAM_CONF
+}
+
+function _deploy_elasticsearch() {
+
+    _print "- install elasticsearch"
+
+    # Install elasticsearch with explicit java dependency
+    _inst java-1.8.0-openjdk-headless
+    _inst elasticsearch
+
+    # Configurate elasticsearch
+    # FIXME: visible on localhost only
+    elasticsearch_cfg=/etc/elasticsearch/elasticsearch.yml
+    mv ${elasticsearch_cfg} ${elasticsearch_cfg}.orig
+    cat > ${elasticsearch_cfg} <<EOF
+network.host: 127.0.0.1
+EOF
+
+    # Ensure is started; start also on boot.
+    srvc_enable elasticsearch.service
+    srvc_start elasticsearch
 }
 
 function _deploy_nginx_proxy() {
