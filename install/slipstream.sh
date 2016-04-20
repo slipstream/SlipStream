@@ -471,6 +471,8 @@ function deploy_slipstream_server_deps () {
 
     _print "Installing SlipStream dependencies"
 
+    _deploy_elasticsearch
+
     if [ "$SS_DB" = "postgresql" ]; then
         _deploy_postgresql
     elif [ "$SS_DB" = "hsqldb" ]; then
@@ -516,8 +518,6 @@ function deploy_slipstream_server () {
     _start_slipstream
 
     _deploy_nginx_proxy
-
-    _deploy_elasticsearch
 
     _load_slipstream_examples
 }
