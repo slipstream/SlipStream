@@ -77,7 +77,7 @@
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
- [org.clojure/core.async "0.2.371"]
+ [org.clojure/core.async "0.2.374" :excludes [[org.clojure/tools.reader]]]
  [org.hibernate/hibernate-entitymanager "4.3.9.Final"]
  [org.hibernate/hibernate-c3p0 "4.3.9.Final"]
  [org.hsqldb/hsqldb "2.3.3"]
