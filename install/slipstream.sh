@@ -704,7 +704,7 @@ EOF
 
 function deploy_riemann() {
   [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
-  _print "Installing Riemann."
+  _print "Installing Riemann"
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann
