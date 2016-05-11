@@ -88,7 +88,8 @@ jobs=(Merge_SlipStream \
       SlipStreamI18n_build \
       SlipStreamServer_Enterprise_build \
       SlipStreamServerDeps_Enterprise_build \
-      SlipStreamUI_Enterprise_build)
+      SlipStreamUI_Enterprise_build \
+      SlipStreamPricing_Enterprise_build)
 
 for job in ${jobs[@]}; do
   echo "${job}: ${cmd}d"
