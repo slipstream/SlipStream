@@ -349,8 +349,7 @@ EOF
         curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
         SS_YUM_REPO=$(yum repolist enabled | grep -i slipstream | awk '{print $2}')
     else
-        #rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
-        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-2.3-1.noarch.rpm
+        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
         yum-config-manager --disable SlipStream-*
         yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     fi
