@@ -1,33 +1,33 @@
 #!/bin/bash
+
+# Installs Riemann server on CentOS 7.
+# Requires EPEL repository.
+
 set -e
 set -x
 
 RIEMANN_VER=0.2.11-1
-
 ss_clj_client=/opt/slipstream/downloads/clj-ss-client.jar
 ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann
-mkdir -p $ss_riemann_streams
 
 function srvc_start() {
     systemctl start $1
 }
-function srvc_stop() {
-    systemctl stop $1
-}
-function srvc_restart() {
-    systemctl restart $1
-}
 function srvc_enable() {
     systemctl enable $1
 }
+function _print() {
+    echo -e "::: $@"
+}
 
-install_riemann() {
+function _install_riemann() {
     yum localinstall -y https://aphyr.com/riemann/riemann-${RIEMANN_VER}.noarch.rpm
     srvc_enable riemann
 }
 
-add_ss_riemann_streams() {
+function _add_ss_riemann_streams() {
+    mkdir -p $ss_riemann_streams
     cat > $ss_riemann_conf<<EOF
 ; -*- mode: clojure; -*-
 ; vim: filetype=clojure
@@ -60,14 +60,11 @@ EOF
     #        at riemann.bin.<clinit>(Unknown Source)
 }
 
-start_riemann() {
+function deploy_riemann() {
+  _print "Installing Riemann"
+  _install_riemann
+  _add_ss_riemann_streams
   srvc_start riemann
-}
-
-deploy_riemann() {
-  install_riemann
-  add_ss_riemann_streams
-  start_riemann
 }
 
 deploy_riemann
