@@ -10,7 +10,6 @@ RIEMANN_VER=0.2.11-1
 ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamServiceOfferAPI.jar
 ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann/streams
-SS_YUM_REPO_EDITION=enterprise
 
 function _inst() {
     yum install -y $@
@@ -56,7 +55,7 @@ EOF
 
 function deploy_riemann() {
   _print "Installing Riemann"
-  _inst slipstream-riemann-$SS_YUM_REPO_EDITION
+  _inst slipstream-riemann-enterprise
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann
