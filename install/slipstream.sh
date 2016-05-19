@@ -703,6 +703,7 @@ EOF
 
 function deploy_riemann() {
   _print "Installing Riemann"
+  _inst slipstream-riemann-$SS_YUM_REPO_EDITION
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann
