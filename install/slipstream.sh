@@ -702,8 +702,9 @@ EOF
 }
 
 function deploy_riemann() {
+  [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
   _print "Installing Riemann"
-  _inst slipstream-riemann-$SS_YUM_REPO_EDITION
+  _inst slipstream-riemann-enterprise
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann
@@ -723,9 +724,7 @@ prepare_node
 deploy_slipstream_server_deps
 deploy_slipstream_client
 deploy_slipstream_server
-if [ "$SS_YUM_REPO_EDITION" == "enterprise" ]; then
-   deploy_riemann
-fi
+deploy_riemann
 cleanup
 
 function _how_to_start_service() {
