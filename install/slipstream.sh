@@ -199,6 +199,12 @@ POSTGRESQL_USER=postgres
 POSTGRESQL_PASS=password
 POSTGRESQL_DBS="slipstream ssclj"
 
+# Riemann variables.
+RIEMANN_VER=0.2.11-1
+ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamServiceOfferAPI.jar
+ss_riemann_conf=/etc/riemann/riemann-slipstream.config
+ss_riemann_streams=/opt/slipstream/riemann/streams
+
 # # # # # # # # # # # #
 # Advanced parameters.
 # # # # # # # # # # # #
@@ -343,8 +349,7 @@ EOF
         curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
         SS_YUM_REPO=$(yum repolist enabled | grep -i slipstream | awk '{print $2}')
     else
-        #rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
-        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-2.3-1.noarch.rpm
+        rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
         yum-config-manager --disable SlipStream-*
         yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     fi
@@ -655,6 +660,45 @@ function _load_slipstream_examples() {
         --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
 }
 
+##
+## Riemann installation.
+function _install_riemann() {
+    yum localinstall -y https://aphyr.com/riemann/riemann-${RIEMANN_VER}.noarch.rpm
+    srvc_enable riemann
+}
+
+function _add_ss_riemann_streams() {
+    cat > $ss_riemann_conf<<EOF
+; -*- mode: clojure; -*-
+; vim: filetype=clojure
+
+(logging/init {:file "/var/log/riemann/riemann.log"})
+
+; Listen on the local interface over TCP (5555).
+; Disable UDP (5555), and websockets (5556).
+(let [host "127.0.0.1"]
+  (tcp-server {:host host})
+  #_(udp-server {:host host})
+  #_(ws-server  {:host host}))
+
+; Location of SlipStream Riemann streams.
+(include "$ss_riemann_streams")
+EOF
+    cat >> /etc/sysconfig/riemann<<EOF
+EXTRA_CLASSPATH=$ss_clj_client
+RIEMANN_CONFIG=$ss_riemann_conf
+EOF
+}
+
+function deploy_riemann() {
+  [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
+  _print "Installing Riemann"
+  _inst slipstream-riemann-enterprise
+  _install_riemann
+  _add_ss_riemann_streams
+  srvc_start riemann
+}
+
 function cleanup () {
     $CLEAN_PKG_CACHE
 }
@@ -669,6 +713,7 @@ prepare_node
 deploy_slipstream_server_deps
 deploy_slipstream_client
 deploy_slipstream_server
+deploy_riemann
 cleanup
 
 function _how_to_start_service() {
