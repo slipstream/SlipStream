@@ -521,6 +521,7 @@ function deploy_slipstream_server () {
     _set_localization
 
     _start_slipstream
+    _enable_slipstream
 
     _deploy_nginx_proxy
 
@@ -558,8 +559,13 @@ function _start_slipstream() {
 }
 
 function _start_slipstream_service() {
-    systemctl start ssclj
-    systemctl start slipstream
+    srvc_start ssclj
+    srvc_start slipstream
+}
+
+function _enable_slipstream() {
+    srvc_enable ssclj
+    srvc_enable slipstream
 }
 
 function _start_slipstream_application() {
