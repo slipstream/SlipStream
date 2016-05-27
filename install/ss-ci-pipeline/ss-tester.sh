@@ -32,6 +32,7 @@ function _install_git_creds() {
     chown root:root ~/.ssh/*
 
     echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    chmod 644 ~/.ssh/config
 }
 
 _install_git_creds
@@ -50,7 +51,7 @@ for up in ${users_passes//,/ }; do
     fi
 done
 
-cd
+cd ~
 
 test_repo_name=SlipStreamTests
 
