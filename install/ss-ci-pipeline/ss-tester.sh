@@ -11,10 +11,9 @@ set -x
 set -e
 set -o pipefail
 
-test_repo_name=SlipStreamTests
-test_repo_branch="issue_#776TL-run-from-ci-tester"
-scale_app_uri=konstan/scale/scale-test-dpl
-scale_comp_name=testvm
+test_repo_branch=`ss-get test_repo_branch`
+scale_app_uri=`ss-get scale_app_uri`
+scale_comp_name=`ss-get scale_comp_name`
 ss_serviceurl=`ss-get ss_service_url`
 nexus_creds=`ss-get nexus_creds`
 
@@ -52,6 +51,9 @@ for up in ${users_passes//,/ }; do
 done
 
 cd
+
+test_repo_name=SlipStreamTests
+
 git clone git@github.com:slipstream/${test_repo_name}.git
 
 ss-get --timeout 2700 deployer.ready
