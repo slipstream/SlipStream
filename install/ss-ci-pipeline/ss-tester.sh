@@ -77,6 +77,7 @@ for connector in ${connectors_to_test}; do
  }
 EOF
 
+    # This is ugly. See https://github.com/adzerk-oss/boot-test/issues/24
     sed -i -e 's/:junit-output-to[ \t]*".*"/:junit-output-to "'${connector}'"/' \
         clojure/build.boot
 
