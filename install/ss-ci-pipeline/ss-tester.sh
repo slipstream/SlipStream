@@ -11,45 +11,77 @@ set -x
 set -e
 set -o pipefail
 
-ss-get --timeout 2700 deployer.ready
+test_repo_name=SlipStreamTests
+test_repo_branch="issue_#776TL-run-from-ci-tester"
+scale_app_uri=konstan/scale/scale-test-dpl
+scale_comp_name=testvm
+ss_serviceurl=`ss-get ss_service_url`
+nexus_creds=`ss-get nexus_creds`
 
-#
-# test the service
-#
+function _install_git_creds() {
 
-SS_URL=`ss-get ss_service_url`
+    # Get and inflate git credentials.
+    TARBALL=~/git-creds.tgz
+    GIT_CREDS_URL=http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz
+    SSH_DIR=~/.ssh
+    mkdir -p $SSH_DIR
+    chmod 0700 $SSH_DIR
+    _CREDS="-u $nexus_creds"
+    curl -k -L -sSf $_CREDS -o $TARBALL $GIT_CREDS_URL
+    tar -C $SSH_DIR -zxvf $TARBALL
+    rm -f $TARBALL
+    chown root:root ~/.ssh/*
+
+    echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+}
+
+_install_git_creds
+
 # space separated list
-CONNECTORS_TO_TEST=`ss-get connectors_to_test`
+connectors_to_test=`ss-get connectors_to_test`
 # u1:p1,u2:p2,..
-USERPASS=`ss-get ss_users`
+users_passes=`ss-get ss_users`
 
-USER=test
-PASS=tesTtesT
-for up in ${USERPASS//,/ }; do
-    if [ "x${up%%:*}" == "x$USER" ]; then
-       PASS=${up#*:}
+test_username=test
+test_userpass=tesTtesT
+for up in ${users_passes//,/ }; do
+    if [ "x${up%%:*}" == "x$test_username" ]; then
+       test_userpass=${up#*:}
        break
     fi
 done
 
-APPLICATION=examples/tutorials/service-testing/system
-msg="Running deployment tests of $APPLICATION on $SS_URL as $USER:$PASS for connectors '$CONNECTORS_TO_TEST'"
+cd
+git clone git@github.com:slipstream/${test_repo_name}.git
+
+ss-get --timeout 2700 deployer.ready
+
+msg="Running deployment tests of $scale_app_uri on $ss_serviceurl as $test_username for connectors '$connectors_to_test'"
 ss-display "$msg"
 echo $msg
 
-for CONNECTOR in ${CONNECTORS_TO_TEST}; do
-    msg="Running deployment test of $APPLICATION on $SS_URL as $USER:$PASS for connector '$CONNECTOR'"
-    ss-display "$msg"
-    echo $msg
-    ss-execute -vvv -u $USER -p $PASS --endpoint=$SS_URL \
-        -w 15 --kill-vms-on-error \
-        --parameters "testclient:cloudservice=$CONNECTOR,apache:cloudservice=$CONNECTOR" \
-        $APPLICATION 2>&1 | tee /tmp/ss-execute-$CONNECTOR.log
-    rc=$?
-    if [ $rc -ne 0 ]; then
-        msg="ERROR: Failed '$msg'"
-        ss-display "$msg"
-        echo $msg
-        exit $rc
-    fi
+cd $test_repo_name
+git checkout $test_repo_branch
+for connector in ${connectors_to_test}; do
+    cat >clojure/resources/test-config.edn<<EOF
+{
+ :username "$test_username"
+ :password "$test_userpass"
+ :serviceurl "$ss_serviceurl"
+ :app-uri "$scale_app_uri"
+ :comp-name "$scale_comp_name"
+ :connector-name "$connector"
+ }
+EOF
+
+    sed -i -e 's/:junit-output-to[ \t]*".*"/:junit-output-to "'${connector}'"/' \
+        clojure/build.boot
+
+    export BOOT_AS_ROOT=yes
+    make clojure-test
 done
+
+msg="All tests ran successfully."
+ss-display "$msg"
+echo $msg
+
