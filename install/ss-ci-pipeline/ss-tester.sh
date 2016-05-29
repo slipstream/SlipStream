@@ -77,7 +77,10 @@ _display() {
 
 test_auth() {
     _display "Running authentication tests on $ss_serviceurl as $test_username."
-    echo $msg
+
+    export BOOT_AS_ROOT=yes
+    export BOOT_COLOR=no
+    # We don't want to fail the deployment even if tests fail.
     make test-auth || true
 
     cp -rp clojure/target/* $test_results_dir
