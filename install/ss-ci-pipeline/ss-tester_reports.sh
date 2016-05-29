@@ -3,7 +3,6 @@
 set -x
 set -e
 
-mkdir -p $SLIPSTREAM_REPORT_DIR/ss-test-results
+test_results_dir=~/test-results
 
-[ -d ~/SlipStreamTests/clojure/target ] && \
-   cp -rp ~/SlipStreamTests/clojure/target/* $SLIPSTREAM_REPORT_DIR/ss-test-results
+[ -d $test_results_dir ] && cp -rp $test_results_dir $SLIPSTREAM_REPORT_DIR
