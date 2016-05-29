@@ -12,7 +12,7 @@ set -e
 set -o pipefail
 
 test_repo_branch=`ss-get test_repo_branch`
-run_comp_uri=`ss-get run-comp-uri`
+run_comp_uri=`ss-get run_comp_uri`
 scale_app_uri=`ss-get scale_app_uri`
 scale_comp_name=`ss-get scale_comp_name`
 ss_serviceurl=`ss-get ss_service_url`
@@ -86,15 +86,16 @@ test_auth() {
 test_run_comp() {
     for connector in ${connectors_to_test}; do
 
-        _display "Running simple deployment tests of $scale_app_uri on $ss_serviceurl as $test_username for connector: '$connector'"
+        _display "Running simple deployment tests of $run_comp_uri on $ss_serviceurl as $test_username for connector: '$connector'"
 
         cat >clojure/resources/test-config.edn<<EOF
 {
  :username "$test_username"
  :password "$test_userpass"
  :serviceurl "$ss_serviceurl"
- :comp-uri "$scale_app_uri"
  :connector-name "$connector"
+
+ :comp-uri "$run_comp_uri"
  }
 EOF
 
@@ -118,9 +119,9 @@ test_run_app() {
  :username "$test_username"
  :password "$test_userpass"
  :serviceurl "$ss_serviceurl"
- :app-uri "$scale_app_uri"
- :comp-name "$scale_comp_name"
  :connector-name "$connector"
+
+ :app-uri "$scale_app_uri"
  }
 EOF
 
@@ -143,9 +144,10 @@ test_run_app_scale() {
  :username "$test_username"
  :password "$test_userpass"
  :serviceurl "$ss_serviceurl"
+ :connector-name "$connector"
+
  :app-uri "$scale_app_uri"
  :comp-name "$scale_comp_name"
- :connector-name "$connector"
  }
 EOF
 
