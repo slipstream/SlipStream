@@ -85,7 +85,7 @@ phantomjs=/usr/local/bin/phantomjs
 phantomjs_dir=phantomjs-2.1.1-linux-x86_64
 phantomjs_bz2=${phantomjs_dir}.tar.bz2
 phantomjs_url=https://bitbucket.org/ariya/phantomjs/downloads/
-curl -fsSLo /tmp/${phantomjs_bz2} ${phantomjs_url}${phantomjs_bz2}
+curl -fsSLv -o /tmp/${phantomjs_bz2} ${phantomjs_url}${phantomjs_bz2}
 tar jxf /tmp/${phantomjs_bz2} -C /tmp
 cp /tmp/${phantomjs_dir}/bin/phantomjs ${phantomjs}
 chmod 755 ${phantomjs}
