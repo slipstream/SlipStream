@@ -4,7 +4,7 @@ set -x
 set -e
 
 # Hack due to an issue in aleph via kvlt.
-yum remove -y java
+yum remove -y java-1.8.0-openjdk-headless
 yum localinstall -y http://yum.sixsq.com/thirdparty/jdk-8u91-linux-x64.rpm
 
 curl -fsSL -o /usr/bin/boot \
