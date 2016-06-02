@@ -243,8 +243,21 @@ function _is_true() {
     fi
 }
 
+function _ss_rpm_name_decorator() {
+    # Decorate RPM names with -[yum-repo-edition]
+    names=''
+    for v in $@; do
+        if [[ $v == slipstream* ]] && [[ $v != *-$SS_YUM_REPO_EDITION ]] ; then
+            names="$names $v-$SS_YUM_REPO_EDITION"
+        else
+            names="$names $v"
+        fi
+    done
+    echo $names
+}
+
 function _inst() {
-    yum install -y $@
+    yum install -y $(_ss_rpm_name_decorator $@)
 }
 
 function srvc_start() {
