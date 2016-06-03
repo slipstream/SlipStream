@@ -243,6 +243,24 @@ function _is_true() {
     fi
 }
 
+function _ss_rpm_name_decorator() {
+    # Decorate RPM names with -[yum-repo-edition] if `slipstream` is present
+    # in the argument string.
+    if [[ ! $@ =~ slipstream ]]; then
+        echo $@
+        return 0
+    fi
+    names=''
+    for n in $@; do
+        if [[ $n == slipstream* ]] && [[ $n != *-$SS_YUM_REPO_EDITION ]] ; then
+            names="$names $v-$SS_YUM_REPO_EDITION"
+        else
+            names="$names $n"
+        fi
+    done
+    echo $names
+}
+
 function _inst() {
     yum install -y $@
 }
