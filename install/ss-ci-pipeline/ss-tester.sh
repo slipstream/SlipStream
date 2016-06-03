@@ -80,7 +80,7 @@ _display() {
 test_deps() {
     _display "Check if local dependencies are available."
 
-    make test-clojure-deps || true
+    make test-clojure-deps
 }
 
 test_auth() {
