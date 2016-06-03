@@ -171,9 +171,9 @@ export BOOT_AS_ROOT=yes
 
 test_deps
 test_auth
-test_run_comp
-test_run_app
-test_run_app_scale
+#test_run_comp
+#test_run_app
+#test_run_app_scale
 
 _display "All tests ran."
 
