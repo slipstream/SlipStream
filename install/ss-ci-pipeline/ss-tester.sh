@@ -77,12 +77,15 @@ _display() {
     echo $1
 }
 
+test_deps() {
+    _display "Check if local dependencies are available."
+
+    make test-clojure-deps || true
+}
+
 test_auth() {
     _display "Running authentication tests on $ss_serviceurl as $test_username."
 
-    export BOOT_AS_ROOT=yes
-    export BOOT_COLOR=no
-    # We don't want to fail the deployment even if tests fail.
     make test-auth || true
 
     cp -rp clojure/target/* $test_results_dir
@@ -104,9 +107,6 @@ test_run_comp() {
  }
 EOF
 
-        export BOOT_AS_ROOT=yes
-        export BOOT_COLOR=no
-        # We don't want to fail the deployment even if tests fail.
         make test-run-comp || true
 
         mkdir -p $test_results_dir/$connector
@@ -130,8 +130,6 @@ test_run_app() {
  }
 EOF
 
-        export BOOT_AS_ROOT=yes
-        # We don't want to fail the deployment even if tests fail.
         make test-run-app || true
 
         mkdir -p $test_results_dir/$connector
@@ -156,9 +154,6 @@ test_run_app_scale() {
  }
 EOF
 
-        export BOOT_AS_ROOT=yes
-        export BOOT_COLOR=no
-        # We don't want to fail the deployment even if tests fail.
         make test-run-app-scale || true
 
         mkdir -p $test_results_dir/$connector
@@ -172,6 +167,9 @@ EOF
 #    TODO: `boot sift` might help.
 # 3. Run single test from rom a namespace boot test -n foo.bar -f '(re-find #"my-test" (str %))': https://github.com/adzerk-oss/boot-test/issues/7
 
+export BOOT_AS_ROOT=yes
+
+test_deps
 test_auth
 test_run_comp
 test_run_app
