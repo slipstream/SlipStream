@@ -37,9 +37,18 @@ function _install_git_creds() {
 
 _install_git_creds
 
-# space separated list
+cd ~
+
+test_repo_name=SlipStreamTests
+
+git clone git@github.com:slipstream/${test_repo_name}.git
+
+#
+# Wait for deployer to deploy SlipStream.
+#
+ss-get --timeout 2700 deployer.ready
+
 connectors_to_test=`ss-get connectors_to_test`
-# u1:p1,u2:p2,..
 users_passes=`ss-get ss_users`
 
 test_username=test
@@ -50,14 +59,6 @@ for up in ${users_passes//,/ }; do
        break
     fi
 done
-
-cd ~
-
-test_repo_name=SlipStreamTests
-
-git clone git@github.com:slipstream/${test_repo_name}.git
-
-ss-get --timeout 2700 deployer.ready
 
 ss_serviceurl=`ss-get ss_service_url`
 
