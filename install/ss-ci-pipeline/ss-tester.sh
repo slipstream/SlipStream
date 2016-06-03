@@ -15,7 +15,6 @@ test_repo_branch=`ss-get test_repo_branch`
 run_comp_uri=`ss-get run_comp_uri`
 scale_app_uri=`ss-get scale_app_uri`
 scale_comp_name=`ss-get scale_comp_name`
-ss_serviceurl=`ss-get ss_service_url`
 nexus_creds=`ss-get nexus_creds`
 
 function _install_git_creds() {
@@ -59,6 +58,8 @@ test_repo_name=SlipStreamTests
 git clone git@github.com:slipstream/${test_repo_name}.git
 
 ss-get --timeout 2700 deployer.ready
+
+ss_serviceurl=`ss-get ss_service_url`
 
 msg="Ready to run tests on $ss_serviceurl as $test_username."
 ss-display "$msg"
