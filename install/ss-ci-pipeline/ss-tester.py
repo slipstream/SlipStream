@@ -177,8 +177,14 @@ def _get_test_user_pass():
     username = 'test'
     userpass = 'tesTtesT'
     if users_passes:
+        # Comma separated list of colon separated user:pass pairs.
         userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(username, userpass)
     return username, userpass
+
+
+def _get_connectors_to_test():
+    # Space separated list.
+    return ss_get('connectors_to_test').split(' ')
 
 
 test_repo_branch = ss_get('test_repo_branch')
@@ -205,7 +211,7 @@ ss_serviceurl = ss_get('ss_service_url')
 
 _print('Ready to run tests on %s as %s.' % (ss_serviceurl, test_username))
 
-connectors_to_test = ss_get('connectors_to_test')
+connectors_to_test = _get_connectors_to_test()
 
 _cd(test_repo_name)
 _check_call(['git', 'checkout', test_repo_branch])
