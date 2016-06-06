@@ -99,20 +99,26 @@ def _check_call(cmd):
 
 
 def _install_git_creds():
+    _print('Installing git creds.')
     n_user, n_pass = ss_get('nexus_creds').split(':')
 
     tarball = _expanduser('~/git-creds.tgz')
-    download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
-                                                 'password': n_pass})
+    _print('Downloading git creds to %s' % tarball)
+    res = download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
+                                                       'password': n_pass})
+    _print('Downloaded git creds to %s' % res)
     ssh_dir = _expanduser('~/.ssh2')
     _mkdir(ssh_dir, 0700)
     _tar_extract(tarball, ssh_dir)
     os.unlink(tarball)
     os.chown(ssh_dir, os.getuid(), os.getgid())
+    _print('Expanded git creds to %s' % ssh_dir)
 
     ssh_conf = _expanduser('~/.ssh2/config')
     fileAppendContent(ssh_conf, "Host github.com\n\tStrictHostKeyChecking no\n")
     os.chmod(ssh_conf, 0644)
+    _print('Updated local ssh config')
+    _print('Git creds downloaded.')
 
 
 def merge_dicts(x, y):
