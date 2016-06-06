@@ -177,7 +177,7 @@ def _get_test_user_pass():
     username = 'test'
     userpass = 'tesTtesT'
     if users_passes:
-        userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(test_username, userpass)
+        userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(username, userpass)
     return username, userpass
 
 
