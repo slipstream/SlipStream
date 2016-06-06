@@ -94,7 +94,7 @@ test_auth() {
 test_run_comp() {
     for connector in ${connectors_to_test}; do
 
-        _display "Running simple deployment tests of $run_comp_uri on $ss_serviceurl as $test_username for connector: '$connector'"
+        _display "Running component deployment tests of $run_comp_uri on $ss_serviceurl as $test_username for connector: '$connector'"
 
         cat >clojure/resources/test-config.edn<<EOF
 {
@@ -117,7 +117,7 @@ EOF
 test_run_app() {
     for connector in ${connectors_to_test}; do
 
-        _display "Running simple deployment tests of $scale_app_uri on $ss_serviceurl as $test_username for connector: '$connector'"
+        _display "Running application deployment tests of $scale_app_uri on $ss_serviceurl as $test_username for connector: '$connector'"
 
         cat >clojure/resources/test-config.edn<<EOF
 {
