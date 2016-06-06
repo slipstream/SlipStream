@@ -51,7 +51,7 @@ def ss_get(param, ignore_abort=False, timeout=30):
     return client.getRuntimeParameter(param)
 
 
-def ss_set(key, value, ignore_abort):
+def ss_set(key, value, ignore_abort=False):
     ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
     client = Client(ch)
@@ -59,7 +59,7 @@ def ss_set(key, value, ignore_abort):
 
 
 def ss_display(msg, ignore_abort=False):
-    ss_set('statecustom', msg)
+    ss_set('statecustom', msg, ignore_abort=ignore_abort)
 
 
 def _print(msg):
