@@ -124,6 +124,7 @@ def _install_git_creds():
 
     ssh_conf = _expanduser('~/.ssh/config')
     fileAppendContent(ssh_conf, "Host github.com\n\tStrictHostKeyChecking no\n")
+    os.chmod(ssh_conf, 0644)
 
     _chown(ssh_dir, os.getuid(), os.getgid(), recursive=True)
 
