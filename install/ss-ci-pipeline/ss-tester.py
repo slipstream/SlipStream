@@ -43,9 +43,10 @@ def download_file(src_url, dst_file, creds={}):
     return dst_file
 
 
-def ss_get(param, ignore_abort=False, timeout=30):
+def ss_get(param, ignore_abort=False, timeout=30, no_block=False):
     ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
+    ch.set('noBlock', no_block)
     ch.set('timeout', timeout)
     client = Client(ch)
     return client.getRuntimeParameter(param)
@@ -171,6 +172,15 @@ def run_test(name, config={}, msg='', connectors=[], fail=False, save_results=Tr
             shutil.move('clojure/target', os.path.join(test_results_dir, name))
 
 
+def _get_test_user_pass():
+    users_passes = ss_get('ss_users')
+    username = 'test'
+    userpass = 'tesTtesT'
+    if users_passes:
+        userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(test_username, userpass)
+    return username, userpass
+
+
 test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
@@ -189,9 +199,7 @@ _check_call(['git', 'clone', 'git@github.com:slipstream/%s.git' % test_repo_name
 #
 ss_get('deployer.ready', timeout=2700)
 
-users_passes = ss_get('ss_users')
-test_username = 'test'
-test_userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(test_username, 'tesTtesT')
+test_username, test_userpass = _get_test_user_pass()
 
 ss_serviceurl = ss_get('ss_service_url')
 
