@@ -44,7 +44,7 @@ def download_file(src_url, dst_file, creds={}):
 
 
 def ss_get(param, ignore_abort=False, timeout=30):
-    ch = ConfigHolder()
+    ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
     ch.set('timeout', timeout)
     client = Client(ch)
@@ -52,7 +52,7 @@ def ss_get(param, ignore_abort=False, timeout=30):
 
 
 def ss_set(key, value, ignore_abort):
-    ch = ConfigHolder()
+    ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
     client = Client(ch)
     client.setRuntimeParameter(key, value)
