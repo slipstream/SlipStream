@@ -90,6 +90,17 @@ def _rmdir(path, ignore_errors=True):
     shutil.rmtree(path, ignore_errors=ignore_errors)
 
 
+def _chown(path, uid, gid, recursive=False):
+    if not recursive:
+        os.chown(path, uid, gid)
+    else:
+        for root, dirs, files in os.walk(path):
+            for d in dirs:
+                os.chown(os.path.join(root, d), uid, gid)
+            for f in files:
+                os.chown(os.path.join(root, f), uid, gid)
+
+
 def _tar_extract(tarball, target_dir='.'):
     tarfile.open(tarball, 'r:gz').extractall(os.path.expanduser(target_dir))
 
@@ -99,26 +110,22 @@ def _check_call(cmd):
 
 
 def _install_git_creds():
-    _print('Installing git creds.')
+    _print('Installing git credentials.')
+
     n_user, n_pass = ss_get('nexus_creds').split(':')
 
     tarball = _expanduser('~/git-creds.tgz')
-    _print('Downloading git creds to %s' % tarball)
-    res = download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
-                                                       'password': n_pass})
-    _print('Downloaded git creds to %s' % res)
-    ssh_dir = _expanduser('~/.ssh2')
+    download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
+                                                 'password': n_pass})
+    ssh_dir = _expanduser('~/.ssh')
     _mkdir(ssh_dir, 0700)
     _tar_extract(tarball, ssh_dir)
     os.unlink(tarball)
-    os.chown(ssh_dir, os.getuid(), os.getgid())
-    _print('Expanded git creds to %s' % ssh_dir)
 
-    ssh_conf = _expanduser('~/.ssh2/config')
+    ssh_conf = _expanduser('~/.ssh/config')
     fileAppendContent(ssh_conf, "Host github.com\n\tStrictHostKeyChecking no\n")
-    os.chmod(ssh_conf, 0644)
-    _print('Updated local ssh config')
-    _print('Git creds downloaded.')
+
+    _chown(ssh_dir, os.getuid(), os.getgid(), recursive=True)
 
 
 def merge_dicts(x, y):
