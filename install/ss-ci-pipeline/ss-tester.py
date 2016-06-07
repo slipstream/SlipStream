@@ -68,6 +68,10 @@ def _print(msg):
     print(msg)
 
 
+def _print_t(msg):
+    _print(':t: %s' % msg)
+
+
 def _expanduser(path):
     return os.path.expanduser(path)
 
@@ -157,8 +161,7 @@ def _run_test(name, config={}, fail=False):
 def run_test(name, config={}, msg='', connectors=[], fail=False, save_results=True):
     if connectors:
         for connector in connectors:
-            if msg:
-                _print('::: %s' % (msg % {'connector': connector}))
+            _print_t(' '.join(filter(None, [msg, 'Connector: %s' % connector])))
             config['connector-name'] = connector
             _run_test(name, config=config, fail=fail)
             if save_results:
@@ -166,7 +169,7 @@ def run_test(name, config={}, msg='', connectors=[], fail=False, save_results=Tr
                             os.path.join(test_results_dir, '%s-%s' % (name, connector)))
     else:
         if msg:
-            _print('::: %s' % msg)
+            _print_t(msg)
         _run_test(name, config=config, fail=fail)
         if save_results:
             shutil.move('clojure/target', os.path.join(test_results_dir, name))
@@ -187,6 +190,10 @@ def _get_connectors_to_test():
     return ss_get('connectors_to_test').split(' ')
 
 
+#
+# Tests.
+#
+
 test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
@@ -202,7 +209,6 @@ _check_call(['git', 'clone', 'git@github.com:slipstream/%s.git' % test_repo_name
 
 #
 # Wait for deployer to deploy SlipStream.
-#
 ss_get('deployer.ready', timeout=2700)
 
 test_username, test_userpass = _get_test_user_pass()
@@ -226,20 +232,20 @@ config_auth = {'username': test_username,
 
 tests_no_order = {
     'test-run-comp': {
-        'msg': 'Running component deployment tests of %s on %s as %s for connector: %s' %
-               (run_comp_uri, ss_serviceurl, test_username, '%(connector)s'),
+        'msg': 'Component deployment - %s on %s as %s.' %
+               (run_comp_uri, ss_serviceurl, test_username),
         'config': merge_dicts(config_auth, {'comp-uri': run_comp_uri}),
         'connectors': connectors_to_test},
 
     'test-run-app':
-        {'msg': 'Running application deployment tests of %s on %s as %s for connector: %s' %
-                (run_comp_uri, ss_serviceurl, test_username, '%(connector)s'),
+        {'msg': 'Application deployment - %s on %s as %s.' %
+                (scale_app_uri, ss_serviceurl, test_username),
          'config': merge_dicts(config_auth, {'app-uri': scale_app_uri}),
          'connectors': connectors_to_test},
 
     'test-run-app-scale':
-        {'msg': 'Running scalable deployment tests of %s on %s as %s for connector: %s' %
-                (run_comp_uri, ss_serviceurl, test_username, '%(connector)s'),
+        {'msg': 'Scalable deployment - %s on %s as %s.' %
+                (scale_app_uri, ss_serviceurl, test_username),
          'config': merge_dicts(config_auth, {'app-uri': scale_app_uri,
                                              'comp-name': scale_comp_name}),
          'connectors': connectors_to_test},
@@ -250,7 +256,7 @@ tests = collections.OrderedDict(
                                 'fail': True,
                                 'save_results': False}),
 
-         ('test-auth', {'msg': 'Running authentication tests on %s as %s.' % (ss_serviceurl, test_username),
+         ('test-auth', {'msg': 'Authentication tests on %s as %s.' % (ss_serviceurl, test_username),
                         'config': config_auth})] +
 
         tests_no_order.items()
