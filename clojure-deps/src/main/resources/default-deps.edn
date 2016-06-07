@@ -46,7 +46,6 @@
  [fs "1.4.6"]
 
  [honeysql "0.6.2"]
- [http-kit "2.1.19"]
 
  [instaparse "1.4.1"]
  [io.nervous/kvlt "0.1.1"]
