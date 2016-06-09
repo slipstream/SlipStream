@@ -675,12 +675,6 @@
       </dependency>
 
       <dependency>
-        <groupId>http-kit</groupId>
-        <artifactId>http-kit</artifactId>
-        <version>2.1.19</version>
-      </dependency>
-
-      <dependency>
         <groupId>aleph</groupId>
         <artifactId>aleph</artifactId>
         <version>0.4.1-beta7</version>
