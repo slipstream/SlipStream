@@ -373,6 +373,12 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamServerPRSlib-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>Libcloud-SixSq-zip</artifactId>
         <version>${project.version}</version>
       </dependency>
