@@ -500,12 +500,6 @@
       </dependency>
 
       <dependency>
-        <groupId>clj-json</groupId>
-        <artifactId>clj-json</artifactId>
-        <version>0.5.3</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.restlet.jee</groupId>
         <artifactId>org.restlet</artifactId>
         <version>2.2.1</version>
@@ -636,30 +630,6 @@
         <groupId>net.kencochrane.raven</groupId>
         <artifactId>raven</artifactId>
         <version>6.0.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>19.0</version>
       </dependency>
 
       <dependency>
