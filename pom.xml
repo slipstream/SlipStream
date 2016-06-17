@@ -5,12 +5,12 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>3.5-SNAPSHOT</version>
+  <version>3.6-SNAPSHOT</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
   <prerequisites>
-    <maven>3.2.0</maven>
+    <maven>3.3</maven>
   </prerequisites>
 
   <modules>
@@ -80,7 +80,7 @@
     <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
     <hsqldb.version>2.3.3</hsqldb.version>
-    <postgresql.version>9.4.1207.jre7</postgresql.version>
+    <postgresql.version>9.4.1208.jre7</postgresql.version>
 
     <stratuslab.version>14.06.0</stratuslab.version>
     <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
@@ -198,7 +198,7 @@
         <plugin>
           <groupId>com.theoryinpractise</groupId>
           <artifactId>clojure-maven-plugin</artifactId>
-          <version>1.7.1</version>
+          <version>1.8.1</version>
         </plugin>
         <plugin>
           <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
@@ -216,7 +216,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.3</version>
+          <version>3.5.1</version>
           <configuration>
             <target>1.8</target>
             <source>1.8</source>
@@ -244,8 +244,13 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>2.4.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.4</version>
+          <version>3.5.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -258,7 +263,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>2.7</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -273,7 +278,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -283,7 +288,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>1.8</version>
+          <version>1.9</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
@@ -303,7 +308,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>1.4.0</version>
+          <version>1.5.0</version>
         </plugin>
 
         <plugin>
@@ -315,7 +320,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>rpm-maven-plugin</artifactId>
-          <version>2.1.4</version>
+          <version>2.1.5</version>
         </plugin>
 
         <plugin>
@@ -365,6 +370,12 @@
       <!-- ****************************** -->
       <!-- SlipStream module dependencies -->
       <!-- ****************************** -->
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamServerPRSlib-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
@@ -489,12 +500,6 @@
       </dependency>
 
       <dependency>
-        <groupId>clj-json</groupId>
-        <artifactId>clj-json</artifactId>
-        <version>0.5.3</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.restlet.jee</groupId>
         <artifactId>org.restlet</artifactId>
         <version>2.2.1</version>
@@ -539,7 +544,7 @@
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-        <version>2.5</version>
+        <version>2.6.2</version>
       </dependency>
 
       <dependency>
@@ -547,18 +552,6 @@
         <artifactId>mail</artifactId>
         <version>1.4.7</version>
         <scope>compile</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>net.sf.flexjson</groupId>
-        <artifactId>flexjson</artifactId>
-        <version>3.3</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20151123</version>
       </dependency>
 
       <dependency>
@@ -582,13 +575,13 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.14</version>
+        <version>1.7.21</version>
       </dependency>
 
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
-        <version>1.7.14</version>
+        <version>1.7.21</version>
       </dependency>
 
       <dependency>
@@ -618,7 +611,7 @@
       <dependency>
         <groupId>ring</groupId>
         <artifactId>ring</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
 
       <dependency>
@@ -640,45 +633,15 @@
       </dependency>
 
       <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>2.7.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>19.0</version>
-      </dependency>
-
-      <dependency>
         <groupId>prismatic</groupId>
         <artifactId>schema</artifactId>
-        <version>1.0.4</version>
-      </dependency>
-
-      <dependency>
-        <groupId>http-kit</groupId>
-        <artifactId>http-kit</artifactId>
-        <version>2.1.19</version>
+        <version>1.1.2</version>
       </dependency>
 
       <dependency>
         <groupId>aleph</groupId>
         <artifactId>aleph</artifactId>
-        <version>0.4.1-beta7</version>
+        <version>0.4.1</version>
       </dependency>
 
       <!-- upgrade aleph dependency to avoid problem on clojure 1.8.0 --> 
@@ -689,15 +652,9 @@
       </dependency>
 
       <dependency>
-        <groupId>clojurewerkz</groupId>
-        <artifactId>scrypt</artifactId>
-        <version>1.2.0</version>
-      </dependency>
-
-      <dependency>
         <groupId>instaparse</groupId>
         <artifactId>instaparse</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.2</version>
       </dependency>
 
       <dependency>
@@ -709,7 +666,7 @@
       <dependency>
         <groupId>ring</groupId>
         <artifactId>ring-core</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
 
       <dependency>
@@ -727,19 +684,19 @@
       <dependency>
         <groupId>compojure</groupId>
         <artifactId>compojure</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
 
       <dependency>
         <groupId>clj-time</groupId>
         <artifactId>clj-time</artifactId>
-        <version>0.11.0</version>
+        <version>0.12.0</version>
       </dependency>
 
       <dependency>
         <groupId>clj-http</groupId>
         <artifactId>clj-http</artifactId>
-        <version>2.0.1</version>
+        <version>3.1.0</version>
       </dependency>
 
       <dependency>
@@ -751,25 +708,25 @@
       <dependency>
         <groupId>metrics-clojure</groupId>
         <artifactId>metrics-clojure</artifactId>
-        <version>2.6.1</version>
+        <version>2.7.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-ring</groupId>
         <artifactId>metrics-clojure-ring</artifactId>
-        <version>2.6.1</version>
+        <version>2.7.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-jvm</groupId>
         <artifactId>metrics-clojure-jvm</artifactId>
-        <version>2.6.1</version>
+        <version>2.7.0</version>
       </dependency>
 
       <dependency>
         <groupId>metrics-clojure-graphite</groupId>
         <artifactId>metrics-clojure-graphite</artifactId>
-        <version>2.6.1</version>
+        <version>2.7.0</version>
       </dependency>
 
       <dependency>
@@ -787,13 +744,13 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.14</version>
+        <version>1.7.21</version>
       </dependency>
 
       <dependency>
         <groupId>environ</groupId>
         <artifactId>environ</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
       </dependency>
 
       <dependency>
@@ -806,12 +763,6 @@
         <groupId>honeysql</groupId>
         <artifactId>honeysql</artifactId>
         <version>0.6.2</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.xerial</groupId>
-        <artifactId>sqlite-jdbc</artifactId>
-        <version>3.8.11.2</version>
       </dependency>
 
       <dependency>
@@ -875,19 +826,13 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
-        <version>0.2.374</version>
+        <version>0.2.382</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>
             <artifactId>tools.reader</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-
-      <dependency>
-        <groupId>puppetlabs</groupId>
-        <artifactId>http-client</artifactId>
-        <version>0.4.6</version>
       </dependency>
 
       <dependency>
@@ -962,14 +907,14 @@
       <dependency>
         <groupId>peridot</groupId>
         <artifactId>peridot</artifactId>
-        <version>0.4.3</version>
+        <version>0.4.4</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>expectations</groupId>
         <artifactId>expectations</artifactId>
-        <version>2.1.4</version>
+        <version>2.1.8</version>
         <scope>test</scope>
       </dependency>
 
@@ -982,7 +927,7 @@
       <dependency>
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
-        <version>2.3.2</version>
+        <version>2.3.3</version>
       </dependency>
 
     </dependencies>

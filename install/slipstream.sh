@@ -262,7 +262,7 @@ function _ss_rpm_name_decorator() {
 }
 
 function _inst() {
-    yum install -y $@
+    yum install -y $(_ss_rpm_name_decorator $@)
 }
 
 function srvc_start() {
@@ -684,6 +684,18 @@ function _load_slipstream_examples() {
         --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
 }
 
+
+##
+## Install Placement and Ranking service
+function deploy_prs_service() {
+  [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
+  _print "Installing Placement and Ranking service"
+  _inst slipstream-pricing-server-enterprise
+  srvc_enable ss-pricing
+  srvc_start ss-pricing
+}
+
+
 ##
 ## Riemann installation.
 function _install_riemann() {
@@ -737,6 +749,7 @@ prepare_node
 deploy_slipstream_server_deps
 deploy_slipstream_client
 deploy_slipstream_server
+deploy_prs_service
 deploy_riemann
 cleanup
 
