@@ -641,7 +641,7 @@
       <dependency>
         <groupId>aleph</groupId>
         <artifactId>aleph</artifactId>
-        <version>0.4.1</version>
+        <version>0.4.1-beta7</version>
       </dependency>
 
       <!-- upgrade aleph dependency to avoid problem on clojure 1.8.0 --> 
