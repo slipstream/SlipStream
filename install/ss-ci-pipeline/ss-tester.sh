@@ -44,7 +44,7 @@ for CONNECTOR in ${CONNECTORS_TO_TEST}; do
     ss-display "$msg"
     echo $msg
     ss-execute -vvv -u $USER -p $PASS --endpoint=$SS_URL \
-        -w 15 --kill-vms-on-error \
+        -w 15 --kill-vms-on-error --keep-running never \
         --parameters "testclient:cloudservice=$CONNECTOR,apache:cloudservice=$CONNECTOR" \
         $APPLICATION 2>&1 | tee /tmp/ss-execute-$CONNECTOR.log
     rc=$?
