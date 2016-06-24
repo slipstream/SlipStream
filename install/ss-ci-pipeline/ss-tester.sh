@@ -6,6 +6,7 @@
 # ss_service_url
 # connectors_to_test
 # ss_users
+# ss_test_user (optional - default to "test")
 
 set -x
 set -e
@@ -17,14 +18,15 @@ ss-get --timeout 2700 deployer.ready
 # test the service
 #
 
-SS_URL=`ss-get ss_service_url`
+SS_URL=$(ss-get ss_service_url)
 # space separated list
-CONNECTORS_TO_TEST=`ss-get connectors_to_test`
+CONNECTORS_TO_TEST=$(ss-get connectors_to_test)
 # u1:p1,u2:p2,..
-USERPASS=`ss-get ss_users`
+USERPASS=$(ss-get ss_users)
 
-USER=test
-PASS=tesTtesT
+USER=$(ss-get --noblock ss_test_user)
+: ${USER:='test'}
+PASS='tesTtesT'
 for up in ${USERPASS//,/ }; do
     if [ "x${up%%:*}" == "x$USER" ]; then
        PASS=${up#*:}
