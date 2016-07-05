@@ -335,6 +335,12 @@
           <version>1.10</version>
         </plugin>
 
+        <plugin>
+          <groupId>net.ju-n.maven.plugins</groupId>
+          <artifactId>checksum-maven-plugin</artifactId>
+          <version>1.3</version>
+        </plugin>
+
       </plugins>
     </pluginManagement>
 
