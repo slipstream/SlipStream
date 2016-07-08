@@ -14,9 +14,9 @@ boot -h
 # create a settings.xml file
 #
 nexus_creds=`ss-get nexus_creds`
-mkdir -p ~/.m2
 nexus_username=`echo -n ${nexus_creds} | cut -d ':' -f 1`
 nexus_password=`echo -n ${nexus_creds} | cut -d ':' -f 2`
+mkdir -p ~/.m2
 cat > ~/.m2/settings.xml <<EOF
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
