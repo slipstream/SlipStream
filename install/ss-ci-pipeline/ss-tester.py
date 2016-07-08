@@ -92,12 +92,10 @@ def _check_call(cmd):
     subprocess.check_call(cmd, stdout=subprocess.PIPE)
 
 
-def _install_git_creds():
-    n_user, n_pass = ss_get('nexus_creds').split(':')
-
+def _install_git_creds(nexus_user, nexus_pass):
     tarball = _expanduser('~/git-creds.tgz')
-    download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
-                                                 'password': n_pass})
+    download_file(GIT_CREDS_URL, tarball, creds={'username': nexus_user,
+                                                 'password': nexus_pass})
     _mkdir(SSH_DIR, 0700)
     _tar_extract(tarball, SSH_DIR)
     os.unlink(tarball)
@@ -107,6 +105,20 @@ def _install_git_creds():
     os.chmod(ssh_conf, 0644)
 
     _chown(SSH_DIR, os.getuid(), os.getgid(), recursive=True)
+
+
+def _install_ss_repo_creds_boot(nexus_user, nexus_pass):
+    conf = """
+(configure-repositories!
+ (fn [{:keys [url] :as repo-map}]
+   (->> (condp re-find url
+          #"^http://nexus\.sixsq\.com/"
+          {:username "%(user)s"
+           :password "%(pass)s"}
+          #".*" nil)
+        (merge repo-map))))
+""" % {'user': nexus_user, 'pass': nexus_pass}
+    fileAppendContent(_expanduser('~/.boot/profile.boot'), conf)
 
 
 def merge_dicts(x, y):
@@ -259,8 +271,13 @@ run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
 scale_comp_name = ss_get('scale_comp_name')
 
+nexus_user, nexus_pass = ss_get('nexus_creds').split(':')
+
 _print('Installing git credentials.')
-_install_git_creds()
+_install_git_creds(nexus_user, nexus_pass)
+
+_print('Install SS repo credentials for boot.')
+_install_ss_repo_creds_boot(nexus_user, nexus_pass)
 
 _cd_home()
 
