@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import json
 import tarfile
 import subprocess
 import shutil
@@ -10,37 +11,18 @@ import urllib2
 
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
-from slipstream.util import (fileAppendContent,
+from slipstream.HttpClient import HttpClient
+from slipstream.util import (download_file, fileAppendContent,
                              filePutContent, execute)
+
+
+NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
+SS_SERVICES_IN_NAGIOS = ['nuv.la', 'bb.sixsq.com']
 
 GIT_CREDS_URL = 'http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
                 'com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz'
 
-
-def download_file(src_url, dst_file, creds={}):
-    """creds: {'cookie': '<cookie>',
-               'username': '<name>', 'password': '<pass>'}
-    cookie is preferred over username and password. If none are provided,
-    the download proceeds w/o authentication.
-    """
-    request = urllib2.Request(src_url)
-    if creds.get('cookie'):
-        request.add_header('cookie', creds.get('cookie'))
-    elif creds.get('username') and creds.get('password'):
-        request.add_header('Authorization',
-                           (b'Basic ' + (creds.get('username') + b':' + creds.get('password')).encode('base64')).replace('\n', ''))
-    src_fh = urllib2.urlopen(request)
-
-    dst_fh = open(dst_file, 'wb')
-    while True:
-        data = src_fh.read()
-        if not data:
-            break
-        dst_fh.write(data)
-    src_fh.close()
-    dst_fh.close()
-
-    return dst_file
+SSH_DIR = os.path.expanduser('~/.ssh')
 
 
 def ss_get(param, ignore_abort=False, timeout=30, no_block=False):
@@ -65,11 +47,7 @@ def ss_display(msg, ignore_abort=False):
 
 def _print(msg):
     ss_display(msg)
-    print(msg)
-
-
-def _print_t(msg):
-    _print(':t: %s' % msg)
+    print('::: %s' % msg)
 
 
 def _expanduser(path):
@@ -115,23 +93,20 @@ def _check_call(cmd):
 
 
 def _install_git_creds():
-    _print('Installing git credentials.')
-
     n_user, n_pass = ss_get('nexus_creds').split(':')
 
     tarball = _expanduser('~/git-creds.tgz')
     download_file(GIT_CREDS_URL, tarball, creds={'username': n_user,
                                                  'password': n_pass})
-    ssh_dir = _expanduser('~/.ssh')
-    _mkdir(ssh_dir, 0700)
-    _tar_extract(tarball, ssh_dir)
+    _mkdir(SSH_DIR, 0700)
+    _tar_extract(tarball, SSH_DIR)
     os.unlink(tarball)
 
-    ssh_conf = _expanduser('~/.ssh/config')
+    ssh_conf = _expanduser(os.path.join(SSH_DIR, 'config'))
     fileAppendContent(ssh_conf, "Host github.com\n\tStrictHostKeyChecking no\n")
     os.chmod(ssh_conf, 0644)
 
-    _chown(ssh_dir, os.getuid(), os.getgid(), recursive=True)
+    _chown(SSH_DIR, os.getuid(), os.getgid(), recursive=True)
 
 
 def merge_dicts(x, y):
@@ -141,68 +116,155 @@ def merge_dicts(x, y):
 
 
 def _dict_to_edn(_dict):
-    return "{\n%s\n}" % \
-           '\n'.join(map(lambda kv: ' :%s "%s"' % (kv[0], kv[1]), _dict.items()))
-
-
-def _write_test_config(config):
-    filePutContent('clojure/resources/test-config.edn', _dict_to_edn(config))
-
-
-def _run_test(name, config={}, fail=False):
-    if config:
-        _write_test_config(config)
-    cmd = ['make', name]
-    rc = execute(cmd)
-    if fail and rc != 0:
-        raise Exception('Failed running test: %s' % name)
-
-
-def run_test(name, config={}, msg='', connectors=[], fail=False, save_results=True):
-    if connectors:
-        for connector in connectors:
-            _print_t(' '.join(filter(None, [msg, 'Connector: %s' % connector])))
-            config['connector-name'] = connector
-            _run_test(name, config=config, fail=fail)
-            if save_results:
-                shutil.move('clojure/target',
-                            os.path.join(test_results_dir, '%s-%s' % (name, connector)))
-    else:
-        if msg:
-            _print_t(msg)
-        _run_test(name, config=config, fail=fail)
-        if save_results:
-            shutil.move('clojure/target', os.path.join(test_results_dir, name))
+    "Only string, boolean and None are fully supported."
+    def _kv_to_edn(kv):
+        k = kv[0]; v = kv[1]
+        if isinstance(v, bool):
+            return ' :%s %s' % (k, str(v).lower())
+        elif v == None:
+            return ' :%s nil' % k
+        else:
+            return ' :%s "%s"' % (k, v)
+    return "{\n%s\n}" % '\n'.join(map(_kv_to_edn, _dict.items()))
 
 
 def _get_test_user_pass():
+    username = ss_get('ss_test_user', no_block=True).strip() or 'test'
     users_passes = ss_get('ss_users')
-    username = 'test'
     userpass = 'tesTtesT'
     if users_passes:
         # Comma separated list of colon separated user:pass pairs.
         userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(username, userpass)
     return username, userpass
 
+def _get_monitoring_status():
+    "Returns monitoring status as JSON."
+    nagios_user, nagios_pass = ss_get('nagios_creds').split(':')
 
-def _get_connectors_to_test():
+    h = HttpClient(username=nagios_user, password=nagios_pass)
+    _, res = h.get(NAGIOS_STATUS_URL, accept="application/json")
+    return json.loads(res)
+
+def _check_enabled(check):
+    return int(check.get('active_checks_enabled')) == 1
+
+def _check_error(check):
+    return int(check.get('current_state', 10)) > 0
+
+def _enabled_and_error(check):
+    return _check_enabled(check) and _check_error(check)
+
+def _failing_monitored_connectors(ss_servers):
+    "ss_servers - list of SS server names as defined in monitoring app."
+
+    status = _get_monitoring_status()
+
+    ss_exec_checks_err = {}
+    for s in ss_servers:
+        for chn,ch in status.get("services", {}).get(s, {}).items():
+            if chn.startswith('ss-exec_') and _enabled_and_error(ch):
+                if ss_exec_checks_err.has_key(chn):
+                    _ch = ss_exec_checks_err.get(chn)
+                    if int(_ch.get('last_check', 0)) < int(ch.get('last_check', 0)):
+                        ss_exec_checks_err[chn] = ch
+                else:
+                    ss_exec_checks_err[chn] = ch
+    return ss_exec_checks_err.keys()
+
+def _get_connectors_to_test(monitored_ss):
     # Space separated list.
-    return ss_get('connectors_to_test').split(' ')
+    requested = ss_get('connectors_to_test').split(' ')
+    _print('Connectors requested to test: %s' % requested)
+    monitored_failing = _failing_monitored_connectors(monitored_ss)
+    _print('Connectors currently failing: %s' % monitored_failing)
+    return list(set(requested) - set(monitored_failing))
+
+class TestsRunner(object):
+    """
+    Order in which tests get added with add_test() is preserved.
+    """
+
+    def __init__(self, config_auth, connectors_to_test=[]):
+        self._tests = collections.OrderedDict()
+        self._config_auth = config_auth
+        self._connectors_to_test = connectors_to_test
+
+    def add_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
+        self._tests[name] = {'config': merge_dicts(self._config_auth, config),
+                             'connectors': connectors or self._connectors_to_test,
+                             'msg': msg,
+                             'fail': fail,
+                             'save_results': save_results}
+
+    def get_test_names(self):
+        return self._tests.keys()
+
+    def run(self, tests_to_run=[]):
+        testnames = tests_to_run or self.get_test_names()
+
+        #if tests_to_run and not set(self.get_test_names()).intersection(tests_to_run):
+
+        for name in testnames:
+            self._run_test(name, **self._tests[name])
+
+    def _run_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
+        if connectors:
+            for connector in connectors:
+                self._print_t(' '.join(filter(None, [msg, 'Connector: %s' % connector])))
+                config['connector-name'] = connector
+                self.__run_test(name, config=config, fail=fail)
+                if save_results:
+                    shutil.move('clojure/target',
+                                os.path.join(test_results_dir, '%s-%s' % (name, connector)))
+        else:
+            if msg:
+                self._print_t(msg)
+            self.__run_test(name, config=config, fail=fail)
+            if save_results:
+                shutil.move('clojure/target', os.path.join(test_results_dir, name))
+
+    def __run_test(self, name, config={}, fail=False):
+        if config:
+            self._write_test_config(config)
+        cmd = ['make', name]
+        print('executing: %s ' % cmd)
+        rc = execute(cmd)
+        if fail and rc != 0:
+            raise Exception('Failed running test: %s' % name)
+
+    @staticmethod
+    def _write_test_config(config):
+        filePutContent('clojure/resources/test-config.edn', _dict_to_edn(config))
+
+    @staticmethod
+    def _print(msg):
+        ss_display(msg)
+        print(msg)
+
+    @staticmethod
+    def _print_t(msg):
+        _print(':t: %s' % msg)
+
+    def info(self):
+        _print('Connectors to test: %s' % self._connectors_to_test)
+        _print('Tests to run: %s' % self.get_test_names())
 
 
-#
-# Tests.
-#
+##
+## Tests.
+##
 
 test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
 scale_comp_name = ss_get('scale_comp_name')
 
+_print('Installing git credentials.')
 _install_git_creds()
 
 _cd_home()
 
+_print('Cloning test repo.')
 test_repo_name = 'SlipStreamTests'
 _rmdir(_expanduser('~/%s' % test_repo_name), ignore_errors=True)
 _check_call(['git', 'clone', 'git@github.com:slipstream/%s.git' % test_repo_name])
@@ -217,7 +279,7 @@ ss_serviceurl = ss_get('ss_service_url')
 
 _print('Ready to run tests on %s as %s.' % (ss_serviceurl, test_username))
 
-connectors_to_test = _get_connectors_to_test()
+connectors_to_test = _get_connectors_to_test(SS_SERVICES_IN_NAGIOS)
 
 _cd(test_repo_name)
 _check_call(['git', 'checkout', test_repo_branch])
@@ -228,43 +290,30 @@ _mkdir(test_results_dir, 0755)
 
 config_auth = {'username': test_username,
                'password': test_userpass,
-               'serviceurl': ss_serviceurl}
+               'serviceurl': ss_serviceurl,
+               'insecure?': True}
 
-tests_no_order = {
-    'test-run-comp': {
-        'msg': 'Component deployment - %s on %s as %s.' %
-               (run_comp_uri, ss_serviceurl, test_username),
-        'config': merge_dicts(config_auth, {'comp-uri': run_comp_uri}),
-        'connectors': connectors_to_test},
+tr = TestsRunner(config_auth, connectors_to_test=connectors_to_test)
 
-    'test-run-app':
-        {'msg': 'Application deployment - %s on %s as %s.' %
-                (scale_app_uri, ss_serviceurl, test_username),
-         'config': merge_dicts(config_auth, {'app-uri': scale_app_uri}),
-         'connectors': connectors_to_test},
+tr.add_test('test-clojure-deps',
+            msg='Check if local dependencies are available.',
+            fail=True, save_results=False)
+tr.add_test('test-auth',
+            msg='Authentication tests on %s as %s.' % (ss_serviceurl, test_username))
+tr.add_test('test-run-comp',
+            msg='Component deployment - %s on %s as %s.' % (run_comp_uri, ss_serviceurl, test_username),
+            config={'comp-uri': run_comp_uri})
+tr.add_test('test-run-app',
+            msg='Application deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
+            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name})
+tr.add_test('test-run-app-scale',
+            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
+            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name})
 
-    'test-run-app-scale':
-        {'msg': 'Scalable deployment - %s on %s as %s.' %
-                (scale_app_uri, ss_serviceurl, test_username),
-         'config': merge_dicts(config_auth, {'app-uri': scale_app_uri,
-                                             'comp-name': scale_comp_name}),
-         'connectors': connectors_to_test},
-}
-
-tests = collections.OrderedDict(
-        [('test-clojure-deps', {'msg': 'Check if local dependencies are available.',
-                                'fail': True,
-                                'save_results': False}),
-
-         ('test-auth', {'msg': 'Authentication tests on %s as %s.' % (ss_serviceurl, test_username),
-                        'config': config_auth})] +
-
-        tests_no_order.items()
-)
+tr.info()
 
 os.environ['BOOT_AS_ROOT'] = 'yes'
-
-for name, params in tests.items():
-    run_test(name, **params)
+tr.run()
 
 _print('All tests were ran.')
+
