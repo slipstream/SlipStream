@@ -9,7 +9,7 @@
  [com.sixsq.slipstream/SlipStreamConnector :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamCredCache :version]
  [com.sixsq.slipstream/SlipStreamPersistence :version :scope "test"]
- [com.sixsq.slipstream/SlipStreamServer-jar :scope "test"]
+ [com.sixsq.slipstream/SlipStreamServer-jar :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamServer-ui-static-content :version :type "zip"]
  [com.sixsq.slipstream/SlipStreamService :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamUI :version]
