@@ -6,7 +6,7 @@
  [com.sixsq.slipstream/SlipStreamAsync :version]
  [com.sixsq.slipstream/SlipStreamClientAPI-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResources-jar :version]
- [com.sixsq.slipstream/SlipStreamConnector :scope "test"]
+ [com.sixsq.slipstream/SlipStreamConnector :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamCredCache :version]
  [com.sixsq.slipstream/SlipStreamPersistence :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamServer-jar :scope "test"]
