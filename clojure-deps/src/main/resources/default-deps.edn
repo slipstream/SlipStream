@@ -123,7 +123,7 @@
  [adzerk/boot-reload "0.4.11" :scope "test"]
  [boot-codox "0.9.5" :scope "test"]
  [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
- [pandeiro/boot-http "0.7.3" :scope "test"]]
+ [pandeiro/boot-http "0.7.3" :scope "test"]
  [tolitius/boot-check "0.1.2" :scope "test"]
 
  ;; 
