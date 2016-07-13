@@ -17,7 +17,7 @@ function deploy() {
     #
     curl -o /etc/yum.repos.d/rocci.repo http://repository.egi.eu/community/software/rocci.cli/${rOCCI_VERSION}/releases/repofiles/sl-6-x86_64.repo
 
-    yum -y install slipstream-connector-occi
+    yum -y install slipstream-connector-occi-*
 }
 
 deploy
