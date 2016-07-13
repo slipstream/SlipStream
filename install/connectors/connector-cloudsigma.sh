@@ -8,7 +8,7 @@ function deploy() {
     pip-python install -Iv miniREST==$PYPI_MINIREST_VER
     pip-python install -Iv simplejson==$PYPI_SIMPLEJSON_VER
     
-    yum install -y slipstream-connector-cloudsigma
+    yum install -y slipstream-connector-cloudsigma-*
 }
 
 deploy

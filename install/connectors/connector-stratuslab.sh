@@ -13,7 +13,7 @@ name=StratusLab-Releases
 baseurl=http://yum.stratuslab.eu/releases/${SL_OS_VER}
 gpgcheck=0
 EOF
-    yum install -y slipstream-connector-stratuslab
+    yum install -y slipstream-connector-stratuslab-*
 }
 
 deploy
