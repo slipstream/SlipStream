@@ -126,7 +126,7 @@ if ( _is_true $with_refconf ); then
     CONNECTORS=(
         ["nuv.la"]='exoscale-ch-gva ultimum-cz1 ec2-eu-west'
         ["bb1.hnx.helix-nebula.eu"]='atos-es1 deac-lv1 ultimum-cz1'
-        ["connectors.community"]='atos-es1')
+        ["connectors.community"]='ultimum-cz1')
 
     ss-set connectors_to_test "${CONNECTORS[$REFCONF_NAME]}"
 else
