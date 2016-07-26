@@ -77,9 +77,6 @@ EOF
 # 
 echo statecustom "Installing phantomjs..."
 
-# install dependencies
-yum install -y bzip2 fontconfig freetype libstdc++
-
 # install phantomjs from SS YUM repo
 yum localinstall -y https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
 yum-config-manager --disable SlipStream-*
