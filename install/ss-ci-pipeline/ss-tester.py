@@ -332,5 +332,5 @@ tr.info()
 os.environ['BOOT_AS_ROOT'] = 'yes'
 tr.run()
 
-_print('All tests were ran.')
+_print('All tests were run.')
 
