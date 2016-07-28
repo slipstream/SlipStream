@@ -77,18 +77,11 @@ EOF
 # 
 echo statecustom "Installing phantomjs..."
 
-# install dependencies
-yum install -y bzip2 fontconfig freetype libstdc++
-
-# copy and install the binary
-phantomjs=/usr/local/bin/phantomjs
-phantomjs_dir=phantomjs-2.1.1-linux-x86_64
-phantomjs_bz2=${phantomjs_dir}.tar.bz2
-phantomjs_url=https://bitbucket.org/ariya/phantomjs/downloads/
-curl -fsSLv -o /tmp/${phantomjs_bz2} ${phantomjs_url}${phantomjs_bz2}
-tar jxf /tmp/${phantomjs_bz2} -C /tmp
-cp /tmp/${phantomjs_dir}/bin/phantomjs ${phantomjs}
-chmod 755 ${phantomjs}
+# install phantomjs from SS YUM repo
+yum localinstall -y https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
+yum-config-manager --disable SlipStream-*
+REPO_KIND=community
+yum install -y --enablerepo SlipStream-Snapshots-$REPO_KIND slipstream-phantomjs-$REPO_KIND
 
 # check that the installation worked
 phantomjs --version

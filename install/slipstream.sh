@@ -348,20 +348,6 @@ function _add_yum_repos () {
     rpm -Uvh --force \
         http://nginx.org/packages/centos/7/noarch/RPMS/${nginx_repo_rpm}
 
-    # Elasticsearch
-    # install signing key
-    rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
-
-    # configure Elasticsearch yum repo
-    cat > /etc/yum.repos.d/elasticsearch.repo <<EOF
-[elasticsearch-2.x]
-name=Elasticsearch repository for 2.x packages
-baseurl=https://packages.elastic.co/elasticsearch/2.x/centos
-gpgcheck=1
-gpgkey=https://packages.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-EOF
-
     # SlipStream
     if [ -n "$SS_YUM_REPO_DEF_URL" ]; then
         curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
@@ -371,6 +357,9 @@ EOF
         yum-config-manager --disable SlipStream-*
         yum-config-manager --enable SlipStream-${SS_YUM_REPO}
     fi
+
+    # Elasticsearch repo configuration is available in SlipStream repo
+    yum install -y 'slipstream-es-repo-*'
 }
 
 function _install_global_dependencies() {
