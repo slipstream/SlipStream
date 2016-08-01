@@ -253,7 +253,9 @@ class TestsRunner(object):
                 fn = os.path.join(files_loc, fn)
                 tsuites = etree.parse(fn).getroot()
                 for tsuite in tsuites.findall('testsuite'):
-                    tsuite.set('package', tsuite.attrib['package'] + '.' + connector)
+                    tsuite.set('package', connector + '.' + tsuite.attrib['package'])
+                    for tcase in tsuite.findall('testcase'):
+                        tcase.set('classname', connector + '.' + tcase.attrib['classname'])
                 filePutContent(fn, etree.tostring(tsuites))
 
     def _save_result(self, name, connector=None):
