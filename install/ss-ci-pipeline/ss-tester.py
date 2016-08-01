@@ -7,13 +7,13 @@ import subprocess
 import shutil
 import collections
 
-import urllib2
-
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
 from slipstream.HttpClient import HttpClient
 from slipstream.util import (download_file, fileAppendContent,
-                             filePutContent, execute)
+                             filePutContent, execute, importETree)
+
+etree = importETree()
 
 
 NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
@@ -181,24 +181,27 @@ def _failing_monitored_connectors(ss_servers):
                         ss_exec_checks_err[chn] = ch
                 else:
                     ss_exec_checks_err[chn] = ch
-    return ss_exec_checks_err.keys()
+    return map(lambda x: x.replace('ss-exec_', ''), ss_exec_checks_err.keys())
 
 def _get_connectors_to_test(monitored_ss):
     # Space separated list.
     requested = ss_get('connectors_to_test').split(' ')
     _print('Connectors requested to test: %s' % requested)
     monitored_failing = _failing_monitored_connectors(monitored_ss)
-    _print('Connectors currently failing: %s' % monitored_failing)
+    _print('Connectors currently failing: %s on %s' % (monitored_failing, monitored_ss))
     return list(set(requested) - set(monitored_failing))
+
 
 class TestsRunner(object):
     """
     Order in which tests get added with add_test() is preserved.
     """
 
-    def __init__(self, config_auth, connectors_to_test=[]):
+    def __init__(self, config_auth, tests_loc, final_tests_loc, connectors_to_test=[]):
         self._tests = collections.OrderedDict()
         self._config_auth = config_auth
+        self._tests_loc = tests_loc
+        self._final_tests_loc = final_tests_loc
         self._connectors_to_test = connectors_to_test
 
     def add_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
@@ -219,21 +222,20 @@ class TestsRunner(object):
         for name in testnames:
             self._run_test(name, **self._tests[name])
 
-    def _run_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
+    def _run_test(self, tname, config={}, connectors=[], msg='', fail=False, save_results=True):
         if connectors:
             for connector in connectors:
                 self._print_t(' '.join(filter(None, [msg, 'Connector: %s' % connector])))
                 config['connector-name'] = connector
-                self.__run_test(name, config=config, fail=fail)
+                self.__run_test(tname, config=config, fail=fail)
                 if save_results:
-                    shutil.move('clojure/target',
-                                os.path.join(test_results_dir, '%s-%s' % (name, connector)))
+                    self._save_result(tname, connector)
         else:
             if msg:
                 self._print_t(msg)
-            self.__run_test(name, config=config, fail=fail)
+            self.__run_test(tname, config=config, fail=fail)
             if save_results:
-                shutil.move('clojure/target', os.path.join(test_results_dir, name))
+                self._save_result(tname)
 
     def __run_test(self, name, config={}, fail=False):
         if config:
@@ -243,6 +245,23 @@ class TestsRunner(object):
         rc = execute(cmd)
         if fail and rc != 0:
             raise Exception('Failed running test: %s' % name)
+
+    @staticmethod
+    def _change_test_name_in_test_files(files_loc, connector):
+        for fn in os.listdir(files_loc):
+            if fn.endswith(".xml"):
+                fn = os.path.join(files_loc, fn)
+                tsuites = etree.parse(fn).getroot()
+                for tsuite in tsuites.findall('testsuite'):
+                    tsuite.set('package', tsuite.attrib['package'] + '.' + connector)
+                filePutContent(fn, etree.tostring(tsuites))
+
+    def _save_result(self, name, connector=None):
+        if connector:
+            self._change_test_name_in_test_files(self._tests_loc, connector)
+        shutil.move(self._tests_loc,
+                    os.path.join(self._final_tests_loc,
+                                 '%s%s' % (name, '-' + connector if connector else '')))
 
     @staticmethod
     def _write_test_config(config):
@@ -301,16 +320,19 @@ connectors_to_test = _get_connectors_to_test(SS_SERVICES_IN_NAGIOS)
 _cd(test_repo_name)
 _check_call(['git', 'checkout', test_repo_branch])
 
-test_results_dir = _expanduser('~/test-results/')
-_rmdir(test_results_dir)
-_mkdir(test_results_dir, 0755)
+final_tests_loc = _expanduser('~/test-results')
+_rmdir(final_tests_loc)
+_mkdir(final_tests_loc, 0755)
 
 config_auth = {'username': test_username,
                'password': test_userpass,
                'serviceurl': ss_serviceurl,
                'insecure?': True}
 
-tr = TestsRunner(config_auth, connectors_to_test=connectors_to_test)
+tests_loc = 'clojure/target'
+
+tr = TestsRunner(config_auth, tests_loc, final_tests_loc,
+                 connectors_to_test=connectors_to_test)
 
 tr.add_test('test-clojure-deps',
             msg='Check if local dependencies are available.',
