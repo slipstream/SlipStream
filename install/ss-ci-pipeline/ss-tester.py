@@ -289,7 +289,7 @@ test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
 scale_comp_name = ss_get('scale_comp_name')
-tests_to_run = filter(None, ss_get('tests_to_run', no_block=True).strinp().split(';'))
+tests_to_run = filter(None, ss_get('tests_to_run', no_block=True).strip().split(';'))
 
 nexus_user, nexus_pass = ss_get('nexus_creds').split(':')
 
