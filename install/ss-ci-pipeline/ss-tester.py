@@ -25,6 +25,9 @@ SSH_DIR = os.path.expanduser('~/.ssh')
 
 
 def ss_get(param, ignore_abort=False, timeout=30, no_block=False):
+    """Returns None if parameter is not set.
+    Raises Exceptions.NotFoundError if parameter doesn't exist.
+    """
     ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
     ch.set('noBlock', no_block)
@@ -200,6 +203,11 @@ def _get_connectors_to_test(monitored_ss):
     return list(set(requested) - set(monitored_failing))
 
 
+def _tests_to_run():
+    return filter(None,
+                  (ss_get('tests_to_run', no_block=True) or '').strip().split(';'))
+
+
 class TestsRunner(object):
     """
     Order in which tests get added with add_test() is preserved.
@@ -295,7 +303,7 @@ test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
 scale_comp_name = ss_get('scale_comp_name')
-tests_to_run = filter(None, ss_get('tests_to_run', no_block=True).strip().split(';'))
+tests_to_run = _tests_to_run()
 
 nexus_user, nexus_pass = ss_get('nexus_creds').split(':')
 
