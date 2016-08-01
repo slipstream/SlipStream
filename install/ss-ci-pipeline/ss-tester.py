@@ -15,7 +15,6 @@ from slipstream.util import (download_file, fileAppendContent,
 
 etree = importETree()
 
-
 NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
 SS_SERVICES_IN_NAGIOS = ['nuv.la', 'bb.sixsq.com']
 
@@ -129,14 +128,17 @@ def merge_dicts(x, y):
 
 def _dict_to_edn(_dict):
     "Only string, boolean and None are fully supported."
+
     def _kv_to_edn(kv):
-        k = kv[0]; v = kv[1]
+        k = kv[0]
+        v = kv[1]
         if isinstance(v, bool):
             return ' :%s %s' % (k, str(v).lower())
         elif v == None:
             return ' :%s nil' % k
         else:
             return ' :%s "%s"' % (k, v)
+
     return "{\n%s\n}" % '\n'.join(map(_kv_to_edn, _dict.items()))
 
 
@@ -149,6 +151,7 @@ def _get_test_user_pass():
         userpass = dict(map(lambda x: x.split(':'), users_passes.split(','))).get(username, userpass)
     return username, userpass
 
+
 def _get_monitoring_status():
     "Returns monitoring status as JSON."
     nagios_user, nagios_pass = ss_get('nagios_creds').split(':')
@@ -157,14 +160,18 @@ def _get_monitoring_status():
     _, res = h.get(NAGIOS_STATUS_URL, accept="application/json")
     return json.loads(res)
 
+
 def _check_enabled(check):
     return int(check.get('active_checks_enabled')) == 1
+
 
 def _check_error(check):
     return int(check.get('current_state', 10)) > 0
 
+
 def _enabled_and_error(check):
     return _check_enabled(check) and _check_error(check)
+
 
 def _failing_monitored_connectors(ss_servers):
     "ss_servers - list of SS server names as defined in monitoring app."
@@ -173,7 +180,7 @@ def _failing_monitored_connectors(ss_servers):
 
     ss_exec_checks_err = {}
     for s in ss_servers:
-        for chn,ch in status.get("services", {}).get(s, {}).items():
+        for chn, ch in status.get("services", {}).get(s, {}).items():
             if chn.startswith('ss-exec_') and _enabled_and_error(ch):
                 if ss_exec_checks_err.has_key(chn):
                     _ch = ss_exec_checks_err.get(chn)
@@ -182,6 +189,7 @@ def _failing_monitored_connectors(ss_servers):
                 else:
                     ss_exec_checks_err[chn] = ch
     return map(lambda x: x.replace('ss-exec_', ''), ss_exec_checks_err.keys())
+
 
 def _get_connectors_to_test(monitored_ss):
     # Space separated list.
@@ -197,16 +205,15 @@ class TestsRunner(object):
     Order in which tests get added with add_test() is preserved.
     """
 
-    def __init__(self, config_auth, tests_loc, final_tests_loc, connectors_to_test=[]):
+    def __init__(self, config_auth, tests_loc, final_tests_loc):
         self._tests = collections.OrderedDict()
         self._config_auth = config_auth
         self._tests_loc = tests_loc
         self._final_tests_loc = final_tests_loc
-        self._connectors_to_test = connectors_to_test
 
     def add_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
         self._tests[name] = {'config': merge_dicts(self._config_auth, config),
-                             'connectors': connectors or self._connectors_to_test,
+                             'connectors': connectors,
                              'msg': msg,
                              'fail': fail,
                              'save_results': save_results}
@@ -277,7 +284,6 @@ class TestsRunner(object):
         _print(':t: %s' % msg)
 
     def info(self):
-        _print('Connectors to test: %s' % self._connectors_to_test)
         _print('Tests to run: %s' % self.get_test_names())
 
 
@@ -332,8 +338,7 @@ config_auth = {'username': test_username,
 
 tests_loc = 'clojure/target'
 
-tr = TestsRunner(config_auth, tests_loc, final_tests_loc,
-                 connectors_to_test=connectors_to_test)
+tr = TestsRunner(config_auth, tests_loc, final_tests_loc)
 
 tr.add_test('test-clojure-deps',
             msg='Check if local dependencies are available.',
@@ -342,13 +347,16 @@ tr.add_test('test-auth',
             msg='Authentication tests on %s as %s.' % (ss_serviceurl, test_username))
 tr.add_test('test-run-comp',
             msg='Component deployment - %s on %s as %s.' % (run_comp_uri, ss_serviceurl, test_username),
-            config={'comp-uri': run_comp_uri})
+            config={'comp-uri': run_comp_uri},
+            connectors=connectors_to_test)
 tr.add_test('test-run-app',
             msg='Application deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
-            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name})
+            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
+            connectors=connectors_to_test)
 tr.add_test('test-run-app-scale',
             msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
-            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name})
+            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
+            connectors=connectors_to_test)
 
 tr.info()
 
@@ -356,4 +364,3 @@ os.environ['BOOT_AS_ROOT'] = 'yes'
 tr.run(tests_to_run=tests_to_run)
 
 _print('All tests were ran.')
-
