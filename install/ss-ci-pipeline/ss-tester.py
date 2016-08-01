@@ -217,8 +217,6 @@ class TestsRunner(object):
     def run(self, tests_to_run=[]):
         testnames = tests_to_run or self.get_test_names()
 
-        #if tests_to_run and not set(self.get_test_names()).intersection(tests_to_run):
-
         for name in testnames:
             self._run_test(name, **self._tests[name])
 
@@ -291,6 +289,7 @@ test_repo_branch = ss_get('test_repo_branch')
 run_comp_uri = ss_get('run_comp_uri')
 scale_app_uri = ss_get('scale_app_uri')
 scale_comp_name = ss_get('scale_comp_name')
+tests_to_run = filter(None, ss_get('tests_to_run', no_block=True).strinp().split(','))
 
 nexus_user, nexus_pass = ss_get('nexus_creds').split(':')
 
@@ -354,7 +353,7 @@ tr.add_test('test-run-app-scale',
 tr.info()
 
 os.environ['BOOT_AS_ROOT'] = 'yes'
-tr.run()
+tr.run(tests_to_run=tests_to_run)
 
 _print('All tests were ran.')
 
