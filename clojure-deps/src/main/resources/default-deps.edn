@@ -121,7 +121,7 @@
  [adzerk/boot-cljs "1.7.228-1" :scope "test"]
  [adzerk/boot-cljs-repl "0.3.2" :scope "test"]
  [adzerk/boot-reload "0.4.11" :scope "test"]
- [boot-codox "0.9.5" :scope "test"]
+ [boot-codox "0.9.6" :scope "test"]
  [boot-environ "1.1.0" :scope "test"]
  [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
  [pandeiro/boot-http "0.7.3" :scope "test"]
