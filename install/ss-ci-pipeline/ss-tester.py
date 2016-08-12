@@ -129,22 +129,6 @@ def merge_dicts(x, y):
     return z
 
 
-def _dict_to_edn(_dict):
-    "Only string, boolean and None are fully supported."
-
-    def _kv_to_edn(kv):
-        k = kv[0]
-        v = kv[1]
-        if isinstance(v, bool):
-            return ' :%s %s' % (k, str(v).lower())
-        elif v == None:
-            return ' :%s nil' % k
-        else:
-            return ' :%s "%s"' % (k, v)
-
-    return "{\n%s\n}" % '\n'.join(map(_kv_to_edn, _dict.items()))
-
-
 def _get_test_user_pass():
     username = ss_get('ss_test_user', no_block=True).strip() or 'test'
     users_passes = ss_get('ss_users')
@@ -213,18 +197,16 @@ class TestsRunner(object):
     Order in which tests get added with add_test() is preserved.
     """
 
-    def __init__(self, config_auth, tests_loc, final_tests_loc):
+    def __init__(self, config_auth):
         self._tests = collections.OrderedDict()
         self._config_auth = config_auth
-        self._tests_loc = tests_loc
-        self._final_tests_loc = final_tests_loc
+        self.failed_tests = []
 
-    def add_test(self, name, config={}, connectors=[], msg='', fail=False, save_results=True):
+    def add_test(self, name, config={}, connectors=[], msg='', fail=False):
         self._tests[name] = {'config': merge_dicts(self._config_auth, config),
                              'connectors': connectors,
                              'msg': msg,
-                             'fail': fail,
-                             'save_results': save_results}
+                             'fail': fail}
 
     def get_test_names(self):
         return self._tests.keys()
@@ -235,52 +217,40 @@ class TestsRunner(object):
         for name in testnames:
             self._run_test(name, **self._tests[name])
 
-    def _run_test(self, tname, config={}, connectors=[], msg='', fail=False, save_results=True):
+    def _run_test(self, tname, config={}, connectors=[], msg='', fail=False):
         if connectors:
             for connector in connectors:
                 self._print_t(' '.join(filter(None, [msg, 'Connector: %s' % connector])))
-                config['connector-name'] = connector
+                config['connectors'] = connector
                 self.__run_test(tname, config=config, fail=fail)
-                if save_results:
-                    self._save_result(tname, connector)
         else:
             if msg:
                 self._print_t(msg)
             self.__run_test(tname, config=config, fail=fail)
-            if save_results:
-                self._save_result(tname)
 
     def __run_test(self, name, config={}, fail=False):
-        if config:
-            self._write_test_config(config)
-        cmd = ['make', name]
+        cmd = ['make', name, "TESTOPTS=%s" % self._build_test_opts(config)]
         print('executing: %s ' % cmd)
         rc = execute(cmd)
-        if fail and rc != 0:
-            raise Exception('Failed running test: %s' % name)
+        if rc != 0:
+            self.failed_tests.append((name, config.get('connectors', '')))
+            if fail:
+                raise Exception('Failed running test: %s' % name)
+
+    def get_failed_tests(self):
+        def _test_to_str(tpl):
+            return '%s%s' % (tpl[0], (tpl[1] != '') and (' on ' + tpl[1]) or '')
+        return map(_test_to_str, self.failed_tests)
 
     @staticmethod
-    def _change_test_name_in_test_files(files_loc, connector):
-        for fn in os.listdir(files_loc):
-            if fn.endswith(".xml"):
-                fn = os.path.join(files_loc, fn)
-                tsuites = etree.parse(fn).getroot()
-                for tsuite in tsuites.findall('testsuite'):
-                    tsuite.set('package', connector + '.' + tsuite.attrib['package'])
-                    for tcase in tsuite.findall('testcase'):
-                        tcase.set('classname', connector + '.' + tcase.attrib['classname'])
-                filePutContent(fn, etree.tostring(tsuites))
-
-    def _save_result(self, name, connector=None):
-        if connector:
-            self._change_test_name_in_test_files(self._tests_loc, connector)
-        shutil.move(self._tests_loc,
-                    os.path.join(self._final_tests_loc,
-                                 '%s%s' % (name, '-' + connector if connector else '')))
-
-    @staticmethod
-    def _write_test_config(config):
-        filePutContent('clojure/resources/test-config.edn', _dict_to_edn(config))
+    def _build_test_opts(config):
+        opts = ""
+        for k, v in config.items():
+            if k not in ['insecure?']:
+                opts += ' --%s %s' % (k, v)
+        if config.get('insecure?', False):
+            opts += ' -i'
+        return opts
 
     @staticmethod
     def _print(msg):
@@ -326,43 +296,43 @@ ss_get('deployer.ready', timeout=2700)
 
 test_username, test_userpass = _get_test_user_pass()
 
-ss_serviceurl = ss_get('ss_service_url')
+endpoint = ss_get('ss_service_url')
 
-_print('Ready to run tests on %s as %s.' % (ss_serviceurl, test_username))
+_print('Ready to run tests on %s as %s.' % (endpoint, test_username))
 
 connectors_to_test = _get_connectors_to_test(SS_SERVICES_IN_NAGIOS)
 
 _cd(test_repo_name)
 _check_call(['git', 'checkout', test_repo_branch])
 
-final_tests_loc = _expanduser('~/test-results')
-_rmdir(final_tests_loc)
-_mkdir(final_tests_loc, 0755)
+results_dir = _expanduser('~/test-results')
+_rmdir(results_dir)
+_mkdir(results_dir, 0755)
 
 config_auth = {'username': test_username,
                'password': test_userpass,
-               'serviceurl': ss_serviceurl,
-               'insecure?': True}
+               'endpoint': endpoint,
+               'insecure?': True,
+               'results-dir': results_dir}
 
-tests_loc = 'clojure/target'
+tr = TestsRunner(config_auth)
 
-tr = TestsRunner(config_auth, tests_loc, final_tests_loc)
-
+# smoke test
 tr.add_test('test-clojure-deps',
-            msg='Check if local dependencies are available.',
-            fail=True, save_results=False)
+            msg='Check if local dependencies are available.', fail=True)
+
 tr.add_test('test-auth',
-            msg='Authentication tests on %s as %s.' % (ss_serviceurl, test_username))
+            msg='Authentication tests on %s as %s.' % (endpoint, test_username))
 tr.add_test('test-run-comp',
-            msg='Component deployment - %s on %s as %s.' % (run_comp_uri, ss_serviceurl, test_username),
+            msg='Component deployment - %s on %s as %s.' % (run_comp_uri, endpoint, test_username),
             config={'comp-uri': run_comp_uri},
             connectors=connectors_to_test)
 tr.add_test('test-run-app',
-            msg='Application deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
+            msg='Application deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
             config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
             connectors=connectors_to_test)
 tr.add_test('test-run-app-scale',
-            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, ss_serviceurl, test_username),
+            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
             config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
             connectors=connectors_to_test)
 
@@ -372,3 +342,8 @@ os.environ['BOOT_AS_ROOT'] = 'yes'
 tr.run(tests_to_run=tests_to_run)
 
 _print('All tests were ran.')
+
+if tr.failed_tests:
+    _print('Tests failed: %s' % ', '.join(tr.get_failed_tests()))
+    exit(1)
+
