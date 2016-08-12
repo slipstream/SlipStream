@@ -123,7 +123,8 @@
  [adzerk/boot-reload "0.4.11" :scope "test"]
  [boot-codox "0.9.6" :scope "test"]
  [boot-environ "1.1.0" :scope "test"]
- [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
+ ;; [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
+ [org.clojars.sixsq/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"] ;; non-canonical fork
  [pandeiro/boot-http "0.7.3" :scope "test"]
  [tolitius/boot-check "0.1.2" :scope "test"]
 
