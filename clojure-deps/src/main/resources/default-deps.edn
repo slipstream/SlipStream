@@ -125,9 +125,7 @@
  ;; 
  ;; libraries and utilities for testing
  ;;
- [jline "1.0" :scope "test"]
  [junit "4.12" :scope "test"]
- [org.hamcrest/hamcrest-all "1.3" :scope "test"]
  [org.clojure/tools.nrepl "0.2.12" :scope "test"
   :exclusions [org.clojure/clojure]]
  [clojure-complete/clojure-complete "0.2.4" :scope "test"
