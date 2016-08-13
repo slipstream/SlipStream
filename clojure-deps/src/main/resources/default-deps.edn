@@ -85,7 +85,7 @@
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
- [org.clojure/core.async "0.2.382" :exclusions [org.clojure/tools.reader]]
+ [org.clojure/core.async "0.2.385" :exclusions [org.clojure/tools.reader]]
  [org.elasticsearch/elasticsearch "2.3.5"]
  [org.hsqldb/hsqldb "2.3.4"]
  [org.slf4j/slf4j-api "1.7.21"]
