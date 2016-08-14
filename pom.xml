@@ -838,19 +838,19 @@
       <dependency>
         <groupId>buddy</groupId>
         <artifactId>buddy-core</artifactId>
-        <version>0.9.0</version>
+        <version>0.13.0</version>
       </dependency>
 
       <dependency>
         <groupId>buddy</groupId>
         <artifactId>buddy-hashers</artifactId>
-        <version>0.11.0</version>
+        <version>0.14.0</version>
       </dependency>
 
       <dependency>
         <groupId>buddy</groupId>
         <artifactId>buddy-sign</artifactId>
-        <version>0.9.0</version>
+        <version>1.1.0</version>
       </dependency>
 
       <!-- ***************** -->
