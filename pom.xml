@@ -379,6 +379,13 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDbBinding-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServerPRSlib-jar</artifactId>
         <version>${project.version}</version>
       </dependency>

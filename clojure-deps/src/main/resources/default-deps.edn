@@ -14,6 +14,7 @@
  [com.sixsq.slipstream/Libcloud-SixSq-zip :version]
  [com.sixsq.slipstream/SlipStreamAsync :version]
  [com.sixsq.slipstream/SlipStreamClientAPI-jar :version]
+ [com.sixsq.slipstream/SlipStreamDbBinding-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResources-jar :version]
  [com.sixsq.slipstream/SlipStreamConnector :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamCredCache :version]
