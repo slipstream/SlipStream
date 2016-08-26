@@ -5,7 +5,7 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>3.11-SNAPSHOT</version>
+  <version>3.11</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
