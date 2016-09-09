@@ -402,7 +402,6 @@
           </execution>
         </executions>
       </plugin>
-      
     </plugins>
   </build>
 
@@ -418,10 +417,29 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDbBinding-jar-dep</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamDbBinding-jar</artifactId>
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDbSerializers-jar-dep</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDbSerializers-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
@@ -995,6 +1013,15 @@
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
         <version>2.3.5</version>
+      </dependency>
+
+      <!-- FIXME: used to silence annoying warning at Elasticseach startup.
+           Next version of Elasticsearch should provide this dependency by default.
+      -->
+      <dependency>
+          <groupId>net.java.dev.jna</groupId>
+          <artifactId>jna</artifactId>
+          <version>4.2.2</version>
       </dependency>
 
     </dependencies>
