@@ -559,6 +559,12 @@
       <!-- *************************** -->
 
       <dependency>
+          <groupId>com.chemdrawcloud</groupId>
+          <artifactId>gwt-crypto</artifactId>
+          <version>2.7.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
         <version>2.6</version>
