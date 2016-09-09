@@ -205,6 +205,10 @@ ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamServiceOfferAPI.jar
 ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann/streams
 
+# Elasticsearch
+ES_HOST=localhost
+ES_PORT=9300
+
 # # # # # # # # # # # #
 # Advanced parameters.
 # # # # # # # # # # # #
@@ -521,6 +525,7 @@ function deploy_slipstream_server () {
 
     _set_theme
     _set_localization
+    _set_elasticsearch_coords
 
     _start_slipstream
     _enable_slipstream
@@ -528,6 +533,11 @@ function deploy_slipstream_server () {
     _deploy_nginx_proxy
 
     _load_slipstream_examples
+}
+
+function _set_elasticsearch_coords() {
+    _set_jetty_args es.host $ES_HOST
+    _set_jetty_args es.port $ES_PORT
 }
 
 function _set_theme() {
