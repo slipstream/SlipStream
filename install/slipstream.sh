@@ -647,7 +647,7 @@ function _deploy_elasticsearch() {
     _inst java-1.8.0-openjdk-headless
     _inst elasticsearch
 
-    # Configurate elasticsearch
+    # Configure elasticsearch
     # FIXME: visible on localhost only
     elasticsearch_cfg=/etc/elasticsearch/elasticsearch.yml
     mv ${elasticsearch_cfg} ${elasticsearch_cfg}.orig

@@ -62,21 +62,9 @@ function _configure() {
     _prints "done."
 }
 
-function _configure_es() {
-    _printn " configuring Elastic Search backup... "
-
-    ES_CONF=/etc/elasticsearch/elasticsearch.yml
-    sed -i -e "s|CHANGE_ME_ID|${AMAZON_ID}|" $ES_CONF
-    sed -i -e "s|CHANGE_ME_KEY|${AMAZON_KEY}|" $ES_CONF
-
-    _prints "done configuring Elastic Search backup."
-}
-
-
 function install_backup_S3 () {
     _install
     _configure
-    _configure_es
     systemctl restart crond
 }
 
