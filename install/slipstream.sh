@@ -647,12 +647,17 @@ function _deploy_elasticsearch() {
     _inst java-1.8.0-openjdk-headless
     _inst elasticsearch
 
-    # Configurate elasticsearch
+    # Configure elasticsearch
     # FIXME: visible on localhost only
     elasticsearch_cfg=/etc/elasticsearch/elasticsearch.yml
     mv ${elasticsearch_cfg} ${elasticsearch_cfg}.orig
     cat > ${elasticsearch_cfg} <<EOF
 network.host: 127.0.0.1
+# AWS configuration
+cloud:
+  aws:
+    access_key: CHANGE_ME_ID
+    secret_key: CHANGE_ME_KEY
 EOF
 
     # Ensure is started; start also on boot.

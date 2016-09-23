@@ -71,4 +71,3 @@ function install_backup_S3 () {
 _print "Installing SlipStream backup."
 install_backup_S3
 _print "SlipStream backup installed."
-
