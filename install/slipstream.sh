@@ -233,6 +233,9 @@ CLEAN_PKG_CACHE="yum clean all"
 
 SS_JETTY_CONFIG=/etc/default/slipstream
 
+SS_USER=slipstream
+SS_GROUP=$SS_USER
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Deployment.
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -605,19 +608,12 @@ function _update_hostname_in_conf_file() {
            $@
 }
 
-function _update_slipstream_configuration() {
-
-    # Connectors.
-    SLIPSTREAM_CONNECTORS=
-    if [ -d $SLIPSTREAM_ETC/connectors ]; then
-        SLIPSTREAM_CONNECTORS=$(find $SLIPSTREAM_ETC/connectors -name "*.edn")
-        for cconf in $SLIPSTREAM_CONNECTORS; do
-            _update_hostname_in_conf_file $cconf
-        done
-    fi
+function _update_service_configuration() {
 
     # Configuration.
     [ -s $SLIPSTREAM_CONF ] || printf "{\n}\n" > $SLIPSTREAM_CONF
+
+    chown $SS_USER.$SS_GROUP $SLIPSTREAM_CONF
 
     _update_hostname_in_conf_file $SLIPSTREAM_CONF
 
@@ -631,8 +627,22 @@ function _update_slipstream_configuration() {
     _update_or_add_config_property connectorOrchPublicSSHKey \"/opt/slipstream/server/.ssh/id_rsa.pub\"
     _update_or_add_config_property connectorOrchPrivateSSHKey \"/opt/slipstream/server/.ssh/id_rsa\"
 
-    # Push configuration to DB.
-    ss-config $SLIPSTREAM_CONF $SLIPSTREAM_CONNECTORS
+    # Push service configuration to DB.
+    ss-config $SLIPSTREAM_CONF
+}
+
+function _update_connectors_configuration() {
+    # Connectors.
+    SLIPSTREAM_CONNECTORS=
+    if [ -d $SLIPSTREAM_ETC/connectors ]; then
+        SLIPSTREAM_CONNECTORS=$(find $SLIPSTREAM_ETC/connectors -name "*.edn")
+        for cconf in $SLIPSTREAM_CONNECTORS; do
+            _update_hostname_in_conf_file $cconf
+        done
+    fi
+
+    # Push connectors configuration to DB.
+    [ -n "$SLIPSTREAM_CONNECTORS" ] && ss-config $SLIPSTREAM_CONNECTORS
 }
 
 function _update_or_add_config_property() {
@@ -642,6 +652,11 @@ function _update_or_add_config_property() {
     grep -qP "^[ \t]*:$PROPERTY" $SLIPSTREAM_CONF && \
         sed -i "s|:$PROPERTY.*|$SUBST_STR|" $SLIPSTREAM_CONF || \
         sed -i "/\}/i $SUBST_STR" $SLIPSTREAM_CONF
+}
+
+function _update_slipstream_configuration() {
+    _update_service_configuration
+    _update_connectors_configuration
 }
 
 function _deploy_elasticsearch() {
