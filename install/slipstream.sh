@@ -206,8 +206,8 @@ ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann/streams
 
 # Elasticsearch
-ES_HOST=localhost
-ES_PORT=9300
+export ES_HOST=localhost
+export ES_PORT=9300
 
 # # # # # # # # # # # #
 # Advanced parameters.
@@ -226,7 +226,7 @@ SS_LOCAL_HOST=localhost
 SS_LOCAL_URL=http://$SS_LOCAL_HOST:$SS_LOCAL_PORT
 
 SLIPSTREAM_ETC=/etc/slipstream
-SLIPSTREAM_CONF=$SLIPSTREAM_ETC/slipstream.conf
+SLIPSTREAM_CONF=$SLIPSTREAM_ETC/slipstream.edn
 
 DEPS="unzip curl wget gnupg nc python-pip"
 CLEAN_PKG_CACHE="yum clean all"
@@ -607,36 +607,41 @@ function _update_hostname_in_conf_file() {
 
 function _update_slipstream_configuration() {
 
-    for ssconf in $(find $SLIPSTREAM_ETC -maxdepth 1 -name "$(basename $SLIPSTREAM_CONF)*" -type f); do
-        _update_hostname_in_conf_file $ssconf
-    done
-
+    # Connectors.
+    SLIPSTREAM_CONNECTORS=
     if [ -d $SLIPSTREAM_ETC/connectors ]; then
-        for cconf in $(find $SLIPSTREAM_ETC/connectors -name "*.conf"); do
+        SLIPSTREAM_CONNECTORS=$(find $SLIPSTREAM_ETC/connectors -name "*.edn")
+        for cconf in $SLIPSTREAM_CONNECTORS; do
             _update_hostname_in_conf_file $cconf
         done
     fi
 
-    _update_or_add_config_property slipstream.update.clienturl \
-        https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz
-    _update_or_add_config_property slipstream.update.clientbootstrapurl \
-        https://${SS_HOSTNAME}/downloads/slipstream.bootstrap
-    _update_or_add_config_property cloud.connector.library.libcloud.url \
-        https://${SS_HOSTNAME}/downloads/libcloud.tgz
-    _update_or_add_config_property slipstream.base.url https://${SS_HOSTNAME}
-    _update_or_add_config_property cloud.connector.orchestrator.publicsshkey \
-        /opt/slipstream/server/.ssh/id_rsa.pub
-    _update_or_add_config_property cloud.connector.orchestrator.privatesshkey \
-        /opt/slipstream/server/.ssh/id_rsa
+    # Configuration.
+    [ -s $SLIPSTREAM_CONF ] || printf "{\n}\n" > $SLIPSTREAM_CONF
+
+    _update_hostname_in_conf_file $SLIPSTREAM_CONF
+
+    # Configuration. Mandatory attribute.
+    _update_or_add_config_property id \"configuration/slipstream\"
+
+    _update_or_add_config_property clientURL \"https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz\"
+    _update_or_add_config_property clientBootstrapURL \"https://${SS_HOSTNAME}/downloads/slipstream.bootstrap\"
+    _update_or_add_config_property connectorLibcloudURL \"https://${SS_HOSTNAME}/downloads/libcloud.tgz\"
+    _update_or_add_config_property serviceURL \"https://${SS_HOSTNAME}\"
+    _update_or_add_config_property connectorOrchPublicSSHKey \"/opt/slipstream/server/.ssh/id_rsa.pub\"
+    _update_or_add_config_property connectorOrchPrivateSSHKey \"/opt/slipstream/server/.ssh/id_rsa\"
+
+    # Push configuration to DB.
+    ss-config $SLIPSTREAM_CONF $SLIPSTREAM_CONNECTORS
 }
 
 function _update_or_add_config_property() {
-	PROPERTY=$1
-	VALUE=$2
-    SUBST_STR="$PROPERTY = $VALUE"
-    grep -qP "^[ \t]*$PROPERTY" $SLIPSTREAM_CONF && \
-        sed -i "s|$PROPERTY.*|$SUBST_STR|" $SLIPSTREAM_CONF || \
-        echo $SUBST_STR >> $SLIPSTREAM_CONF
+    PROPERTY=$1
+    VALUE=$2
+    SUBST_STR=":$PROPERTY $VALUE"
+    grep -qP "^[ \t]*:$PROPERTY" $SLIPSTREAM_CONF && \
+        sed -i "s|:$PROPERTY.*|$SUBST_STR|" $SLIPSTREAM_CONF || \
+        sed -i "/\}/i $SUBST_STR" $SLIPSTREAM_CONF
 }
 
 function _deploy_elasticsearch() {
