@@ -599,9 +599,9 @@ EOF
 
 function _update_hostname_in_conf_file() {
     # $@ names of the files to update
-    sed -i -e "/^[a-z]/ s/nuv.la/${SS_HOSTNAME}/" \
-           -e "/^[a-z]/ s/example.com/${SS_HOSTNAME}/" \
-           -e "/^[a-z]/ s/<CHANGE_HOSTNAME>/${SS_HOSTNAME}/" \
+    sed -i -e "/^[ \t]*:[a-zA-Z]/ s/nuv.la/${SS_HOSTNAME}/" \
+           -e "/^[ \t]*:[a-zA-Z]/ s/example.com/${SS_HOSTNAME}/" \
+           -e "/^[ \t]*:[a-zA-Z]/ s/<CHANGE_HOSTNAME>/${SS_HOSTNAME}/" \
            $@
 }
 
