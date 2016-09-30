@@ -48,7 +48,8 @@
  [com.cemerick/url "0.1.1"]
  [com.jcraft/jsch "0.1.53"]
  [com.mchange/c3p0 "0.9.5.2"]
- [com.taoensso/tower "3.0.2"]
+ [com.taoensso/tower "3.1.0-beta5"]
+ [com.taoensso/timbre "4.2.1"]
 
  [enlive "1.1.6"]
  [environ "1.1.0"]
