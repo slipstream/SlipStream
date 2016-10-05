@@ -63,6 +63,7 @@ echo statecustom "Installing boot..."
 boot=/usr/local/bin/boot
 curl -fsSLo $boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
 chmod 755 $boot
+ln -sf $boot /usr/bin
 export BOOT_AS_ROOT=yes
 $boot
 cat >>~/.bashrc<<EOF
