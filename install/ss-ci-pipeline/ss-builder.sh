@@ -36,6 +36,12 @@ slipstream_connectors_version=`ss-get slipstream_connectors_version`
 slipstream_server_version=`ss-get slipstream_server_version`
 slipstream_server_deps_version=`ss-get slipstream_server_deps_version`
 slipstream_ui_version=`ss-get slipstream_ui_version`
+slipstream_connector_cloudsigma_version=`ss-get slipstream_connector_cloudsigma_version`
+slipstream_connector_nuvlabox_version=`ss-get slipstream_connector_nuvlabox_version`
+slipstream_connector_vcloud_version=`ss-get slipstream_connector_vcloud_version`
+slipstream_connector_ec2_version=`ss-get slipstream_connector_ec2_version`
+slipstream_i18n_version=`ss-get slipstream_i18n_version`
+slipstream_pricing_version=`ss-get slipstream_pricing_version`
 skip_tests=`ss-get skip_tests`
 
 _HOSTNAME=`ss-get hostname`
@@ -152,6 +158,12 @@ mvn ${maven_profile} \
   -Dslipstream.server.version=${slipstream_server_version} \
   -Dslipstream.server.deps.version=${slipstream_server_deps_version} \
   -Dslipstream.ui.version=${slipstream_ui_version} \
+  -Dslipstream.connector.cloudsigma.version=${slipstream_connector_cloudsigma_version} \
+  -Dslipstream.connector.nuvlabox.version=${slipstream_connector_nuvlabox_version} \
+  -Dslipstream.connector.vcloud.version=${slipstream_connector_vcloud_version} \
+  -Dslipstream.connector.ec2.version=${slipstream_connector_ec2_version} \
+  -Dslipstream.i18n.version=${slipstream_i18n_version} \
+  -Dslipstream.pricing.version=${slipstream_pricing_version} \
   generate-sources
 
 #
