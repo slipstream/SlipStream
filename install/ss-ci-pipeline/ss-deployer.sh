@@ -51,7 +51,7 @@ REFCONF_NAME=`ss-get refconf_name`
 YUM_REPO_KIND=`ss-get yum_repo_kind`
 YUM_REPO_EDITION=`ss-get yum_repo_edition`
 SS_REPO_CONF_URL=`ss-get ss-repo-conf-url`
-
+install_scripts_branch=`ss-get install_scripts_branch`
 
 function _install_yum_client_cert() {
     SS_CONF_DIR=/etc/slipstream
@@ -79,7 +79,12 @@ YUM_REPO_TO_GH_BRANCH[candidate]=candidate-latest
 YUM_REPO_TO_GH_BRANCH[release]=release-latest
 
 _GH_PROJECT_URL=https://raw.githubusercontent.com/slipstream/SlipStream
-_GH_SCRIPTS_URL=$_GH_PROJECT_URL/${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}/install
+if [ "$install_scripts_branch" != "master" ]; then
+    branch=$install_scripts_branch
+else
+    branch=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
+fi
+_GH_SCRIPTS_URL=$_GH_PROJECT_URL/$branch/install
 _SS_PARAM_BACKEND="-d $slipstream_backend"
 _NEXUS_URI=http://nexus.sixsq.com/service/local/artifact/maven/redirect
 if ( _is_true $with_refconf ); then
