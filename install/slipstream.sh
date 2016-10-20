@@ -602,9 +602,9 @@ EOF
 
 function _update_hostname_in_conf_file() {
     # $@ names of the files to update
-    sed -i -e "/^[ \t]*:[a-zA-Z]/ s/nuv.la/${SS_HOSTNAME}/" \
-           -e "/^[ \t]*:[a-zA-Z]/ s/example.com/${SS_HOSTNAME}/" \
-           -e "/^[ \t]*:[a-zA-Z]/ s/<CHANGE_HOSTNAME>/${SS_HOSTNAME}/" \
+    sed -i -e "s/nuv.la/${SS_HOSTNAME}/" \
+           -e "s/example.com/${SS_HOSTNAME}/" \
+           -e "s/<CHANGE_HOSTNAME>/${SS_HOSTNAME}/" \
            $@
 }
 
@@ -617,15 +617,16 @@ function _update_service_configuration() {
 
     _update_hostname_in_conf_file $SLIPSTREAM_CONF
 
-    # Configuration. Mandatory attribute.
-    _update_or_add_config_property id \"configuration/slipstream\"
-
-    _update_or_add_config_property clientURL \"https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz\"
-    _update_or_add_config_property clientBootstrapURL \"https://${SS_HOSTNAME}/downloads/slipstream.bootstrap\"
-    _update_or_add_config_property connectorLibcloudURL \"https://${SS_HOSTNAME}/downloads/libcloud.tgz\"
-    _update_or_add_config_property serviceURL \"https://${SS_HOSTNAME}\"
-    _update_or_add_config_property connectorOrchPublicSSHKey \"/opt/slipstream/server/.ssh/id_rsa.pub\"
-    _update_or_add_config_property connectorOrchPrivateSSHKey \"/opt/slipstream/server/.ssh/id_rsa\"
+    # Update configuration file.
+    ss-config \
+       -e id=configuration/slipstream \
+       -e clientURL=https://${SS_HOSTNAME}/downloads/slipstreamclient.tgz \
+       -e clientBootstrapURL=https://${SS_HOSTNAME}/downloads/slipstream.bootstrap \
+       -e connectorLibcloudURL=https://${SS_HOSTNAME}/downloads/libcloud.tgz \
+       -e serviceURL=https://${SS_HOSTNAME} \
+       -e connectorOrchPublicSSHKey=/opt/slipstream/server/.ssh/id_rsa.pub \
+       -e connectorOrchPrivateSSHKey=/opt/slipstream/server/.ssh/id_rsa \
+       $SLIPSTREAM_CONF
 
     # Push service configuration to DB.
     ss-config $SLIPSTREAM_CONF
@@ -643,15 +644,6 @@ function _update_connectors_configuration() {
 
     # Push connectors configuration to DB.
     [ -z "$SLIPSTREAM_CONNECTORS" ] || ss-config $SLIPSTREAM_CONNECTORS
-}
-
-function _update_or_add_config_property() {
-    PROPERTY=$1
-    VALUE=$2
-    SUBST_STR=":$PROPERTY $VALUE"
-    grep -qP "^[ \t]*:$PROPERTY" $SLIPSTREAM_CONF && \
-        sed -i "s|:$PROPERTY.*|$SUBST_STR|" $SLIPSTREAM_CONF || \
-        sed -i "/\}/i $SUBST_STR" $SLIPSTREAM_CONF
 }
 
 function _update_slipstream_configuration() {
