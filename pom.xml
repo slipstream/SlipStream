@@ -32,7 +32,7 @@
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
         <module>../SlipStreamClient</module>
-        <module>../SlipStreamClientAPI</module>
+        <module>../SlipStreamClojureAPI</module>
         <module>../SlipStreamConnectors</module>
         <!-- add enterprise modules here : do not remove comment -->
 
