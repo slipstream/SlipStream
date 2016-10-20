@@ -119,23 +119,24 @@ function _install_reference_configuration() {
     rm -f $TARBALL
 
     # Discover connectors that have to be installed.
-    CONNECTORS_TO_INSTALL=$(grep -hr cloud.connector.class $SS_CONF_DIR | \
-        awk -F= '
-    {
-        # input: cloud.connector.class = foo:bar, baz
-        # ouput: bar baz
-        split($2, cnames, ",");
-        for (i in cnames) {
-            split(cnames[i], cn, ":")
-            if (length(cn) == 2) {
-                cname = cn[2]
-            } else {
-                cname = cn[1]
-            }
-            gsub(/[ \t]/, "", cname)
-            print " " cname
-        };
-    }' | sort -u)
+    CONNECTORS_TO_INSTALL=$(awk '/:cloudConnectorClass/,/("|,)$/' $SS_CONF_DIR/slipstream.edn | \
+        awk '
+        {
+            gsub(/.*:cloudConnectorClass[ \t]*/, "", $0)
+            # input: "foo:bar, baz"
+            # ouput: bar baz
+            split($0, cnames, ",");
+            for (i in cnames) {
+                split(cnames[i], cn, ":")
+                if (length(cn) == 2) {
+                    cname = cn[2]
+                } else {
+                    cname = cn[1]
+                }
+                gsub(/[ \t"\n]/, "", cname)
+                print " " cname
+            };
+        }' | sort -u)
 
     # Generate new passwords for the defined users.
     for passfile in /etc/slipstream/passwords/*; do
@@ -148,11 +149,6 @@ function _install_slipstream() {
     curl -sSf -k -o slipstream.sh $GH_BASE_URL/install/slipstream.sh
     chmod +x slipstream.sh
     ./slipstream.sh -S -k $YUM_REPO_KIND -e $YUM_REPO_EDITION $SS_INSTALL_OPTIONS
-
-    # After SS RPM installation our conf file might have been moved. Bring it back.
-    if [ -f $SS_CONF_DIR/slipstream.conf.rpmorig ]; then
-        mv $SS_CONF_DIR/slipstream.conf.rpmorig $SS_CONF_DIR/slipstream.conf
-    fi
 }
 
 function _install_slipstream_connectors() {
