@@ -10,7 +10,7 @@ REPOS=(
 "SlipStreamServer"
 "SlipStreamServerDeps"
 "SlipStreamClient"
-"SlipStreamClientAPI"
+"SlipStreamClojureAPI"
 "SlipStreamConnectors"
 # add enterprise-only repositories here -- do not remove this comment
 )
