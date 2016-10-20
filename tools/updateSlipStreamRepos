@@ -33,7 +33,7 @@ REPOS+=("SlipStreamUI")
 REPOS+=("SlipStreamServer")
 REPOS+=("SlipStreamServerDeps")
 REPOS+=("SlipStreamClient")
-REPOS+=("SlipStreamClientAPI")
+REPOS+=("SlipStreamClojureAPI")
 REPOS+=("SlipStreamConnectors")
 
 exec 3>&1
