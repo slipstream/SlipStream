@@ -7,12 +7,15 @@ set -o pipefail
 _SCRIPT_NAME=${0##*/}
 
 _YUM_REPO_KIND_DEFAULT=release
+SLIPSTREAM_ETC=/etc/slipstream
+ES_COORDS=localhost:9300
 
 LOG_FILE=/tmp/slipstream-connectors-install.log
 exec 4>&2 3>&1 1>>${LOG_FILE} 2>&1
 
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [-r repo] <list of connectors>
+ -d host:port of Elasticsearch (default: $ES_COORDS).
  -r repo: <release|candidate|snapshot|local> (default: ${_YUM_REPO_KIND_DEFAULT})" 1>&3
     exit 1
 }
@@ -31,11 +34,14 @@ function _check_repo() {
 
 SS_YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
 
-while getopts :r: opt; do
+while getopts :r:d: opt; do
     case $opt in
     r)
         SS_YUM_REPO_KIND=$OPTARG
         _check_repo $SS_YUM_REPO_KIND
+        ;;
+    d)
+        ES_COORDS=$OPTARG
         ;;
     \?)
         usage
@@ -44,6 +50,9 @@ while getopts :r: opt; do
 done
 
 shift $((OPTIND - 1))
+
+export ES_HOST=${ES_COORDS%:*}
+export ES_PORT=${ES_COORDS##*:}
 
 GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 
@@ -65,6 +74,14 @@ function _download() {
     curl -sSf -k -o $TO $FROM || { _print "ERROR: Failed downloading $FROM"; exit 1; }
     _prints "done."
     chmod +x $TO
+}
+
+function _push_connectors_configuration_to_db() {
+    if [ -d $SLIPSTREAM_ETC/connectors ]; then
+        SLIPSTREAM_CONNECTORS=$(find $SLIPSTREAM_ETC/connectors -name "*.edn")
+        [ -z "$SLIPSTREAM_CONNECTORS" ] || \
+            { _print "Pushing connectors configuration to DB."; ss-config $SLIPSTREAM_CONNECTORS; }
+    fi
 }
 
 SCRIPT_BASE_URL=$GH_BASE_URL/${YUM_REPO_TO_GH_BRANCH[$SS_YUM_REPO_KIND]}/install/connectors
@@ -97,5 +114,8 @@ for name in $CONNECTORS; do
     ./$script
     _prints "done."
 done
+
+_push_connectors_configuration_to_db
+
 _print "SlipStream connectors installed: $CONNECTORS"
 

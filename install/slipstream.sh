@@ -642,8 +642,7 @@ function _update_connectors_configuration() {
         done
     fi
 
-    # Push connectors configuration to DB.
-    [ -z "$SLIPSTREAM_CONNECTORS" ] || ss-config $SLIPSTREAM_CONNECTORS
+    # NB! Pushing connectors configuration to DB can only be done when connectors are installed.
 }
 
 function _update_slipstream_configuration() {
