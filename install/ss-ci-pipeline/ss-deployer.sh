@@ -95,14 +95,16 @@ if ( _is_true $with_refconf ); then
     chmod +x /tmp/ss-install-ref-conf.sh
     REF_CONF_URL=$_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -k $YUM_REPO_KIND -e $YUM_REPO_EDITION -o \"$_SS_PARAM_BACKEND\""
+        ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -k $YUM_REPO_KIND -e $YUM_REPO_EDITION"
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
             /tmp/ss-install-ref-conf.sh \
                 $ref_conf_params \
                 -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
-                -p $NEXUS_CREDS
+                -p $NEXUS_CREDS \
+                -o "$_SS_PARAM_BACKEND"
         else
-            /tmp/ss-install-ref-conf.sh $ref_conf_params
+            /tmp/ss-install-ref-conf.sh $ref_conf_params \
+                -o "$_SS_PARAM_BACKEND"
         fi
     else
         /tmp/ss-install-ref-conf.sh \
