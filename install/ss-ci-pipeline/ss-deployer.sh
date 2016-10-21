@@ -93,7 +93,7 @@ if ( _is_true $with_refconf ); then
         -o /tmp/ss-install-ref-conf.sh \
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
-    REF_CONF_URL=$_NEXUS_URI'?r=snapshots-'$YUM_REPO_KIND'-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
+    REF_CONF_URL=$_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
     if ( _is_none ${SS_REPO_CONF_URL} ); then
         ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -k $YUM_REPO_KIND -e $YUM_REPO_EDITION -o \"$_SS_PARAM_BACKEND\""
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
