@@ -93,27 +93,20 @@ if ( _is_true $with_refconf ); then
         -o /tmp/ss-install-ref-conf.sh \
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
+    REF_CONF_URL=$_NEXUS_URI'?r=snapshots-'$YUM_REPO_KIND'-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
     if ( _is_none ${SS_REPO_CONF_URL} ); then
+        ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -k $YUM_REPO_KIND -e $YUM_REPO_EDITION -o \"$_SS_PARAM_BACKEND\""
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
             /tmp/ss-install-ref-conf.sh \
-                -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
-                -u $NEXUS_CREDS \
-                -k $YUM_REPO_KIND \
-                -e $YUM_REPO_EDITION \
+                $ref_conf_params \
                 -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
-                -p $NEXUS_CREDS \
-                -o "$_SS_PARAM_BACKEND"
+                -p $NEXUS_CREDS
         else
-            /tmp/ss-install-ref-conf.sh \
-                -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
-                -u $NEXUS_CREDS \
-                -k $YUM_REPO_KIND \
-                -e $YUM_REPO_EDITION \
-                -o "$_SS_PARAM_BACKEND"
+            /tmp/ss-install-ref-conf.sh $ref_conf_params
         fi
     else
         /tmp/ss-install-ref-conf.sh \
-            -r $_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST' \
+            -r $REF_CONF_URL \
             -u $NEXUS_CREDS \
             -o "$_SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
     fi
@@ -200,7 +193,9 @@ while [ $tries -lt 5 ]; do
 done
 # the service failed the validation
 if [ "$exit_code" -ne "0" ]; then
+   ss-set statecustom "ERROR: Service failed validation."
    exit $exit_code
 fi
 
+ss-set statecustom "Service deployed and validated."
 ss-set ready true
