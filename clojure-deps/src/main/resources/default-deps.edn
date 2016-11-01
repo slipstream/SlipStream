@@ -25,6 +25,8 @@
  [com.sixsq.slipstream/SlipStreamServer-ui-static-content :version :type "zip"]
  [com.sixsq.slipstream/SlipStreamService :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamUI :version]
+ [com.sixsq.slipstream/SlipStreamPricingLib-jar :version]
+ [com.sixsq.slipstream/SlipStreamPlacementLib-jar :version]
 
  ;;
  ;; general dependencies
