@@ -28,6 +28,8 @@
  [com.sixsq.slipstream/SlipStreamPricingLib-jar :version]
  [com.sixsq.slipstream/SlipStreamPlacementLib-jar :version]
 
+ [com.sixsq.slipstream/SlipStreamRiemann-jar :version]
+
  ;;
  ;; general dependencies
  ;; (please keep these in alphabetical order)
