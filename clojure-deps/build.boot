@@ -8,7 +8,7 @@
 
   :resource-paths #{"src/main/resources"}
 
-  :dependencies '[[org.clojure/clojure "1.9.0-alpha14"]
+  :dependencies '[[org.clojure/clojure "1.8.0"]
                   [sixsq/build-utils "0.1.4" :scope "test"]])
 
 (require '[sixsq.build-fns :refer [merge-defaults

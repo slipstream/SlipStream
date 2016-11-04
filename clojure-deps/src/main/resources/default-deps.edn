@@ -3,7 +3,7 @@
  ;; core languages
  ;;
 
- [org.clojure/clojure "1.9.0-alpha14"]
+ [org.clojure/clojure "1.8.0"]
  [org.clojure/clojurescript "1.9.293"]
 
  ;;
@@ -33,7 +33,7 @@
  ;; (please keep these in alphabetical order)
  ;;
 
- [aleph "0.4.2-alpha8"]
+ [aleph "0.4.1"]
 
  [buddy/buddy-core "0.13.0"]
  [buddy/buddy-hashers "0.14.0"]
