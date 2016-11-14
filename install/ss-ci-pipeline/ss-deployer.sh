@@ -41,7 +41,7 @@ function _is_none() {
 yum clean all
 yum upgrade -y
 
-ss-get --timeout 1800 builder.ready
+ss-get --timeout 3600 builder.ready
 
 install_examples=`ss-get install_examples`
 slipstream_backend=`ss-get slipstream_backend`
