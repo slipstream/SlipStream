@@ -40,7 +40,7 @@ function _printn() {
 
 function _install() {
     _printn " installing packages... "
-    yum install -y slipstream-server-backup
+    yum install -y slipstream-server-backup-*
     _prints "done."
 }
 
