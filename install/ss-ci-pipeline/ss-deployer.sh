@@ -108,6 +108,7 @@ if ( _is_true $with_refconf ); then
         fi
     else
         /tmp/ss-install-ref-conf.sh \
+            -e $YUM_REPO_EDITION \
             -r $REF_CONF_URL \
             -u $NEXUS_CREDS \
             -o "$_SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
