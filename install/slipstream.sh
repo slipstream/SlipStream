@@ -701,6 +701,31 @@ function deploy_prs_service() {
   [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
   _print "Installing Placement and Ranking service"
   _inst slipstream-pricing-server-enterprise
+
+  # Populate service attribute namespace resource.
+  cat > /etc/slipstream/san.json<<EOF
+{
+  "prefix" : "schema-org",
+  "id" : "service-attribute-namespace/schema-org",
+  "acl" : {
+    "owner" : {
+      "principal" : "ADMIN",
+      "type" : "ROLE"
+    },
+    "rules" : [ {
+      "type" : "ROLE",
+      "principal" : "ADMIN",
+      "right" : "ALL"
+    } ]
+  },
+  "resourceURI" : "http://sixsq.com/slipstream/1/ServiceAttributeNamespace",
+  "uri" : "http://example.org"
+}
+EOF
+  curl -X POST http://localhost:8201/api/service-attribute-namespace \
+      -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
+      -d@/etc/slipstream/san.json
+
   if [ -f /etc/default/ss-pricing ]; then
       source /etc/default/ss-pricing
       if [ -f /etc/slipstream/passwords/$SS_CIMI_USERNAME ]; then 
