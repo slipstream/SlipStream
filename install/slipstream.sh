@@ -724,9 +724,11 @@ function deploy_prs_service() {
 EOF
   if ( ! _is_true $SS_START ); then
       srvc_start ssclj
-      sleep 5
   fi
-  curl -X POST http://localhost:8201/api/service-attribute-namespace \
+  ssclj_host=localhost
+  ssclj_port=8201
+  _wait_listens $ssclj_host $ssclj_port
+  curl -X POST http://$ssclj_host:$ssclj_port/api/service-attribute-namespace \
       -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
       -d@/etc/slipstream/san.json
   if ( ! _is_true $SS_START ); then
