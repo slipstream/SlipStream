@@ -708,6 +708,13 @@ function deploy_prs_service() {
           sed -i -e 's/SS_CIMI_PASSWORD=.*/SS_CIMI_PASSWORD='$pass'/' /etc/default/ss-pricing
       fi
   fi
+  if [ -f /etc/default/slipstream-price-parsing ]; then
+      source /etc/default/slipstream-price-parsing
+      if [ -f /etc/slipstream/passwords/$SSPARSERUSERNAME ]; then 
+          pass=$(cat /etc/slipstream/passwords/$SSPARSERUSERNAME)
+          sed -i -e 's/SSPARSERPASSWORD=.*/SSPARSERPASSWORD='$pass'/' /etc/default/slipstream-price-parsing
+      fi
+  fi
   srvc_enable ss-pricing
   srvc_start ss-pricing
 }
