@@ -722,9 +722,16 @@ function deploy_prs_service() {
   "uri" : "http://example.org"
 }
 EOF
+  if ( ! _is_true $SS_START ); then
+      srvc_start ssclj
+      sleep 5
+  fi
   curl -X POST http://localhost:8201/api/service-attribute-namespace \
       -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
       -d@/etc/slipstream/san.json
+  if ( ! _is_true $SS_START ); then
+      srvc_stop ssclj
+  fi
 
   if [ -f /etc/default/ss-pricing ]; then
       source /etc/default/ss-pricing
