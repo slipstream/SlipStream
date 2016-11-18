@@ -701,6 +701,13 @@ function deploy_prs_service() {
   [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
   _print "Installing Placement and Ranking service"
   _inst slipstream-pricing-server-enterprise
+  if [ -f /etc/default/ss-pricing ]; then
+      source /etc/default/ss-pricing
+      if [ -f /etc/slipstream/passwords/$SS_CIMI_USERNAME ]; then 
+          pass=$(cat /etc/slipstream/passwords/$SS_CIMI_USERNAME)
+          sed -i -e 's/SS_CIMI_PASSWORD=.*/SS_CIMI_PASSWORD='$pass'/' /etc/default/ss-pricing
+      fi
+  fi
   srvc_enable ss-pricing
   srvc_start ss-pricing
 }
