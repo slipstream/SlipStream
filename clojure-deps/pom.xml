@@ -3,7 +3,7 @@
 
   <groupId>sixsq</groupId>
   <artifactId>default-deps</artifactId>
-  <version>3.16-SNAPSHOT</version>
+  <version>3.16</version>
   <packaging>jar</packaging>
   <name>SlipStream Dependencies</name>
   <url>http://sixsq.com/</url>
@@ -11,7 +11,7 @@
   <parent>
     <groupId>com.sixsq.slipstream</groupId>
     <artifactId>SlipStream</artifactId>
-    <version>3.16-SNAPSHOT</version>
+    <version>3.16</version>
   </parent>
 
 </project>
