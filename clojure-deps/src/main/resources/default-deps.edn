@@ -27,6 +27,15 @@
  [com.sixsq.slipstream/SlipStreamUI :version]
  [com.sixsq.slipstream/SlipStreamPricingLib-jar :version]
  [com.sixsq.slipstream/SlipStreamPlacementLib-jar :version]
+ [com.sixsq.slipstream/SlipStreamConnector-Azure-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-CloudStack-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-EC2-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-Exoscale-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-NativeSoftLayer-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-NuvlaBox-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-OpenNebula-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-OpenStack-conf :version]
+ [com.sixsq.slipstream/SlipStreamConnector-StratusLab-conf :version]
 
  ;;
  ;; general dependencies
