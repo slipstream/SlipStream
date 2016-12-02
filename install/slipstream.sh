@@ -296,10 +296,16 @@ function _wait_listens() {
     sleep_interval=${4:-2}
     stop_time=$(($(_now_sec) + $wait_time))
     while (( "$(_now_sec)" <= $stop_time )); do
-        ncat -v -4 $1 $2 < /dev/null
+        set +e
+        res=$(ncat -v -4 $1 $2 < /dev/null 2>&1)
         if [ "$?" == "0" ]; then
             return 0
+        else
+            if ( ! (echo $res | grep -q "Connection refused") ); then
+                abort "Failed to check $1:$2 with:" $res
+            fi
         fi
+        set -e
         sleep $sleep_interval
     done
     abort "Timed out after ${wait_time} sec waiting for $1:$2"
@@ -727,7 +733,6 @@ EOF
   fi
   ssclj_host=localhost
   ssclj_port=8201
-  sleep 15
   _wait_listens $ssclj_host $ssclj_port
   curl -X POST http://$ssclj_host:$ssclj_port/api/service-attribute-namespace \
       -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
