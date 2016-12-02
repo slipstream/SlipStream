@@ -727,6 +727,7 @@ EOF
   fi
   ssclj_host=localhost
   ssclj_port=8201
+  sleep 15
   _wait_listens $ssclj_host $ssclj_port
   curl -X POST http://$ssclj_host:$ssclj_port/api/service-attribute-namespace \
       -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
