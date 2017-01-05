@@ -91,6 +91,8 @@
     <libcloud.version>0.18.0</libcloud.version>
     <boto.version>2.38.0</boto.version>
 
+    <metrics.version>3.1.0</metrics.version>
+
     <!-- Provide default value to avoid the need for an explicit   -->
     <!-- command line option.  This value will still be overridden -->
     <!-- by the command line option value when used, e.g. in the   -->
@@ -756,6 +758,24 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.7.21</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-core</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-graphite</artifactId>
+        <version>${metrics.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.dropwizard.metrics</groupId>
+        <artifactId>metrics-jvm</artifactId>
+        <version>${metrics.version}</version>
       </dependency>
 
       <!-- *************************** -->
