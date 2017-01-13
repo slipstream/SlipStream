@@ -39,7 +39,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
 
-[ss-release]: http://ssdocs.sixsq.com/documentation/release_notes/
+[ss-release]: http://ssdocs.sixsq.com/en/latest/release_notes
 [ss-product]: http://sixsq.com/products/slipstream.html
 [ss-docs]: http://ssdocs.sixsq.com
-[ss-dev]: http://ssdocs.sixsq.com/documentation/developer_guide/
+[ss-dev]: http://ssdocs.sixsq.com/en/latest/developer_guide
