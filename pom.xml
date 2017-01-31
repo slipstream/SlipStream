@@ -43,13 +43,6 @@
   </profiles>
 
   <properties>
-    <slipstream.version>2.4.3-SNAPSHOT</slipstream.version>
-
-    <!-- community or enterprise edition of the software -->
-    <!-- "-community" = community edition                -->
-    <!-- "-enterprise" = enterprise edition              -->
-    <slipstream.edition>-community</slipstream.edition>
-
     <!-- package platform for the created RPMs -->
     <platform.os>-rhel7</platform.os>
 
