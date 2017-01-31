@@ -135,7 +135,7 @@
       </snapshots>
       <id>slipstream.releases</id>
       <name>SlipStream Releases</name>
-      <url>${nexus}/releases${slipstream.edition}${platform.os}</url>
+      <url>${nexus}/releases-community${platform.os}</url>
     </repository>
 
     <repository>
@@ -147,7 +147,7 @@
       </snapshots>
       <id>slipstream.snapshots</id>
       <name>SlipStream Snapshots</name>
-      <url>${nexus}/snapshots${slipstream.edition}${platform.os}</url>
+      <url>${nexus}/snapshots-community${platform.os}</url>
     </repository>
 
     <repository>
@@ -205,7 +205,7 @@
           <version>2.5.3</version>
           <configuration>
             <preparationGoals>clean</preparationGoals>
-            <tagNameFormat>v@{project.version}${slipstream.edition}</tagNameFormat>
+            <tagNameFormat>v@{project.version}-community</tagNameFormat>
           </configuration>
         </plugin>
         <plugin>
@@ -853,13 +853,13 @@
     <repository>
       <id>sixsq.releases</id>
       <name>SixSq Releases</name>
-      <url>${nexus}/releases${slipstream.edition}${platform.os}</url>
+      <url>${nexus}/releases-community${platform.os}</url>
     </repository>
 
     <snapshotRepository>
       <id>sixsq.snapshots</id>
       <name>SixSq Snapshots</name>
-      <url>${nexus}/snapshots${slipstream.edition}${platform.os}</url>
+      <url>${nexus}/snapshots-community${platform.os}</url>
     </snapshotRepository>
   </distributionManagement>
 
