@@ -97,6 +97,7 @@ function install_nrpe_monitoring () {
 command[check_hsqldb]=$LIB_DIR/nagios/plugins/check_procs -C java -a org.hsqldb.server.Server -c 1:1
 command[check_rootpart]=$LIB_DIR/nagios/plugins/check_disk -w 20% -c 10% -p /
 command[check_slipstream_backup]=/opt/slipstream/backup/nagios_check_slipstream_backup_timestamp
+command[check_slipstream_es_backup]=/opt/slipstream/backup/nagios_check_slipstream_es_backup_timestamp
 command[check_mem]=${CHECK_MEM_BIN} -w $ARG1$ -c $ARG2$ -f -C
 EOF
     _prints "done."
