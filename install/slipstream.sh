@@ -250,21 +250,8 @@ function _is_true() {
     fi
 }
 
-function _ss_rpm_name_decorator() {
-    # Decorate RPM names with -[yum-repo-edition]
-    names=''
-    for v in $@; do
-        if [[ $v == slipstream* ]] && [[ $v != *-$SS_YUM_REPO_EDITION ]] ; then
-            names="$names $v-$SS_YUM_REPO_EDITION"
-        else
-            names="$names $v"
-        fi
-    done
-    echo $names
-}
-
 function _inst() {
-    yum install -y $(_ss_rpm_name_decorator $@)
+    yum install -y $@
 }
 
 function srvc_start() {
@@ -367,7 +354,7 @@ function _add_yum_repos () {
     fi
 
     # Elasticsearch repo configuration is available in SlipStream repo
-    yum install -y 'slipstream-es-repo-*'
+    yum install -y 'slipstream-es-repo'
 }
 
 function _install_global_dependencies() {
