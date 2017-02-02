@@ -131,6 +131,7 @@ while getopts l:H:t:L:k:e:d:x:vESh opt; do
 done
 
 SS_YUM_REPO=${SS_YUM_REPO_KIND}-${SS_YUM_REPO_EDITION}
+SS_YUM_REPO_COMMUNITY=${SS_YUM_REPO_KIND}-community
 
 shift $((OPTIND - 1))
 
@@ -343,7 +344,7 @@ function _add_yum_repos () {
     rpm -Uvh --force \
         http://nginx.org/packages/centos/7/noarch/RPMS/${nginx_repo_rpm}
 
-    # SlipStream
+    # SlipStream (enterprise now requires community repository as well)
     if [ -n "$SS_YUM_REPO_DEF_URL" ]; then
         curl -o /etc/yum.repos.d/slipstream.repo $SS_YUM_REPO_DEF_URL
         SS_YUM_REPO=$(yum repolist enabled | grep -i slipstream | awk '{print $2}')
@@ -351,6 +352,7 @@ function _add_yum_repos () {
         rpm -Uvh --force https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
         yum-config-manager --disable SlipStream-*
         yum-config-manager --enable SlipStream-${SS_YUM_REPO}
+        yum-config-manager --enable SlipStream-${SS_YUM_REPO_COMMUNITY}
     fi
 
     # Elasticsearch repo configuration is available in SlipStream repo
