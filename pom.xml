@@ -36,12 +36,35 @@
         <module>../SlipStreamClient</module>
         <module>../SlipStreamClojureAPI</module>
         <module>../SlipStreamConnectors</module>
-        <!-- add enterprise modules here : do not remove comment -->
+      </modules>
+    </profile>
 
-        <!-- construct yum repository after everything -->
+    <profile>
+      <id>enterprise-build</id>
+      <activation>
+        <property>
+          <name>enterprise</name>
+        </property>
+      </activation>
+      <modules>
+        <module>../SlipStreamConnectorsEnterprise</module>
+        <module>../SlipStreamPricing</module>
+        <module>../SlipStreamServerEnterprise</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>yum-build</id>
+      <activation>
+        <property>
+          <name>yum</name>
+        </property>
+      </activation>
+      <modules>
         <module>yum</module>
       </modules>
     </profile>
+    
   </profiles>
 
   <properties>
