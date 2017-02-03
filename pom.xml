@@ -417,7 +417,6 @@
         <artifactId>SlipStreamDbBinding-jar-dep</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
-        <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -431,7 +430,6 @@
         <artifactId>SlipStreamDbSerializers-jar-dep</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
-        <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -517,7 +515,6 @@
         <artifactId>SlipStreamUI-dep</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
-        <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -539,7 +536,6 @@
         <artifactId>auth-dep</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
-        <scope>provided</scope>
       </dependency>
 
       <dependency>
