@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sixsq.slipstream</groupId>
+  <artifactId>SlipStreamCommunity</artifactId>
+  <packaging>pom</packaging>
+  <version>3.21-SNAPSHOT</version>
+  <name>SlipStreamCommunity</name>
+  <url>http://sixsq.com/</url>
+
+  <parent>
+    <groupId>com.sixsq.slipstream</groupId>
+    <artifactId>SlipStream</artifactId>
+    <version>3.21-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <!-- prefixes for SCM-related URLs           -->
+    <!-- These should NOT have a trailing slash! -->
+    <scm.read>scm:git:https://github.com/slipstream</scm.read>
+    <scm.write>scm:git:ssh://git@github.com/slipstream</scm.write>
+    <scm.public>https://github.com/slipstream</scm.public>
+
+  </properties>
+
+  <repositories>
+
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>slipstream.releases</id>
+      <name>SlipStream Releases</name>
+      <url>${nexus}/releases-community${platform.os}</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>slipstream.snapshots</id>
+      <name>SlipStream Snapshots</name>
+      <url>${nexus}/snapshots-community${platform.os}</url>
+    </repository>
+
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>sixsq.releases</id>
+      <name>SixSq Releases</name>
+      <url>${nexus}/releases-community${platform.os}</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>sixsq.snapshots</id>
+      <name>SixSq Snapshots</name>
+      <url>${nexus}/snapshots-community${platform.os}</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>
