@@ -14,6 +14,8 @@
   </prerequisites>
 
   <modules>
+    <module>community</module>
+    <module>enterprise</module>
     <module>clojure-deps</module>
   </modules>
 
