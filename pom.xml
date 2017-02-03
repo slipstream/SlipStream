@@ -129,30 +129,6 @@
     </repository>
 
     <repository>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>slipstream.releases</id>
-      <name>SlipStream Releases</name>
-      <url>${nexus}/releases-community${platform.os}</url>
-    </repository>
-
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>slipstream.snapshots</id>
-      <name>SlipStream Snapshots</name>
-      <url>${nexus}/snapshots-community${platform.os}</url>
-    </repository>
-
-    <repository>
       <id>sixsq.thirdparty</id>
       <url>${nexus.thirdparty}/thirdparty</url>
     </repository>
@@ -854,19 +830,5 @@
     </dependencies>
 
   </dependencyManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>sixsq.releases</id>
-      <name>SixSq Releases</name>
-      <url>${nexus}/releases-community${platform.os}</url>
-    </repository>
-
-    <snapshotRepository>
-      <id>sixsq.snapshots</id>
-      <name>SixSq Snapshots</name>
-      <url>${nexus}/snapshots-community${platform.os}</url>
-    </snapshotRepository>
-  </distributionManagement>
 
 </project>
