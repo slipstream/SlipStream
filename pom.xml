@@ -854,4 +854,18 @@
 
   </dependencyManagement>
 
+  <distributionManagement>
+    <repository>
+      <id>sixsq.releases</id>
+      <name>SixSq Releases</name>
+      <url>${nexus}/releases-community${platform.os}</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>sixsq.snapshots</id>
+      <name>SixSq Snapshots</name>
+      <url>${nexus}/snapshots-community${platform.os}</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 </project>

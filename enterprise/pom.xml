@@ -58,12 +58,12 @@
       <name>SixSq Releases</name>
       <url>${nexus}/releases-enterprise${platform.os}</url>
     </repository>
-
+    
     <snapshotRepository>
       <id>sixsq.snapshots</id>
       <name>SixSq Snapshots</name>
       <url>${nexus}/snapshots-enterprise${platform.os}</url>
     </snapshotRepository>
   </distributionManagement>
-
+  
 </project>
