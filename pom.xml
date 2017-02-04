@@ -72,8 +72,6 @@
     <platform.os>-rhel7</platform.os>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.build.timestamp.format>dd-MMM-yyyy (HH:mm)</maven.build.timestamp.format>
-    <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
 
     <slipstream.base.dir>/opt/slipstream</slipstream.base.dir>
     <installation.dir>${slipstream.base.dir}/server</installation.dir>
@@ -159,6 +157,30 @@
     <repository>
       <id>clojars.org</id>
       <url>http://clojars.org/repo</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>slipstream.releases</id>
+      <name>SlipStream Releases</name>
+      <url>${nexus}/releases-community${platform.os}</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>slipstream.snapshots</id>
+      <name>SlipStream Snapshots</name>
+      <url>${nexus}/snapshots-community${platform.os}</url>
     </repository>
 
   </repositories>
@@ -341,24 +363,6 @@
     </pluginManagement>
 
     <plugins>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>create-build-date</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>create-timestamp</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <timestampFormat>yyyy-MM-dd</timestampFormat>
-          <timestampPropertyName>buildDate</timestampPropertyName>
-        </configuration>
-      </plugin>
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

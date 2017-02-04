@@ -33,7 +33,7 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <id>slipstream.releases</id>
+      <id>slipstream.releases.enterprise</id>
       <name>SlipStream Releases</name>
       <url>${nexus}/releases-enterprise${platform.os}</url>
     </repository>
@@ -45,7 +45,7 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <id>slipstream.snapshots</id>
+      <id>slipstream.snapshots.enterprise</id>
       <name>SlipStream Snapshots</name>
       <url>${nexus}/snapshots-enterprise${platform.os}</url>
     </repository>
