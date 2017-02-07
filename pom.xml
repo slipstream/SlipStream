@@ -31,11 +31,13 @@
       </activation>
       <modules>
         <module>../SlipStreamUI</module>
+        <module>../SlipStreamWebUI</module>
         <module>../SlipStreamServer</module>
         <module>../SlipStreamServerDeps</module>
         <module>../SlipStreamClient</module>
         <module>../SlipStreamClojureAPI</module>
         <module>../SlipStreamConnectors</module>
+        <module>../SlipStreamPythonAPI</module>
       </modules>
     </profile>
 
