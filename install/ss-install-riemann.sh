@@ -55,7 +55,7 @@ EOF
 
 function deploy_riemann() {
   _print "Installing Riemann"
-  _inst slipstream-riemann-enterprise
+  _inst slipstream-riemann
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann

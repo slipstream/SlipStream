@@ -690,7 +690,7 @@ function _load_slipstream_examples() {
 function deploy_prs_service() {
   [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
   _print "Installing Placement and Ranking service"
-  _inst slipstream-pricing-server-enterprise
+  _inst slipstream-pricing-server
 
   # Populate service attribute namespace resource.
   cat > /etc/slipstream/san.json<<EOF
@@ -777,7 +777,7 @@ EOF
 function deploy_riemann() {
   [ "$SS_YUM_REPO_EDITION" != "enterprise" ] && return 0
   _print "Installing Riemann"
-  _inst slipstream-riemann-enterprise
+  _inst slipstream-riemann
   _install_riemann
   _add_ss_riemann_streams
   srvc_start riemann
