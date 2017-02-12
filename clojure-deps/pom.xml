@@ -5,7 +5,7 @@
   <artifactId>default-deps</artifactId>
   <version>3.22-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>SlipStream Dependencies</name>
+  <name>SlipStream/clojure-deps</name>
   <url>http://sixsq.com/</url>
 
   <parent>

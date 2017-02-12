@@ -6,7 +6,7 @@
   <artifactId>SlipStreamEnterprise</artifactId>
   <packaging>pom</packaging>
   <version>3.22-SNAPSHOT</version>
-  <name>SlipStreamEnterprise</name>
+  <name>SlipStream/enterprise</name>
   <url>http://sixsq.com/</url>
 
   <parent>

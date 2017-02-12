@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>SlipStreamYumRepo</artifactId>
-  <name>YUM repository</name>
+  <name>SlipStream/yum</name>
   <packaging>pom</packaging>
   <url>http://sixsq.com/</url>
 
