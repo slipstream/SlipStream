@@ -555,6 +555,20 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>token-dep</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>token-java</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamServer-ui-static-content</artifactId>
         <version>${project.version}</version>
         <type>zip</type>
