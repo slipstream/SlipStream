@@ -129,21 +129,15 @@ EOF
 #
 # clone the SlipStream source code
 #
-declare -A _SS_EDITION_GH_REPO
-_SS_EDITION_GH_REPO[community]=slipstream
-_SS_EDITION_GH_REPO[enterprise]=SixSq
-
-GH_REPO_EDITION=${_SS_EDITION_GH_REPO[$slipstream_edition]}
 YUM_REPO_NAME=SlipStream-FromSources-$slipstream_edition
 
 ss-set statecustom "Cloning SlipStream $slipstream_edition source code..."
 if [ "$slipstream_edition" == "enterprise" ]; then
-    bootstrap_url=git@github.com:SixSq/SlipStreamBootstrap.git
-    maven_profile=""
+    maven_profile="-P enterprise"
 else
-    bootstrap_url=https://github.com/$GH_REPO_EDITION/SlipStreamBootstrap
     maven_profile="-P public"
 fi
+bootstrap_url=git@github.com:slipstream/SlipStreamBootstrap.git
 
 git clone $bootstrap_url
 
