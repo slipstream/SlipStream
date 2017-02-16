@@ -82,7 +82,7 @@ echo statecustom "Installing phantomjs..."
 yum localinstall -y https://yum.sixsq.com/slipstream-repos-latest.noarch.rpm
 yum-config-manager --disable SlipStream-*
 REPO_KIND=community
-yum install -y --enablerepo SlipStream-Snapshots-$REPO_KIND slipstream-phantomjs-$REPO_KIND
+yum install -y --enablerepo SlipStream-Snapshots-$REPO_KIND slipstream-phantomjs
 
 # check that the installation worked
 phantomjs --version
