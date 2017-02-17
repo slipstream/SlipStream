@@ -163,10 +163,14 @@ mvn ${maven_profile} \
 #
 # build SlipStream
 #
+if [ "$slipstream_edition" == "enterprise" ]; then
+    maven_options="${maven_options} -Denterprise"
+fi
 ss-set statecustom "Building SlipStream $slipstream_edition..."
 cd SlipStream
 mvn --settings ${MAVEN_SETTINGS} \
     ${maven_options} \
+    -Dyum \
     -B -DskipTests=${skip_tests} clean ${maven_goal}
 
 #
