@@ -96,7 +96,6 @@
  [metrics-clojure-graphite "2.7.0"]
 
  [net.cgrand/moustache "1.1.0"]
- [net.java.dev.jna/jna "4.2.2"]
 
  [org.clojure/data.xml "0.0.8"]
  [org.clojure/data.zip "0.1.2"]
