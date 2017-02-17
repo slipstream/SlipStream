@@ -150,5 +150,6 @@
  [clojure-complete/clojure-complete "0.2.4" :scope "test"
   :exclusions [org.clojure/clojure]]
  [peridot "0.4.4" :scope "test"]
- [expectations "2.1.9" :scope "test"]]
+ [expectations "2.1.9" :scope "test"]
+ ]
 
