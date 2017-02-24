@@ -66,7 +66,7 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -S don't start SlipStream service.\n
 -x URL with the YUM repo definition file.\n
 -d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB\n
--a Elasticsearch coordinates. Default: $ES_HOST:$ES_PORT. If provided, and
+-a Elasticsearch coordinates. Default: $ES_HOST:$ES_PORT. If provided, and\n
    hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
 -b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
    and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed."
@@ -850,7 +850,7 @@ EOF
 }
 
 function _deploy_elasticstack() {
-    _is_true $ES_INSTALL && _install_elasticsearch
+    _is_true $ES_INSTALL && _install_elasticsearch || true
 }
 
 function _deploy_nginx_proxy() {
@@ -1031,7 +1031,7 @@ function _install_monitoring() {
 }
 
 function _install_logging() {
-    _is_true $LOGSTASH_INSTALL && _install_logstash
+    _is_true $LOGSTASH_INSTALL && _install_logstash || true
     _install_logging_beats
 }
 
