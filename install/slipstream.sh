@@ -354,6 +354,7 @@ function _configure_firewall () {
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 5601 -j ACCEPT
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 COMMIT
@@ -687,11 +688,27 @@ function _install_kibana() {
     _inst kibana
 
     /usr/share/kibana/bin/kibana-plugin install x-pack
-    # TODO add configuration of security.
+
+    # SSL config. Steal certs from nginx.
+    kibana_ssl=/etc/kibana/ssl
+    if [ ! -d $kibana_ssl ]; then
+        mkdir -p $kibana_ssl
+        chmod 700 $kibana_ssl
+        cp -p /etc/nginx/ssl/server.* $kibana_ssl
+        chown -R kibana. $kibana_ssl
+        chmod 400 $kibana_ssl/*
+    fi
+
+    log_dest=/var/log/kibana
+    mkdir -p $log_dest
+    chown -R kibana. $log_dest
 
     cat >> /etc/kibana/kibana.yml << EOF
+server.ssl.cert: $kibana_ssl/server.crt
+server.ssl.key:  $kibana_ssl/server.key
 server.host: "0.0.0.0"
 elasticsearch.url: "http://$ES_HOST:9200"
+logging.dest: $log_dest/kibana.log
 EOF
 
     srvc_enable kibana.service
@@ -703,6 +720,9 @@ function _install_elasticsearch() {
 
     _inst java-1.8.0-openjdk-headless
     _inst elasticsearch
+
+    # For authn with Kibana and more.
+    /usr/share/elasticsearch/bin/elasticsearch-plugin install -b x-pack
 
     # Configure elasticsearch
     # FIXME visible on localhost only
