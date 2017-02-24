@@ -974,16 +974,17 @@ function _install_monit_collectd() {
 
     sed -i -e "s/SS_LOGSTASH_COLLECTD/$LOGSTASH_HOST/" \
         -e "s/SS_LOGSTASH_COLLECTD_UDP/$SS_LOGSTASH_COLLECTD_UDP/" \
+        -e "s/SS_HOSTNAME/$SS_HOSTNAME/" \
         /etc/collectd.conf
 
-    ss_type_db=/usr/share/collectd/slipstream-type.db
+    ss_type_db=/usr/share/collectd/slipstream-types.db
     if [ ! -f $ss_type_db ]; then
         cat >$ss_type_db<<EOF
 jmx_memory   value:GAUGE:0:U
 time_ms      value:GAUGE:0:U
 EOF
         cat >>/etc/collectd.conf<<EOF
-TypesDB "/usr/share/collectd/type.db"
+TypesDB "/usr/share/collectd/types.db"
 TypesDB "$ss_type_db"
 EOF
     fi
