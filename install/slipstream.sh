@@ -53,7 +53,11 @@ export LOGSTASH_HOST=localhost
 export LOGSTASH_PORT=5043
 LOGSTASH_INSTALL=true
 
-USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
+ELK_XPACK=false
+
+USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> \n
+-S -a <es_host:port> -b <logstash_host:port> -c\n
+\n
 -h print this help\n
 -v run in verbose mode\n
 -l log file (default: $LOG_FILE)\n
@@ -69,7 +73,8 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -a Elasticsearch coordinates. Default: $ES_HOST:$ES_PORT. If provided, and\n
    hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
 -b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
-   and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed."
+   and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed.\n
+-c If provided, install X-Pack for ELK components."
 
 # Allow this to be set in the environment to avoid having to pass arguments
 # through all of the other installation scripts.
@@ -106,7 +111,7 @@ function _is_local_install() {
         fi
 }
 
-while getopts a:b:l:H:t:L:k:e:d:x:vESh opt; do
+while getopts a:b:l:H:t:L:k:e:d:x:vESch opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -159,6 +164,9 @@ while getopts a:b:l:H:t:L:k:e:d:x:vESh opt; do
         LOGSTASH_PORT=${OPTARG#*:}
         LOGSTASH_INSTALL=$(_is_local_install $LOGSTASH_HOST)
         ;;
+    c)
+        ELK_XPACK=true
+        ;;;
     *|h)
         _exit_usage
         ;;
@@ -687,7 +695,8 @@ function _install_kibana() {
     _inst java-1.8.0-openjdk-headless
     _inst kibana
 
-    /usr/share/kibana/bin/kibana-plugin install x-pack
+    _is_true $ELK_XPACK && \
+        /usr/share/kibana/bin/kibana-plugin install x-pack || true
 
     # SSL config. Steal certs from nginx.
     kibana_ssl=/etc/kibana/ssl
@@ -722,7 +731,8 @@ function _install_elasticsearch() {
     _inst elasticsearch
 
     # For authn with Kibana and more.
-    /usr/share/elasticsearch/bin/elasticsearch-plugin install -b x-pack
+    _is_true $ELK_XPACK && \
+        /usr/share/elasticsearch/bin/elasticsearch-plugin install -b x-pack || true
 
     # Configure elasticsearch
     # FIXME visible on localhost only
@@ -784,7 +794,7 @@ NGUSERNAME [a-zA-Z\.\@\-\+_%]+
 NGUSER %{NGUSERNAME}
 NGINXACCESS %{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
 EOF
-    cat >$LOGSTASH_CONFD/nginx-filter.conf<<EOF
+    cat >$LOGSTASH_CONFD/nginx.conf<<EOF
 input {
     beats {
         port => "$LOGSTASH_PORT"
