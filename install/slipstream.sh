@@ -166,7 +166,7 @@ while getopts a:b:l:H:t:L:k:e:d:x:vESch opt; do
         ;;
     c)
         ELK_XPACK=true
-        ;;;
+        ;;
     *|h)
         _exit_usage
         ;;
