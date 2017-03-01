@@ -202,7 +202,7 @@ POSTGRESQL_DBS="slipstream ssclj"
 
 # Riemann variables.
 RIEMANN_VER=0.2.11-1
-ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamServiceOfferAPI.jar
+ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamRiemann.jar
 ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann/streams
 
