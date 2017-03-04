@@ -833,7 +833,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
-        <version>0.2.395</version>
+        <version>0.3.441</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>
