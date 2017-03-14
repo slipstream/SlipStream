@@ -186,8 +186,7 @@ if ( _is_true $with_refconf ); then
     ### Get and publish connectors to test.
     declare -A CONNECTORS
     CONNECTORS=(
-        ["nuv.la"]='exoscale-ch-gva ultimum-cz1 ec2-eu-west nuvlabox-james-chadwick'
-        ["bb1.hnx.helix-nebula.eu"]='atos-es1 deac-lv1 ultimum-cz1'
+        ["nuv.la"]='exoscale-ch-gva ec2-eu-west nuvlabox-james-chadwick'
         ["connectors.community"]='ultimum-cz1')
 
     ss-set connectors_to_test "${CONNECTORS[$REFCONF_NAME]}"
