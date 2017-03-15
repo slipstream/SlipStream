@@ -37,13 +37,14 @@
  [com.sixsq.slipstream/SlipStreamConnector-OpenNebula-conf :version]
  [com.sixsq.slipstream/SlipStreamConnector-OpenStack-conf :version]
  [com.sixsq.slipstream/SlipStreamConnector-StratusLab-conf :version]
+ [com.sixsq.slipstream/slipstream-ring-container :version]
 
  ;;
  ;; general dependencies
  ;; (please keep these in alphabetical order)
  ;;
 
- [aleph "0.4.2-alpha10"]
+ [aleph "0.4.4-alpha1"]
 
  [binaryage/devtools "0.9.1"]
  [buddy/buddy-core "1.1.1"]
@@ -108,7 +109,7 @@
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
- [org.clojure/core.async "0.2.395" :exclusions [org.clojure/tools.reader]]
+ [org.clojure/core.async "0.3.441" :exclusions [org.clojure/tools.reader]]
  [org.elasticsearch/elasticsearch "5.2.1"]
  [org.elasticsearch.client/transport "5.2.1"]
  [org.hsqldb/hsqldb "2.3.4"]
@@ -125,6 +126,7 @@
  [re-frame "0.9.2"]
  [ring "1.5.1"]
  [ring/ring-core "1.5.1"]
+ [ring/ring-codec "1.0.1"]
  [ring/ring-json "0.4.0"]
  [ring/ring-defaults "0.2.1"]
 

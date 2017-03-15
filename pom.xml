@@ -5,7 +5,7 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>3.23-SNAPSHOT</version>
+  <version>3.24-SNAPSHOT</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -833,7 +833,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
-        <version>0.2.395</version>
+        <version>0.3.441</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>
