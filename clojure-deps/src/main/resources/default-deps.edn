@@ -44,7 +44,7 @@
  ;; (please keep these in alphabetical order)
  ;;
 
- [aleph "0.4.2-alpha10"]
+ [aleph "0.4.4-alpha1"]
 
  [binaryage/devtools "0.9.1"]
  [buddy/buddy-core "1.1.1"]
