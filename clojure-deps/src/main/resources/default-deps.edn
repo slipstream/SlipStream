@@ -130,6 +130,7 @@
  [ring/ring-json "0.4.0"]
  [ring/ring-defaults "0.2.1"]
 
+ [secretary "1.2.3"]
  [superstring "2.1.0"]
 
  ;;
