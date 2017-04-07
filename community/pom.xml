@@ -5,14 +5,14 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStreamCommunity</artifactId>
   <packaging>pom</packaging>
-  <version>3.25</version>
+  <version>3.26-SNAPSHOT</version>
   <name>SlipStream/community</name>
   <url>http://sixsq.com/</url>
 
   <parent>
     <groupId>com.sixsq.slipstream</groupId>
     <artifactId>SlipStream</artifactId>
-    <version>3.25</version>
+    <version>3.26-SNAPSHOT</version>
   </parent>
 
   <properties>
