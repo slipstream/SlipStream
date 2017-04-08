@@ -3,7 +3,7 @@
  ;; core languages
  ;;
 
- [org.clojure/clojure "1.9.0-alpha14"]
+ [org.clojure/clojure "1.9.0-alpha15"]
  [org.clojure/clojurescript "1.9.293"]
 
  ;;
@@ -109,7 +109,7 @@
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
- [org.clojure/core.async "0.3.441" :exclusions [org.clojure/tools.reader]]
+ [org.clojure/core.async "0.3.442" :exclusions [org.clojure/tools.reader]]
  [org.elasticsearch/elasticsearch "5.2.1"]
  [org.elasticsearch.client/transport "5.2.1"]
  [org.hsqldb/hsqldb "2.3.4"]
