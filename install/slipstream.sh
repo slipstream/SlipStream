@@ -214,7 +214,7 @@ function _on_trap() {
 trap '_on_trap' ERR
 
 # Return first global IPv4 address.
-function _get_hostname() {
+function _get_ip() {
     ip addr | awk '/inet .*global/ { split($2, x, "/"); print x[1] }' | head -1
 }
 
@@ -223,7 +223,8 @@ function _get_hostname() {
 # # # # # # # # # # #
 
 # First "global" IPv4 address
-SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
+HOST_IP=$(_get_ip)
+SS_HOSTNAME=${SS_HOSTNAME:-$HOST_IP}
 [ -z "${SS_HOSTNAME}" ] && \
     abort "Could not determinee IP or hostname of the public interface
 for SlipStream to run on."
@@ -514,6 +515,8 @@ function _deploy_graphite () {
     _print "- installing Graphite"
 
     _inst slipstream-graphite
+
+    set -i -e "s/__HOST_IP__/$HOST_IP/" /etc/carbon/storage-schemas.conf
 }
 
 function deploy_slipstream_server_deps () {
