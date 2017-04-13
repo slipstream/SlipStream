@@ -7,17 +7,34 @@ LOGS=
 CONFS=
 DATA=
 ARCHIVE_TARGZ=/var/tmp/slipstream/ss-arch.tgz
+STARTSTOP=
 TO_ARCHIVE=
 
-USAGE="usage: -h -l -c -d\n
+SS_SERVICES="
+kibana
+filebeat
+logstash
+graphite-api
+carbon-cache
+collectd
+nginx
+elasticsearch
+hsqldb
+ss-pricing
+ssclj
+slipstream
+"
+
+USAGE="usage: -h -l -c -d -f <path> -s\n
 \n
 -h print this help\n
 -l collect logs\n
 -c collect configurations\n
 -d collect data\n
--f full path to the tarball. Directories will be created. Default: $ARCHIVE_TARGZ.\n"
+-s stop/start service before/after achriving\n
+-f <path> full path to the tarball. Directories will be created. Default: $ARCHIVE_TARGZ.\n"
 
-function _exit_usage() {
+_exit_usage() {
     echo -e $USAGE
     exit 1
 }
@@ -36,6 +53,9 @@ while getopts f:lcdh opt; do
     f)
         ARCHIVE_TARGZ=$OPTARG
         ;;
+    s)
+        STARTSTOP=true
+        ;;
     *|h)
         _exit_usage
         ;;
@@ -48,12 +68,30 @@ done
 mkdir -p `dirname $ARCHIVE_TARGZ`
 rm -rf $ARCHIVE_TARGZ
 
+_echo() {
+    echo ":: $(date) $@"
+}
+
 _is_true() {
     if [ "x${1}" == "xtrue" ]; then
         return 0
     else
         return 1
     fi
+}
+
+_stop_services() {
+    _is_true $STARTSTOP || return 0
+    _echo "Stopping all SlipStream services."
+    systemctl stop $SS_SERVICES || true
+    _echo "Stopped all SlipStream services."
+}
+
+_start_services() {
+    _is_true $STARTSTOP || return 0
+    _echo "Starting all SlipStream services."
+    systemctl start $SS_SERVICES || true
+    _echo "Started all SlipStream services."
 }
 
 _add() {
@@ -153,7 +191,7 @@ _data() {
 }
 
 _create_archive() {
-    echo ":: Collecting resources to be archived."
+    _echo "Collecting resources to be archived."
     if ( _is_true $LOGS ); then
         _logs
     fi
@@ -167,9 +205,12 @@ _create_archive() {
         echo ".. WARNINIG: No resources to archive were collected."
         exit 1
     fi
-    echo ":: Creating archive: $ARCHIVE_TARGZ"
+    _echo "Creating archive: $ARCHIVE_TARGZ"
     tar -zc $TO_ARCHIVE -f $ARCHIVE_TARGZ
+    _echo "Created archive: $ARCHIVE_TARGZ"
 }
 
+_stop_services
 _create_archive
+_start_services
 
