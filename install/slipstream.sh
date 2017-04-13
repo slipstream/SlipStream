@@ -40,7 +40,24 @@ SS_START=true
 
 SS_DB=hsqldb
 
-USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> -S\n
+SS_SERVER_LOC=/opt/slipstream/server
+
+# Elasticsearch via transport client on localhost.
+export ES_HOST=localhost
+export ES_PORT=9300
+ES_INSTALL=true
+
+# Logstash coordinates.
+SS_LOGSTASH_COLLECTD_UDP=25826
+export LOGSTASH_HOST=localhost
+export LOGSTASH_PORT=5043
+LOGSTASH_INSTALL=true
+
+ELK_XPACK=false
+
+USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> \n
+-S -a <es_host:port> -b <logstash_host:port> -c\n
+\n
 -h print this help\n
 -v run in verbose mode\n
 -l log file (default: $LOG_FILE)\n
@@ -52,7 +69,12 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -L the language of the interface. Possilbe values: en, fr, de, jp. (default: en)\n
 -S don't start SlipStream service.\n
 -x URL with the YUM repo definition file.\n
--d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB"
+-d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB\n
+-a Elasticsearch coordinates. Default: $ES_HOST:$ES_PORT. If provided, and\n
+   hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
+-b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
+   and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed.\n
+-c If provided, install X-Pack for ELK components."
 
 # Allow this to be set in the environment to avoid having to pass arguments
 # through all of the other installation scripts.
@@ -81,7 +103,15 @@ function _check_db_param() {
     fi
 }
 
-while getopts l:H:t:L:k:e:d:x:vESh opt; do
+function _is_local_install() {
+        if [[ $1 =~ (localhost|127.0.0.1) ]]; then
+            echo true
+        else
+            echo false
+        fi
+}
+
+while getopts a:b:l:H:t:L:k:e:d:x:vESch opt; do
     case $opt in
     v)
         VERBOSE=true
@@ -123,6 +153,19 @@ while getopts l:H:t:L:k:e:d:x:vESh opt; do
     d)
         _check_db_param $OPTARG
         SS_DB=$OPTARG
+        ;;
+    a)
+        ES_HOST=${OPTARG%%:*}
+        ES_PORT=${OPTARG#*:}
+        ES_INSTALL=$(_is_local_install $ES_HOST)
+        ;;
+    b)
+        LOGSTASH_HOST=${OPTARG%%:*}
+        LOGSTASH_PORT=${OPTARG#*:}
+        LOGSTASH_INSTALL=$(_is_local_install $LOGSTASH_HOST)
+        ;;
+    c)
+        ELK_XPACK=true
         ;;
     *|h)
         _exit_usage
@@ -171,7 +214,7 @@ function _on_trap() {
 trap '_on_trap' ERR
 
 # Return first global IPv4 address.
-function _get_hostname() {
+function _get_ip() {
     ip addr | awk '/inet .*global/ { split($2, x, "/"); print x[1] }' | head -1
 }
 
@@ -180,7 +223,8 @@ function _get_hostname() {
 # # # # # # # # # # #
 
 # First "global" IPv4 address
-SS_HOSTNAME=${SS_HOSTNAME:-$(_get_hostname)}
+HOST_IP=$(_get_ip)
+SS_HOSTNAME=${SS_HOSTNAME:-$HOST_IP}
 [ -z "${SS_HOSTNAME}" ] && \
     abort "Could not determinee IP or hostname of the public interface
 for SlipStream to run on."
@@ -205,10 +249,6 @@ RIEMANN_VER=0.2.11-1
 ss_clj_client=/opt/slipstream/riemann/lib/SlipStreamRiemann.jar
 ss_riemann_conf=/etc/riemann/riemann-slipstream.config
 ss_riemann_streams=/opt/slipstream/riemann/streams
-
-# Elasticsearch
-export ES_HOST=localhost
-export ES_PORT=9300
 
 # # # # # # # # # # # #
 # Advanced parameters.
@@ -323,6 +363,7 @@ function _configure_firewall () {
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 5601 -j ACCEPT
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 COMMIT
@@ -331,7 +372,7 @@ EOF
 }
 
 function _add_yum_repos () {
-    _print "- adding YUM repositories (EPEL, Nginx, Elasticsearch, SlipStream)"
+    _print "- adding YUM repositories (EPEL, Nginx, Elasticstack, SlipStream)"
 
     _inst yum-utils
 
@@ -355,7 +396,7 @@ function _add_yum_repos () {
         yum-config-manager --enable SlipStream-${SS_YUM_REPO_COMMUNITY}
     fi
 
-    # Elasticsearch repo configuration is available in SlipStream repo
+    # Elasticstack repo configuration is available in SlipStream repo
     yum install -y 'slipstream-es-repo'
 }
 
@@ -474,13 +515,15 @@ function _deploy_graphite () {
     _print "- installing Graphite"
 
     _inst slipstream-graphite
+
+    set -i -e "s/__HOST_IP__/$HOST_IP/" /etc/carbon/storage-schemas.conf
 }
 
 function deploy_slipstream_server_deps () {
 
     _print "Installing SlipStream dependencies"
 
-    _deploy_elasticsearch
+    _deploy_elasticstack
 
     if [ "$SS_DB" = "postgresql" ]; then
         _deploy_postgresql
@@ -490,6 +533,7 @@ function deploy_slipstream_server_deps () {
         _print_error "Unsupported RDBMS provided: $SS_DB"
         _exit_usage
     fi
+
     _deploy_graphite
 }
 
@@ -536,6 +580,9 @@ function deploy_slipstream_server () {
 function _set_elasticsearch_coords() {
     _set_jetty_args es.host $ES_HOST
     _set_jetty_args es.port $ES_PORT
+    sed -i -e "s/ES_HOST=.*/ES_HOST=$ES_HOST/" \
+        -e "s/ES_PORT=.*/ES_PORT=$ES_PORT/" \
+        /etc/default/ssclj
 }
 
 function _set_theme() {
@@ -619,8 +666,8 @@ function _update_service_configuration() {
        -e clientBootstrapURL=https://${SS_HOSTNAME}/downloads/slipstream.bootstrap \
        -e connectorLibcloudURL=https://${SS_HOSTNAME}/downloads/libcloud.tgz \
        -e serviceURL=https://${SS_HOSTNAME} \
-       -e connectorOrchPublicSSHKey=/opt/slipstream/server/.ssh/id_rsa.pub \
-       -e connectorOrchPrivateSSHKey=/opt/slipstream/server/.ssh/id_rsa \
+       -e connectorOrchPublicSSHKey=$SS_SERVER_LOC/.ssh/id_rsa.pub \
+       -e connectorOrchPrivateSSHKey=$SS_SERVER_LOC/.ssh/id_rsa \
        $SLIPSTREAM_CONF
 
     # Push service configuration to DB.
@@ -645,16 +692,53 @@ function _update_slipstream_configuration() {
     _update_connectors_configuration
 }
 
-function _deploy_elasticsearch() {
+function _install_kibana() {
+    _print "- installing Kibana"
 
-    _print "- install elasticsearch"
+    _inst java-1.8.0-openjdk-headless
+    _inst kibana
 
-    # Install elasticsearch with explicit java dependency
+    _is_true $ELK_XPACK && \
+        /usr/share/kibana/bin/kibana-plugin install x-pack || true
+
+    # SSL config. Steal certs from nginx.
+    kibana_ssl=/etc/kibana/ssl
+    if [ ! -d $kibana_ssl ]; then
+        mkdir -p $kibana_ssl
+        chmod 700 $kibana_ssl
+        cp -p /etc/nginx/ssl/server.* $kibana_ssl
+        chown -R kibana. $kibana_ssl
+        chmod 400 $kibana_ssl/*
+    fi
+
+    log_dest=/var/log/kibana
+    mkdir -p $log_dest
+    chown -R kibana. $log_dest
+
+    cat >> /etc/kibana/kibana.yml << EOF
+server.ssl.cert: $kibana_ssl/server.crt
+server.ssl.key:  $kibana_ssl/server.key
+server.host: "0.0.0.0"
+elasticsearch.url: "http://$ES_HOST:9200"
+logging.dest: $log_dest/kibana.log
+EOF
+
+    srvc_enable kibana.service
+    srvc_start kibana
+}
+
+function _install_elasticsearch() {
+    _print "- installing Elasticsearch"
+
     _inst java-1.8.0-openjdk-headless
     _inst elasticsearch
 
+    # For authn with Kibana and more.
+    _is_true $ELK_XPACK && \
+        /usr/share/elasticsearch/bin/elasticsearch-plugin install -b x-pack || true
+
     # Configure elasticsearch
-    # FIXME: visible on localhost only
+    # FIXME visible on localhost only
     elasticsearch_cfg=/etc/elasticsearch/elasticsearch.yml
     mv ${elasticsearch_cfg} ${elasticsearch_cfg}.orig
     cat > ${elasticsearch_cfg} <<EOF
@@ -666,9 +750,125 @@ EOF
     srvc_start elasticsearch
 }
 
+function _install_logstash() {
+    _print "- installing Logstash"
+
+    _inst java-1.8.0-openjdk-headless
+    _inst logstash
+
+    LOGSTASH_PATTERNS_DIR=/etc/logstash/patterns
+    mkdir $LOGSTASH_PATTERNS_DIR
+    LOGSTASH_CONFD=/etc/logstash/conf.d
+
+    #
+    # SlipStream Java server access.
+    ES_INDEX=ss-access
+    cat > $LOGSTASH_PATTERNS_DIR/slipstream.grok<<EOF
+RESTLET_DATE %{YEAR}-%{MONTHNUM}-%{MONTHDAY}
+RESTLET_URIPARAM [A-Za-z0-9$.+!*'|(){},~@#%&/=:;_?\-\[\]]*
+SS_ACCESS %{RESTLET_DATE:date}\s+%{TIME:time}\s+%{IP:remote-ip}\s+%{USER:remote-user-id}\s+%{IP:server-ip}\s+%{POSINT:server-port}\s+%{WORD:method}\s+%{URIPATH:resource}\s+%{RESTLET_URIPARAM:query}\s+%{NUMBER:status}\s+%{NUMBER:bytes-sent}\s+%{NUMBER:bytes-received}\s+%{NUMBER:response-time}\s+%{URI:host-ref}
+EOF
+    cat > $LOGSTASH_CONFD/slipstream.conf<<EOF
+input {
+    beats {
+        port => "$LOGSTASH_PORT"
+    }
+}
+filter {
+  if [type] == "ss-access" {
+     grok {
+       match => { "message" => "%{SS_ACCESS}" }
+       patterns_dir => ["$LOGSTASH_PATTERNS_DIR"]
+     }
+  }
+}
+output {
+  elasticsearch { hosts => ["$ES_HOST:9200"]
+                  index => "$ES_INDEX"
+  }
+}
+EOF
+
+    #
+    # Nginx access.
+    ES_INDEX=nginx-access
+    cat > $LOGSTASH_PATTERNS_DIR/nginx.grok<<EOF
+NGUSERNAME [a-zA-Z\.\@\-\+_%]+
+NGUSER %{NGUSERNAME}
+NGINXACCESS %{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
+EOF
+    cat >$LOGSTASH_CONFD/nginx.conf<<EOF
+input {
+    beats {
+        port => "$LOGSTASH_PORT"
+    }
+}
+filter {
+  if [type] == "nginx-access" {
+    grok {
+      match => { "message" => "%{NGINXACCESS}" }
+      patterns_dir => ["$LOGSTASH_PATTERNS_DIR"]
+    }
+  }
+}
+output {
+  elasticsearch { hosts => ["$ES_HOST:9200"]
+                  index => "$ES_INDEX"
+  }
+}
+EOF
+
+    #
+    # Collectd listener.
+    cat >$LOGSTASH_CONFD/collectd.conf<<EOF
+input {
+  udp {
+    port => $SS_LOGSTASH_COLLECTD_UDP
+    buffer_size => 1452
+    codec => collectd { }
+    type => "collectd"
+  }
+}
+EOF
+
+    echo config.reload.automatic: true >> /etc/logstash/logstash.yml
+
+    srvc_enable logstash.service
+    srvc_start logstash
+}
+
+function _install_logging_beats() {
+    _print "- installing Logstash Beats and configurations"
+
+    _inst filebeat
+
+    cat > /etc/filebeat/filebeat.yml<<EOF
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - $SS_SERVER_LOC/logs/slipstream.log.*
+  include_lines: [".*org.restlet.engine.log.LogFilter afterHandle.*"]
+  document_type: ss-access
+- input_type: log
+  paths:
+    - /var/log/nginx/access.log
+  document_type: nginx-access
+tags: ["slipstream-service", "web-tier"]
+output.logstash:
+  hosts: ["$LOGSTASH_HOST:$LOGSTASH_PORT"]
+EOF
+
+    srvc_enable filebeat.service
+    srvc_start filebeat
+}
+
+function _deploy_elasticstack() {
+    _is_true $ES_INSTALL && _install_elasticsearch || true
+}
+
 function _deploy_nginx_proxy() {
 
-    _print "- install nginx and nginx configuration for SlipStream"
+    _print "- installing nginx and nginx configuration for SlipStream"
 
     # Install nginx and the configuration file for SlipStream.
     _inst slipstream-server-nginx-conf
@@ -727,14 +927,14 @@ EOF
 
   if [ -f /etc/default/ss-pricing ]; then
       source /etc/default/ss-pricing
-      if [ -f /etc/slipstream/passwords/$SS_CIMI_USERNAME ]; then 
+      if [ -f /etc/slipstream/passwords/$SS_CIMI_USERNAME ]; then
           pass=$(cat /etc/slipstream/passwords/$SS_CIMI_USERNAME)
           sed -i -e 's/SS_CIMI_PASSWORD=.*/SS_CIMI_PASSWORD='$pass'/' /etc/default/ss-pricing
       fi
   fi
   if [ -f /etc/default/slipstream-price-parsing ]; then
       source /etc/default/slipstream-price-parsing
-      if [ -f /etc/slipstream/passwords/$SSPARSERUSERNAME ]; then 
+      if [ -f /etc/slipstream/passwords/$SSPARSERUSERNAME ]; then
           pass=$(cat /etc/slipstream/passwords/$SSPARSERUSERNAME)
           sed -i -e 's/SSPARSERPASSWORD=.*/SSPARSERPASSWORD='$pass'/' /etc/default/slipstream-price-parsing
       fi
@@ -783,6 +983,79 @@ function deploy_riemann() {
   srvc_start riemann
 }
 
+function _enable_monit_jmx() {
+    _print "- enabling JMX monitoring"
+
+    java -jar $SS_SERVER_LOC/start.jar jetty.base=$SS_SERVER_LOC \
+        --add-to-start=jmx-remote,jmx
+    _is_true $SS_START && \
+        { srvc_restart slipstream && _start_slipstream_application; }
+}
+
+function _install_monit_collectd() {
+    _print "- installing Collectd and monitoring configurations"
+
+    # Collectd for SlipStream JMX.
+    _inst collectd-java collectd-generic-jmx
+    ln -svf /usr/lib/jvm/jre/lib/amd64/server/libjvm.so /usr/lib64/libjvm.so
+
+    branch=feature/elasticstac-installation
+    gh_url=https://raw.githubusercontent.com/slipstream/SlipStream/$branch/install
+
+    curl -sSf -o /etc/collectd.d/jmx.conf $gh_url/ss-collectd-jmx.conf
+    curl -sSf -o /etc/collectd.conf $gh_url/ss-collectd.conf
+
+    sed -i -e "s/SS_LOGSTASH_COLLECTD/$LOGSTASH_HOST/" \
+        -e "s/SS_LOGSTASH_COLLECTD_UDP/$SS_LOGSTASH_COLLECTD_UDP/" \
+        -e "s/SS_HOSTNAME/$SS_HOSTNAME/" \
+        /etc/collectd.conf
+
+    ss_type_db=/usr/share/collectd/slipstream-types.db
+    if [ ! -f $ss_type_db ]; then
+        cat >$ss_type_db<<EOF
+jmx_memory   value:GAUGE:0:U
+time_ms      value:GAUGE:0:U
+EOF
+        cat >>/etc/collectd.conf<<EOF
+TypesDB "/usr/share/collectd/types.db"
+TypesDB "$ss_type_db"
+EOF
+    fi
+
+    # Collectd for Nginx status.
+    _inst collectd-nginx
+    cat >/etc/collectd.d/nginx.conf<<EOF
+LoadPlugin nginx
+<Plugin nginx>
+    URL "http://localhost/nginx_status"
+    # User "user"
+    # Password "pass"
+</Plugin>
+EOF
+
+    srvc_enable collectd
+    srvc_restart collectd
+}
+
+function _install_monitoring() {
+    _enable_monit_jmx
+    _install_monit_collectd
+    _install_kibana
+}
+
+function _install_logging() {
+    _is_true $LOGSTASH_INSTALL && _install_logstash || true
+    _install_logging_beats
+}
+
+function deploy_logging_and_monitoring() {
+    _print "Installing logging"
+    _install_logging
+
+    _print "Installing monitoring"
+    _install_monitoring
+}
+
 function cleanup () {
     $CLEAN_PKG_CACHE
 }
@@ -799,6 +1072,7 @@ deploy_slipstream_client
 deploy_slipstream_server
 deploy_prs_service
 deploy_riemann
+deploy_logging_and_monitoring
 cleanup
 
 function _how_to_start_service() {
