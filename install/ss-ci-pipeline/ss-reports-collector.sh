@@ -69,20 +69,6 @@ _add() {
    done
 }
 
-_stop_services() {
-    systemctl stop \
-      slipstream \
-      ssclj \
-      ss-pricing \
-      hsqldb \
-      elasticsearch \
-      logstash \
-      filebeat \
-      kibana \
-      carbon-cache \
-      graphite-api || true
-}
-
 _logs() {
     # Installation
     _add /tmp/slipstream*.log
@@ -185,6 +171,5 @@ _create_archive() {
     tar -zc $TO_ARCHIVE -f $ARCHIVE_TARGZ
 }
 
-_stop_services
 _create_archive
 
