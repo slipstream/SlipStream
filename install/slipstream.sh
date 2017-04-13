@@ -989,7 +989,7 @@ function _enable_monit_jmx() {
     java -jar $SS_SERVER_LOC/start.jar jetty.base=$SS_SERVER_LOC \
         --add-to-start=jmx-remote,jmx
     _is_true $SS_START && \
-        { srvc_restart slipstream && _start_slipstream_application; }
+        { srvc_restart slipstream && _start_slipstream_application; } || true
 }
 
 function _install_monit_collectd() {
