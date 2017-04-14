@@ -8,8 +8,8 @@ set -o pipefail
 set -o errtrace
 
 
-AMAZON_ID=${1:?"Provide Amazon ID"}
-AMAZON_KEY=${2:?"Provide Amazon Key"}
+AWS_ID=${1:?"Provide Amazon ID"}
+AWS_KEY=${2:?"Provide Amazon Key"}
 S3_BUCKET=slipstream-backup-es
 S3_REGION=eu-west
 
@@ -46,9 +46,10 @@ function _install() {
 
 function _create_backup_repo() {
     _printn " creating backup repo... "
-    plug=/usr/share/elasticsearch/bin/plugin
-    if ( ! $plug list | grep -q cloud-aws ); then
-       $plug install cloud-aws
+    plugin_cli=/usr/share/elasticsearch/bin/elasticsearch-plugin
+    plugin_name=repository-s3
+    if ( ! $plugin_cli list | grep -q $plugin_name ); then
+       $plugin_cli install $plugin_name
     fi
     curl -XPUT \
         'localhost:9200/_snapshot/es_backup?verify=false&pretty=true' \
