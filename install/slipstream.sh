@@ -516,7 +516,9 @@ function _deploy_graphite () {
 
     _inst slipstream-graphite
 
-    set -i -e "s/__HOST_IP__/$HOST_IP/" /etc/carbon/storage-schemas.conf
+    sed -i -e "s/__HOST_IP__/$HOST_IP/" /etc/carbon/storage-schemas.conf
+    sed -i -e "s/WHISPER_SPARSE_CREATE.*/WHISPER_SPARSE_CREATE = True/" \
+        /etc/carbon/carbon.conf
 }
 
 function deploy_slipstream_server_deps () {
