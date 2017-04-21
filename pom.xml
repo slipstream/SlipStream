@@ -107,7 +107,7 @@
     <stratuslab.version.rpm.api.externals>${stratuslab.version}</stratuslab.version.rpm.api.externals>
 
     <libcloud.version>0.18.0</libcloud.version>
-    <boto.version>2.38.0</boto.version>
+    <boto.version>2.46.1</boto.version>
 
     <metrics.version>3.1.0</metrics.version>
 
