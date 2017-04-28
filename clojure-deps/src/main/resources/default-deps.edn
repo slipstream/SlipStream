@@ -3,7 +3,7 @@
  ;; core languages
  ;;
 
- [org.clojure/clojure "1.9.0-alpha15"]
+ [org.clojure/clojure "1.9.0-alpha16"]
  [org.clojure/clojurescript "1.9.293"]
 
  ;;
