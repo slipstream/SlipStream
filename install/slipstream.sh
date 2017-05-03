@@ -1039,9 +1039,17 @@ EOF
     srvc_restart collectd
 }
 
+_install_monit_metricbeat() {
+    # By default sends metrics directly to Elasticsearch running localhost.
+    _inst metricbeat
+    srvc_enable metricbeat
+    srvc_start metricbeat
+}
+
 function _install_monitoring() {
     _enable_monit_jmx
     _install_monit_collectd
+    _install_monit_metricbeats
     _install_kibana
 }
 
