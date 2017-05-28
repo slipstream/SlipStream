@@ -815,7 +815,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>clojure</artifactId>
-        <version>1.9.0-alpha16</version>
+        <version>1.9.0-alpha17</version>
       </dependency>
 
       <dependency>
@@ -827,7 +827,7 @@
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>core.async</artifactId>
-        <version>0.3.442</version>
+        <version>0.3.443</version>
         <exclusions>
           <exclusion>
             <groupId>org.clojure</groupId>

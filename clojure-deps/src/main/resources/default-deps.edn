@@ -3,8 +3,8 @@
  ;; core languages
  ;;
 
- [org.clojure/clojure "1.9.0-alpha16"]
- [org.clojure/clojurescript "1.9.293"]
+ [org.clojure/clojure "1.9.0-alpha17"]
+ [org.clojure/clojurescript "1.9.562"]
 
  ;;
  ;; slipstream dependencies
@@ -109,7 +109,7 @@
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
- [org.clojure/core.async "0.3.442" :exclusions [org.clojure/tools.reader]]
+ [org.clojure/core.async "0.3.443" :exclusions [org.clojure/tools.reader]]
  [org.clojure/test.check "0.9.0" :scope "test"]
  [org.elasticsearch/elasticsearch "5.2.1"]
  [org.elasticsearch.client/transport "5.2.1"]
