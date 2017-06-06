@@ -66,6 +66,9 @@
  [com.taoensso/tower "3.1.0-beta5"]
  [com.taoensso/timbre "4.7.4"]
  [crisptrutski/boot-cljs-test "0.3.1" :scope "test"]
+
+ [degree9/boot-exec "1.0.0" :scope "test"]
+ [degree9/boot-npm "1.4.0" :scope "test"]
  [doo "0.1.7" :scope "test"] ;; added by boot-cljs-test; control options here
 
  [enlive "1.1.6"]
