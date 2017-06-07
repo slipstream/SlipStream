@@ -1049,7 +1049,7 @@ _install_monit_metricbeat() {
 function _install_monitoring() {
     _enable_monit_jmx
     _install_monit_collectd
-    _install_monit_metricbeats
+    _install_monit_metricbeat
     _install_kibana
 }
 
