@@ -65,7 +65,10 @@
  [com.taoensso/tempura "1.1.2"]
  [com.taoensso/tower "3.1.0-beta5"]
  [com.taoensso/timbre "4.7.4"]
- [crisptrutski/boot-cljs-test "0.3.1" :scope "test"]
+
+ ;; Test carefully before upgrading past v0.3.0.  There was a problem
+ ;; with later versions deleting resources from the source tree!
+ [crisptrutski/boot-cljs-test "0.3.0" :scope "test"]
 
  [degree9/boot-exec "1.0.0" :scope "test"]
  [degree9/boot-npm "1.4.0" :scope "test"]
