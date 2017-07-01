@@ -4,7 +4,7 @@
  ;;
 
  [org.clojure/clojure "1.9.0-alpha17"]
- [org.clojure/clojurescript "1.9.562"]
+ [org.clojure/clojurescript "1.9.671"]
 
  ;;
  ;; slipstream dependencies
