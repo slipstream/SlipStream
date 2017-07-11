@@ -52,6 +52,7 @@ YUM_REPO_KIND=`ss-get yum_repo_kind`
 YUM_REPO_EDITION=`ss-get yum_repo_edition`
 SS_REPO_CONF_URL=`ss-get ss-repo-conf-url`
 install_scripts_branch=`ss-get install_scripts_branch`
+ES_HOST_PORT=`ss-get es-host-port`
 
 function _install_yum_client_cert() {
     SS_CONF_DIR=/etc/slipstream
@@ -141,9 +142,9 @@ else
             ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST'
     fi
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        /tmp/slipstream.sh $_SS_PARAM_BACKEND -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
+        /tmp/slipstream.sh $_SS_PARAM_BACKEND -a $ES_HOST_PORT -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
     else
-        /tmp/slipstream.sh $_SS_PARAM_BACKEND -x $SS_REPO_CONF_URL
+        /tmp/slipstream.sh $_SS_PARAM_BACKEND -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
     fi
 fi
 
