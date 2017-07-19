@@ -1040,8 +1040,9 @@ EOF
 }
 
 _install_monit_metricbeat() {
-    # By default sends metrics directly to Elasticsearch running localhost.
     _inst metricbeat
+    sed -i -e "s/hosts: \[\"localhost:9200\"\]/hosts: [\"$ES_HOST:9200\"]/" \
+        /etc/metricbeat/metricbeat.yml
     srvc_enable metricbeat
     srvc_start metricbeat
 }
