@@ -62,7 +62,7 @@ function _create_backup_repo() {
         "http://${ES_HOST}:${ES_PORT}/_snapshot/es_backup?verify=false&pretty=true" \
         -d'{"type": "s3",
         "settings": {
-        "endpoint": "$S3_ENDPOINT",
+        "endpoint": "'$S3_ENDPOINT'",
         "bucket": "'$S3_BUCKET'",
         "region": "eu-west",
         "access_key": "'$S3_ID'",
