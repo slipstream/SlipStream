@@ -42,9 +42,9 @@ function _printn() {
 function _install() {
     _printn " installing packages... "
     yum install -y slipstream-server-backup
-     sed -i -e \
-+        -e "s|ES_HOST=.*|ES_HOST=${ES_HOST}|" \
-+        -e "s|ES_PORT=.*|ES_PORT=${ES_PORT}|" \
+     sed -i \
+         -e "s|ES_HOST=.*|ES_HOST=${ES_HOST}|" \
+         -e "s|ES_PORT=.*|ES_PORT=${ES_PORT}|" \
          /etc/slipstream/slipstream-es-backup.conf
     _prints "done."
 }
