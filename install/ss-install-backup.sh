@@ -7,10 +7,10 @@ set -e
 set -o pipefail
 set -o errtrace
 
-# https://s3-eu-west-1.amazonaws.com/<bucket name>
-AMAZON_BUCKET=${1:?"Provide full URL to S3 bucket."} # $(ss-get aws-bucket)
-AMAZON_ID=${2:?"Provide Amazon ID"}
-AMAZON_KEY=${3:?"Provide Amazon Key"}
+# E.g.: https://s3-eu-west-1.amazonaws.com/<bucket name>
+S3_BUCKET=${1:?"Provide full URL to S3 bucket."}
+S3_ID=${2:?"Provide S3 ID"}
+S3_KEY=${3:?"Provide S3 Key"}
 INSTANCE_ID=${4:?"Provide instance ID (e.g., IP/hostname)."}
 
 LOG_FILE=/tmp/slipstream-backup-install.log
@@ -50,10 +50,10 @@ function _configure() {
     cp -f /opt/slipstream/backup/s3curl.cfg.tpl $S3CURL_CONF
     chmod 600 $S3CURL_CONF
     chown $SS_USER: $S3CURL_CONF
-    sed -i -e "s|CHANGE_ME_ID|${AMAZON_ID}|" $S3CURL_CONF
-    sed -i -e "s|CHANGE_ME_KEY|${AMAZON_KEY}|" $S3CURL_CONF
+    sed -i -e "s|CHANGE_ME_ID|${S3_ID}|" $S3CURL_CONF
+    sed -i -e "s|CHANGE_ME_KEY|${S3_KEY}|" $S3CURL_CONF
 
-    sed -i -e "s|AMAZON_BUCKET=.*|AMAZON_BUCKET=${AMAZON_BUCKET}|" \
+    sed -i -e "s|AMAZON_BUCKET=.*|AMAZON_BUCKET=${S3_BUCKET}|" \
         -e "s|SS_HOSTNAME=.*|SS_HOSTNAME=${INSTANCE_ID}|" \
         /etc/slipstream/slipstream-backup.conf \
         /etc/slipstream/slipstream-es-backup.conf
