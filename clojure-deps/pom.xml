@@ -3,7 +3,7 @@
 
   <groupId>sixsq</groupId>
   <artifactId>default-deps</artifactId>
-  <version>3.33-SNAPSHOT</version>
+  <version>3.33</version>
   <packaging>jar</packaging>
   <name>SlipStream/clojure-deps</name>
   <url>http://sixsq.com/</url>
@@ -11,7 +11,7 @@
   <parent>
     <groupId>com.sixsq.slipstream</groupId>
     <artifactId>SlipStream</artifactId>
-    <version>3.33-SNAPSHOT</version>
+    <version>3.33</version>
   </parent>
 
 </project>
