@@ -580,11 +580,10 @@ function deploy_slipstream_server () {
 }
 
 function _set_elasticsearch_coords() {
-    _set_jetty_args es.host $ES_HOST
-    _set_jetty_args es.port $ES_PORT
     sed -i -e "s/ES_HOST=.*/ES_HOST=$ES_HOST/" \
         -e "s/ES_PORT=.*/ES_PORT=$ES_PORT/" \
-        /etc/default/ssclj
+        /etc/default/ssclj \
+        /etc/default/slipstream
 }
 
 function _set_theme() {
