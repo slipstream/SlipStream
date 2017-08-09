@@ -16,13 +16,17 @@ yum install -y \
     java-1.8.0-openjdk-devel \
     python \
     python-devel \
-    pylint \
+    python-pip \
     python-mock \
     python-nose \
     python-coverage \
     python-paramiko \
     rpm-build \
     createrepo
+    
+# Bug : https://bugzilla.redhat.com/show_bug.cgi?id=1479018
+# Extracted from yum 
+pip install pylint
 
 #
 # install latest maven version
