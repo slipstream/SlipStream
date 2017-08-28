@@ -3,8 +3,8 @@
  ;; core languages
  ;;
 
- [org.clojure/clojure "1.9.0-alpha17"]
- [org.clojure/clojurescript "1.9.671"]
+ [org.clojure/clojure "1.9.0-alpha19"]
+ [org.clojure/clojurescript "1.9.908"]
 
  ;;
  ;; slipstream dependencies
@@ -63,14 +63,20 @@
  [commons-lang/commons-lang "2.6"]
  [commons-codec/commons-codec "1.10"]
  [compojure "1.5.1"]
+ [com.andrewmcveigh/cljs-time "0.5.1"]
  [com.cemerick/url "0.1.1"]
+ [com.jcraft/jsch "0.1.54"]
  [com.taoensso/tempura "1.1.2"]
  [com.taoensso/tower "3.1.0-beta5"]
  [com.taoensso/timbre "4.7.4"]
 
- ;; Test carefully before upgrading past v0.3.0.  There was a problem
- ;; with later versions deleting resources from the source tree!
- [crisptrutski/boot-cljs-test "0.3.0" :scope "test"]
+ ;; A fix for the bug that erased sources files  was commited and released
+ ;; in version 0.3.3.  Nonetheless, check upgrades of this carefully to
+ ;; ensure that the bug does not return.
+ ;;
+ ;; BUG REPORT: https://github.com/crisptrutski/boot-cljs-test/issues/62
+ ;; 
+ [crisptrutski/boot-cljs-test "0.3.3" :scope "test"]
 
  [degree9/boot-exec "1.0.0" :scope "test"]
  [degree9/boot-npm "1.4.0" :scope "test"]
@@ -131,9 +137,9 @@
 
  [potemkin "0.4.3"]
 
- [reagent "0.6.2"]
+ [reagent "0.7.0"]
  [re-com "2.1.0"]
- [re-frame "0.9.4"]
+ [re-frame "0.10.1"]
  [ring "1.6.1"]
  [ring/ring-core "1.6.1"]
  [ring/ring-codec "1.0.1"]
@@ -149,13 +155,13 @@
  [boot/core "2.6.0"]
 
  [adzerk/boot-test "1.2.0" :scope "test"]
- [adzerk/boot-cljs "2.0.0" :scope "test"]
+ [adzerk/boot-cljs "2.1.2" :scope "test"]
  [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
- [adzerk/boot-reload "0.5.1" :scope "test"]
+ [adzerk/boot-reload "0.5.2" :scope "test"]
  [boot-codox "0.10.3" :scope "test"]
  [boot-deps "0.1.6" :scope "test"]
  [boot-environ "1.1.0" :scope "test"]
- [com.cemerick/piggieback "0.2.1" :scope "test"]
+ [com.cemerick/piggieback "0.2.2" :scope "test"]
  [onetom/boot-lein-generate "0.1.3" :scope "test"]
  [pandeiro/boot-http "0.8.3" :scope "test"]
  [tolitius/boot-check "0.1.4" :scope "test"]

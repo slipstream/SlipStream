@@ -149,6 +149,15 @@ else
 fi
 
 #
+# Reduce the memory consumption of ElasticSearch
+#
+if [ "X$ES_HOST_PORT" == "Xlocalhost:9300" ]; then
+    sed -i 's/^-Xms.*/-Xms256m/' /etc/elasticsearch/jvm.options
+    sed -i 's/^-Xmx.*/-Xmx1g/' /etc/elasticsearch/jvm.options
+    systemctl restart elasticsearch
+fi
+
+#
 # restarting services (probably not necessary)
 systemctl restart slipstream
 systemctl restart ssclj
