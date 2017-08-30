@@ -30,7 +30,7 @@ def ss_get(param, ignore_abort=False, timeout=30, no_block=False):
     """
     ch = ConfigHolder(config={'foo': None})
     ch.set('ignoreAbort', ignore_abort)
-    ch.set('noBlock', no_block)
+    ch.set('no_block', no_block)
     ch.set('timeout', timeout)
     client = Client(ch)
     return client.getRuntimeParameter(param)
@@ -130,7 +130,7 @@ def merge_dicts(x, y):
 
 
 def _get_test_user_pass():
-    username = ss_get('ss_test_user', no_block=True).strip() or 'test'
+    username = (ss_get('ss_test_user', no_block=True) or 'test').strip()
     users_passes = ss_get('ss_users')
     userpass = 'tesTtesT'
     if users_passes:
