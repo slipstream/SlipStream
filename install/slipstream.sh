@@ -527,7 +527,7 @@ function _deploy_graphite () {
 }
 
 function _deploy_zookeeper() {
-    _print "- installing Graphite"
+    _print "- installing Zookeeper"
 
     _inst https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
     _inst zookeeper zookeeper-server
@@ -535,6 +535,7 @@ function _deploy_zookeeper() {
     mkdir -p /var/lib/zookeeper
     chown -R zookeeper /var/lib/zookeeper/
 
+    /etc/rc.d/init.d/zookeeper-server init
     /etc/rc.d/init.d/zookeeper-server start
 }
 
