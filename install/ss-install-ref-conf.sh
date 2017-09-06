@@ -46,7 +46,7 @@ function _check_repo_edition() {
     fi
 }
 
-while getopts r:u:c:p:k:e:o: opt; do
+while getopts r:u:c:p:k:e:o:b: opt; do
     case $opt in
     r)
         TARBALL_URL=$OPTARG
