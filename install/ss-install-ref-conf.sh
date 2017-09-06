@@ -17,6 +17,8 @@ YUM_REPO_TO_GH_BRANCH[release]=release-latest
 YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
 YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
 
+GH_BRANCH=
+
 function usage_exit() {
     echo -e "usage:\n$_SCRIPT_NAME -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
     -k <YUM repo kind> -e <YUM repo edition> -o '<parameters to slipstream.sh>'
@@ -27,6 +29,7 @@ function usage_exit() {
 -k kind of the YUM repository to use: ${!YUM_REPO_TO_GH_BRANCH[@]}. Default: $_YUM_REPO_KIND_DEFAULT
 -e edition of the YUM repository to use: ${_YUM_REPO_EDITIONS[@]}. Default: $_YUM_REPO_EDITION_DEFAULT
 -o set of parameters to be passed to slipstream.sh installation script.
+-b force the GitHub branch to download the install scripts from.
 "
     exit 1
 }
@@ -68,6 +71,9 @@ while getopts r:u:c:p:k:e:o: opt; do
     o)
         SS_INSTALL_OPTIONS=$OPTARG
         ;;
+    b)
+        GH_BRANCH=$OPTARG
+        ;;
     \?)
         usage_exit
         ;;
@@ -88,7 +94,12 @@ if [ -z "$YUM_CREDS_URL_USERPASS" ]; then
     echo "WARNING: Credentials for URL with YUM certificates tarball were not provided."
 fi
 
-GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
+if [ -n "$GH_BRANCH" ]; then
+    branch=${GH_BRANCH}
+else
+    branch=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
+fi
+GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/${branch}
 
 SS_CONF_DIR=/etc/slipstream
 mkdir -p $SS_CONF_DIR
