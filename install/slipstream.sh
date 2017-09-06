@@ -55,6 +55,9 @@ LOGSTASH_INSTALL=true
 
 ELK_XPACK=false
 
+# Zookeeper coordinates.
+export ZK_ENDPOINTS=localhost:2181
+
 USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t <theme> -L <lang> \n
 -S -a <es_host:port> -b <logstash_host:port> -c\n
 \n
@@ -74,7 +77,9 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
    hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
 -b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
    and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed.\n
--c If provided, install X-Pack for ELK components."
+-c If provided, install X-Pack for ELK components.
+-z Zookeeper coordinates. Default: $ZK_ENDPOINTS. If provided,
+   and hostname/IP is localhost or 127.0.0.1, then Zookeeper will be installed.\n"
 
 # Allow this to be set in the environment to avoid having to pass arguments
 # through all of the other installation scripts.
@@ -521,6 +526,18 @@ function _deploy_graphite () {
         /etc/carbon/carbon.conf
 }
 
+function _deploy_zookeeper() {
+    _print "- installing Graphite"
+
+    _inst https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
+    _inst zookeeper zookeeper-server
+
+    mkdir -p /var/lib/zookeeper
+    chown -R zookeeper /var/lib/zookeeper/
+
+    /etc/rc.d/init.d/zookeeper-server start
+}
+
 function deploy_slipstream_server_deps () {
 
     _print "Installing SlipStream dependencies"
@@ -537,6 +554,8 @@ function deploy_slipstream_server_deps () {
     fi
 
     _deploy_graphite
+
+    _deploy_zookeeper
 }
 
 function deploy_slipstream_client () {
@@ -570,6 +589,7 @@ function deploy_slipstream_server () {
     _set_theme
     _set_localization
     _set_elasticsearch_coords
+    _set_zookeeper_coords
 
     _start_slipstream
     _enable_slipstream
@@ -584,6 +604,15 @@ function _set_elasticsearch_coords() {
         -e "s/ES_PORT=.*/ES_PORT=$ES_PORT/" \
         /etc/default/ssclj \
         /etc/default/slipstream
+}
+
+function _set_zookeeper_coords() {
+    if ( grep -q ZK_ENDPOINTS /etc/default/ssclj ); then
+        sed -i -e "s/ZK_ENDPOINTS=.*/ZK_ENDPOINTS=$ZK_ENDPOINTS/" \
+            /etc/default/ssclj
+    else
+        echo "ZK_ENDPOINTS=$ZK_ENDPOINTS" >> /etc/default/ssclj
+    fi
 }
 
 function _set_theme() {
