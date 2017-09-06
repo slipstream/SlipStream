@@ -81,12 +81,12 @@ YUM_REPO_TO_GH_BRANCH[release]=release-latest
 
 _GH_PROJECT_URL=https://raw.githubusercontent.com/slipstream/SlipStream
 if [ "$install_scripts_branch" != "master" ]; then
-    branch=$install_scripts_branch
+    GH_BRANCH=$install_scripts_branch
 else
-    branch=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
+    GH_BRANCH=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
 fi
-_GH_SCRIPTS_URL=$_GH_PROJECT_URL/$branch/install
-_SS_PARAM_BACKEND="-d $slipstream_backend"
+_GH_SCRIPTS_URL=$_GH_PROJECT_URL/$GH_BRANCH/install
+SS_PARAM_BACKEND="-d $slipstream_backend"
 _NEXUS_URI=http://nexus.sixsq.com/service/local/artifact/maven/redirect
 if ( _is_true $with_refconf ); then
     ss-set statecustom "Installing SlipStream WITH reference configuration..."
@@ -95,24 +95,23 @@ if ( _is_true $with_refconf ); then
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
     REF_CONF_URL=$_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
+    ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -e $YUM_REPO_EDITION -b $GH_BRANCH"
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -k $YUM_REPO_KIND -e $YUM_REPO_EDITION"
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
             /tmp/ss-install-ref-conf.sh \
                 $ref_conf_params \
+                -k $YUM_REPO_KIND \
                 -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
-                -p $NEXUS_CREDS \
-                -o "$_SS_PARAM_BACKEND"
+                -o "$SS_PARAM_BACKEND"
         else
-            /tmp/ss-install-ref-conf.sh $ref_conf_params \
-                -o "$_SS_PARAM_BACKEND"
+            /tmp/ss-install-ref-conf.sh \
+                $ref_conf_params \
+                -o "$SS_PARAM_BACKEND"
         fi
     else
         /tmp/ss-install-ref-conf.sh \
-            -e $YUM_REPO_EDITION \
-            -r $REF_CONF_URL \
-            -u $NEXUS_CREDS \
-            -o "$_SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
+            $ref_conf_params \
+            -o "$SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
     fi
 
     # Get and publish configured users.
@@ -142,9 +141,9 @@ else
             ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST'
     fi
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        /tmp/slipstream.sh $_SS_PARAM_BACKEND -a $ES_HOST_PORT -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
+        /tmp/slipstream.sh $SS_PARAM_BACKEND -a $ES_HOST_PORT -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
     else
-        /tmp/slipstream.sh $_SS_PARAM_BACKEND -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
+        /tmp/slipstream.sh $SS_PARAM_BACKEND -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
     fi
 fi
 
