@@ -49,10 +49,10 @@ function _check_repo_edition() {
 while getopts r:u:c:p:k:e:o:b: opt; do
     case $opt in
     r)
-        TARBALL_URL=$OPTARG
+        REFCONF_URL=$OPTARG
         ;;
     u)
-        TARBALL_URL_USERPASS=$OPTARG
+        REFCONF_URL_USERPASS=$OPTARG
         ;;
     c)
         YUM_CREDS_URL=$OPTARG
@@ -80,11 +80,11 @@ while getopts r:u:c:p:k:e:o:b: opt; do
     esac
 done
 
-if [ -z "$TARBALL_URL" ]; then
+if [ -z "$REFCONF_URL" ]; then
     echo "ERROR: URL with reference configuration tarball was not provided."
     usage_exit
 fi
-if [ -z "$TARBALL_URL_USERPASS" ]; then
+if [ -z "$REFCONF_URL_USERPASS" ]; then
     echo "WARNING: Credentials for URL with reference configuration tarball were not provided."
 fi
 if [ -z "$YUM_CREDS_URL" ]; then
@@ -122,10 +122,10 @@ function _install_reference_configuration() {
     # Get and inflate the tarball with the server configuration.
     TARBALL=~/ss-ref-conf.tgz
     _CREDS=
-    if [ -n "$TARBALL_URL_USERPASS" ]; then
-        _CREDS="-u $TARBALL_URL_USERPASS"
+    if [ -n "$REFCONF_URL_USERPASS" ]; then
+        _CREDS="-u $REFCONF_URL_USERPASS"
     fi
-    curl -k -L -sSf $_CREDS -o $TARBALL $TARBALL_URL
+    curl -k -L -sSf $_CREDS -o $TARBALL $REFCONF_URL
     tar -C $SS_CONF_DIR -zxvf $TARBALL
     rm -f $TARBALL
 
