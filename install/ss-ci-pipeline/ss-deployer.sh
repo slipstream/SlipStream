@@ -102,6 +102,7 @@ if ( _is_true $with_refconf ); then
                 $ref_conf_params \
                 -k $YUM_REPO_KIND \
                 -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
+                -p $NEXUS_CREDS \
                 -o "$SS_PARAM_BACKEND"
         else
             /tmp/ss-install-ref-conf.sh \
