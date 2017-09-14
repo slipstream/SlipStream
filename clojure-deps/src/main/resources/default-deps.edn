@@ -88,7 +88,7 @@
  [http-kit "2.2.0"]
 
  [instaparse "1.4.3"]
- [io.nervous/kvlt "0.1.5-SNAPSHOT"
+ [io.nervous/kvlt "0.1.5.sixsq"
   :exclusions [org.clojure/clojurescript]]
 
  [javax.mail/mail "1.4.7" :scope "compile"]
