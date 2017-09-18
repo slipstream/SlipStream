@@ -179,5 +179,6 @@
   :exclusions [org.clojure/clojure]]
  [peridot "0.4.4" :scope "test"]
  [expectations "2.1.9" :scope "test"]
+ [clj-http-fake/clj-http-fake "1.0.3" :scope "test"]
  ]
 
