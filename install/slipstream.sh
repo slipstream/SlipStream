@@ -441,6 +441,18 @@ function _install_time_sync_service() {
     srvc_enable chronyd.service
 }
 
+function _configure_hostname() {
+    set +e
+    hostname -f 1>/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        getent hosts $HOST_IP 1>/dev/null 2>&1
+        if [ $? -ne 0 ] ; then
+            echo "$HOST_IP $(hostname)" >> /etc/hosts
+        fi
+    fi
+    set -e
+}
+
 function prepare_node () {
 
     _print "Preparing node"
@@ -450,6 +462,7 @@ function prepare_node () {
     _configure_firewall
     _configure_selinux
     _install_time_sync_service
+    _configure_hostname
 }
 
 function _deploy_postgresql () {
