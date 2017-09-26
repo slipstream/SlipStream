@@ -22,7 +22,7 @@ dependencies.
 
 # License and copyright
 
-Copyright (C) 2015 SixSq Sarl (sixsq.com)
+Copyright (C) 2017 SixSq Sarl (sixsq.com)
 
 The code in the public repositories is licensed under the Apache
 license.
