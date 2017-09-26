@@ -16,7 +16,7 @@ from slipstream.util import (download_file, fileAppendContent,
 etree = importETree()
 
 NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
-SS_SERVICES_IN_NAGIOS = ['nuv.la', 'bb.sixsq.com']
+SS_SERVICES_IN_NAGIOS = ['nuv.la']
 
 GIT_CREDS_URL = 'http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
                 'com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz'
@@ -323,18 +323,18 @@ tr.add_test('test-clojure-deps',
 
 tr.add_test('test-auth',
             msg='Authentication tests on %s as %s.' % (endpoint, test_username))
-tr.add_test('test-run-comp',
-            msg='Component deployment - %s on %s as %s.' % (run_comp_uri, endpoint, test_username),
-            config={'comp-uri': run_comp_uri},
-            connectors=connectors_to_test)
-tr.add_test('test-run-app',
-            msg='Application deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
-            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
-            connectors=connectors_to_test)
-tr.add_test('test-run-app-scale',
-            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
-            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
-            connectors=connectors_to_test)
+#tr.add_test('test-run-comp',
+#            msg='Component deployment - %s on %s as %s.' % (run_comp_uri, endpoint, test_username),
+#            config={'comp-uri': run_comp_uri},
+#            connectors=connectors_to_test)
+#tr.add_test('test-run-app',
+#            msg='Application deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
+#            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
+#            connectors=connectors_to_test)
+#tr.add_test('test-run-app-scale',
+#            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
+#            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
+#            connectors=connectors_to_test)
 
 tr.info()
 
