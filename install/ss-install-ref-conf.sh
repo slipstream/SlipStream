@@ -19,9 +19,12 @@ YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
 
 GH_BRANCH=
 
+ES_HOST_PORT=localhost:9300
+
 function usage_exit() {
-    echo -e "usage:\n$_SCRIPT_NAME -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
+    echo -e "usage:\n$_SCRIPT_NAME -a <ES host:port> -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
     -k <YUM repo kind> -e <YUM repo edition> -o '<parameters to slipstream.sh>'
+-a Elasticsearch host:port. Default: $ES_HOST_PORT
 -r reference configuration URL as https://host/path/file.tgz. Mandatory parameter.
 -u credentials (user:pass) for URL with referece configuration. Optional parameter.
 -c YUM certificate tarball url as https://host/path/file.tgz Optional parameter.
@@ -46,8 +49,11 @@ function _check_repo_edition() {
     fi
 }
 
-while getopts r:u:c:p:k:e:o:b: opt; do
+while getopts a:r:u:c:p:k:e:o:b: opt; do
     case $opt in
+    a)
+        ES_HOST_PORT=$OPTARG
+        ;;
     r)
         REFCONF_URL=$OPTARG
         ;;
@@ -159,7 +165,8 @@ function _install_slipstream() {
     # Install SlipStream, but don't start it.
     curl -sSf -k -o slipstream.sh $GH_BASE_URL/install/slipstream.sh
     chmod +x slipstream.sh
-    ./slipstream.sh -S -k $YUM_REPO_KIND -e $YUM_REPO_EDITION $SS_INSTALL_OPTIONS
+    ./slipstream.sh -S -k $YUM_REPO_KIND -e $YUM_REPO_EDITION \
+        -a $ES_HOST_PORT $SS_INSTALL_OPTIONS
 }
 
 function _install_slipstream_connectors() {
@@ -167,7 +174,8 @@ function _install_slipstream_connectors() {
     curl -sSf -k -o ss-install-connectors.sh \
         $GH_BASE_URL/install/ss-install-connectors.sh
     chmod +x ss-install-connectors.sh
-    ./ss-install-connectors.sh -r $YUM_REPO_KIND $CONNECTORS_TO_INSTALL
+    ./ss-install-connectors.sh -a $ES_HOST_PORT -r $YUM_REPO_KIND \
+        $CONNECTORS_TO_INSTALL
 }
 
 function _start_slipstream() {

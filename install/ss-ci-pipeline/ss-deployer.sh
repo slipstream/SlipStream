@@ -86,7 +86,7 @@ else
     GH_BRANCH=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
 fi
 _GH_SCRIPTS_URL=$_GH_PROJECT_URL/$GH_BRANCH/install
-SS_PARAM_BACKEND="-d $slipstream_backend -a $ES_HOST_PORT"
+SS_PARAM_BACKEND="-d $slipstream_backend"
 _NEXUS_URI=http://nexus.sixsq.com/service/local/artifact/maven/redirect
 if ( _is_true $with_refconf ); then
     ss-set statecustom "Installing SlipStream WITH reference configuration..."
@@ -95,7 +95,7 @@ if ( _is_true $with_refconf ); then
         $_GH_SCRIPTS_URL/ss-install-ref-conf.sh
     chmod +x /tmp/ss-install-ref-conf.sh
     REF_CONF_URL=$_NEXUS_URI'?r=snapshots-enterprise-rhel7&g=com.sixsq.slipstream&a=SlipStreamReferenceConfiguration-'$REFCONF_NAME'-tar&p=tar.gz&c=bundle&v=LATEST'
-    ref_conf_params="-r $REF_CONF_URL -u $NEXUS_CREDS -e $YUM_REPO_EDITION -b $GH_BRANCH"
+    ref_conf_params="-a $ES_HOST_PORT -r $REF_CONF_URL -u $NEXUS_CREDS -e $YUM_REPO_EDITION -b $GH_BRANCH"
     if ( _is_none ${SS_REPO_CONF_URL} ); then
         if [ "X$YUM_REPO_EDITION" == "Xenterprise" ]; then
             /tmp/ss-install-ref-conf.sh \

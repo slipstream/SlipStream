@@ -15,7 +15,7 @@ exec 4>&2 3>&1 1>>${LOG_FILE} 2>&1
 
 function usage() {
     echo -e "usage:\n$_SCRIPT_NAME [-r repo] <list of connectors>
- -d host:port of Elasticsearch (default: $ES_COORDS).
+ -a host:port of Elasticsearch (default: $ES_COORDS).
  -r repo: <release|candidate|snapshot|local> (default: ${_YUM_REPO_KIND_DEFAULT})" 1>&3
     exit 1
 }
@@ -34,13 +34,13 @@ function _check_repo() {
 
 SS_YUM_REPO_KIND=${_YUM_REPO_KIND_DEFAULT}
 
-while getopts :r:d: opt; do
+while getopts :r:a: opt; do
     case $opt in
     r)
         SS_YUM_REPO_KIND=$OPTARG
         _check_repo $SS_YUM_REPO_KIND
         ;;
-    d)
+    a)
         ES_COORDS=$OPTARG
         ;;
     \?)
