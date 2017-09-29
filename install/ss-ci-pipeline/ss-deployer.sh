@@ -86,7 +86,7 @@ else
     GH_BRANCH=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
 fi
 _GH_SCRIPTS_URL=$_GH_PROJECT_URL/$GH_BRANCH/install
-SS_PARAM_BACKEND="-d $slipstream_backend"
+SS_PARAM_BACKEND="-d $slipstream_backend -a $ES_HOST_PORT"
 _NEXUS_URI=http://nexus.sixsq.com/service/local/artifact/maven/redirect
 if ( _is_true $with_refconf ); then
     ss-set statecustom "Installing SlipStream WITH reference configuration..."
