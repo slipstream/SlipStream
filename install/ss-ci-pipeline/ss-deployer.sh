@@ -3,7 +3,6 @@
 # input parameteres
 #
 # install_examples
-# slipstream_backend
 # with_refconf
 # nexus_creds
 # refconf_name
@@ -44,7 +43,6 @@ yum upgrade -y
 ss-get --timeout 3600 builder.ready
 
 install_examples=`ss-get install_examples`
-slipstream_backend=`ss-get slipstream_backend`
 with_refconf=`ss-get with_refconf`
 NEXUS_CREDS=`ss-get nexus_creds`
 REFCONF_NAME=`ss-get refconf_name`
@@ -86,7 +84,6 @@ else
     GH_BRANCH=${YUM_REPO_TO_GH_BRANCH[${YUM_REPO_KIND}]}
 fi
 _GH_SCRIPTS_URL=$_GH_PROJECT_URL/$GH_BRANCH/install
-SS_PARAM_BACKEND="-d $slipstream_backend"
 _NEXUS_URI=http://nexus.sixsq.com/service/local/artifact/maven/redirect
 if ( _is_true $with_refconf ); then
     ss-set statecustom "Installing SlipStream WITH reference configuration..."
@@ -102,17 +99,15 @@ if ( _is_true $with_refconf ); then
                 $ref_conf_params \
                 -k $YUM_REPO_KIND \
                 -c ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST' \
-                -p $NEXUS_CREDS \
-                -o "$SS_PARAM_BACKEND"
+                -p $NEXUS_CREDS
         else
             /tmp/ss-install-ref-conf.sh \
-                $ref_conf_params \
-                -o "$SS_PARAM_BACKEND"
+                $ref_conf_params
         fi
     else
         /tmp/ss-install-ref-conf.sh \
             $ref_conf_params \
-            -o "$SS_PARAM_BACKEND -x $SS_REPO_CONF_URL"
+            -o "-x $SS_REPO_CONF_URL"
     fi
 
     # Get and publish configured users.
@@ -142,9 +137,9 @@ else
             ${_NEXUS_URI}'?r=releases-enterprise&g=com.sixsq.slipstream&a=SlipStreamYUMCertsForSlipStreamInstaller&p=tgz&v=LATEST'
     fi
     if ( _is_none ${SS_REPO_CONF_URL} ); then
-        /tmp/slipstream.sh $SS_PARAM_BACKEND -a $ES_HOST_PORT -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
+        /tmp/slipstream.sh -a $ES_HOST_PORT -e $YUM_REPO_EDITION -k $YUM_REPO_KIND
     else
-        /tmp/slipstream.sh $SS_PARAM_BACKEND -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
+        /tmp/slipstream.sh -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
     fi
 fi
 

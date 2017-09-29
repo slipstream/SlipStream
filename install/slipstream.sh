@@ -38,8 +38,6 @@ SS_THEME=default
 SS_LANG=en
 SS_START=true
 
-SS_DB=hsqldb
-
 SS_SERVER_LOC=/opt/slipstream/server
 
 # Elasticsearch via transport client on localhost.
@@ -72,7 +70,6 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
 -L the language of the interface. Possilbe values: en, fr, de, jp. (default: en)\n
 -S don't start SlipStream service.\n
 -x URL with the YUM repo definition file.\n
--d SlipStream RDBMS: hsqldb or postgresql. Default: $SS_DB\n
 -a Elasticsearch coordinates. Default: $ES_HOST:$ES_PORT. If provided, and\n
    hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
 -b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
@@ -99,12 +96,6 @@ function _check_repo_edition() {
 function _check_repo_kind() {
     if ! test "${_YUM_REPO_KIND_MAP[$1]+isset}"; then
         _exit_usage
-    fi
-}
-
-function _check_db_param() {
-    if [ "$1" != "hsqldb" ] && [ "$1" != "postgresql" ]; then
-       _exit_usage
     fi
 }
 
@@ -154,10 +145,6 @@ while getopts a:b:l:H:t:L:k:e:d:x:vESch opt; do
         ;;
     x)
         SS_YUM_REPO_DEF_URL=$OPTARG
-        ;;
-    d)
-        _check_db_param $OPTARG
-        SS_DB=$OPTARG
         ;;
     a)
         ES_HOST=${OPTARG%%:*}
@@ -239,15 +226,6 @@ CLOUD_CLIENT_LIBCLOUD_VERSION=0.18.0
 
 # Packages from PyPi for SlipStream Client
 PYPI_SCPCLIENT_VER=0.4
-
-# PostgreSQL
-# NB! Should correspond to the maven dependency version.
-POSTGRESQL_VER=9.4
-POSTGRESQL_REL=1
-POSTGRESQL_RHEL=7.1
-POSTGRESQL_USER=postgres
-POSTGRESQL_PASS=password
-POSTGRESQL_DBS="slipstream ssclj"
 
 # Riemann variables.
 RIEMANN_VER=0.2.11-1
@@ -465,45 +443,6 @@ function prepare_node () {
     _configure_hostname
 }
 
-function _deploy_postgresql () {
-
-    _print "- installing PostgreSQL"
-
-    VER=${POSTGRESQL_VER//.}
-    rpm -iUvh \
-        http://yum.postgresql.org/$POSTGRESQL_VER/redhat/rhel-$POSTGRESQL_RHEL-x86_64/pgdg-centos$VER-$POSTGRESQL_VER-$POSTGRESQL_REL.noarch.rpm
-
-    _inst --nogpgcheck --enablerepo=pgdg$VER \
-        postgresql$VER \
-        postgresql$VER-server \
-        postgresql$VER-libs \
-        postgresql$VER-contrib
-
-    srvc_enable postgresql-$POSTGRESQL_VER
-
-    # start
-    srvc_ initdb postgresql-$POSTGRESQL_VER
-    srvc_start postgresql-$POSTGRESQL_VER
-
-    # post-install configuration
-    sed -i \
-        -e '/^local.*all.*all.*/ s/^#*/#/' \
-        -e '/^host.*all.*127.0.0.1\/32.*/ s/^#*/#/' \
-        -e '/^host.*all.*::1\/128.*/ s/^#*/#/' \
-         /var/lib/pgsql/$POSTGRESQL_VER/data/pg_hba.conf
-   cat >> /var/lib/pgsql/$POSTGRESQL_VER/data/pg_hba.conf<<EOF
-local   all             all                                     trust
-host    all             all             127.0.0.1/32            trust
-host    all             all             ::1/128                 trust
-EOF
-    srvc_restart postgresql-$POSTGRESQL_VER
-
-    for db_name in $POSTGRESQL_DBS; do
-        su - postgres -c "createdb $db_name"
-    done
-    su - postgres -c "psql -c \"ALTER ROLE ${POSTGRESQL_USER} WITH PASSWORD '"${POSTGRESQL_PASS}"'\";"
-}
-
 function _deploy_hsqldb () {
 
     _print "- installing HSQLDB"
@@ -558,14 +497,7 @@ function deploy_slipstream_server_deps () {
 
     _deploy_elasticstack
 
-    if [ "$SS_DB" = "postgresql" ]; then
-        _deploy_postgresql
-    elif [ "$SS_DB" = "hsqldb" ]; then
-        _deploy_hsqldb
-    else
-        _print_error "Unsupported RDBMS provided: $SS_DB"
-        _exit_usage
-    fi
+    _deploy_hsqldb
 
     _deploy_graphite
 
