@@ -1,4 +1,4 @@
-(def +version+ "3.37-SNAPSHOT")
+(def +version+ "3.37")
 
 (set-env!
   :project 'sixsq/default-deps
