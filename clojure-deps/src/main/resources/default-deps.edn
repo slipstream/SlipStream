@@ -129,7 +129,6 @@
  [org.elasticsearch/elasticsearch "5.2.1"]
  [org.elasticsearch.client/transport "5.2.1"]
  [org.hsqldb/hsqldb "2.3.4"]
- [zookeeper-clj "0.9.4"]
  [org.json/json "20160810"]
  [org.slf4j/slf4j-api "1.7.22"]
  [org.slf4j/slf4j-jdk14 "1.7.22"]
@@ -149,6 +148,8 @@
 
  [secretary "1.2.3"]
  [superstring "2.1.0"]
+
+ [zookeeper-clj "0.9.4"]
 
  ;;
  ;; boot and boot tasks
