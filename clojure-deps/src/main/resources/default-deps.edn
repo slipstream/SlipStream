@@ -47,27 +47,30 @@
 
  [aleph "0.4.4-alpha1"]
 
- [binaryage/devtools "0.9.4"]
- [buddy/buddy-core "1.1.1"]
- [buddy/buddy-hashers "1.1.0"]
- [buddy/buddy-sign "1.3.0"]
+ [binaryage/devtools "0.9.7"]
+ [buddy/buddy-core "1.4.0"]
+ [buddy/buddy-hashers "1.3.0"]
+ [buddy/buddy-sign "2.2.0"]
 
  [camel-snake-kebab "0.4.0"]
  [cc.qbits/spandex "0.5.2"]
- [cheshire "5.6.3"] ;; newer, explicit version needed by ring-json
- [clj-http "3.3.0"]
+ [cheshire "5.8.0"] ;; newer, explicit version needed by ring-json
+ [clj-http "3.7.0"]
  [clj-stacktrace "0.2.8"]
- [clj-time "0.12.1"]
+ [clj-time "0.14.0"]
  [clojure-ini "0.0.2"]
  [commons-logging "1.2"]
  [commons-lang/commons-lang "2.6"]
  [commons-codec/commons-codec "1.10"]
- [compojure "1.5.1"]
+ [compojure "1.6.0"]
  [com.andrewmcveigh/cljs-time "0.5.1"]
  [com.cemerick/url "0.1.1"]
  [com.jcraft/jsch "0.1.54"]
  [com.taoensso/tempura "1.1.2"]
  [com.taoensso/tower "3.1.0-beta5"]
+
+ ;; Pinned to this version because of a dependency conflict with the
+ ;; deprecated tower library used by SlipStreamUI.
  [com.taoensso/timbre "4.7.4"]
 
  ;; A fix for the bug that erased sources files  was commited and released
@@ -76,11 +79,11 @@
  ;;
  ;; BUG REPORT: https://github.com/crisptrutski/boot-cljs-test/issues/62
  ;; 
- [crisptrutski/boot-cljs-test "0.3.3" :scope "test"]
+ [crisptrutski/boot-cljs-test "0.3.4" :scope "test"]
 
  [degree9/boot-exec "1.0.0" :scope "test"]
  [degree9/boot-npm "1.4.0" :scope "test"]
- [doo "0.1.7" :scope "test"] ;; added by boot-cljs-test; control options here
+ [doo "0.1.8" :scope "test"] ;; added by boot-cljs-test; control options here
 
  [enlive "1.1.6"]
  [environ "1.1.0"]
@@ -89,7 +92,7 @@
  [honeysql "0.6.2"]
  [http-kit "2.2.0"]
 
- [instaparse "1.4.3"]
+ [instaparse "1.4.8"]
  [io.nervous/kvlt "0.1.5-SNAPSHOT"
   :exclusions [org.clojure/clojurescript]]
 
@@ -103,48 +106,48 @@
                javax.jms/jms
                com.sun.jdmk/jmxtools
                com.sun.jmx/jmxri]]
- [org.apache.logging.log4j/log4j-core "2.7"]
- [org.apache.logging.log4j/log4j-api "2.7"]
- [org.apache.logging.log4j/log4j-web "2.7"]
- [org.slf4j/slf4j-simple "1.7.22"]
+ [org.apache.logging.log4j/log4j-core "2.9.1"]
+ [org.apache.logging.log4j/log4j-api "2.9.1"]
+ [org.apache.logging.log4j/log4j-web "2.9.1"]
+ [org.slf4j/slf4j-simple "1.7.25"]
 
  [me.raynes/fs "1.4.6"]
- [metrics-clojure "2.7.0"]
- [metrics-clojure-ring "2.7.0"]
- [metrics-clojure-jvm "2.7.0"]
- [metrics-clojure-graphite "2.7.0"]
+ [metrics-clojure "2.10.0"]
+ [metrics-clojure-ring "2.10.0"]
+ [metrics-clojure-jvm "2.10.0"]
+ [metrics-clojure-graphite "2.10.0"]
 
  [net.cgrand/moustache "1.1.0"]
 
  [org.clojure/data.xml "0.0.8"]
  [org.clojure/data.zip "0.1.2"]
  [org.clojure/tools.cli "0.3.5"]
- [org.clojure/tools.logging "0.3.1"]
+ [org.clojure/tools.logging "0.4.0"]
  [org.clojure/tools.namespace "0.2.11"]
  [org.clojure/data.json "0.2.6"]
  [org.clojure/java.classpath "0.2.3"]
  [org.clojure/java.jdbc "0.4.2"]
  [org.clojure/core.async "0.3.443" :exclusions [org.clojure/tools.reader]]
  [org.clojure/test.check "0.9.0" :scope "test"]
- [org.elasticsearch/elasticsearch "5.2.1"]
- [org.elasticsearch.client/transport "5.2.1"]
+ [org.elasticsearch/elasticsearch "5.5.0"]
+ [org.elasticsearch.client/transport "5.5.0"]
  [org.hsqldb/hsqldb "2.3.4"]
- [org.json/json "20160810"]
- [org.slf4j/slf4j-api "1.7.22"]
- [org.slf4j/slf4j-jdk14 "1.7.22"]
- [org.slf4j/slf4j-log4j12 "1.7.22"]
+ [org.json/json "20170516"]
+ [org.slf4j/slf4j-api "1.7.25"]
+ [org.slf4j/slf4j-jdk14 "1.7.25"]
+ [org.slf4j/slf4j-log4j12 "1.7.25"]
  [org.apache.curator/curator-test "2.8.0" :scope "test"]
 
- [potemkin "0.4.3"]
+ [potemkin "0.4.4"]
 
  [reagent "0.7.0"]
  [re-com "2.1.0"]
- [re-frame "0.10.1"]
- [ring "1.6.1"]
- [ring/ring-core "1.6.1"]
+ [re-frame "0.10.2"]
+ [ring "1.6.2"]
+ [ring/ring-core "1.6.2"]
  [ring/ring-codec "1.0.1"]
  [ring/ring-json "0.4.0"]
- [ring/ring-defaults "0.3.0"]
+ [ring/ring-defaults "0.3.1"]
 
  [secretary "1.2.3"]
  [superstring "2.1.0"]
@@ -154,20 +157,20 @@
  ;;
  ;; boot and boot tasks
  ;;
- [boot/core "2.6.0"]
+ [boot/core "2.7.2"]
 
  [adzerk/boot-test "1.2.0" :scope "test"]
- [adzerk/boot-cljs "2.1.2" :scope "test"]
+ [adzerk/boot-cljs "2.1.4" :scope "test"]
  [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
  [adzerk/boot-reload "0.5.2" :scope "test"]
  [boot-codox "0.10.3" :scope "test"]
- [boot-deps "0.1.6" :scope "test"]
+ [boot-deps "0.1.8" :scope "test"]
  [boot-environ "1.1.0" :scope "test"]
  [com.cemerick/piggieback "0.2.2" :scope "test"]
  [onetom/boot-lein-generate "0.1.3" :scope "test"]
  [org.martinklepsch/boot-garden "1.3.2-0" :scope "test"]
  [pandeiro/boot-http "0.8.3" :scope "test"]
- [tolitius/boot-check "0.1.4" :scope "test"]
+ [tolitius/boot-check "0.1.6" :scope "test"]
  [weasel "0.7.0" :scope "test"]
 
  ;;
@@ -178,7 +181,7 @@
   :exclusions [org.clojure/clojure]]
  [clojure-complete/clojure-complete "0.2.4" :scope "test"
   :exclusions [org.clojure/clojure]]
- [peridot "0.4.4" :scope "test"]
+ [peridot "0.5.0" :scope "test"]
  [expectations "2.1.9" :scope "test"]
  ]
 
