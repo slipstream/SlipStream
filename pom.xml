@@ -34,6 +34,7 @@
         <module>../SlipStreamClojureAPI</module>
         <module>../SlipStreamConnectors</module>
         <module>../SlipStreamPythonAPI</module>
+        <module>../SlipStreamJobEngine</module>
       </modules>
     </profile>
 
