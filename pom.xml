@@ -123,31 +123,6 @@
       <url>http://maven.restlet.org</url>
     </repository>
 
-    <!-- NB! It's OK to depend on StratusLab from CentOS 6 repos. -->
-    <repository>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>stratuslab.releases</id>
-      <name>Releases</name>
-      <url>http://repo.stratuslab.eu:8081/content/repositories/centos-6.2-releases</url>
-    </repository>
-
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>stratuslab.snapshots</id>
-      <name>Snapshots</name>
-      <url>http://repo.stratuslab.eu:8081/content/repositories/centos-6.2-snapshots</url>
-    </repository>
-
     <repository>
       <id>sixsq.thirdparty</id>
       <url>${nexus.thirdparty}/thirdparty</url>
