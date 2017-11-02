@@ -39,6 +39,8 @@
  [com.sixsq.slipstream/SlipStreamConnector-OpenStack-conf :version]
  [com.sixsq.slipstream/SlipStreamConnector-StratusLab-conf :version]
  [com.sixsq.slipstream/slipstream-ring-container :version]
+ [com.sixsq.slipstream/cimi-resources-jar :version]
+ [com.sixsq.slipstream/cimi-resources-tests-jar :version]
 
  ;;
  ;; general dependencies
