@@ -153,6 +153,9 @@
  [superstring "2.1.0"]
 
  [zookeeper-clj "0.9.4"]
+ [org.apache.zookeeper/zookeeper "3.4.6"
+  :exclusions [jline
+               org.slf4j/slf4j-log4j12]]
 
  ;;
  ;; boot and boot tasks
