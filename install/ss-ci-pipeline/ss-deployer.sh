@@ -185,7 +185,7 @@ tries=0
 authn_url="${ss_url}/api/session"
 while [ $tries -lt 5 ]; do
 
-  rc=`curl -k --cookie-jar /root/cookies -b /root/cookies -sS -XPOST -d href='session-template/internal' -d username=${SS_UNAME} -d password=${SS_UPASS} -H content-type:application/x-www-form-urlencoded -w '%{http_code}' ${authn_url}`
+  rc=`curl -k --cookie-jar /root/cookies -b /root/cookies -sS -XPOST -d href='session-template/internal' -d username=${SS_UNAME} -d password=${SS_UPASS} -H content-type:application/x-www-form-urlencoded -o /dev/null -w '%{http_code}' ${authn_url}`
   echo "Return code from $SS_UNAME login is " ${rc}
   if [ "${rc}" -ne "201" ]; then
     echo "Return code from $SS_UNAME login was not 201."
@@ -211,7 +211,7 @@ fi
 profile_url="${ss_url}/user/$SS_UNAME"
 while [ $tries -lt 5 ]; do
 
-  rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -d -o /dev/null -w "%{http_code}" ${profile_url}`
+  rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -o /dev/null -w "%{http_code}" ${profile_url}`
   echo "Return code from $SS_UNAME profile page is " ${rc}
   if [ "${rc}" -ne "200" ]; then
     echo "Return code from $SS_UNAME profile page was not 200."
