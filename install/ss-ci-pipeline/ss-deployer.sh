@@ -188,7 +188,7 @@ while [ $tries -lt 5 ]; do
 
   rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${landing_page_url}`
   echo "Return code from ${landing_page} is " ${rc}
-  if [ "${rc}" -ne "201" ]; then
+  if [ "${rc}" -ne "200" ]; then
     echo "Return code from ${landing_page} was not 200."
     exit_code=1
   else
