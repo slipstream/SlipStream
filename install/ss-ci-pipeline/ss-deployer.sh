@@ -181,6 +181,32 @@ fi
 exit_code=0
 tries=0
 
+# ensure slipstream (java) is fully started and responds
+# required so that HSQLDB is populated and available
+while [ $tries -lt 5 ]; do
+
+  rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${ss_url}`
+  echo "Return code from $SS_UNAME landing page is " ${rc}
+  if [ "${rc}" -ne "201" ]; then
+    echo "Return code from $SS_UNAME landing page was not 200."
+    exit_code=1
+  else
+    echo "Return code from $SS_UNAME landing page was 200."
+    exit_code=0
+    break
+  fi
+
+  sleep 10
+  tries=$[$tries+1]
+
+done
+
+# the service failed the validation with login
+if [ "$exit_code" -ne "0" ]; then
+   ss-set statecustom "ERROR: Service failed to provide landing page."
+   exit $exit_code
+fi
+
 # authenticate with server using username and password
 authn_url="${ss_url}/api/session"
 while [ $tries -lt 5 ]; do
