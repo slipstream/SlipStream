@@ -177,13 +177,41 @@ SS_UPASS=supeRsupeR
 if [ -f /etc/slipstream/passwords/$SS_UNAME ]; then
     SS_UPASS=$(cat /etc/slipstream/passwords/$SS_UNAME)
 fi
-profile_url="${ss_url}/user/$SS_UNAME"
 
 exit_code=0
 tries=0
+
+# authenticate with server using username and password
+authn_url="${ss_url}/api/session"
 while [ $tries -lt 5 ]; do
 
-  rc=`curl -k -s -u $SS_UNAME:$SS_UPASS -o /dev/null -w "%{http_code}" ${profile_url}`
+  rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -XPOST -d href=session-template/internal -d username=$SS_UNAME -d password=$SS_UPASS -o /dev/null -w "%{http_code}" ${authn_url}`
+  echo "Return code from $SS_UNAME login is " ${rc}
+  if [ "${rc}" -ne "201" ]; then
+    echo "Return code from $SS_UNAME login was not 201."
+    exit_code=1
+  else
+    echo "Return code from $SS_UNAME login was 201."
+    exit_code=0
+    break
+  fi
+
+  sleep 10
+  tries=$[$tries+1]
+
+done
+
+# the service failed the validation with login
+if [ "$exit_code" -ne "0" ]; then
+   ss-set statecustom "ERROR: Service failed login validation."
+   exit $exit_code
+fi
+
+# check that the user's profile page is accessible
+profile_url="${ss_url}/user/$SS_UNAME"
+while [ $tries -lt 5 ]; do
+
+  rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -d -o /dev/null -w "%{http_code}" ${profile_url}`
   echo "Return code from $SS_UNAME profile page is " ${rc}
   if [ "${rc}" -ne "200" ]; then
     echo "Return code from $SS_UNAME profile page was not 200."
@@ -198,9 +226,10 @@ while [ $tries -lt 5 ]; do
   tries=$[$tries+1]
 
 done
-# the service failed the validation
+
+# the service failed the user profile validation
 if [ "$exit_code" -ne "0" ]; then
-   ss-set statecustom "ERROR: Service failed validation."
+   ss-set statecustom "ERROR: Service failed user profile validation."
    exit $exit_code
 fi
 
