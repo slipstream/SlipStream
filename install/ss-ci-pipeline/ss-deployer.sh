@@ -179,11 +179,11 @@ if [ -f /etc/slipstream/passwords/$SS_UNAME ]; then
 fi
 
 exit_code=0
-tries=0
 
 # ensure slipstream (java) is fully started and responds
 # required so that HSQLDB is populated and available
 landing_page_url="${ss_url}/login"
+tries=0
 while [ $tries -lt 5 ]; do
 
   rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${landing_page_url}`
@@ -210,6 +210,7 @@ fi
 
 # authenticate with server using username and password
 authn_url="${ss_url}/api/session"
+tries=0
 while [ $tries -lt 5 ]; do
 
   rc=`curl -k --cookie-jar /root/cookies -b /root/cookies -sS -XPOST -d href='session-template/internal' -d username=${SS_UNAME} -d password=${SS_UPASS} -H content-type:application/x-www-form-urlencoded -o /dev/null -w '%{http_code}' ${authn_url}`
@@ -236,6 +237,7 @@ fi
 
 # check that the user's profile page is accessible
 profile_url="${ss_url}/user/$SS_UNAME"
+tries=0
 while [ $tries -lt 5 ]; do
 
   rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -o /dev/null -w "%{http_code}" ${profile_url}`
