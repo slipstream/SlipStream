@@ -183,15 +183,16 @@ tries=0
 
 # ensure slipstream (java) is fully started and responds
 # required so that HSQLDB is populated and available
+landing_page_url="${ss_url}/login"
 while [ $tries -lt 5 ]; do
 
-  rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${ss_url}`
-  echo "Return code from $SS_UNAME landing page is " ${rc}
+  rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${landing_page_url}`
+  echo "Return code from ${landing_page} is " ${rc}
   if [ "${rc}" -ne "201" ]; then
-    echo "Return code from $SS_UNAME landing page was not 200."
+    echo "Return code from ${landing_page} was not 200."
     exit_code=1
   else
-    echo "Return code from $SS_UNAME landing page was 200."
+    echo "Return code from ${landing_page} was 200."
     exit_code=0
     break
   fi
@@ -238,12 +239,12 @@ profile_url="${ss_url}/user/$SS_UNAME"
 while [ $tries -lt 5 ]; do
 
   rc=`curl -k --cookie-jar ~/cookies -b ~/cookies -sS -o /dev/null -w "%{http_code}" ${profile_url}`
-  echo "Return code from $SS_UNAME profile page is " ${rc}
+  echo "Return code from ${profile_url} is " ${rc}
   if [ "${rc}" -ne "200" ]; then
-    echo "Return code from $SS_UNAME profile page was not 200."
+    echo "Return code from ${profile_url} was not 200."
     exit_code=1
   else
-    echo "Return code from $SS_UNAME profile page was 200."
+    echo "Return code from ${profile_url} was 200."
     exit_code=0
     break
   fi
