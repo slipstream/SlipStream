@@ -443,6 +443,13 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamCljResourcesTestServer-jar</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamCredCache</artifactId>
         <version>${project.version}</version>
       </dependency>
