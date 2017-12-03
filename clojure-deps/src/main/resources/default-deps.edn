@@ -20,7 +20,7 @@
  [com.sixsq.slipstream/SlipStreamDbSerializers-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResources-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar :version]
- [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar :version]
+ [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamConnector :version :scope "test"]
  [com.sixsq.slipstream/SlipStreamCredCache :version]
  [com.sixsq.slipstream/SlipStreamPersistence :version :scope "test"]
