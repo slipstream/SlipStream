@@ -74,8 +74,8 @@ USAGE="usage: -h -v -l <log-file> -k <repo-kind> -e <repo-edition> -E -H <ip> -t
    hostname/IP is localhost or 127.0.0.1, then Elasticsearch will be installed.\n
 -b Logstash coordinates. Default: $LOGSTASH_HOST:$LOGSTASH_PORT.  If provided,\n
    and hostname/IP is localhost or 127.0.0.1, then Logstash will be installed.\n
--c If provided, install X-Pack for ELK components.
--z Zookeeper coordinates. Default: $ZK_ENDPOINTS. If provided,
+-c If provided, install X-Pack for ELK components.\n
+-z Zookeeper coordinates. Default: $ZK_ENDPOINTS. If provided,\n
    and hostname/IP is localhost or 127.0.0.1, then Zookeeper will be installed.\n"
 
 # Allow this to be set in the environment to avoid having to pass arguments
