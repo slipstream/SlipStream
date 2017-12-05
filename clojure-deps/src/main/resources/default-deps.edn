@@ -48,7 +48,7 @@
  ;; (please keep these in alphabetical order)
  ;;
 
- [aleph "0.4.4-alpha1"]
+ [aleph "0.4.4"]
 
  [binaryage/devtools "0.9.7"]
  [buddy/buddy-core "1.4.0"]
@@ -56,7 +56,7 @@
  [buddy/buddy-sign "2.2.0"]
 
  [camel-snake-kebab "0.4.0"]
- [cc.qbits/spandex "0.5.2"]
+ [cc.qbits/spandex "0.5.4"]
  [cheshire "5.8.0"] ;; newer, explicit version needed by ring-json
  [clj-http "3.7.0"]
  [clj-stacktrace "0.2.8"]
@@ -132,8 +132,12 @@
  [org.clojure/java.jdbc "0.4.2"]
  [org.clojure/core.async "0.3.443" :exclusions [org.clojure/tools.reader]]
  [org.clojure/test.check "0.9.0" :scope "test"]
- [org.elasticsearch/elasticsearch "5.2.1"]
- [org.elasticsearch.client/transport "5.2.1"]
+ [org.elasticsearch/elasticsearch "5.5.0"]
+ [org.elasticsearch.client/transport "5.5.0"]
+ [org.elasticsearch.plugin/transport-netty4-client "5.5.0"]
+ [org.elasticsearch.test/framework "5.5.0"
+  :exclusions [com.carrotsearch.randomizedtesting/randomizedtesting-runner]]
+  
  [org.hsqldb/hsqldb "2.3.4"]
  [org.json/json "20170516"]
  [org.slf4j/slf4j-api "1.7.25"]
