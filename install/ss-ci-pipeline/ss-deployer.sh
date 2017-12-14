@@ -186,7 +186,7 @@ fi
 #
 # restarting services (probably not necessary)
 systemctl restart ssclj
-_wait_listens localhost 8201 15
+_wait_listens localhost 8201
 systemctl restart slipstream
 systemctl restart nginx
 
