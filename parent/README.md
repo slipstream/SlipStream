@@ -1,14 +1,11 @@
-# parent
+# Parent Project for Leiningen
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
+A parent project to centrally manage repositories and dependencies for
+SlipStream modules.
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 SixSq Sàrl
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the [Apache License, Version 2.0 (January
+2004)](http://www.apache.org/licenses/LICENSE-2.0).
