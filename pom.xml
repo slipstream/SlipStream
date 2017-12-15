@@ -405,6 +405,12 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamDbTesting-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
         <artifactId>SlipStreamDbSerializers-jar-dep</artifactId>
         <version>${project.version}</version>
         <type>pom</type>

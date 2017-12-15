@@ -17,6 +17,7 @@
  [com.sixsq.slipstream/SlipStreamAsync :version]
  [com.sixsq.slipstream/SlipStreamClientAPI-jar :version]
  [com.sixsq.slipstream/SlipStreamDbBinding-jar :version]
+ [com.sixsq.slipstream/SlipStreamDbTesting-jar :version]
  [com.sixsq.slipstream/SlipStreamDbSerializers-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResources-jar :version]
  [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar :version]
