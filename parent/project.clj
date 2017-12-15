@@ -8,9 +8,10 @@
 
   :plugins [[lein-ancient "0.6.14"]]
 
-  :dependencies [[org.clojure/clojure "1.9.0"]]
+  ;:dependencies [[org.clojure/clojure "1.9.0"]]
 
-  ;:filespecs [{:type :path :path "./project.clj"}]
+  :filespecs [{:type :path
+               :path "./project.clj"}]
 
   :managed-dependencies
   [
@@ -25,39 +26,39 @@
    ;; slipstream dependencies
    ;;
 
-   [com.sixsq.slipstream/auth +version+]
-   [com.sixsq.slipstream/token +version+]
-   [com.sixsq.slipstream/utils +version+]
-   [com.sixsq.slipstream/Libcloud-SixSq-zip +version+]
-   [com.sixsq.slipstream/SlipStreamAsync +version+]
-   [com.sixsq.slipstream/SlipStreamClientAPI-jar +version+]
-   [com.sixsq.slipstream/SlipStreamDbBinding-jar +version+]
-   [com.sixsq.slipstream/SlipStreamDbSerializers-jar +version+]
-   [com.sixsq.slipstream/SlipStreamCljResources-jar +version+]
-   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar +version+]
-   [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar +version+ :scope "test"]
-   [com.sixsq.slipstream/SlipStreamConnector +version+ :scope "test"]
-   [com.sixsq.slipstream/SlipStreamCredCache +version+]
-   [com.sixsq.slipstream/SlipStreamPersistence +version+ :scope "test"]
-   [com.sixsq.slipstream/SlipStreamServer-jar +version+ :scope "test"]
-   [com.sixsq.slipstream/SlipStreamServer-ui-static-content +version+ :type "zip"]
-   [com.sixsq.slipstream/SlipStreamService +version+ :scope "test"]
-   [com.sixsq.slipstream/SlipStreamUI +version+]
-   [com.sixsq.slipstream/SlipStreamPricingLib-jar +version+]
-   [com.sixsq.slipstream/SlipStreamPlacementLib-jar +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-Azure-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-CloudStack-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-EC2-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-Exoscale-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-NativeSoftLayer-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-NuvlaBox-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-OpenNebula-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-OpenStack-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-OTC-conf +version+]
-   [com.sixsq.slipstream/SlipStreamConnector-StratusLab-conf +version+]
-   [com.sixsq.slipstream/slipstream-ring-container +version+]
-   [com.sixsq.slipstream/cimi-resources-jar +version+]
-   [com.sixsq.slipstream/cimi-resources-tests-jar +version+]
+   [com.sixsq.slipstream/auth ~+version+]
+   [com.sixsq.slipstream/token ~+version+]
+   [com.sixsq.slipstream/utils ~+version+]
+   [com.sixsq.slipstream/Libcloud-SixSq-zip ~+version+]
+   [com.sixsq.slipstream/SlipStreamAsync ~+version+]
+   [com.sixsq.slipstream/SlipStreamClientAPI-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamDbBinding-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamDbSerializers-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamCljResources-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamConnector ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamCredCache ~+version+]
+   [com.sixsq.slipstream/SlipStreamPersistence ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamServer-jar ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamServer-ui-static-content ~+version+ :type "zip"]
+   [com.sixsq.slipstream/SlipStreamService ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamUI ~+version+]
+   [com.sixsq.slipstream/SlipStreamPricingLib-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamPlacementLib-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-Azure-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-CloudStack-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-EC2-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-Exoscale-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-NativeSoftLayer-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-NuvlaBox-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-OpenNebula-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-OpenStack-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-OTC-conf ~+version+]
+   [com.sixsq.slipstream/SlipStreamConnector-StratusLab-conf ~+version+]
+   [com.sixsq.slipstream/slipstream-ring-container ~+version+]
+   [com.sixsq.slipstream/cimi-resources-jar ~+version+]
+   [com.sixsq.slipstream/cimi-resources-tests-jar ~+version+]
 
    ;;
    ;; general dependencies
@@ -183,30 +184,28 @@
    [expectations "2.1.9" :scope "test"]
    ]
 
-  :profiles
-  {:community  {:repositories [["third-party" {:url           "http://nexus.sixsq.com/content/repositories/thirdparty/"
-                                               :snapshots     false
-                                               :sign-releases false
-                                               :checksum      :fail
-                                               :update        :daily}]
-                               ["snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
-                                             :snapshots     true
-                                             :sign-releases false
-                                             :checksum      :fail
-                                             :update        :always}]
-                               ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
-                                            :snapshots     false
-                                            :sign-releases false
-                                            :checksum      :fail
-                                            :update        :daily}]]}
-   :enterprise {:repositories [["snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
-                                             :snapshots     true
-                                             :sign-releases false
-                                             :checksum      :fail
-                                             :update        :always}]
-                               ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
-                                            :snapshots     false
-                                            :sign-releases false
-                                            :checksum      :fail
-                                            :update        :daily}]]}}
-  )
+  :repositories [["third-party" {:url           "http://nexus.sixsq.com/content/repositories/thirdparty/"
+                                 :snapshots     false
+                                 :sign-releases false
+                                 :checksum      :fail
+                                 :update        :daily}]
+                 ["community-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+                                         :snapshots     true
+                                         :sign-releases false
+                                         :checksum      :fail
+                                         :update        :always}]
+                 ["community-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+                                        :snapshots     false
+                                        :sign-releases false
+                                        :checksum      :fail
+                                        :update        :daily}]
+                 ["enterprise-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
+                                          :snapshots     true
+                                          :sign-releases false
+                                          :checksum      :fail
+                                          :update        :always}]
+                 ["enterprise-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
+                                         :snapshots     false
+                                         :sign-releases false
+                                         :checksum      :fail
+                                         :update        :daily}]])
