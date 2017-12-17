@@ -42,7 +42,9 @@ SS_SERVER_LOC=/opt/slipstream/server
 
 # Elasticsearch via transport client on localhost.
 export ES_HOST=localhost
-export ES_PORT=9300
+export ES_PORT_BIN=9300
+export ES_PORT_HTTP=9200
+export ES_PORT=$ES_PORT_BIN
 ES_INSTALL=true
 
 # Logstash coordinates.
@@ -695,7 +697,7 @@ function _install_kibana() {
 server.ssl.cert: $kibana_ssl/server.crt
 server.ssl.key:  $kibana_ssl/server.key
 server.host: "0.0.0.0"
-elasticsearch.url: "http://$ES_HOST:9200"
+elasticsearch.url: "http://$ES_HOST:$ES_PORT_HTTP"
 logging.dest: $log_dest/kibana.log
 EOF
 
@@ -724,6 +726,8 @@ EOF
     # Ensure is started; start also on boot.
     srvc_enable elasticsearch.service
     srvc_start elasticsearch
+    _wait_listens $ES_HOST $ES_PORT_BIN 15
+    _wait_listens $ES_HOST $ES_PORT_HTTP 15
 }
 
 function _install_logstash() {

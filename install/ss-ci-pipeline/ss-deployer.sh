@@ -37,6 +37,36 @@ function _is_none() {
     fi
 }
 
+function abort() {
+    echo "!!! Aborting: $@"
+    exit 1
+}
+
+function _now_sec() {
+    date +%s
+}
+
+function _wait_listens() {
+    # host port [timeout seconds] [sleep interval seconds]
+    wait_time=${3:-60}
+    sleep_interval=${4:-2}
+    stop_time=$(($(_now_sec) + $wait_time))
+    while (( "$(_now_sec)" <= $stop_time )); do
+        set +e
+        res=$(ncat -v -4 $1 $2 < /dev/null 2>&1)
+        if [ "$?" == "0" ]; then
+            return 0
+        else
+            if ( ! (echo $res | grep -q "Connection refused") ); then
+                abort "Failed to check $1:$2 with:" $res
+            fi
+        fi
+        set -e
+        sleep $sleep_interval
+    done
+    abort "Timed out after ${wait_time} sec waiting for $1:$2"
+}
+
 yum clean all
 yum upgrade -y
 
@@ -150,12 +180,14 @@ if [ "X$ES_HOST_PORT" == "Xlocalhost:9300" ]; then
     sed -i 's/^-Xms.*/-Xms256m/' /etc/elasticsearch/jvm.options
     sed -i 's/^-Xmx.*/-Xmx1g/' /etc/elasticsearch/jvm.options
     systemctl restart elasticsearch
+    _wait_listens localhost 9300 15
 fi
 
 #
 # restarting services (probably not necessary)
-systemctl restart slipstream
 systemctl restart ssclj
+_wait_listens localhost 8201
+systemctl restart slipstream
 systemctl restart nginx
 
 #
