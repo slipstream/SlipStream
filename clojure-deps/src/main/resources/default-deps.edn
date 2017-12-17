@@ -58,7 +58,7 @@
  [buddy/buddy-sign "2.2.0"]
 
  [camel-snake-kebab "0.4.0"]
- [cc.qbits/spandex "0.5.4"]
+ [cc.qbits/spandex "0.5.5"]
  [cheshire "5.8.0"] ;; newer, explicit version needed by ring-json
  [clj-http "3.7.0"]
  [clj-stacktrace "0.2.8"]
@@ -93,7 +93,7 @@
 
  [enlive "1.1.6"]
  [environ "1.1.0"]
- [expound "0.3.4"]
+ [expound "0.4.0"]
  
  [honeysql "0.6.2"]
  [http-kit "2.2.0"]
