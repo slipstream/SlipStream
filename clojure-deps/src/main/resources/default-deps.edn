@@ -70,6 +70,7 @@
  [compojure "1.6.0"]
  [com.andrewmcveigh/cljs-time "0.5.2"]
  [com.cemerick/url "0.1.1"]
+ [com.draines/postal "2.0.2"]
  [com.jcraft/jsch "0.1.54"]
  [com.taoensso/tempura "1.1.2"]
  [com.taoensso/tower "3.1.0-beta5"]
