@@ -1,6 +1,11 @@
 (def +version+ "3.42-SNAPSHOT")
 
-(defproject sixsq.slipstream/parent "3.42-SNAPSHOT"
+;; FIXME: Provide HTTPS access to Nexus.
+(require 'cemerick.pomegranate.aether)
+(cemerick.pomegranate.aether/register-wagon-factory!
+ "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
+
+(defproject com.sixsq.slipstream/parent "3.42-SNAPSHOT"
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
   :license {:name "Apache 2.0"
@@ -209,4 +214,16 @@
                                          :snapshots     false
                                          :sign-releases false
                                          :checksum      :fail
-                                         :update        :daily}]])
+                                         :update        :daily}]]
+
+  
+  :deploy-repositories [["snapshots" {:url "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+                                      :snapshots     true
+                                      :sign-releases false
+                                      :checksum      :fail
+                                      :update        :always}]
+                        ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+                                     :snapshots     false
+                                     :sign-releases false
+                                     :checksum      :fail
+                                     :update        :daily}]])
