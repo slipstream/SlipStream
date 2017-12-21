@@ -39,6 +39,7 @@ msg="Running deployment tests of $APPLICATION on $SS_URL as $USER:$PASS for conn
 ss-display "$msg"
 echo $msg
 
+ss-login -vvv -u $USER -p $PASS --endpoint=$SS_URL
 for CONNECTOR in ${CONNECTORS_TO_TEST}; do
     msg="Running deployment test of $APPLICATION on $SS_URL as $USER:$PASS for connector '$CONNECTOR'"
     ss-display "$msg"
