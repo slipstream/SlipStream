@@ -18,6 +18,8 @@
   :filespecs [{:type :path
                :path "./project.clj"}]
 
+  :pom-location "target/"
+
   :managed-dependencies
   [
    ;;
