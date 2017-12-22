@@ -3,9 +3,10 @@
 ;; FIXME: Provide HTTPS access to Nexus.
 (require 'cemerick.pomegranate.aether)
 (cemerick.pomegranate.aether/register-wagon-factory!
- "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
+  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
-(defproject com.sixsq.slipstream/parent "3.42-SNAPSHOT"
+(defproject
+  com.sixsq.slipstream/parent "3.42-SNAPSHOT"
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
   :license {:name "Apache 2.0"
@@ -96,6 +97,7 @@
    [com.jcraft/jsch "0.1.54"]
    [com.taoensso/tempura "1.1.2"]
    [com.taoensso/tower "3.1.0-beta5"]
+   [org.clojure/tools.reader "1.1.0"]
 
    ;; Pinned to this version because of a dependency conflict with the
    ;; deprecated tower library used by SlipStreamUI.
@@ -192,40 +194,42 @@
    [expectations "2.1.9" :scope "test"]
    ]
 
-  :repositories [["third-party" {:url           "http://nexus.sixsq.com/content/repositories/thirdparty/"
-                                 :snapshots     false
-                                 :sign-releases false
-                                 :checksum      :fail
-                                 :update        :daily}]
-                 ["community-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
-                                         :snapshots     true
-                                         :sign-releases false
-                                         :checksum      :fail
-                                         :update        :always}]
-                 ["community-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
-                                        :snapshots     false
-                                        :sign-releases false
-                                        :checksum      :fail
-                                        :update        :daily}]
-                 ["enterprise-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
-                                          :snapshots     true
-                                          :sign-releases false
-                                          :checksum      :fail
-                                          :update        :always}]
-                 ["enterprise-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
-                                         :snapshots     false
-                                         :sign-releases false
-                                         :checksum      :fail
-                                         :update        :daily}]]
+  :repositories
+  [["third-party" {:url           "http://nexus.sixsq.com/content/repositories/thirdparty/"
+                   :snapshots     false
+                   :sign-releases false
+                   :checksum      :fail
+                   :update        :daily}]
+   ["community-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+                           :snapshots     true
+                           :sign-releases false
+                           :checksum      :fail
+                           :update        :always}]
+   ["community-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+                          :snapshots     false
+                          :sign-releases false
+                          :checksum      :fail
+                          :update        :daily}]
+   ["enterprise-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
+                            :snapshots     true
+                            :sign-releases false
+                            :checksum      :fail
+                            :update        :always}]
+   ["enterprise-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
+                           :snapshots     false
+                           :sign-releases false
+                           :checksum      :fail
+                           :update        :daily}]]
 
-  
-  :deploy-repositories [["snapshots" {:url "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
-                                      :snapshots     true
-                                      :sign-releases false
-                                      :checksum      :fail
-                                      :update        :always}]
-                        ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
-                                     :snapshots     false
-                                     :sign-releases false
-                                     :checksum      :fail
-                                     :update        :daily}]])
+
+  :deploy-repositories
+  [["snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+                 :snapshots     true
+                 :sign-releases false
+                 :checksum      :fail
+                 :update        :always}]
+   ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+                :snapshots     false
+                :sign-releases false
+                :checksum      :fail
+                :update        :daily}]])
