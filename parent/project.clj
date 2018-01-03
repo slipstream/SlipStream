@@ -105,11 +105,16 @@
    [com.taoensso/timbre "4.7.4"]
 
    ;; cljs testing; control options here
+   [cljsjs/moment "2.17.1-1"]
+   [cljsjs/react-date-range "0.2.4-0" :exclusions [cljsjs/react]]
+
    [doo "0.1.8" :scope "test"]
 
    [enlive "1.1.6"]
    [environ "1.1.0"]
    [expound "0.4.0"]
+
+   [funcool/promesa "1.9.0"]
 
    [honeysql "0.6.2"]
    [http-kit "2.2.0"]
@@ -176,6 +181,7 @@
    [ring/ring-defaults "0.3.1"]
 
    [secretary "1.2.3"]
+   [soda-ash "0.76.0"]
    [superstring "2.1.0"]
 
    [zookeeper-clj "0.9.4"]
