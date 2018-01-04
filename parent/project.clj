@@ -44,7 +44,7 @@
    [com.sixsq.slipstream/SlipStreamDbTesting-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamDbSerializers-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamCljResources-jar ~+version+]
-   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamConnector ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamCredCache ~+version+]
@@ -167,7 +167,7 @@
    [org.slf4j/slf4j-api "1.7.25"]
    [org.slf4j/slf4j-jdk14 "1.7.25"]
    [org.slf4j/slf4j-log4j12 "1.7.25"]
-   [org.apache.curator/curator-test "2.8.0" :scope "test"]
+   [org.apache.curator/curator-test "2.12.0" :scope "test"]
 
    [potemkin "0.4.4"]
 
