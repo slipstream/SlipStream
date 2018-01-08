@@ -98,12 +98,6 @@
     <hsqldb.version>2.3.4</hsqldb.version>
     <postgresql.version>9.4.1209</postgresql.version>
 
-    <stratuslab.version>14.06.0</stratuslab.version>
-    <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
-    <stratuslab.version.rpm>${stratuslab.version}</stratuslab.version.rpm>
-    <stratuslab.version.rpm.api>${stratuslab.version}</stratuslab.version.rpm.api>
-    <stratuslab.version.rpm.api.externals>${stratuslab.version}</stratuslab.version.rpm.api.externals>
-
     <libcloud.version>0.18.0</libcloud.version>
     <boto.version>2.46.1</boto.version>
 
