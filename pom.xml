@@ -816,6 +816,12 @@
         </exclusions>
       </dependency>
 
+      <dependency>
+        <groupId>org.clojure</groupId>
+        <artifactId>test.check</artifactId>
+        <version>0.9.0</version>
+      </dependency>
+
       <!-- ***************** -->
       <!-- test dependencies -->
       <!-- ***************** -->
