@@ -5,14 +5,14 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>lein-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.42-SNAPSHOT</version>
+  <version>3.42</version>
   <name>lein-parent</name>
   <url>http://sixsq.com/</url>
 
   <parent>
     <groupId>com.sixsq.slipstream</groupId>
     <artifactId>SlipStream</artifactId>
-    <version>3.42-SNAPSHOT</version>
+    <version>3.42</version>
   </parent>
 
   <profiles>
