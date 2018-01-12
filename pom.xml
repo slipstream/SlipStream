@@ -5,7 +5,7 @@
   <groupId>com.sixsq.slipstream</groupId>
   <artifactId>SlipStream</artifactId>
   <packaging>pom</packaging>
-  <version>3.42-SNAPSHOT</version>
+  <version>3.43-SNAPSHOT</version>
   <name>SlipStream</name>
   <url>http://sixsq.com/</url>
 
@@ -97,12 +97,6 @@
 
     <hsqldb.version>2.3.4</hsqldb.version>
     <postgresql.version>9.4.1209</postgresql.version>
-
-    <stratuslab.version>14.06.0</stratuslab.version>
-    <stratuslab.version.zip>${stratuslab.version}</stratuslab.version.zip>
-    <stratuslab.version.rpm>${stratuslab.version}</stratuslab.version.rpm>
-    <stratuslab.version.rpm.api>${stratuslab.version}</stratuslab.version.rpm.api>
-    <stratuslab.version.rpm.api.externals>${stratuslab.version}</stratuslab.version.rpm.api.externals>
 
     <libcloud.version>0.18.0</libcloud.version>
     <boto.version>2.46.1</boto.version>
@@ -820,6 +814,12 @@
             <artifactId>tools.reader</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.clojure</groupId>
+        <artifactId>test.check</artifactId>
+        <version>0.9.0</version>
       </dependency>
 
       <!-- ***************** -->

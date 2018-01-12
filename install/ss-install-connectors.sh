@@ -102,8 +102,7 @@ _print "Installing SlipStream connectors: $CONNECTORS"
 
 declare -A CONNECTORS_MAPPING 
 CONNECTORS_MAPPING=(
-    ['cloudstackadvancedzone']='cloudstack'
-    ['stratuslabiter']='stratuslab')
+    ['cloudstackadvancedzone']='cloudstack')
 
 for name in $CONNECTORS; do
     _print "---> ${name}"
