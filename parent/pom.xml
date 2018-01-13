@@ -7,7 +7,7 @@
   <artifactId>lein-parent</artifactId>
   <packaging>pom</packaging>
   <version>3.43-SNAPSHOT</version>
-  <name>lein-parent</name>
+  <name>SlipStream/parent</name>
   <url>http://sixsq.com/</url>
 
   <parent>
