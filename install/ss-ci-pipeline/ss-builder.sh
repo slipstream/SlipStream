@@ -25,6 +25,7 @@ set -e
 # In case configuration file is not read.
 source ~/.bashrc
 
+export LC_ALL='en_US.UTF-8'
 
 maven_goal=`ss-get maven_goal`
 maven_options="`ss-get maven_options`"
