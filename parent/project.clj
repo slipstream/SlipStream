@@ -6,7 +6,7 @@
   "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
 (defproject
-  com.sixsq.slipstream/parent "3.43-SNAPSHOT"
+  com.sixsq.slipstream/parent "3.43"
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
   :license {:name "Apache 2.0"
@@ -20,6 +20,10 @@
                :path "./project.clj"}]
 
   :pom-location "target/"
+
+  ;; keep the release process happy; not actually used
+  :parent-project {:coords  [com.sixsq.slipstream/parent "3.43-SNAPSHOT"]
+                   :inherit [:min-lein-version :managed-dependencies :repositories :deploy-repositories]}
 
   :managed-dependencies
   [
@@ -238,4 +242,4 @@
                 :snapshots     false
                 :sign-releases false
                 :checksum      :fail
-                :update        :daily}]])
+                :update        :daily}]] :+version+ "3.43")
