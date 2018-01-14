@@ -45,9 +45,6 @@
         <property>
           <name>enterprise</name>
         </property>
-        <property>
-          <name>!skipModules</name>
-        </property>
       </activation>
       <modules>
         <module>../SlipStreamConnectorsEnterprise</module>
