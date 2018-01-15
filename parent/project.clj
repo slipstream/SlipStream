@@ -6,7 +6,7 @@
   "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
 (defproject
-  com.sixsq.slipstream/parent "3.43"
+  com.sixsq.slipstream/parent "3.43-SNAPSHOT"
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
   :license {:name "Apache 2.0"
@@ -242,4 +242,4 @@
                 :snapshots     false
                 :sign-releases false
                 :checksum      :fail
-                :update        :daily}]] :+version+ "3.43")
+                :update        :daily}]])
