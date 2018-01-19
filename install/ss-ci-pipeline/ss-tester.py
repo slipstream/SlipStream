@@ -15,7 +15,7 @@ from slipstream.util import (fileAppendContent, execute, importETree)
 
 etree = importETree()
 
-NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
+NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/statusJson.php'
 SS_SERVICES_IN_NAGIOS = ['nuv.la']
 
 GIT_CREDS_URL = 'http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
