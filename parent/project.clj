@@ -79,7 +79,6 @@
 
    [aleph "0.4.4"]
 
-   [binaryage/devtools "0.9.8"]
    [buddy/buddy-core "1.4.0"]
    [buddy/buddy-hashers "1.3.0"]
    [buddy/buddy-sign "2.2.0"]
@@ -195,13 +194,21 @@
    ;;
    ;; libraries and utilities for testing
    ;;
-   [junit "4.12" :scope "test"]
-   [org.clojure/tools.nrepl "0.2.13" :scope "test"
-    :exclusions [org.clojure/clojure]]
+   [binaryage/devtools "0.9.8" :scope "test"]
+
    [clojure-complete/clojure-complete "0.2.4" :scope "test"
     :exclusions [org.clojure/clojure]]
-   [peridot "0.5.0" :scope "test"]
+
+   [day8.re-frame/trace "0.1.14" :scope "test"]
+
    [expectations "2.1.9" :scope "test"]
+
+   [junit "4.12" :scope "test"]
+
+   [org.clojure/tools.nrepl "0.2.13" :scope "test"
+    :exclusions [org.clojure/clojure]]
+
+   [peridot "0.5.0" :scope "test"]
    ]
 
   :repositories
