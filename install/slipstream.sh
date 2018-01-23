@@ -39,6 +39,7 @@ SS_LANG=en
 SS_START=true
 
 SS_SERVER_LOC=/opt/slipstream/server
+SS_SERVER_LOG_DIR=/var/log/slipstream/server
 
 # Elasticsearch via transport client on localhost.
 export ES_HOST=localhost
@@ -394,7 +395,7 @@ function _install_global_dependencies() {
 
 function _configure_selinux() {
 
-    _print "- configuring selinux"
+    _print "- configuring SELinux"
 
     # install SELinux needed utility tools
     _inst policycoreutils policycoreutils-python
@@ -416,6 +417,8 @@ function _configure_selinux() {
 }
 
 function _install_time_sync_service() {
+    _print "- installing time synchronization service"
+
     _inst chrony
     srvc_start chronyd.service
     srvc_enable chronyd.service
@@ -458,11 +461,6 @@ function _deploy_hsqldb () {
     cat > ~/sqltool.rc <<EOF
 urlid slipstream
 url jdbc:hsqldb:hsql://localhost:9001/slipstream
-username sa
-password
-
-urlid ssclj
-url jdbc:hsqldb:hsql://localhost:9001/ssclj
 username sa
 password
 EOF
@@ -742,20 +740,36 @@ function _install_logstash() {
 
     #
     # SlipStream Java server access.
-    ES_INDEX=ss-access
+    ES_INDEX_SS=ss-access
     cat > $LOGSTASH_PATTERNS_DIR/slipstream.grok<<EOF
 RESTLET_DATE %{YEAR}-%{MONTHNUM}-%{MONTHDAY}
 RESTLET_URIPARAM [A-Za-z0-9$.+!*'|(){},~@#%&/=:;_?\-\[\]]*
 SS_ACCESS %{RESTLET_DATE:date}\s+%{TIME:time}\s+%{IP:remote-ip}\s+%{USER:remote-user-id}\s+%{IP:server-ip}\s+%{POSINT:server-port}\s+%{WORD:method}\s+%{URIPATH:resource}\s+%{RESTLET_URIPARAM:query}\s+%{NUMBER:status}\s+%{NUMBER:bytes-sent}\s+%{NUMBER:bytes-received}\s+%{NUMBER:response-time}\s+%{URI:host-ref}
 EOF
-    cat > $LOGSTASH_CONFD/slipstream.conf<<EOF
+
+    #
+    # Nginx access.
+    ES_INDEX_NGINX=nginx-access
+    cat > $LOGSTASH_PATTERNS_DIR/nginx.grok<<EOF
+NGUSERNAME [a-zA-Z\.\@\-\+_%]+
+NGUSER %{NGUSERNAME}
+NGINXACCESS %{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
+EOF
+
+    cat > $LOGSTASH_CONFD/ss-nginx.conf<<EOF
 input {
     beats {
         port => "$LOGSTASH_PORT"
     }
 }
 filter {
-  if [type] == "ss-access" {
+if [type] == "nginx-access" {
+     grok {
+       match => { "message" => "%{NGINXACCESS}" }
+       patterns_dir => ["$LOGSTASH_PATTERNS_DIR"]
+     }
+  }
+if [type] == "ss-access" {
      grok {
        match => { "message" => "%{SS_ACCESS}" }
        patterns_dir => ["$LOGSTASH_PATTERNS_DIR"]
@@ -763,37 +777,15 @@ filter {
   }
 }
 output {
-  elasticsearch { hosts => ["$ES_HOST:9200"]
-                  index => "$ES_INDEX"
-  }
-}
-EOF
-
-    #
-    # Nginx access.
-    ES_INDEX=nginx-access
-    cat > $LOGSTASH_PATTERNS_DIR/nginx.grok<<EOF
-NGUSERNAME [a-zA-Z\.\@\-\+_%]+
-NGUSER %{NGUSERNAME}
-NGINXACCESS %{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
-EOF
-    cat >$LOGSTASH_CONFD/nginx.conf<<EOF
-input {
-    beats {
-        port => "$LOGSTASH_PORT"
-    }
-}
-filter {
   if [type] == "nginx-access" {
-    grok {
-      match => { "message" => "%{NGINXACCESS}" }
-      patterns_dir => ["$LOGSTASH_PATTERNS_DIR"]
+    elasticsearch { hosts => ["$ES_HOST:9200"]
+                    index => "$ES_INDEX_NGINX"
     }
   }
-}
-output {
-  elasticsearch { hosts => ["$ES_HOST:9200"]
-                  index => "$ES_INDEX"
+  if [type] == "ss-access" {
+    elasticsearch { hosts => ["$ES_HOST:9200"]
+                    index => "$ES_INDEX_SS"
+    }
   }
 }
 EOF
@@ -826,13 +818,17 @@ function _install_logging_beats() {
 filebeat.prospectors:
 - input_type: log
   paths:
-    - $SS_SERVER_LOC/logs/slipstream.log.*
-  include_lines: [".*org.restlet.engine.log.LogFilter afterHandle.*"]
-  document_type: ss-access
+    - /var/log/nginx/access.log
+  fields: 
+    type: nginx-access
+  fields_under_root: true
 - input_type: log
   paths:
-    - /var/log/nginx/access.log
-  document_type: nginx-access
+    - $SS_SERVER_LOG_DIR/slipstream.log.*
+  include_lines: [".*org.restlet.engine.log.LogFilter afterHandle.*"]
+  fields: 
+    type: ss-access
+  fields_under_root: true
 tags: ["slipstream-service", "web-tier"]
 output.logstash:
   hosts: ["$LOGSTASH_HOST:$LOGSTASH_PORT"]
@@ -860,7 +856,9 @@ function _load_slipstream_examples() {
     _is_true $SLIPSTREAM_EXAMPLES || return 0
 
     _print "- loading SlipStream examples"
-    ss-module-upload -u ${SS_USERNAME} -p ${SS_PASSWORD} \
+    ss-login -u ${SS_USERNAME} -p ${SS_PASSWORD} \
+        --endpoint $SS_LOCAL_URL
+    ss-module-upload \
         --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
 }
 
