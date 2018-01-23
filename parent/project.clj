@@ -1,4 +1,4 @@
-(def +version+ "3.43-SNAPSHOT")
+(def +version+ "3.44-SNAPSHOT")
 
 ;; FIXME: Provide HTTPS access to Nexus.
 (require 'cemerick.pomegranate.aether)
@@ -6,7 +6,7 @@
   "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
 (defproject
-  com.sixsq.slipstream/parent "3.43-SNAPSHOT"
+  com.sixsq.slipstream/parent "3.44-SNAPSHOT"
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
   :license {:name "Apache 2.0"
@@ -22,7 +22,7 @@
   :pom-location "target/"
 
   ;; keep the release process happy; not actually used
-  :parent-project {:coords  [com.sixsq.slipstream/parent "3.43-SNAPSHOT"]
+  :parent-project {:coords  [com.sixsq.slipstream/parent "3.44-SNAPSHOT"]
                    :inherit [:min-lein-version :managed-dependencies :repositories :deploy-repositories]}
 
   :managed-dependencies
@@ -48,8 +48,8 @@
    [com.sixsq.slipstream/SlipStreamDbTesting-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamDbSerializers-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamCljResources-jar ~+version+]
-   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+ :classifier "tests" :scope "test"]
-   [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar ~+version+ :classifier "tests" :scope "test"]
+   [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamConnector ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamCredCache ~+version+]
    [com.sixsq.slipstream/SlipStreamPersistence ~+version+ :scope "test"]

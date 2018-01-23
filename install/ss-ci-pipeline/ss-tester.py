@@ -6,22 +6,48 @@ import tarfile
 import subprocess
 import shutil
 import collections
+import urllib2
 
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
 from slipstream.HttpClient import HttpClient
-from slipstream.util import (download_file, fileAppendContent,
-                             filePutContent, execute, importETree)
+from slipstream.util import (fileAppendContent, execute, importETree)
 
 etree = importETree()
 
-NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/cgi-bin/statusJson.php'
+NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/statusJson.php'
 SS_SERVICES_IN_NAGIOS = ['nuv.la']
 
 GIT_CREDS_URL = 'http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
                 'com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz'
 
 SSH_DIR = os.path.expanduser('~/.ssh')
+
+
+def download_file(src_url, dst_file, creds={}):
+    """creds: {'cookie': '<cookie>',
+               'username': '<name>', 'password': '<pass>'}
+    cookie is preferred over username and password. If none are provided,
+    the download proceeds w/o authentication.
+    """
+    request = urllib2.Request(src_url)
+    if creds.get('cookie'):
+        request.add_header('cookie', creds.get('cookie'))
+    elif creds.get('username') and creds.get('password'):
+        request.add_header('Authorization',
+                           (b'Basic ' + (creds.get('username') + b':' + creds.get('password')).encode('base64')).replace('\n', ''))
+    src_fh = urllib2.urlopen(request)
+
+    dst_fh = open(dst_file, 'wb')
+    while True:
+        data = src_fh.read()
+        if not data:
+            break
+        dst_fh.write(data)
+    src_fh.close()
+    dst_fh.close()
+
+    return dst_file
 
 
 def ss_get(param, ignore_abort=False, timeout=30, no_block=False):
