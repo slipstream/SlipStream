@@ -560,6 +560,12 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.sixsq.slipstream</groupId>
+        <artifactId>SlipStreamClientAPI-jar</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
       <!-- *************************** -->
       <!-- direct library dependencies -->
       <!-- *************************** -->
