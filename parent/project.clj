@@ -43,7 +43,9 @@
    [com.sixsq.slipstream/utils ~+version+]
    [com.sixsq.slipstream/Libcloud-SixSq-zip ~+version+]
    [com.sixsq.slipstream/SlipStreamAsync ~+version+]
-   [com.sixsq.slipstream/SlipStreamClientAPI-jar ~+version+]
+   [com.sixsq.slipstream/SlipStreamClientAPI-jar ~+version+] ;; TO BE REMOVED
+   [com.sixsq.slipstream/SlipStreamClojureAPI-cimi ~+version+]
+   [com.sixsq.slipstream/SlipStreamClojureAPI-run ~+version+]
    [com.sixsq.slipstream/SlipStreamDbBinding-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamDbTesting-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamDbSerializers-jar ~+version+]
