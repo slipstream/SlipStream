@@ -96,7 +96,8 @@
    [commons-codec/commons-codec "1.11"]
    [compojure "1.6.0"]
    [com.andrewmcveigh/cljs-time "0.5.2"]
-   [com.cemerick/url "0.1.1"]
+   [com.cemerick/url "0.1.1"
+    :exclusions [com.cemerick/clojurescript.test]]
    [com.draines/postal "2.0.2"]
    [com.jcraft/jsch "0.1.54"]
    [com.taoensso/tempura "1.1.2"]
