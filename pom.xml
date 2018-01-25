@@ -562,7 +562,7 @@
 
       <dependency>
         <groupId>com.sixsq.slipstream</groupId>
-        <artifactId>SlipStreamClientAPI-jar</artifactId>
+        <artifactId>SlipStreamClojureAPI-cimi</artifactId>
         <version>${project.version}</version>
       </dependency>
 
