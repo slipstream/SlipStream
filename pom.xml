@@ -92,8 +92,8 @@
 
     <!-- root URL for the nexus repositories         -->
     <!-- The value should NOT have a trailing slash! -->
-    <nexus>http://nexus.sixsq.com/content/repositories</nexus>
-    <nexus.thirdparty>http://nexus.sixsq.com/content/repositories</nexus.thirdparty>
+    <nexus>https://nexus.sixsq.com/content/repositories</nexus>
+    <nexus.thirdparty>https://nexus.sixsq.com/content/repositories</nexus.thirdparty>
 
     <hsqldb.version>2.3.4</hsqldb.version>
     <postgresql.version>9.4.1209</postgresql.version>

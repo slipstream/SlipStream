@@ -1,10 +1,5 @@
 (def +version+ "3.45-SNAPSHOT")
 
-;; FIXME: Provide HTTPS access to Nexus.
-(require 'cemerick.pomegranate.aether)
-(cemerick.pomegranate.aether/register-wagon-factory!
-  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
-
 (defproject
   com.sixsq.slipstream/parent "3.45-SNAPSHOT"
   :description "parent project file for SlipStream modules"
@@ -207,27 +202,27 @@
    ]
 
   :repositories
-  [["third-party" {:url           "http://nexus.sixsq.com/content/repositories/thirdparty/"
+  [["third-party" {:url           "https://nexus.sixsq.com/content/repositories/thirdparty/"
                    :snapshots     false
                    :sign-releases false
                    :checksum      :fail
                    :update        :daily}]
-   ["community-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+   ["community-snapshots" {:url           "https://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
                            :snapshots     true
                            :sign-releases false
                            :checksum      :fail
                            :update        :always}]
-   ["community-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+   ["community-releases" {:url           "https://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
                           :snapshots     false
                           :sign-releases false
                           :checksum      :fail
                           :update        :daily}]
-   ["enterprise-snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
+   ["enterprise-snapshots" {:url           "https://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
                             :snapshots     true
                             :sign-releases false
                             :checksum      :fail
                             :update        :always}]
-   ["enterprise-releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
+   ["enterprise-releases" {:url           "https://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
                            :snapshots     false
                            :sign-releases false
                            :checksum      :fail
@@ -235,12 +230,12 @@
 
 
   :deploy-repositories
-  [["snapshots" {:url           "http://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
+  [["snapshots" {:url           "https://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/"
                  :snapshots     true
                  :sign-releases false
                  :checksum      :fail
                  :update        :always}]
-   ["releases" {:url           "http://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+   ["releases" {:url           "https://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
                 :snapshots     false
                 :sign-releases false
                 :checksum      :fail

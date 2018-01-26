@@ -49,7 +49,7 @@ function _install_git_creds() {
 
     # Get and inflate git credentials.
     TARBALL=~/git-creds.tgz
-    GIT_CREDS_URL=http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz
+    GIT_CREDS_URL=https://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz
     SSH_DIR=~/.ssh
     mkdir -p $SSH_DIR
     chmod 0700 $SSH_DIR
