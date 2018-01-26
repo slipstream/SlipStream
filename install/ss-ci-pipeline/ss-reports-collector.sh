@@ -21,7 +21,7 @@ nginx
 elasticsearch
 hsqldb
 ss-pricing
-ssclj
+cimi
 slipstream
 "
 
