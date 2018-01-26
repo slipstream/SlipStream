@@ -86,6 +86,9 @@
    [clj-stacktrace "0.2.8"]
    [clj-time "0.14.2"]
    [clojure-ini "0.0.2"]
+   [cljsjs/semantic-ui-react "0.77.2-0" :exclusions [cljsjs/react]]
+   [cljsjs/moment "2.17.1-1"]
+   [cljsjs/react-date-range "0.2.4-0" :exclusions [cljsjs/react]]
    [commons-logging "1.2"]
    [commons-lang/commons-lang "2.6"]
    [commons-codec/commons-codec "1.11"]
@@ -104,8 +107,6 @@
    [com.taoensso/timbre "4.7.4"]
 
    ;; cljs testing; control options here
-   [cljsjs/moment "2.17.1-1"]
-   [cljsjs/react-date-range "0.2.4-0" :exclusions [cljsjs/react]]
 
    [doo "0.1.8" :scope "test"]
 
@@ -180,7 +181,6 @@
    [ring/ring-defaults "0.3.1"]
 
    [secretary "1.2.3"]
-   [soda-ash "0.76.0"]
    [superstring "2.1.0"]
 
    [zookeeper-clj "0.9.4"]
