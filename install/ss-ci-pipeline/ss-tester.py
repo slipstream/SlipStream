@@ -7,10 +7,10 @@ import subprocess
 import shutil
 import collections
 import urllib2
+import base64
 
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
-from slipstream.HttpClient import HttpClient
 from slipstream.util import (fileAppendContent, execute, importETree)
 
 etree = importETree()
@@ -169,9 +169,13 @@ def _get_monitoring_status():
     "Returns monitoring status as JSON."
     nagios_user, nagios_pass = ss_get('nagios_creds').split(':')
 
-    h = HttpClient(username=nagios_user, password=nagios_pass)
-    _, res = h.get(NAGIOS_STATUS_URL, accept="application/json")
-    return json.loads(res)
+    request = urllib2.Request(NAGIOS_STATUS_URL)
+    base64string = base64.b64encode('%s:%s' % (nagios_user, nagios_pass))
+    request.add_header("Authorization", "Basic %s" % base64string)
+    request.add_header("Accept", "application/json")
+    res = urllib2.urlopen(request)
+
+    return json.loads(res.read())
 
 
 def _check_enabled(check):
