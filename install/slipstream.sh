@@ -548,16 +548,16 @@ function deploy_slipstream_server () {
 function _set_elasticsearch_coords() {
     sed -i -e "s/ES_HOST=.*/ES_HOST=$ES_HOST/" \
         -e "s/ES_PORT=.*/ES_PORT=$ES_PORT/" \
-        /etc/default/ssclj \
+        /etc/default/cimi \
         /etc/default/slipstream
 }
 
 function _set_zookeeper_coords() {
-    if ( grep -q ZK_ENDPOINTS /etc/default/ssclj ); then
+    if ( grep -q ZK_ENDPOINTS /etc/default/cimi ); then
         sed -i -e "s/ZK_ENDPOINTS=.*/ZK_ENDPOINTS=$ZK_ENDPOINTS/" \
-            /etc/default/ssclj
+            /etc/default/cimi
     else
-        echo "ZK_ENDPOINTS=$ZK_ENDPOINTS" >> /etc/default/ssclj
+        echo "ZK_ENDPOINTS=$ZK_ENDPOINTS" >> /etc/default/cimi
     fi
 }
 
@@ -578,7 +578,7 @@ function _stop_slipstream_service() {
     _print "- stopping SlipStream service"
 
     srvc_stop slipstream || true
-    srvc_stop ssclj || true
+    srvc_stop cimi || true
 }
 
 function _start_slipstream() {
@@ -592,12 +592,12 @@ function _start_slipstream() {
 }
 
 function _start_slipstream_service() {
-    srvc_start ssclj
+    srvc_start cimi
     srvc_start slipstream
 }
 
 function _enable_slipstream() {
-    srvc_enable ssclj
+    srvc_enable cimi
     srvc_enable slipstream
 }
 
@@ -891,16 +891,16 @@ function deploy_prs_service() {
 }
 EOF
   if ( ! _is_true $SS_START ); then
-      srvc_start ssclj
+      srvc_start cimi
   fi
-  ssclj_host=localhost
-  ssclj_port=8201
-  _wait_listens $ssclj_host $ssclj_port
-  curl -X POST http://$ssclj_host:$ssclj_port/api/service-attribute-namespace \
+  cimi_host=localhost
+  cimi_port=8201
+  _wait_listens $cimi_host $cimi_port
+  curl -X POST http://$cimi_host:$cimi_port/api/service-attribute-namespace \
       -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
       -d@/etc/slipstream/san.json
   if ( ! _is_true $SS_START ); then
-      srvc_stop ssclj
+      srvc_stop cimi
   fi
 
   if [ -f /etc/default/ss-pricing ]; then

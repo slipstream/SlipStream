@@ -203,7 +203,7 @@ fi
 #
 # restarting services (probably not necessary)
 systemctl restart slipstream
-systemctl restart ssclj
+systemctl restart cimi
 systemctl restart nginx
 
 #
