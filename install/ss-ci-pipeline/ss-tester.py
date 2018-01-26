@@ -7,10 +7,10 @@ import subprocess
 import shutil
 import collections
 import urllib2
+import base64
 
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
-from slipstream.HttpClient import HttpClient
 from slipstream.util import (fileAppendContent, execute, importETree)
 
 etree = importETree()
@@ -18,7 +18,7 @@ etree = importETree()
 NAGIOS_STATUS_URL = 'http://monitor.sixsq.com/nagios/statusJson.php'
 SS_SERVICES_IN_NAGIOS = ['nuv.la']
 
-GIT_CREDS_URL = 'http://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
+GIT_CREDS_URL = 'https://nexus.sixsq.com/service/local/repositories/releases-enterprise/content/' \
                 'com/sixsq/slipstream/sixsq-hudson-creds/1.0.0/sixsq-hudson-creds-1.0.0.tar.gz'
 
 SSH_DIR = os.path.expanduser('~/.ssh')
@@ -140,7 +140,7 @@ def _install_ss_repo_creds_boot(nexus_user, nexus_pass):
 (configure-repositories!
  (fn [{:keys [url] :as repo-map}]
    (->> (condp re-find url
-          #"^http://nexus\.sixsq\.com/"
+          #"^https://nexus\.sixsq\.com/"
           {:username "%(user)s"
            :password "%(pass)s"}
           #".*" nil)
@@ -169,9 +169,13 @@ def _get_monitoring_status():
     "Returns monitoring status as JSON."
     nagios_user, nagios_pass = ss_get('nagios_creds').split(':')
 
-    h = HttpClient(username=nagios_user, password=nagios_pass)
-    _, res = h.get(NAGIOS_STATUS_URL, accept="application/json")
-    return json.loads(res)
+    request = urllib2.Request(NAGIOS_STATUS_URL)
+    base64string = base64.b64encode('%s:%s' % (nagios_user, nagios_pass))
+    request.add_header("Authorization", "Basic %s" % base64string)
+    request.add_header("Accept", "application/json")
+    res = urllib2.urlopen(request)
+
+    return json.loads(res.read())
 
 
 def _check_enabled(check):

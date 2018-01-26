@@ -180,7 +180,7 @@ function _install_slipstream_connectors() {
 
 function _start_slipstream() {
     # Start SlipStream.
-    systemctl start ssclj
+    systemctl start cimi
     systemctl start slipstream
 }
 
