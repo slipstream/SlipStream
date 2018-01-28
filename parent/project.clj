@@ -108,9 +108,10 @@
    [com.taoensso/timbre "4.7.4"]
 
    ;; cljs testing; control options here
-
    [doo "0.1.8" :scope "test"]
-
+   
+   [duratom "0.3.7"]
+   
    [enlive "1.1.6"]
    [environ "1.1.0"]
    [expound "0.4.0"]
