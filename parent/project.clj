@@ -98,6 +98,7 @@
     :exclusions [com.cemerick/clojurescript.test]]
    [com.draines/postal "2.0.2"]
    [com.jcraft/jsch "0.1.54"]
+   [com.taoensso/encore "2.93.0"]
    [com.taoensso/tempura "1.1.2"]
    [com.taoensso/tower "3.1.0-beta5"]
    [org.clojure/tools.reader "1.1.0"]
@@ -173,7 +174,7 @@
 
    [reagent "0.7.0"]
    [re-com "2.1.0"]
-   [re-frame "0.10.2"]
+   [re-frame "0.10.3"]
    [ring "1.6.3"]
    [ring/ring-core "1.6.3"]
    [ring/ring-codec "1.1.0"]
@@ -191,12 +192,12 @@
    ;;
    ;; libraries and utilities for testing
    ;;
-   [binaryage/devtools "0.9.8" :scope "test"]
+   [binaryage/devtools "0.9.9" :scope "test"]
 
    [clojure-complete/clojure-complete "0.2.4" :scope "test"
     :exclusions [org.clojure/clojure]]
 
-   [day8.re-frame/trace "0.1.14" :scope "test"]
+   [day8.re-frame/trace "0.1.15" :scope "test"]
 
    [expectations "2.1.9" :scope "test"]
 
