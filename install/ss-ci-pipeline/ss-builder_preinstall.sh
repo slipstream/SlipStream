@@ -8,4 +8,5 @@ set -e
 #
 echo statecustom "Upgrading system..."
 yum clean all
+yum install deltarpm -y
 yum upgrade -y
