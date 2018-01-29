@@ -877,7 +877,7 @@ function deploy_slipstream_job_engine() {
 DAEMON_ARGS='--ss-url=http://$SS_LOCAL_HOST:$CIMI_PORT --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS'
 EOF
 
-cat > /etc/default/slipstream-job-distributor<<EOF
+cat > /etc/default/slipstream-job-executor<<EOF
 DAEMON_ARGS='--ss-url=http://$SS_LOCAL_HOST:$CIMI_PORT --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS --threads=8 --es-hosts-list=$ES_HOST'
 EOF
 
