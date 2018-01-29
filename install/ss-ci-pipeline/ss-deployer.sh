@@ -189,6 +189,10 @@ systemctl restart cimi
 _wait_listens localhost 8201
 systemctl restart slipstream
 systemctl restart nginx
+systemctl restart slipstream-job-distributor@vms_collect
+systemctl restart slipstream-job-distributor@vms_cleanup
+systemctl restart slipstream-job-distributor@jobs_cleanup
+systemctl restart slipstream-job-executor
 
 #
 # set the service URL
