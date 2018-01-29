@@ -115,7 +115,7 @@
     <repository>
       <id>maven-restlet</id>
       <name>Public online Restlet repository</name>
-      <url>http://maven.restlet.org</url>
+      <url>https://maven.restlet.org</url>
     </repository>
 
     <repository>
@@ -125,7 +125,7 @@
 
     <repository>
       <id>clojars.org</id>
-      <url>http://clojars.org/repo</url>
+      <url>https://clojars.org/repo</url>
     </repository>
 
     <repository>
