@@ -1,9 +1,10 @@
 (def +version+ "3.45-SNAPSHOT")
 
-(defproject
-  com.sixsq.slipstream/parent "3.45-SNAPSHOT"
+(defproject com.sixsq.slipstream/parent "3.45-SNAPSHOT"
+  
   :description "parent project file for SlipStream modules"
   :url "https://github.com/slipstream"
+
   :license {:name "Apache 2.0"
             :url  "http://www.apache.org/licenses/LICENSE-2.0"}
 
@@ -18,7 +19,10 @@
 
   ;; keep the release process happy; not actually used
   :parent-project {:coords  [com.sixsq.slipstream/parent "3.45-SNAPSHOT"]
-                   :inherit [:min-lein-version :managed-dependencies :repositories :deploy-repositories]}
+                   :inherit [:min-lein-version
+                             :managed-dependencies
+                             :repositories
+                             :deploy-repositories]}
 
   :managed-dependencies
   [
