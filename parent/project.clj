@@ -3,10 +3,12 @@
 (defproject com.sixsq.slipstream/parent "3.45-SNAPSHOT"
   
   :description "parent project file for SlipStream modules"
+
   :url "https://github.com/slipstream"
 
   :license {:name "Apache 2.0"
-            :url  "http://www.apache.org/licenses/LICENSE-2.0"}
+            :url  "http://www.apache.org/licenses/LICENSE-2.0"
+            :distribution :repo}
 
   :plugins [[lein-ancient "0.6.14"]]
 
