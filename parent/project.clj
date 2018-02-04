@@ -52,6 +52,8 @@
    [com.sixsq.slipstream/SlipStreamCljResources-jar ~+version+]
    [com.sixsq.slipstream/SlipStreamCljResourcesTests-jar ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamCljResourcesTestServer-jar ~+version+ :scope "test"]
+   [com.sixsq.slipstream/SlipStreamServer-cimi-resources-dep ~+version+]
+   [com.sixsq.slipstream/SlipStreamServer-cimi-resources ~+version+]
    [com.sixsq.slipstream/SlipStreamConnector ~+version+ :scope "test"]
    [com.sixsq.slipstream/SlipStreamCredCache ~+version+]
    [com.sixsq.slipstream/SlipStreamPersistence ~+version+ :scope "test"]
