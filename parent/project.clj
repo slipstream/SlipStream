@@ -106,6 +106,7 @@
     :exclusions [com.cemerick/clojurescript.test]]
    [com.draines/postal "2.0.2"]
    [com.jcraft/jsch "0.1.54"]
+   [com.rpl/specter "1.1.0"]
    [com.taoensso/encore "2.93.0"]
    [com.taoensso/tempura "1.1.2"]
    [com.taoensso/tower "3.1.0-beta5"]
@@ -126,7 +127,6 @@
 
    [funcool/promesa "1.9.0"]
 
-   [honeysql "0.6.2"]
    [http-kit "2.2.0"]
 
    [instaparse "1.4.8"]
@@ -143,9 +143,9 @@
                  javax.jms/jms
                  com.sun.jdmk/jmxtools
                  com.sun.jmx/jmxri]]
-   [org.apache.logging.log4j/log4j-core "2.9.1"]
-   [org.apache.logging.log4j/log4j-api "2.9.1"]
-   [org.apache.logging.log4j/log4j-web "2.9.1"]
+   [org.apache.logging.log4j/log4j-core "2.10.0"]
+   [org.apache.logging.log4j/log4j-api "2.10.0"]
+   [org.apache.logging.log4j/log4j-web "2.10.0"]
    [org.slf4j/slf4j-simple "1.7.25"]
 
    [me.raynes/fs "1.4.6"]
@@ -163,8 +163,7 @@
    [org.clojure/tools.namespace "0.2.11"]
    [org.clojure/data.json "0.2.6"]
    [org.clojure/java.classpath "0.2.3"]
-   [org.clojure/java.jdbc "0.4.2"]
-   [org.clojure/core.async "0.3.465" :exclusions [org.clojure/tools.reader]]
+   [org.clojure/core.async "0.4.474" :exclusions [org.clojure/tools.reader]]
    [org.clojure/test.check "0.9.0" :scope "test"]
    [org.elasticsearch/elasticsearch "5.5.0"]
    [org.elasticsearch.client/transport "5.5.0"]
@@ -172,8 +171,7 @@
    [org.elasticsearch.test/framework "5.5.0"
     :exclusions [com.carrotsearch.randomizedtesting/randomizedtesting-runner]]
 
-   [org.hsqldb/hsqldb "2.3.4"]
-   [org.json/json "20171018"]
+   [org.json/json "20180130"]
    [org.slf4j/slf4j-api "1.7.25"]
    [org.slf4j/slf4j-jdk14 "1.7.25"]
    [org.slf4j/slf4j-log4j12 "1.7.25"]
@@ -183,7 +181,7 @@
 
    [reagent "0.7.0"]
    [re-com "2.1.0"]
-   [re-frame "0.10.3"]
+   [re-frame "0.10.4"]
    [ring "1.6.3"]
    [ring/ring-core "1.6.3"]
    [ring/ring-codec "1.1.0"]
@@ -206,7 +204,7 @@
    [clojure-complete/clojure-complete "0.2.4" :scope "test"
     :exclusions [org.clojure/clojure]]
 
-   [day8.re-frame/trace "0.1.15" :scope "test"]
+   [day8.re-frame/trace "0.1.18" :scope "test"]
 
    [expectations "2.1.9" :scope "test"]
 
