@@ -136,8 +136,6 @@
    [javax.mail/mail "1.4.7" :scope "compile"]
    [javax.servlet/javax.servlet-api "3.1.0"]
 
-   [korma "0.4.2"]
-
    [log4j "1.2.17"
     :exclusions [javax.mail/mail
                  javax.jms/jms
