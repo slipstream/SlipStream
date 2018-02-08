@@ -82,6 +82,7 @@
    ;;
 
    [aleph "0.4.4"]
+   [amazonica "0.3.118"] 
 
    [buddy/buddy-core "1.4.0"]
    [buddy/buddy-hashers "1.3.0"]
