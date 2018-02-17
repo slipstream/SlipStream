@@ -550,6 +550,7 @@ function deploy_slipstream_server () {
    _deploy_nginx_proxy
 
    _load_slipstream_examples
+   _upload_apikey_session_template
 }
 
 function _set_elasticsearch_coords() {
@@ -865,6 +866,41 @@ function _load_slipstream_examples() {
    _print "- loading SlipStream examples"
    ss-login -u ${SS_USERNAME} -p ${SS_PASSWORD} --endpoint https://$SS_LOCAL_HOST
    ss-module-upload --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
+}
+
+function _upload_apikey_session_template() {
+   tmpl=/tmp/api-key.json
+   cat >$tmpl<<EOF
+{
+   "method": "api-key",
+   "instance": "api-key",
+
+   "name" : "Login with API Key and Secret",
+   "description" : "Authentication with API Key and Secret",
+   "group" : "Login with API Key and Secret",
+
+   "key" : "key",
+   "secret" : "secret",
+
+   "acl": {
+             "owner": {"principal": "ADMIN",
+                       "type":      "ROLE"},
+             "rules": [{"principal": "ADMIN",
+                        "type":      "ROLE",
+                        "right":     "ALL"},
+                       {"principal": "ANON",
+                        "type":      "ROLE",
+                        "right":     "VIEW"},
+                       {"principal": "USER",
+                        "type":      "ROLE",
+                        "right":     "VIEW"}]
+          }
+}
+EOF
+   curl -sSf -d@$tmpl -H'content-type: application/json' \
+      -H'slipstream-authn-info: super ADMIN' \
+      http://localhost:8201/api/session-template
+   rm -f $tmpl
 }
 
 ##
