@@ -615,7 +615,7 @@ function _start_slipstream_application() {
    _wait_listens $SS_LOCAL_HOST $SS_LOCAL_PORT
    curl -m 60 -sfS -o /dev/null $SS_LOCAL_URL
    # CIMI
-   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 180
    curl -m 60 -sfS -o /dev/null $CIMI_LOCAL_URL/api/cloud-entry-point
 }
 
