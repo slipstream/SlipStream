@@ -256,8 +256,9 @@ SS_LOCAL_PORT=8182
 SS_LOCAL_HOST=localhost
 SS_LOCAL_URL=http://$SS_LOCAL_HOST:$SS_LOCAL_PORT
 
-SS_LOCAL_HOST=localhost
-CIMI_PORT=8201
+CIMI_LOCAL_HOST=localhost
+CIMI_LOCAL_PORT=8201
+CIMI_LOCAL_URL=http://$CIMI_LOCAL_HOST:$CIMI_LOCAL_PORT
 
 SLIPSTREAM_ETC=/etc/slipstream
 SLIPSTREAM_CONF=$SLIPSTREAM_ETC/slipstream.edn
@@ -610,8 +611,12 @@ function _enable_slipstream() {
 }
 
 function _start_slipstream_application() {
+   # SS
    _wait_listens $SS_LOCAL_HOST $SS_LOCAL_PORT
-   curl -m 60 -S -o /dev/null $SS_LOCAL_URL
+   curl -m 60 -sfS -o /dev/null $SS_LOCAL_URL
+   # CIMI
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT
+   curl -m 60 -sfS -o /dev/null $CIMI_LOCAL_URL/api/cloud-entry-point
 }
 
 function _set_jetty_args() {
@@ -897,9 +902,10 @@ function _upload_apikey_session_template() {
           }
 }
 EOF
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT
    curl -sSf -d@$tmpl -H'content-type: application/json' \
       -H'slipstream-authn-info: super ADMIN' \
-      http://localhost:8201/api/session-template
+      $CIMI_LOCAL_URL/api/session-template
    rm -f $tmpl
 }
 
@@ -910,11 +916,11 @@ function deploy_slipstream_job_engine() {
    _inst slipstream-job-engine
 
    cat > /etc/default/slipstream-job-distributor<<EOF
-DAEMON_ARGS='--ss-url=http://$SS_LOCAL_HOST:$CIMI_PORT --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS'
+DAEMON_ARGS='--ss-url=$CIMI_LOCAL_URL --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS'
 EOF
 
 cat > /etc/default/slipstream-job-executor<<EOF
-DAEMON_ARGS='--ss-url=http://$SS_LOCAL_HOST:$CIMI_PORT --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS --threads=8 --es-hosts-list=$ES_HOST'
+DAEMON_ARGS='--ss-url=$CIMI_LOCAL_URL --ss-user=$SS_USERNAME --ss-pass=$SS_PASSWORD --ss-insecure --zk-hosts=$ZK_ENDPOINTS --threads=8 --es-hosts-list=$ES_HOST'
 EOF
 
 if ( _is_true $SS_START ); then
@@ -959,8 +965,8 @@ EOF
 if ( ! _is_true $SS_START ); then
    srvc_start cimi
 fi
-_wait_listens $SS_LOCAL_HOST $CIMI_PORT
-curl -X POST http://$SS_LOCAL_HOST:$CIMI_PORT/api/service-attribute-namespace \
+_wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT
+curl -X POST $CIMI_LOCAL_URL/api/service-attribute-namespace \
    -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
    -d@/etc/slipstream/san.json
 if ( ! _is_true $SS_START ); then
