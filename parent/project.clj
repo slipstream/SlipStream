@@ -1,13 +1,13 @@
 (def +version+ "3.46-SNAPSHOT")
 
 (defproject com.sixsq.slipstream/parent "3.46-SNAPSHOT"
-  
+
   :description "parent project file for SlipStream modules"
 
   :url "https://github.com/slipstream"
 
-  :license {:name "Apache 2.0"
-            :url  "http://www.apache.org/licenses/LICENSE-2.0"
+  :license {:name         "Apache 2.0"
+            :url          "http://www.apache.org/licenses/LICENSE-2.0"
             :distribution :repo}
 
   :plugins [[lein-ancient "0.6.14"]]
@@ -82,7 +82,7 @@
    ;;
 
    [aleph "0.4.4"]
-   [amazonica "0.3.118"] 
+   [amazonica "0.3.118"]
 
    [buddy/buddy-core "1.4.0"]
    [buddy/buddy-hashers "1.3.0"]
@@ -119,9 +119,9 @@
 
    ;; cljs testing; control options here
    [doo "0.1.8" :scope "test"]
-   
+
    [duratom "0.3.7"]
-   
+
    [enlive "1.1.6"]
    [environ "1.1.0"]
    [expound "0.4.0"]
@@ -180,7 +180,7 @@
 
    [reagent "0.7.0"]
    [re-com "2.1.0"]
-   [re-frame "0.10.4"]
+   [re-frame "0.10.5"]
    [ring "1.6.3"]
    [ring/ring-core "1.6.3"]
    [ring/ring-codec "1.1.0"]
@@ -203,7 +203,7 @@
    [clojure-complete/clojure-complete "0.2.4" :scope "test"
     :exclusions [org.clojure/clojure]]
 
-   [day8.re-frame/trace "0.1.18" :scope "test"]
+   [day8.re-frame/re-frame-10x "0.2.0" :scope "test"]
 
    [expectations "2.1.9" :scope "test"]
 
