@@ -1,6 +1,6 @@
-(def +version+ "3.46-SNAPSHOT")
+(def +version+ "3.46")
 
-(defproject com.sixsq.slipstream/parent "3.46-SNAPSHOT"
+(defproject com.sixsq.slipstream/parent "3.46"
 
   :description "parent project file for SlipStream modules"
 
@@ -20,7 +20,7 @@
   :pom-location "target/"
 
   ;; keep the release process happy; not actually used
-  :parent-project {:coords  [com.sixsq.slipstream/parent "3.46-SNAPSHOT"]
+  :parent-project {:coords  [com.sixsq.slipstream/parent "3.46"]
                    :inherit [:min-lein-version
                              :managed-dependencies
                              :repositories
