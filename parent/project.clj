@@ -179,7 +179,6 @@
    [potemkin "0.4.4"]
 
    [reagent "0.7.0"]
-   [re-com "2.1.0"]
    [re-frame "0.10.5"]
    [ring "1.6.3"]
    [ring/ring-core "1.6.3"]
