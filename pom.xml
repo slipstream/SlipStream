@@ -13,7 +13,6 @@
     <module>community</module>
     <module>enterprise</module>
     <module>clojure-deps</module>
-    <module>parent</module>
   </modules>
 
   <!-- To NOT build all of the submodules, define the -->
