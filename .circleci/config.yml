@@ -30,12 +30,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn dependency:go-offline -DskipModules
+      - run: mvn -s .circleci/settings.xml --batch-mode dependency:go-offline -DskipModules
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
-      # deploy artifacts
-      - run: mvn -s .circleci/settings.xml clean deploy -DskipModules
+      # build and deploy artifacts
+      - run: mvn -s .circleci/settings.xml --batch-mode deploy -DskipModules
