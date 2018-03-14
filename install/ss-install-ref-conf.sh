@@ -20,6 +20,12 @@ YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
 GH_BRANCH=
 
 ES_HOST_PORT=localhost:9300
+CIMI_HOST=localhost
+CIMI_PORT=8201
+CIMI_ENPOINT=http://$CIMI_HOST:$CIMI_PORT
+
+REPORTS_CLOUD_STORE=exoscale-ch-gva
+OBJECT_STORE_ENDPOINT=https://sos-ch-dk-2.exo.io
 
 function usage_exit() {
     echo -e "usage:\n$_SCRIPT_NAME -a <ES host:port> -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
@@ -110,6 +116,27 @@ GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/${branch}
 SS_CONF_DIR=/etc/slipstream
 mkdir -p $SS_CONF_DIR
 
+function _wait_listens() {
+    # host port [timeout seconds] [sleep interval seconds]
+    wait_time=${3:-60}
+    sleep_interval=${4:-2}
+    stop_time=$(($(_now_sec) + $wait_time))
+    while (( "$(_now_sec)" <= $stop_time )); do
+        set +e
+        res=$(ncat -v -4 $1 $2 < /dev/null 2>&1)
+        if [ "$?" == "0" ]; then
+            return 0
+        else
+            if ( ! (echo $res | grep -q "Connection refused") ); then
+                abort "Failed to check $1:$2 with:" $res
+            fi
+        fi
+        set -e
+        sleep $sleep_interval
+    done
+    abort "Timed out after ${wait_time} sec waiting for $1:$2"
+}
+
 function _install_yum_client_cert() {
     [ -z "$YUM_CREDS_URL" ] && { echo "WARNING: Skipped intallation of YUM credentials."; return; }
     # Get and inflate YUM certs.
@@ -184,8 +211,27 @@ function _start_slipstream() {
     systemctl start slipstream
 }
 
+function _configure_object_store_for_reports() {
+    _wait_listens $CIMI_HOST $CIMI_PORT
+    curl -H'accept: application/json' -H'slipstream-authn-info: test USER' \
+        "$CIMI_ENPOINT/api/credential?\$filter=type^='cloud-cred'%20and%20connector/href='connector/$REPORTS_CLOUD_STORE'" \
+        > credentials.json
+    s3_key=`jq '.credentials[0] | .["key"]' credentials.json`
+    s3_key=${s3_key//\"}
+    s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
+    s3_secret=${s3_secret//\"}
+    cat>/opt/slipstream/server/.aws/credentials<<EOF
+[default]
+aws_endpoint=$OBJECT_STORE_ENDPOINT
+aws_access_key_id=$s3_key
+aws_secret_access_key=$s3_secret
+EOF
+    rm -f credentials.json
+}
+
 _install_yum_client_cert
 _install_reference_configuration
 _install_slipstream
 _install_slipstream_connectors
 _start_slipstream
+_configure_object_store_for_reports
