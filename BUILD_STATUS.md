@@ -1,2 +1,11 @@
-[![CircleCI](https://circleci.com/gh/slipstream/SlipStream/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStream/tree/master)
-
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStream/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStream/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamServerDeps/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamServerDeps/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamUI/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamUI/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamPythonAPI/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamPythonAPI/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamClient/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamClient/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamClojureAPI/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamClojureAPI/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamWebUI/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamWebUI/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamServer/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamServer/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamConnectors/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamConnectors/tree/master)
+ - SlipStream [![CircleCI](https://circleci.com/gh/slipstream/SlipStreamJobEngine/tree/master.svg?style=svg)](https://circleci.com/gh/slipstream/SlipStreamJobEngine/tree/master)
+ 
