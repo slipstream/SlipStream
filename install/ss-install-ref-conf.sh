@@ -25,6 +25,8 @@ CIMI_PORT=8201
 CIMI_ENPOINT=http://$CIMI_HOST:$CIMI_PORT
 
 REPORTS_CLOUD_STORE=exoscale-ch-gva
+# Should be pre-created.
+REPORTS_BUCKET_NAME=slipstream-reports-test
 OBJECT_STORE_ENDPOINT=https://sos-ch-dk-2.exo.io
 
 function usage_exit() {
@@ -221,16 +223,14 @@ function _configure_object_store_for_reports() {
     s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
     s3_secret=${s3_secret//\"}
     rm -f credentials.json
-    mkdir -p /opt/slipstream/server/.aws
-    chmod 700 /opt/slipstream/server/.aws
-    cat>/opt/slipstream/server/.aws/credentials<<EOF
-[default]
-aws_endpoint=$OBJECT_STORE_ENDPOINT
-aws_access_key_id=$s3_key
-aws_secret_access_key=$s3_secret
-EOF
-    chmod 600 /opt/slipstream/server/.aws/credentials
-    chown -R slipstream: /opt/slipstream/server/.aws
+    conf_path=/opt/slipstream/server/.credentials/object-store-conf.edn
+    sed -e 's/<KEY>/'$s3_key'/' \
+        -e 's/<SECRET>/'$s3_secret'/' \
+        -e 's/<ENDPOINT>/'$OBJECT_STORE_ENDPOINT'/' \
+        -e 's/<REPORTS_BUCKET_NAME>/'$REPORTS_BUCKET_NAME'/' \
+        ${conf_path}.tmpl > $conf_path
+    chmod 600 $conf_path
+    chown slipstream: $conf_path
 }
 
 _install_yum_client_cert
