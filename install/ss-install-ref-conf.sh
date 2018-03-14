@@ -220,13 +220,17 @@ function _configure_object_store_for_reports() {
     s3_key=${s3_key//\"}
     s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
     s3_secret=${s3_secret//\"}
+    rm -f credentials.json
+    mkdir -p /opt/slipstream/server/.aws
+    chmod 700 /opt/slipstream/server/.aws
     cat>/opt/slipstream/server/.aws/credentials<<EOF
 [default]
 aws_endpoint=$OBJECT_STORE_ENDPOINT
 aws_access_key_id=$s3_key
 aws_secret_access_key=$s3_secret
 EOF
-    rm -f credentials.json
+    chmod 600 /opt/slipstream/server/.aws/credentials
+    chown -R slipstream: /opt/slipstream/server/.aws
 }
 
 _install_yum_client_cert
