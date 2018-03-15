@@ -223,30 +223,8 @@ function _start_slipstream() {
     systemctl start slipstream
 }
 
-function _configure_object_store_for_reports() {
-    _wait_listens $CIMI_HOST $CIMI_PORT
-    curl -H'accept: application/json' -H'slipstream-authn-info: test USER' \
-        "$CIMI_ENPOINT/api/credential?\$filter=type^='cloud-cred'%20and%20connector/href='connector/$REPORTS_CLOUD_STORE'" \
-        > credentials.json
-    s3_key=`jq '.credentials[0] | .["key"]' credentials.json`
-    s3_key=${s3_key//\"}
-    s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
-    s3_secret=${s3_secret//\"}
-    rm -f credentials.json
-    conf_path=/opt/slipstream/server/.credentials/object-store-conf.edn
-    cp ${conf_path}.tmpl $conf_path
-    sed -i -e 's|<KEY>|'$s3_key'|' \
-        -e 's|<SECRET>|'$s3_secret'|' \
-        -e 's|<ENDPOINT>|'$OBJECT_STORE_ENDPOINT'|' \
-        -e 's|<REPORTS_BUCKET_NAME>|'$REPORTS_BUCKET_NAME'|' \
-        $conf_path
-    chmod 600 $conf_path
-    chown slipstream: $conf_path
-}
-
 _install_yum_client_cert
 _install_reference_configuration
 _install_slipstream
 _install_slipstream_connectors
 _start_slipstream
-_configure_object_store_for_reports

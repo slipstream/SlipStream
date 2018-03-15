@@ -83,6 +83,15 @@ SS_REPO_CONF_URL=`ss-get ss-repo-conf-url`
 install_scripts_branch=`ss-get install_scripts_branch`
 ES_HOST_PORT=`ss-get es-host-port`
 
+CIMI_HOST=localhost
+CIMI_PORT=8201
+CIMI_ENPOINT=http://$CIMI_HOST:$CIMI_PORT
+
+REPORTS_CLOUD_STORE=exoscale-ch-gva
+# Should be pre-created.
+REPORTS_BUCKET_NAME=slipstream-reports-test
+OBJECT_STORE_ENDPOINT=https://sos-ch-dk-2.exo.io
+
 function _install_yum_client_cert() {
     SS_CONF_DIR=/etc/slipstream
     mkdir -p $SS_CONF_DIR
@@ -96,6 +105,27 @@ function _install_yum_client_cert() {
     tar -C $SS_CONF_DIR -zxvf $TARBALL
     chmod 400 $SS_CONF_DIR/yum-client.*
     rm -f $TARBALL
+}
+
+function _configure_object_store_for_reports() {
+    _wait_listens $CIMI_HOST $CIMI_PORT
+    curl -H'accept: application/json' -H'slipstream-authn-info: test USER' \
+        "$CIMI_ENPOINT/api/credential?\$filter=type^='cloud-cred'%20and%20connector/href='connector/$REPORTS_CLOUD_STORE'" \
+        > credentials.json
+    s3_key=`jq '.credentials[0] | .["key"]' credentials.json`
+    s3_key=${s3_key//\"}
+    s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
+    s3_secret=${s3_secret//\"}
+    rm -f credentials.json
+    conf_path=/opt/slipstream/server/.credentials/object-store-conf.edn
+    cp ${conf_path}.tmpl $conf_path
+    sed -i -e 's|<KEY>|'$s3_key'|' \
+        -e 's|<SECRET>|'$s3_secret'|' \
+        -e 's|<ENDPOINT>|'$OBJECT_STORE_ENDPOINT'|' \
+        -e 's|<REPORTS_BUCKET_NAME>|'$REPORTS_BUCKET_NAME'|' \
+        $conf_path
+    chmod 600 $conf_path
+    chown slipstream: $conf_path
 }
 
 #
@@ -244,6 +274,8 @@ if [ "$exit_code" -ne "0" ]; then
    ss-set statecustom "ERROR: Service failed to provide landing page."
    exit $exit_code
 fi
+
+_configure_object_store_for_reports
 
 # authenticate with server using username and password
 authn_url="${ss_url}/api/session"
