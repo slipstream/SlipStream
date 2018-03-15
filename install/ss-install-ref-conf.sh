@@ -20,14 +20,6 @@ YUM_REPO_EDITION=${_YUM_REPO_EDITION_DEFAULT}
 GH_BRANCH=
 
 ES_HOST_PORT=localhost:9300
-CIMI_HOST=localhost
-CIMI_PORT=8201
-CIMI_ENPOINT=http://$CIMI_HOST:$CIMI_PORT
-
-REPORTS_CLOUD_STORE=exoscale-ch-gva
-# Should be pre-created.
-REPORTS_BUCKET_NAME=slipstream-reports-test
-OBJECT_STORE_ENDPOINT=https://sos-ch-dk-2.exo.io
 
 function usage_exit() {
     echo -e "usage:\n$_SCRIPT_NAME -a <ES host:port> -r <conf-url> -u <conf-url user:pass> -c <cert-url> -p <cert-url user:pass>
