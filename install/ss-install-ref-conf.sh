@@ -136,6 +136,7 @@ function _wait_listens() {
         set +e
         res=$(ncat -v -4 $1 $2 < /dev/null 2>&1)
         if [ "$?" == "0" ]; then
+            set -e
             return 0
         else
             if ( ! (echo $res | grep -q "Connection refused") ); then
