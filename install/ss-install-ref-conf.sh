@@ -118,6 +118,15 @@ GH_BASE_URL=https://raw.githubusercontent.com/slipstream/SlipStream/${branch}
 SS_CONF_DIR=/etc/slipstream
 mkdir -p $SS_CONF_DIR
 
+function abort() {
+    echo "!!! Aborting: $@"
+    exit 1
+}
+
+function _now_sec() {
+    date +%s
+}
+
 function _wait_listens() {
     # host port [timeout seconds] [sleep interval seconds]
     wait_time=${3:-60}
