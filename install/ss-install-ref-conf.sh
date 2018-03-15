@@ -233,11 +233,12 @@ function _configure_object_store_for_reports() {
     s3_secret=${s3_secret//\"}
     rm -f credentials.json
     conf_path=/opt/slipstream/server/.credentials/object-store-conf.edn
-    sed -e 's/<KEY>/'$s3_key'/' \
+    cp ${conf_path}.tmpl $conf_path
+    sed -i -e 's/<KEY>/'$s3_key'/' \
         -e 's/<SECRET>/'$s3_secret'/' \
         -e 's/<ENDPOINT>/'$OBJECT_STORE_ENDPOINT'/' \
         -e 's/<REPORTS_BUCKET_NAME>/'$REPORTS_BUCKET_NAME'/' \
-        ${conf_path}.tmpl > $conf_path
+        $conf_path
     chmod 600 $conf_path
     chown slipstream: $conf_path
 }
