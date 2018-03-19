@@ -11,6 +11,7 @@
 # slipstream_server_deps_version
 # slipstream_ui_version 
 # skip_tests
+# skip_containers
 # slipstream_edition (community|enterprise)
 
 # output parameters
@@ -41,7 +42,7 @@ slipstream_ui_version=`ss-get slipstream_ui_version`
 slipstream_i18n_version=`ss-get slipstream_i18n_version`
 slipstream_pricing_version=`ss-get slipstream_pricing_version`
 skip_tests=`ss-get skip_tests`
-
+skip_containers=`ss-get skip_containers`
 _HOSTNAME=`ss-get hostname`
 
 function _install_git_creds() {
@@ -166,7 +167,7 @@ cd SlipStream
 mvn --settings ${MAVEN_SETTINGS} \
     ${maven_options} \
     -Dyum \
-    -B -DskipTests=${skip_tests} clean ${maven_goal}
+    -B -DskipTests=${skip_tests} -DskipContainers=${skip_containers} clean ${maven_goal}
 
 #
 # make local yum repository
