@@ -595,15 +595,28 @@ function _start_slipstream() {
    if ( _is_true $SS_START ); then
       _print "- starting SlipStream service"
       _start_slipstream_service
-      _start_slipstream_application
    else
       _print "- WARNING: requested not to start SlipStream service"
    fi
 }
 
+function _start_cimi_application() {
+   # CIMI
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 180
+   curl -m 60 -sfS -o /dev/null $CIMI_LOCAL_URL/api/cloud-entry-point
+}
+
+function _start_ss_application() {
+   # SS
+   _wait_listens $SS_LOCAL_HOST $SS_LOCAL_PORT
+   curl -m 60 -sfS -o /dev/null $SS_LOCAL_URL
+}
+
 function _start_slipstream_service() {
    srvc_start cimi
+   _start_cimi_application
    srvc_start slipstream
+   _start_ss_application
 }
 
 function _enable_slipstream() {
@@ -612,12 +625,8 @@ function _enable_slipstream() {
 }
 
 function _start_slipstream_application() {
-   # SS
-   _wait_listens $SS_LOCAL_HOST $SS_LOCAL_PORT
-   curl -m 60 -sfS -o /dev/null $SS_LOCAL_URL
-   # CIMI
-   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 180
-   curl -m 60 -sfS -o /dev/null $CIMI_LOCAL_URL/api/cloud-entry-point
+   _start_cimi_application
+   _start_ss_application
 }
 
 function _set_jetty_args() {
