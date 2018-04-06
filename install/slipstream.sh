@@ -870,6 +870,7 @@ function _deploy_nginx_proxy() {
    _print "- installing nginx and nginx configuration for SlipStream"
 
    # Install nginx and the configuration file for SlipStream.
+   _inst nginx-1.12.2-1.el7_4.ngx
    _inst slipstream-server-nginx-conf
    srvc_start nginx
 }
