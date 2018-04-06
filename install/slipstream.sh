@@ -880,8 +880,8 @@ function _load_slipstream_examples() {
    _is_true $SLIPSTREAM_EXAMPLES || return 0
 
    _print "- loading SlipStream examples"
-   ss-login -u ${SS_USERNAME} -p ${SS_PASSWORD} --endpoint $SS_LOCAL_URL
-   ss-module-upload --endpoint $SS_LOCAL_URL /usr/share/doc/slipstream/*.xml
+   ss-login -u ${SS_USERNAME} -p ${SS_PASSWORD} --endpoint https://$SS_LOCAL_HOST
+   ss-module-upload --endpoint https://$SS_LOCAL_HOST /usr/share/doc/slipstream/*.xml
 }
 
 function _upload_apikey_session_template() {
