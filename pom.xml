@@ -12,7 +12,6 @@
   <modules>
     <module>community</module>
     <module>enterprise</module>
-    <module>clojure-deps</module>
   </modules>
 
   <!-- To NOT build all of the submodules, define the -->
@@ -48,7 +47,6 @@
       <modules>
         <module>../SlipStreamConnectorsEnterprise</module>
         <module>../SlipStreamPricing</module>
-        <module>../SlipStreamServerEnterprise</module>
       </modules>
     </profile>
 
@@ -855,13 +853,13 @@
       <dependency>
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
-        <version>5.5.0</version>
+        <version>6.2.4</version>
       </dependency>
 
       <dependency>
         <groupId>org.elasticsearch.client</groupId>
         <artifactId>transport</artifactId>
-        <version>5.5.0</version>
+        <version>6.2.4</version>
       </dependency>
 
     </dependencies>
