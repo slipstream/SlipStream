@@ -735,6 +735,13 @@ function _install_elasticsearch() {
    # For authn with Kibana and more.
    _is_true $ELK_XPACK && \
       /usr/share/elasticsearch/bin/elasticsearch-plugin install -b x-pack || true
+   # To be added from elasticsearch v6.x
+
+   mkdir -p /usr/share/elasticsearch/logs/
+   chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/logs
+
+   mkdir -p /usr/share/elasticsearch/data/
+   chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
 
    # Configure elasticsearch
    # FIXME visible on localhost only
