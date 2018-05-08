@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -61,7 +62,7 @@
         <module>yum</module>
       </modules>
     </profile>
-    
+
   </profiles>
 
   <properties>
@@ -179,11 +180,6 @@
 
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>com.theoryinpractise</groupId>
-          <artifactId>clojure-maven-plugin</artifactId>
-          <version>1.8.1</version>
-        </plugin>
         <plugin>
           <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
           <artifactId>serviceloader-maven-plugin</artifactId>
@@ -568,34 +564,31 @@
       <!-- *************************** -->
 
       <dependency>
-          <groupId>com.chemdrawcloud</groupId>
-          <artifactId>gwt-crypto</artifactId>
-          <version>2.7.0</version>
+        <groupId>com.chemdrawcloud</groupId>
+        <artifactId>gwt-crypto</artifactId>
+        <version>2.7.0</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
         <version>2.6</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-        <version>1.10</version>
+        <version>1.11</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>com.jcraft</groupId>
         <artifactId>jsch</artifactId>
         <version>0.1.54</version>
         <type>jar</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.clojars.nathell</groupId>
-        <artifactId>tagsoup</artifactId>
-        <version>1.2.1</version>
       </dependency>
 
       <dependency>
@@ -652,6 +645,7 @@
         <version>20160810</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>javax.mail</groupId>
         <artifactId>mail</artifactId>
@@ -677,22 +671,11 @@
         <version>0.9.5.2</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.21</version>
-      </dependency>
-
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
-        <version>1.7.21</version>
-      </dependency>
-
-      <dependency>
-        <groupId>environ</groupId>
-        <artifactId>environ</artifactId>
-        <version>1.1.0</version>
+        <version>1.7.25</version>
       </dependency>
 
       <dependency>
@@ -713,64 +696,39 @@
         <version>1.0</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
-        <version>3.1.0</version>
+        <version>4.0.0</version>
       </dependency>
 
-      <dependency>
-        <groupId>clj-time</groupId>
-        <artifactId>clj-time</artifactId>
-        <version>0.12.1</version>
-      </dependency>
-
-      <dependency>
-        <groupId>clj-http</groupId>
-        <artifactId>clj-http</artifactId>
-        <version>3.1.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>4.5.2</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcore</artifactId>
-        <version>4.4.4</version>
-      </dependency>
-
-      <dependency>
-        <groupId>clj-stacktrace</groupId>
-        <artifactId>clj-stacktrace</artifactId>
-        <version>0.2.8</version>
-      </dependency>
-
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.17</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.21</version>
+        <version>1.7.25</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
-        <version>2.7</version>
+        <version>2.11.0</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
-        <version>2.7</version>
+        <version>2.11.0</version>
       </dependency>
 
       <dependency>
@@ -795,30 +753,14 @@
       <!-- direct clojure dependencies -->
       <!-- *************************** -->
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>clojure</artifactId>
         <version>1.9.0</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.clojure</groupId>
-        <artifactId>data.json</artifactId>
-        <version>0.2.6</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.clojure</groupId>
-        <artifactId>core.async</artifactId>
-        <version>0.3.443</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.clojure</groupId>
-            <artifactId>tools.reader</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.clojure</groupId>
         <artifactId>test.check</artifactId>
@@ -850,12 +792,14 @@
         <scope>test</scope>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
         <version>6.2.4</version>
       </dependency>
 
+      <!--defined also in SlipStreamParent artifact -->
       <dependency>
         <groupId>org.elasticsearch.client</groupId>
         <artifactId>transport</artifactId>
