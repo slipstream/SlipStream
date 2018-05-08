@@ -22,11 +22,13 @@ yum install -y \
     python-coverage \
     python-paramiko \
     rpm-build \
-    createrepo
+    createrepo \
+    gcc
     
 # Bug : https://bugzilla.redhat.com/show_bug.cgi?id=1479018
 # Extracted from yum 
 pip install pylint
+pip install tox
 
 #
 # install latest maven version
