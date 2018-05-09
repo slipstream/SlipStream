@@ -619,6 +619,21 @@
         <groupId>org.restlet.jee</groupId>
         <artifactId>org.restlet.ext.httpclient</artifactId>
         <version>2.2.1</version>
+	<!-- avoid conflicts with versions from clj-http -->
+	<exclusions>
+	  <exclusion>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	  </exclusion>
+	  <exclusion>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpcore</artifactId>
+	  </exclusion>
+	  <exclusion>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpmime</artifactId>
+	  </exclusion>
+	</exclusions>
       </dependency>
 
       <dependency>
