@@ -573,7 +573,7 @@ function _set_zookeeper_coords() {
 
 function _set_theme() {
    # do not write this line if using the default theme for now
-   if [ -n $SS_THEME -a "X$SS_THEME" -ne "Xdefault" ]; then
+   if [ -n $SS_THEME -a "X$SS_THEME" != "Xdefault" ]; then
       _set_jetty_args slipstream.ui.util.theme.current-theme $SS_THEME
    fi
 }
