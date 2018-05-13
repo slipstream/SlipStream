@@ -190,6 +190,9 @@ function _install_reference_configuration() {
     for passfile in /etc/slipstream/passwords/*; do
         echo -n $(uuidgen) | tail -c 12 > $passfile
     done
+
+    # Ensure all files are owned by slipstream user
+    chmod -R slipstream:slipstream $SS_CONF_DIR
 }
 
 function _install_slipstream() {
