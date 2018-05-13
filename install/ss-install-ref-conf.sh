@@ -192,7 +192,7 @@ function _install_reference_configuration() {
     done
 
     # Ensure all files are owned by slipstream user
-    chmod -R slipstream:slipstream $SS_CONF_DIR
+    chown -R slipstream:slipstream $SS_CONF_DIR
 }
 
 function _install_slipstream() {
