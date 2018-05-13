@@ -649,6 +649,10 @@ function _update_hostname_in_conf_file() {
       $@
 }
 
+function _chown_slipstream_etc() {
+   chown -R $SS_USER.$SS_GROUP $SLIPSTREAM_ETC
+}
+
 function _update_service_configuration() {
 
    # Configuration.
@@ -687,6 +691,7 @@ function _update_connectors_configuration() {
 }
 
 function _update_slipstream_configuration() {
+   _chown_slipstream_etc
    _update_service_configuration
    _update_connectors_configuration
 }
