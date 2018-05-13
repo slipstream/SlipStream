@@ -120,8 +120,9 @@ function _configure_object_store_for_reports() {
         > ss-cfg.json
     sed -i -e 's|"<CREDENTIAL_ID>"|'$credential_id'|' ss-cfg.json
 
-    # set the reports bucket to a random value
-    random_id=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+    # set the reports bucket to current seconds since the epoch
+    # using /dev/urandom makes the script hang (presumably waiting for entropy)
+    random_id=`date +%s`
     reports_bucket="slipstream-test-${random_id}"
     sed -i -e 's|<REPORTS_BUCKET>|'$reports_bucket'|' ss-cfg.json
 
