@@ -88,9 +88,6 @@ CIMI_PORT=8201
 CIMI_ENDPOINT=http://$CIMI_HOST:$CIMI_PORT
 
 REPORTS_CLOUD_STORE=exoscale-ch-gva
-# Should be pre-created.
-REPORTS_BUCKET_NAME=slipstream-reports-test
-OBJECT_STORE_ENDPOINT=https://sos-ch-dk-2.exo.io
 
 function _install_yum_client_cert() {
     SS_CONF_DIR=/etc/slipstream
@@ -123,7 +120,12 @@ function _configure_object_store_for_reports() {
         > ss-cfg.json
     sed -i -e 's|"<CREDENTIAL_ID>"|'$credential_id'|' ss-cfg.json
 
-    # push the modified credential back into the server
+    # set the reports bucket to a random value
+    random_id=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+    reports_bucket="slipstream-test-${random_id}"
+    sed -i -e 's|<REPORTS_BUCKET>|'$reports_bucket'|' ss-cfg.json
+
+    # push the modified configuration back into the server
     curl -H'content-type: application/json' -H'slipstream-authn-info: admin ADMIN' \
          "$CIMI_ENDPOINT/api/configuration/slipstream" -XPUT --data @ss-cfg.json
     rm -f ss-cfg.json
