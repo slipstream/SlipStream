@@ -85,7 +85,7 @@ ES_HOST_PORT=`ss-get es-host-port`
 
 CIMI_HOST=localhost
 CIMI_PORT=8201
-CIMI_ENPOINT=http://$CIMI_HOST:$CIMI_PORT
+CIMI_ENDPOINT=http://$CIMI_HOST:$CIMI_PORT
 
 REPORTS_CLOUD_STORE=exoscale-ch-gva
 # Should be pre-created.
@@ -109,23 +109,24 @@ function _install_yum_client_cert() {
 
 function _configure_object_store_for_reports() {
     _wait_listens $CIMI_HOST $CIMI_PORT
-    curl -H'accept: application/json' -H'slipstream-authn-info: test USER' \
-        "$CIMI_ENPOINT/api/credential?\$filter=type^='cloud-cred'%20and%20connector/href='connector/$REPORTS_CLOUD_STORE'" \
+
+    # search for a credential to use for saving reports
+    curl -H'accept: application/json' -H'slipstream-authn-info: admin ADMIN' \
+        "$CIMI_ENDPOINT/api/credential?\$filter=type^='cloud-cred'%20and%20connector/href='connector/$REPORTS_CLOUD_STORE'" \
         > credentials.json
-    s3_key=`jq '.credentials[0] | .["key"]' credentials.json`
-    s3_key=${s3_key//\"}
-    s3_secret=`jq '.credentials[0] | .["secret"]' credentials.json`
-    s3_secret=${s3_secret//\"}
+    credential_id=`jq '.credentials[0] | .["id"]' credentials.json`
     rm -f credentials.json
-    conf_path=/opt/slipstream/server/.credentials/object-store-conf.edn
-    cp ${conf_path}.tmpl $conf_path
-    sed -i -e 's|<KEY>|'$s3_key'|' \
-        -e 's|<SECRET>|'$s3_secret'|' \
-        -e 's|<ENDPOINT>|'$OBJECT_STORE_ENDPOINT'|' \
-        -e 's|<REPORTS_BUCKET_NAME>|'$REPORTS_BUCKET_NAME'|' \
-        $conf_path
-    chmod 600 $conf_path
-    chown slipstream: $conf_path
+
+    # copy the slipstream configuration and update with credential id
+    curl -H'accept: application/json' -H'slipstream-authn-info: admin ADMIN' \
+        "$CIMI_ENDPOINT/api/configuration/slipstream" \
+        > ss-cfg.json
+    sed -i -e 's|"<CREDENTIAL_ID>"|'$credential_id'|' ss-cfg.json
+
+    # push the modified credential back into the server
+    curl -H'content-type: application/json' -H'slipstream-authn-info: admin ADMIN' \
+         "$CIMI_ENDPOINT/api/configuration/slipstream" -XPUT --data @ss-cfg.json
+    rm -f ss-cfg.json
 }
 
 #
