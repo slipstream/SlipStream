@@ -3,9 +3,9 @@
 set -x
 set -e
 
-curl -fsSL -o /usr/bin/boot \
-   https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
-chmod 755 /usr/bin/boot
+curl -fsSL -o /usr/bin/lein \
+   https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+chmod 755 /usr/bin/lein
 
-export BOOT_AS_ROOT=yes
-boot -h
+export LEIN_ROOT=true
+lein -h

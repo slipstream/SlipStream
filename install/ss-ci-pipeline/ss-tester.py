@@ -11,7 +11,7 @@ import base64
 
 from slipstream.ConfigHolder import ConfigHolder
 from slipstream.Client import Client
-from slipstream.util import (fileAppendContent, execute, importETree)
+from slipstream.util import (create_directory, filePutContent, fileAppendContent, execute, importETree)
 
 etree = importETree()
 
@@ -135,18 +135,31 @@ def _install_git_creds(nexus_user, nexus_pass):
     _chown(SSH_DIR, os.getuid(), os.getgid(), recursive=True)
 
 
-def _install_ss_repo_creds_boot(nexus_user, nexus_pass):
+def _install_ss_repo_creds_lein(nexus_user, nexus_pass):
+    create_directory(_expanduser('~/.lein'))
+    
     conf = """
-(configure-repositories!
- (fn [{:keys [url] :as repo-map}]
-   (->> (condp re-find url
-          #"^https://nexus\.sixsq\.com/"
-          {:username "%(user)s"
-           :password "%(pass)s"}
-          #".*" nil)
-        (merge repo-map))))
+{
+ :auth {:repository-auth
+        {#"https://nexus.sixsq.com/content/repositories/snapshots-community-rhel7/" 
+          {:username "%(user)s", :password "%(pass)s"}
+
+         #"https://nexus.sixsq.com/content/repositories/releases-community-rhel7/"
+          {:username "%(user)s", :password "%(pass)s"}
+
+         #"https://nexus.sixsq.com/content/repositories/snapshots-enterprise-rhel7/"
+          {:username "%(user)s", :password "%(pass)s"}
+
+         #"https://nexus.sixsq.com/content/repositories/releases-enterprise-rhel7/"
+          {:username "%(user)s", :password "%(pass)s"}
+
+         #"https://nexus.sixsq.com/content/repositories/thirdparty/"
+          {:username "%(user)s", :password "%(pass)s"}
+        }
+       }
+ }
 """ % {'user': nexus_user, 'pass': nexus_pass}
-    fileAppendContent(_expanduser('~/.boot/profile.boot'), conf)
+    filePutContent(_expanduser('~/.lein/profiles.clj'), conf)
 
 
 def merge_dicts(x, y):
@@ -310,8 +323,8 @@ nexus_user, nexus_pass = ss_get('nexus_creds').split(':')
 _print('Installing git credentials.')
 _install_git_creds(nexus_user, nexus_pass)
 
-_print('Install SS repo credentials for boot.')
-_install_ss_repo_creds_boot(nexus_user, nexus_pass)
+_print('Install SS repo credentials for lein.')
+_install_ss_repo_creds_lein(nexus_user, nexus_pass)
 
 _cd_home()
 
@@ -361,14 +374,14 @@ tr.add_test('test-run-app',
             msg='Application deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
             config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
             connectors=connectors_to_test)
-#tr.add_test('test-run-app-scale',
-#            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
-#            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
-#            connectors=connectors_to_test)
+tr.add_test('test-run-app-scale',
+            msg='Scalable deployment - %s on %s as %s.' % (scale_app_uri, endpoint, test_username),
+            config={'app-uri': scale_app_uri, 'comp-name': scale_comp_name},
+            connectors=connectors_to_test)
 
 tr.info()
 
-os.environ['BOOT_AS_ROOT'] = 'yes'
+os.environ['LEIN_ROOT'] = 'true'
 tr.run(tests_to_run=tests_to_run)
 
 _print('All tests were run.')
