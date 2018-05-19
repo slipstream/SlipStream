@@ -371,7 +371,7 @@ tr.info()
 os.environ['BOOT_AS_ROOT'] = 'yes'
 tr.run(tests_to_run=tests_to_run)
 
-_print('All tests were ran.')
+_print('All tests were run.')
 
 if tr.failed_tests:
     _print('Tests failed: %s' % ', '.join(tr.get_failed_tests()))
