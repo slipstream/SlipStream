@@ -898,7 +898,7 @@ function _load_slipstream_examples() {
 
 function _upload_apikey_session_template() {
    _is_true $SS_START || srvc_start cimi
-   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 180
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 600
    tmpl=/tmp/api-key.json
    cat >$tmpl<<EOF
 {
@@ -990,7 +990,7 @@ EOF
 if ( ! _is_true $SS_START ); then
    srvc_start cimi
 fi
-_wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT
+_wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 600
 curl -X POST $CIMI_LOCAL_URL/api/service-attribute-namespace \
    -H "slipstream-authn-info: super ADMIN" -H "Content-type: application/json" \
    -d@/etc/slipstream/san.json
