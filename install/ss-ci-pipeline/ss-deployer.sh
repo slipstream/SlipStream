@@ -105,7 +105,7 @@ function _install_yum_client_cert() {
 }
 
 function _configure_object_store_for_reports() {
-    _wait_listens $CIMI_HOST $CIMI_PORT
+    _wait_listens $CIMI_HOST $CIMI_PORT 180
 
     # search for a credential to use for saving reports
     curl -H'accept: application/json' -H'slipstream-authn-info: admin ADMIN' \
@@ -221,7 +221,7 @@ fi
 #
 # restarting services (probably not necessary)
 systemctl restart cimi
-_wait_listens localhost 8201
+_wait_listens localhost 8201 180
 systemctl restart slipstream
 systemctl restart nginx
 systemctl restart slipstream-job-distributor@vms_collect

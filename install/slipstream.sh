@@ -601,8 +601,8 @@ function _start_slipstream() {
 }
 
 function _start_cimi_application() {
-   # CIMI
-   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 180
+   # CIMI (increased to 600 because of slow startup)
+   _wait_listens $CIMI_LOCAL_HOST $CIMI_LOCAL_PORT 600
    curl -m 60 -sfS -o /dev/null $CIMI_LOCAL_URL/api/cloud-entry-point
 }
 
