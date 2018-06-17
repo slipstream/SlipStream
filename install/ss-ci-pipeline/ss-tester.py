@@ -335,7 +335,7 @@ _check_call(['git', 'clone', 'git@github.com:slipstream/%s.git' % test_repo_name
 
 #
 # Wait for deployer to deploy SlipStream.
-ss_get('deployer.ready', timeout=2700)
+ss_get('deployer.ready', timeout=5400)
 
 test_username, test_userpass = _get_test_user_pass()
 

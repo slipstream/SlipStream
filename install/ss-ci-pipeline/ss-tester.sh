@@ -12,7 +12,7 @@ set -x
 set -e
 set -o pipefail
 
-ss-get --timeout 2700 deployer.ready
+ss-get --timeout 5400 deployer.ready
 
 #
 # test the service

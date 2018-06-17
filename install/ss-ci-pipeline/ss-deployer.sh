@@ -219,9 +219,39 @@ if [ "X$ES_HOST_PORT" == "Xlocalhost:9300" ]; then
 fi
 
 #
-# restarting services (probably not necessary)
+# restarting cimi service (probably not necessary)
 systemctl restart cimi
+
 _wait_listens localhost 8201 600
+# ensure cimi is fully started and responds
+cep_url="http://localhost:8201/api/cloud-entry-point"
+tries=0
+while [ $tries -lt 10 ]; do
+
+  rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${cep_url}`
+  echo "Return code from ${cep_url} is " ${rc}
+  if [ "${rc}" -ne "200" ]; then
+    echo "Return code from ${cep_url} was not 200."
+    exit_code=1
+  else
+    echo "Return code from ${cep_url} was 200."
+    exit_code=0
+    break
+  fi
+
+  sleep 60
+  tries=$[$tries+1]
+
+done
+
+# the service failed the validation with login
+if [ "$exit_code" -ne "0" ]; then
+   ss-set statecustom "ERROR: Service failed to provide cloud-entry-point."
+   exit $exit_code
+fi
+
+#
+# restart other services (probably not necessary)
 systemctl restart slipstream
 systemctl restart nginx
 systemctl restart slipstream-job-distributor@vms_collect
@@ -258,12 +288,12 @@ tries=0
 while [ $tries -lt 5 ]; do
 
   rc=`curl -k -sS -o /dev/null -w '%{http_code}' ${landing_page_url}`
-  echo "Return code from ${landing_page} is " ${rc}
+  echo "Return code from ${landing_page_url} is " ${rc}
   if [ "${rc}" -ne "200" ]; then
-    echo "Return code from ${landing_page} was not 200."
+    echo "Return code from ${landing_page_url} was not 200."
     exit_code=1
   else
-    echo "Return code from ${landing_page} was 200."
+    echo "Return code from ${landing_page_url} was 200."
     exit_code=0
     break
   fi
