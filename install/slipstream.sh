@@ -457,6 +457,19 @@ function prepare_node () {
    _configure_hostname
 }
 
+function _deploy_haveged () {
+
+   _print "- installing haveged (entropy generator)"
+
+   srvc_stop haveged || true
+
+   _inst haveged
+
+   srvc_enable haveged
+
+   srvc_start haveged
+}
+
 function _deploy_hsqldb () {
 
    _print "- installing HSQLDB"
@@ -503,6 +516,8 @@ function _deploy_zookeeper() {
 function deploy_slipstream_server_deps () {
 
    _print "Installing SlipStream dependencies"
+
+   _deploy_haveged
 
    _deploy_elasticstack
 
