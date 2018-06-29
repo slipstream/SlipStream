@@ -774,8 +774,8 @@ EOF
 # Ensure is started; start also on boot.
 srvc_enable elasticsearch.service
 srvc_start elasticsearch
-_wait_listens $ES_HOST $ES_PORT_BIN 15
-_wait_listens $ES_HOST $ES_PORT_HTTP 15
+_wait_listens $ES_HOST $ES_PORT_BIN 90
+_wait_listens $ES_HOST $ES_PORT_HTTP 90
 }
 
 function _install_logstash() {
