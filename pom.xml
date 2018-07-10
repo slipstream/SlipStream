@@ -52,18 +52,6 @@
       </modules>
     </profile>
 
-    <profile>
-      <id>yum-build</id>
-      <activation>
-        <property>
-          <name>yum</name>
-        </property>
-      </activation>
-      <modules>
-        <module>yum</module>
-      </modules>
-    </profile>
-
   </profiles>
 
   <properties>
