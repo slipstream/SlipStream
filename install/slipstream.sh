@@ -970,6 +970,8 @@ if ( _is_true $SS_START ); then
    srvc_enable slipstream-job-distributor@vms_cleanup
    srvc_start slipstream-job-distributor@jobs_cleanup
    srvc_enable slipstream-job-distributor@jobs_cleanup
+   srvc_start slipstream-job-distributor@quotas_collect
+   srvc_enable slipstream-job-distributor@quotas_collect
    srvc_start slipstream-job-executor
    srvc_enable slipstream-job-executor
 fi
