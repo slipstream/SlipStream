@@ -7,12 +7,20 @@ GITHUB_URLS=(
 
 REPOS=(
 "SlipStreamUI"
+"SlipStreamWebUI"
 "SlipStreamServer"
 "SlipStreamServerDeps"
 "SlipStreamClient"
 "SlipStreamClojureAPI"
 "SlipStreamConnectors"
+"SlipStreamPythonAPI"
+"SlipStreamJobEngine"
+"SlipStreamParent"
+"SlipStreamTests"
+
 # add enterprise-only repositories here -- do not remove this comment
+"SlipStreamConnectorsEnterprise"
+"SlipStreamServerEnterprise"
 )
 
 # loop over possible repository locations for cloning
@@ -44,7 +52,7 @@ update_ss_repo(){
   if [ -d ${repo} ]
   then
     echo "Updating ${repo}..."
-    (cd ${repo}; git pull)
+    (cd ${repo}; git rev-parse --abbrev-ref HEAD; git pull)
     rc=$?
   else
     echo "Repo ${repo} is not yet cloned here."
