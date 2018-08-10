@@ -27,6 +27,7 @@ yum install -y \
     
 # Bug : https://bugzilla.redhat.com/show_bug.cgi?id=1479018
 # Extracted from yum 
+pip install --upgrade pip
 pip install pylint
 pip install tox
 
