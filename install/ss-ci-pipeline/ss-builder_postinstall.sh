@@ -23,6 +23,7 @@ yum install -y \
     python-paramiko \
     rpm-build \
     createrepo \
+    npm \
     gcc
     
 # Bug : https://bugzilla.redhat.com/show_bug.cgi?id=1479018
