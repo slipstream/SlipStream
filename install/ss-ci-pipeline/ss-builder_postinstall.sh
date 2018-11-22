@@ -28,6 +28,7 @@ yum install -y \
 # Bug : https://bugzilla.redhat.com/show_bug.cgi?id=1479018
 # Extracted from yum 
 pip install --upgrade pip
+pip install --upgrade --ignore-installed enum34 # fix bug because enum34 is already installed with yum.
 pip install pylint
 pip install tox
 
