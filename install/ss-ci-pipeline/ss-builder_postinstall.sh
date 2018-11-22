@@ -38,7 +38,7 @@ pip install tox
 echo statecustom "Installing maven..."
 maven_version=3.3.9
 curl -o ~/apache-maven-${maven_version}-bin.tar.gz \
-    http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz
+    https://www-eu.apache.org/dist/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz
 tar zxf ~/apache-maven-${maven_version}-bin.tar.gz -C ~
 export MAVEN_HOME=~/apache-maven-${maven_version}
 export MAVEN_OPTS=-Xmx2048M
