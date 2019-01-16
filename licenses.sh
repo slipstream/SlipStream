@@ -2,7 +2,7 @@
 
 # To use this script:
 # 1. Go to parent directory with all SlipStream modules: cd ../
-# 2. Run script: ./SlipStream/licenses.sh
+# 2. Run script: ./SlipStream/licenses.sh 2>&1 > licenses.log
 # 3. All license information in licenses-all.tar.gz
 # 4. Enjoy!
 
