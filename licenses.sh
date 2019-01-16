@@ -2,7 +2,7 @@
 
 # To use this script:
 # 1. Go to parent directory with all SlipStream modules: cd ../
-# 2. Run script: ./SlipStream/licenses.sh 2>&1 > licenses.log
+# 2. Run script: ./SlipStream/licenses.sh > licenses.log 2>&1
 # 3. All license information in licenses-all.tar.gz
 # 4. Enjoy!
 
@@ -11,7 +11,7 @@
 
 ## Generates dependencies.html for all Java modules
 
-(cd SlipStream; mvn clean project-info-reports:dependencies -P enterprise-build)
+(cd SlipStream; mvn -P enterprise-build project-info-reports:dependencies)
 
 ## Clojure(Script) dependencies
 
