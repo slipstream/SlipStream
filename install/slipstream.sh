@@ -11,6 +11,7 @@
 
 # Fail fast and fail hard.
 set -e
+set -x
 set -o pipefail
 
 # # # # # # #
@@ -173,6 +174,7 @@ SS_YUM_REPO_COMMUNITY=${SS_YUM_REPO_KIND}-community
 
 shift $((OPTIND - 1))
 
+VERBOSE=true
 if [ "$VERBOSE" = "true" ]; then
    exec 4>&2 3>&1
 else
