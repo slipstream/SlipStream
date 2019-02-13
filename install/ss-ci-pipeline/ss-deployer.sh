@@ -273,13 +273,13 @@ fi
 
 # Get and publish configured users.
 DEFAULT_USERPASS=$SS_UNAME:$SS_UPASS
-    if [ -d /etc/slipstream/passwords/ ]
-    then
-        _USER_PASS=$(
-        for user in /etc/slipstream/passwords/*; do
-            echo -n $(basename $user):$(cat $user),;
-        done)
-    fi
+if [ -d /etc/slipstream/passwords/ ]
+then
+    _USER_PASS=$(
+    for user in /etc/slipstream/passwords/*; do
+        echo -n $(basename $user):$(cat $user),;
+    done)
+fi
 _USER_PASS=${_USER_PASS%,}
 _USER_PASS=${_USER_PASS:-$DEFAULT_USERPASS}
 ss-set ss_users $_USER_PASS
