@@ -200,14 +200,6 @@ else
     fi
 fi
 
-# Get and publish configured users.
-_USER_PASS=$(
-for user in /etc/slipstream/passwords/*; do
-    echo -n $(basename $user):$(cat $user),;
-done)
-_USER_PASS=${_USER_PASS%,}
-ss-set ss_users $_USER_PASS
-
 #
 # Reduce the memory consumption of ElasticSearch
 #
@@ -278,6 +270,16 @@ SS_UPASS=supeRsupeR
 if [ -f /etc/slipstream/passwords/$SS_UNAME ]; then
     SS_UPASS=$(cat /etc/slipstream/passwords/$SS_UNAME)
 fi
+
+# Get and publish configured users.
+DEFAULT_USERPASS=$SS_UNAME:$SS_UPASS
+# _USER_PASS=$(
+# for user in /etc/slipstream/passwords/*; do
+#     echo -n $(basename $user):$(cat $user),;
+# done)
+# _USER_PASS=${_USER_PASS%,}
+_USER_PASS=${_USER_PASS:-$DEFAULT_USERPASS}
+ss-set ss_users $_USER_PASS
 
 exit_code=0
 
