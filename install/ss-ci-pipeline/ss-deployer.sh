@@ -175,14 +175,6 @@ if ( _is_true $with_refconf ); then
             -o "-x $SS_REPO_CONF_URL"
     fi
 
-    # Get and publish configured users.
-    _USER_PASS=$(
-    for user in /etc/slipstream/passwords/*; do
-        echo -n $(basename $user):$(cat $user),;
-    done)
-    _USER_PASS=${_USER_PASS%,}
-    ss-set ss_users $_USER_PASS
-
     ### Get and publish connectors to test.
     declare -A CONNECTORS
     CONNECTORS=(
@@ -207,6 +199,14 @@ else
         /tmp/slipstream.sh -a $ES_HOST_PORT -x $SS_REPO_CONF_URL
     fi
 fi
+
+# Get and publish configured users.
+_USER_PASS=$(
+for user in /etc/slipstream/passwords/*; do
+    echo -n $(basename $user):$(cat $user),;
+done)
+_USER_PASS=${_USER_PASS%,}
+ss-set ss_users $_USER_PASS
 
 #
 # Reduce the memory consumption of ElasticSearch
