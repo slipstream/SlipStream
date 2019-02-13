@@ -279,8 +279,8 @@ then
     for user in /etc/slipstream/passwords/*; do
         echo -n $(basename $user):$(cat $user),;
     done)
+    _USER_PASS=${_USER_PASS%,}
 fi
-_USER_PASS=${_USER_PASS%,}
 _USER_PASS=${_USER_PASS:-$DEFAULT_USERPASS}
 ss-set ss_users $_USER_PASS
 
