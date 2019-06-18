@@ -53,7 +53,7 @@ function install_slipstream_server() {
     echo -e ":::\n::: SlipStream Service.\n:::"
     SCRIPT=slipstream.sh
     _download $SCRIPT "SlipStream installation script"
-    ./$SCRIPT -k $YUM_REPO_KIND -e $YUM_REPO_EDITION
+    ./$SCRIPT -k $YUM_REPO_KIND -e $YUM_REPO_EDITION -x https://sixsq-build-artifacts.s3.amazonaws.com/slipstream/slipstream-3.71.repo
 }
 
 function install_slipstream_connectors() {
