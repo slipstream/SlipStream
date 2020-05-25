@@ -1,4 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/slipstream/slipstream.png?label=ready&title=Ready)](https://waffle.io/slipstream/slipstream)
+# SlipStream is now deprecated -> replaced by https://github.com/nuvla
+
 # SlipStream
 
 Developed by SixSq, SlipStream is a multi-cloud application management
